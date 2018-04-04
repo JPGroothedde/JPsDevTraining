@@ -37,6 +37,12 @@
 			return new QQNodeBackgroundProcessUpdate('BackgroundProcessUpdate', null, null);
 		}
 		/**
+		 * @return QQNodeComment
+		 */
+		static public function Comment() {
+			return new QQNodeComment('Comment', null, null);
+		}
+		/**
 		 * @return QQNodeEmailMessage
 		 */
 		static public function EmailMessage() {
@@ -85,10 +91,16 @@
 			return new QQNodePasswordReset('PasswordReset', null, null);
 		}
 		/**
-		 * @return QQNodePlaceHolder
+		 * @return QQNodePost
 		 */
-		static public function PlaceHolder() {
-			return new QQNodePlaceHolder('PlaceHolder', null, null);
+		static public function Post() {
+			return new QQNodePost('Post', null, null);
+		}
+		/**
+		 * @return QQNodePostLike
+		 */
+		static public function PostLike() {
+			return new QQNodePostLike('PostLike', null, null);
 		}
 		/**
 		 * @return QQNodeRemoteAccess

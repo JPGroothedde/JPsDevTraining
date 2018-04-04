@@ -29,6 +29,11 @@
 		QApplicationBase::$ClassFile['qqnodebackgroundprocessupdate'] = __MODEL__ . '/BackgroundProcessUpdate.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodebackgroundprocessupdate'] = __MODEL__ . '/BackgroundProcessUpdate.class.php';
 
+	// ClassPaths for the Comment class
+		QApplicationBase::$ClassFile['comment'] = __MODEL__ . '/Comment.class.php';
+		QApplicationBase::$ClassFile['qqnodecomment'] = __MODEL__ . '/Comment.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodecomment'] = __MODEL__ . '/Comment.class.php';
+
 	// ClassPaths for the EmailMessage class
 		QApplicationBase::$ClassFile['emailmessage'] = __MODEL__ . '/EmailMessage.class.php';
 		QApplicationBase::$ClassFile['qqnodeemailmessage'] = __MODEL__ . '/EmailMessage.class.php';
@@ -69,10 +74,15 @@
 		QApplicationBase::$ClassFile['qqnodepasswordreset'] = __MODEL__ . '/PasswordReset.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodepasswordreset'] = __MODEL__ . '/PasswordReset.class.php';
 
-	// ClassPaths for the PlaceHolder class
-		QApplicationBase::$ClassFile['placeholder'] = __MODEL__ . '/PlaceHolder.class.php';
-		QApplicationBase::$ClassFile['qqnodeplaceholder'] = __MODEL__ . '/PlaceHolder.class.php';
-		QApplicationBase::$ClassFile['qqreversereferencenodeplaceholder'] = __MODEL__ . '/PlaceHolder.class.php';
+	// ClassPaths for the Post class
+		QApplicationBase::$ClassFile['post'] = __MODEL__ . '/Post.class.php';
+		QApplicationBase::$ClassFile['qqnodepost'] = __MODEL__ . '/Post.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodepost'] = __MODEL__ . '/Post.class.php';
+
+	// ClassPaths for the PostLike class
+		QApplicationBase::$ClassFile['postlike'] = __MODEL__ . '/PostLike.class.php';
+		QApplicationBase::$ClassFile['qqnodepostlike'] = __MODEL__ . '/PostLike.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodepostlike'] = __MODEL__ . '/PostLike.class.php';
 
 	// ClassPaths for the RemoteAccess class
 		QApplicationBase::$ClassFile['remoteaccess'] = __MODEL__ . '/RemoteAccess.class.php';

@@ -70,19 +70,20 @@ class SummernoteEntryController_Base {
     public function setValues($Object) {
         $this->txtEntryHtml->Text = '';
         $this->txtAuthorId->Text = '';
-        $this->txtLastChangedDate->Text = '';$this->setLastChangedDateTime();
+        $this->txtLastChangedDate->Text = '';
+        $this->setLastChangedDateTime();
 
         if (!$Object) {
             $this->refreshAll();
             return;
         }
-        if ($Object->EntryHtml) {
+        if (!is_null($Object->EntryHtml)) {
             $this->txtEntryHtml->Text = $Object->EntryHtml;
         }
-        if ($Object->AuthorId) {
+        if (!is_null($Object->AuthorId)) {
             $this->txtAuthorId->Text = $Object->AuthorId;
         }
-        if ($Object->LastChangedDate) {
+        if (!is_null($Object->LastChangedDate)) {
             $this->txtLastChangedDate->Text = $Object->LastChangedDate->format(DATE_TIME_FORMAT_HTML);
             $this->setLastChangedDateTime($Object->LastChangedDate);
         }
@@ -396,7 +397,7 @@ class SummernoteEntryController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev

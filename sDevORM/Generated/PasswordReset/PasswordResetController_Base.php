@@ -85,21 +85,22 @@ class PasswordResetController_Base {
 
     public function setValues($Object) {
         $this->txtToken->Text = '';
-        $this->txtCreatedDateTime->Text = '';$this->setCreatedDateTimeTime();
+        $this->txtCreatedDateTime->Text = '';
+        $this->setCreatedDateTimeTime();
 
         if (!$Object) {
             $this->refreshAll();
             return;
         }
-        if ($Object->Token) {
+        if (!is_null($Object->Token)) {
             $this->txtToken->Text = $Object->Token;
         }
-        if ($Object->CreatedDateTime) {
+        if (!is_null($Object->CreatedDateTime)) {
             $this->txtCreatedDateTime->Text = $Object->CreatedDateTime->format(DATE_TIME_FORMAT_HTML);
             $this->setCreatedDateTimeTime($Object->CreatedDateTime);
         }
         
-        if ($Object->AccountObject) {
+        if (!is_null($Object->AccountObject)) {
             $this->lstAccount->SelectedValue = $Object->AccountObject->Id;
         }
 
@@ -410,7 +411,7 @@ class PasswordResetController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev

@@ -70,19 +70,20 @@ class FileDocumentController_Base {
     public function setValues($Object) {
         $this->txtFileName->Text = '';
         $this->txtPath->Text = '';
-        $this->txtCreatedDate->Text = '';$this->setCreatedDateTime();
+        $this->txtCreatedDate->Text = '';
+        $this->setCreatedDateTime();
 
         if (!$Object) {
             $this->refreshAll();
             return;
         }
-        if ($Object->FileName) {
+        if (!is_null($Object->FileName)) {
             $this->txtFileName->Text = $Object->FileName;
         }
-        if ($Object->Path) {
+        if (!is_null($Object->Path)) {
             $this->txtPath->Text = $Object->Path;
         }
-        if ($Object->CreatedDate) {
+        if (!is_null($Object->CreatedDate)) {
             $this->txtCreatedDate->Text = $Object->CreatedDate->format(DATE_TIME_FORMAT_HTML);
             $this->setCreatedDateTime($Object->CreatedDate);
         }
@@ -396,7 +397,7 @@ class FileDocumentController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev

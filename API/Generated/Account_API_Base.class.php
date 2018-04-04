@@ -40,7 +40,7 @@ class Account_API_Base {
             $result = array("Result" => "Success","ObjId" => $newAccountObj->Id);
             return $result;
         } catch (QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not create Account object via API: '.$e->getMessage());
+            error_log('Could not create Account object via API: '.$e->getMessage());
             $result = array("Result" => "Failed","Message" => $e->getMessage());
             return $result;
         }
@@ -78,7 +78,7 @@ class Account_API_Base {
             $result = array("Result" => "Success","Message" => "Object Modified");
             return $result;
         } catch (QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not update Account object via API: '.$e->getMessage());
+            error_log('Could not update Account object via API: '.$e->getMessage());
             $result = array("Result" => "Failed","Message" => $e->getMessage());
             return $result;
         }

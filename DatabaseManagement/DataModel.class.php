@@ -4,17 +4,23 @@ class DataModel extends DataModel_Base {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // define all the objects for your app here
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    var $ProjectObjects                = array("PlaceHolder");
+    var $ProjectObjects                = array("Post","Comment","PostLike");
     var $ProjectObjectAttributes = array (																										// The attributes for each of the defined objects
-        "PlaceHolder"                   => array("DummyOne","DummyTwo","DummyThree","DummyFour","DummyFive","DummySix"),
+        "Post"                  => array("PostText","DateCreated"),
+        "Comment"               => array("CommentText","DateCreated"),
+        "PostLike"              => array("PostLike","DateCreated"),
     );
 
     var $ProjectObjectAttributeTypes = array (																									// The attribute type for each of the defined object attributes (Defines how it is stored in the db)
-        "PlaceHolder"                   => array("DATE","VARCHAR(20)","INT","INT","DATETIME","DOUBLE"),
+        "Post"                  => array("VARCHAR(200)","DATETIME"),
+        "Comment"               => array("VARCHAR(20)","DATETIME"),
+        "PostLike"              => array("VARCHAR(5)","DATETIME"),
     );
 
     var $ProjectObjectSingleRelations = array (																									 // The list of objects that each object is related to once
-        "PlaceHolder"                   => array("Account","UserRole"),
+        "Post"                  => array("Account"),
+        "Comment"               => array("Account","Post"),
+        "PostLike"              => array("Account","Post"),
     );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Special Renders

@@ -2,9 +2,121 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de105970-ee06-4441-a939-70ec740783fe" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/App/Training/index.php" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/App/Training/index.tpl.php" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Generated/Account_API_Base.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/Account_API_Base.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Generated/Documentation/PlaceHolder_API_Documentation_Base.html" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/Documentation/PlaceHolder_API_Documentation_Base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Generated/Operations/PlaceHolder_API_Operations.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/Operations/PlaceHolder_API_Operations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Generated/PlaceHolder_API_Base.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/PlaceHolder_API_Base.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Generated/UserRole_API_Base.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/UserRole_API_Base.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Training/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/Training/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Coordinates.json" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Coordinates.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Delta.json" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Delta.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/_core/php/DeveloperMode/CustomLog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/_core/php/DeveloperMode/CustomLog.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AccountGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AccountGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/ApiEntityGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/ApiEntityGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/ApiKeyGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/ApiKeyGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AuditLogEntryGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AuditLogEntryGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/BackgroundProcessGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/BackgroundProcessGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/BackgroundProcessUpdateGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/BackgroundProcessUpdateGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailMessageGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailMessageGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateContentBlockGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateContentBlockGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateContentRowGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateContentRowGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/FileDocumentGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/FileDocumentGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/LoginTokenGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/LoginTokenGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PageViewGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PageViewGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PasswordResetGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PasswordResetGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/QQN.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/QQN.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/RemoteAccessGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/RemoteAccessGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/SummernoteEntryGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/SummernoteEntryGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/UserRoleGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/UserRoleGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/_class_paths.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/_class_paths.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/AccountController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/AccountController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/FormTemplates/Account_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/FormTemplates/Account_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/ApiEntityController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/ApiEntityController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/FormTemplates/ApiEntity_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/FormTemplates/ApiEntity_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/ApiKeyController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/ApiKeyController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/FormTemplates/ApiKey_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/FormTemplates/ApiKey_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/AuditLogEntryController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/AuditLogEntryController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/FormTemplates/AuditLogEntry_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/FormTemplates/AuditLogEntry_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/BackgroundProcessController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/BackgroundProcessController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/FormTemplates/BackgroundProcess_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/FormTemplates/BackgroundProcess_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/BackgroundProcessUpdateController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/BackgroundProcessUpdateController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/FormTemplates/BackgroundProcessUpdate_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/FormTemplates/BackgroundProcessUpdate_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/EmailMessageController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/EmailMessageController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/FormTemplates/EmailMessage_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/FormTemplates/EmailMessage_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/EmailTemplateController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/EmailTemplateController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/FormTemplates/EmailTemplate_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/FormTemplates/EmailTemplate_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/EmailTemplateContentBlockController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/EmailTemplateContentBlockController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/FormTemplates/EmailTemplateContentBlock_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/FormTemplates/EmailTemplateContentBlock_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/EmailTemplateContentRowController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/EmailTemplateContentRowController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/FormTemplates/EmailTemplateContentRow_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/FormTemplates/EmailTemplateContentRow_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FileDocumentController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FileDocumentController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FormTemplates/FileDocument_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FormTemplates/FileDocument_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/FormTemplates/LoginToken_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/FormTemplates/LoginToken_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/LoginTokenController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/LoginTokenController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/FormTemplates/PageView_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/FormTemplates/PageView_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageViewController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageViewController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/FormTemplates/PasswordReset_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/FormTemplates/PasswordReset_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PasswordResetController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PasswordResetController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/FormTemplates/RemoteAccess_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/FormTemplates/RemoteAccess_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/RemoteAccessController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/RemoteAccessController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/FormTemplates/SummernoteEntry_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/FormTemplates/SummernoteEntry_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/SummernoteEntryController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/SummernoteEntryController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/FormTemplates/UserRole_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/FormTemplates/UserRole_Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/UserRoleController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/UserRoleController_Base.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,7 +125,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/PHPMailer/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
@@ -21,9 +133,8 @@
       <file leaf-file-name="app_config.inc.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="61" column="52" lean-forward="false" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-              <folding />
+            <state relative-caret-position="1037">
+              <caret line="61" column="52" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -31,9 +142,17 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App/Training/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-              <folding />
+            <state relative-caret-position="282">
+              <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataModel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DatabaseManagement/DataModel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="69" selection-start-line="6" selection-start-column="69" selection-end-line="6" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -42,14 +161,7 @@
         <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#5#0#PHP" expanded="true" />
-                <element signature="e#34#39#0#PHP" expanded="true" />
-                <element signature="e#99#104#0#PHP" expanded="true" />
-                <element signature="e#156#161#0#PHP" expanded="true" />
-                <element signature="e#186#191#0#PHP" expanded="true" />
-              </folding>
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -64,6 +176,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>$AlertMessageArray</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -72,6 +189,7 @@
       <list>
         <option value="$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php" />
         <option value="$PROJECT_DIR$/App/Training/index.tpl.php" />
+        <option value="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" />
         <option value="$PROJECT_DIR$/App/Training/index.php" />
       </list>
     </option>
@@ -82,27 +200,17 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="429" />
-    <option name="width" value="882" />
-    <option name="height" value="506" />
+    <option name="x" value="63" />
+    <option name="width" value="872" />
+    <option name="height" value="505" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -120,6 +228,11 @@
               <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Training" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="DatabaseManagement" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
@@ -143,8 +256,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -164,9 +275,6 @@
       </list>
     </option>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -179,34 +287,36 @@
       <updated>1522827004793</updated>
       <workItem from="1522827006071" duration="517000" />
       <workItem from="1522827538354" duration="358000" />
+      <workItem from="1522837911098" duration="10017000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="875000" />
+    <option name="totallyTimeSpent" value="10892000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="429" y="0" width="1366" height="732" extended-state="6" />
+    <frame x="0" y="0" width="1366" height="732" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25340393" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1398243" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,55 +325,56 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager />
-    <watches-manager />
-  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="61" column="52" lean-forward="false" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-          <folding />
+        <state relative-caret-position="1037">
+          <caret line="61" column="52" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="e#34#39#0#PHP" expanded="true" />
-            <element signature="e#99#104#0#PHP" expanded="true" />
-            <element signature="e#156#161#0#PHP" expanded="true" />
-            <element signature="e#186#191#0#PHP" expanded="true" />
-          </folding>
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/Training/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="61" column="52" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/includes/qcubed/controls/QForm.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="22" column="19" lean-forward="false" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
-          <folding>
-            <element signature="n#QForm#0;n#!!top" expanded="true" />
-          </folding>
+          <caret line="22" column="19" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/base_controls/QFormBase.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="31">
-          <caret line="307" column="31" lean-forward="false" selection-start-line="307" selection-start-column="31" selection-end-line="307" selection-end-column="31" />
+          <caret line="307" column="31" selection-start-line="307" selection-start-column="31" selection-end-line="307" selection-end-column="31" />
           <folding>
             <element signature="n#Run#0;n#QFormBase#0;n#!!top" expanded="true" />
             <marker date="1514801973000" expanded="true" signature="59300:59452" ph="..." />
@@ -274,11 +385,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/framework/QApplicationBase.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="2000" column="47" lean-forward="true" selection-start-line="2000" selection-start-column="34" selection-end-line="2000" selection-end-column="47" />
+          <folding>
+            <element signature="n#style#0;n#li#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseManagement/DataModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="69" selection-start-line="6" selection-start-column="69" selection-end-line="6" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/App/Training/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-          <folding />
+        <state relative-caret-position="282">
+          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
         </state>
       </provider>
     </entry>

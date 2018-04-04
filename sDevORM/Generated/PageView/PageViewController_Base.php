@@ -80,7 +80,8 @@ class PageViewController_Base {
     }
 
     public function setValues($Object) {
-        $this->txtTimeStamped->Text = '';$this->setTimeStampedTime();
+        $this->txtTimeStamped->Text = '';
+        $this->setTimeStampedTime();
         $this->txtIPAddress->Text = '';
         $this->txtPageDetails->Text = '';
         $this->txtUserAgentDetails->Text = '';
@@ -91,23 +92,23 @@ class PageViewController_Base {
             $this->refreshAll();
             return;
         }
-        if ($Object->TimeStamped) {
+        if (!is_null($Object->TimeStamped)) {
             $this->txtTimeStamped->Text = $Object->TimeStamped->format(DATE_TIME_FORMAT_HTML);
             $this->setTimeStampedTime($Object->TimeStamped);
         }
-        if ($Object->IPAddress) {
+        if (!is_null($Object->IPAddress)) {
             $this->txtIPAddress->Text = $Object->IPAddress;
         }
-        if ($Object->PageDetails) {
+        if (!is_null($Object->PageDetails)) {
             $this->txtPageDetails->Text = $Object->PageDetails;
         }
-        if ($Object->UserAgentDetails) {
+        if (!is_null($Object->UserAgentDetails)) {
             $this->txtUserAgentDetails->Text = $Object->UserAgentDetails;
         }
-        if ($Object->UserRole) {
+        if (!is_null($Object->UserRole)) {
             $this->txtUserRole->Text = $Object->UserRole;
         }
-        if ($Object->Username) {
+        if (!is_null($Object->Username)) {
             $this->txtUsername->Text = $Object->Username;
         }
         
@@ -528,7 +529,7 @@ class PageViewController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev
