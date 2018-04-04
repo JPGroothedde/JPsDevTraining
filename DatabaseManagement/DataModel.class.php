@@ -4,17 +4,24 @@ class DataModel extends DataModel_Base {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // define all the objects for your app here
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    var $ProjectObjects                = array("PlaceHolder");
+    var $ProjectObjects                = array("Customer","Product","Invoice","LineItem");
     var $ProjectObjectAttributes = array (																										// The attributes for each of the defined objects
-        "PlaceHolder"                   => array("DummyOne","DummyTwo","DummyThree","DummyFour","DummyFive","DummySix"),
+        "Customer"                  => array("Name","PhoneNumber"),
+        "Product"                   => array("Name","UnitPrice"),
+        "Invoice"                   => array("InvoiceNo"),
+        "LineItem"                  => array("Quantity","LineTotal"),
     );
 
     var $ProjectObjectAttributeTypes = array (																									// The attribute type for each of the defined object attributes (Defines how it is stored in the db)
-        "PlaceHolder"                   => array("DATE","VARCHAR(20)","INT","INT","DATETIME","DOUBLE"),
+        "Customer"                  => array("VARCHAR(20)","VARCHAR(13)"),
+        "Product"                   => array("VARCHAR(20)","VARCHAR(20)"),
+        "Invoice"                   => array("VARCHAR(20)"),
+        "LineItem"                  => array("VARCHAR(10)","VARCHAR(20)"),
     );
 
     var $ProjectObjectSingleRelations = array (																									 // The list of objects that each object is related to once
-        "PlaceHolder"                   => array("Account","UserRole"),
+        "LineItem"                  => array("Product","Invoice"),
+        "Invoice"                   => array("Customer"),
     );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Special Renders

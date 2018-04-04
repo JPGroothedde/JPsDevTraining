@@ -29,6 +29,11 @@
 		QApplicationBase::$ClassFile['qqnodebackgroundprocessupdate'] = __MODEL__ . '/BackgroundProcessUpdate.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodebackgroundprocessupdate'] = __MODEL__ . '/BackgroundProcessUpdate.class.php';
 
+	// ClassPaths for the Customer class
+		QApplicationBase::$ClassFile['customer'] = __MODEL__ . '/Customer.class.php';
+		QApplicationBase::$ClassFile['qqnodecustomer'] = __MODEL__ . '/Customer.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodecustomer'] = __MODEL__ . '/Customer.class.php';
+
 	// ClassPaths for the EmailMessage class
 		QApplicationBase::$ClassFile['emailmessage'] = __MODEL__ . '/EmailMessage.class.php';
 		QApplicationBase::$ClassFile['qqnodeemailmessage'] = __MODEL__ . '/EmailMessage.class.php';
@@ -54,6 +59,16 @@
 		QApplicationBase::$ClassFile['qqnodefiledocument'] = __MODEL__ . '/FileDocument.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodefiledocument'] = __MODEL__ . '/FileDocument.class.php';
 
+	// ClassPaths for the Invoice class
+		QApplicationBase::$ClassFile['invoice'] = __MODEL__ . '/Invoice.class.php';
+		QApplicationBase::$ClassFile['qqnodeinvoice'] = __MODEL__ . '/Invoice.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodeinvoice'] = __MODEL__ . '/Invoice.class.php';
+
+	// ClassPaths for the LineItem class
+		QApplicationBase::$ClassFile['lineitem'] = __MODEL__ . '/LineItem.class.php';
+		QApplicationBase::$ClassFile['qqnodelineitem'] = __MODEL__ . '/LineItem.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodelineitem'] = __MODEL__ . '/LineItem.class.php';
+
 	// ClassPaths for the LoginToken class
 		QApplicationBase::$ClassFile['logintoken'] = __MODEL__ . '/LoginToken.class.php';
 		QApplicationBase::$ClassFile['qqnodelogintoken'] = __MODEL__ . '/LoginToken.class.php';
@@ -69,10 +84,10 @@
 		QApplicationBase::$ClassFile['qqnodepasswordreset'] = __MODEL__ . '/PasswordReset.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodepasswordreset'] = __MODEL__ . '/PasswordReset.class.php';
 
-	// ClassPaths for the PlaceHolder class
-		QApplicationBase::$ClassFile['placeholder'] = __MODEL__ . '/PlaceHolder.class.php';
-		QApplicationBase::$ClassFile['qqnodeplaceholder'] = __MODEL__ . '/PlaceHolder.class.php';
-		QApplicationBase::$ClassFile['qqreversereferencenodeplaceholder'] = __MODEL__ . '/PlaceHolder.class.php';
+	// ClassPaths for the Product class
+		QApplicationBase::$ClassFile['product'] = __MODEL__ . '/Product.class.php';
+		QApplicationBase::$ClassFile['qqnodeproduct'] = __MODEL__ . '/Product.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodeproduct'] = __MODEL__ . '/Product.class.php';
 
 	// ClassPaths for the RemoteAccess class
 		QApplicationBase::$ClassFile['remoteaccess'] = __MODEL__ . '/RemoteAccess.class.php';

@@ -19,6 +19,7 @@
 	 * @property string $EntryHtml the value for strEntryHtml 
 	 * @property string $AuthorId the value for strAuthorId 
 	 * @property QDateTime $LastChangedDate the value for dttLastChangedDate 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class SummernoteEntryGen extends QBaseClass implements IteratorAggregate {
@@ -61,6 +62,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column SummernoteEntry.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
 		 * columns from the run-time database query result for this object).  Used by InstantiateDbRow and
 		 * GetVirtualAttribute.
@@ -93,6 +102,7 @@
 			$this->strEntryHtml = SummernoteEntry::EntryHtmlDefault;
 			$this->strAuthorId = SummernoteEntry::AuthorIdDefault;
 			$this->dttLastChangedDate = (SummernoteEntry::LastChangedDateDefault === null)?null:new QDateTime(SummernoteEntry::LastChangedDateDefault);
+			$this->strLastUpdated = SummernoteEntry::LastUpdatedDefault;
 		}
 
 
@@ -438,6 +448,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'EntryHtml', $strAliasPrefix . 'EntryHtml');
 			    $objBuilder->AddSelectItem($strTableName, 'AuthorId', $strAliasPrefix . 'AuthorId');
 			    $objBuilder->AddSelectItem($strTableName, 'LastChangedDate', $strAliasPrefix . 'LastChangedDate');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
             }
 		}
 
@@ -566,6 +577,9 @@
 			$strAlias = $strAliasPrefix . 'LastChangedDate';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->dttLastChangedDate = $objDbRow->GetColumn($strAliasName, 'DateTime');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -707,69 +721,79 @@
 		//////////////////////////
 
 		/**
-		 * Save this SummernoteEntry
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this SummernoteEntry
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = SummernoteEntry::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = SummernoteEntry::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = SummernoteEntry::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'SummernoteEntry';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EntryHtml -> '.$this->strEntryHtml.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'AuthorId -> '.$this->strAuthorId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'LastChangedDate -> '.$this->dttLastChangedDate.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("EntryHtml" => $this->strEntryHtml));
+                $ChangedArray = array_merge($ChangedArray,array("AuthorId" => $this->strAuthorId));
+                $ChangedArray = array_merge($ChangedArray,array("LastChangedDate" => $this->dttLastChangedDate));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->EntryHtml) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EntryHtml -> '.$ExistingObj->EntryHtml.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EntryHtml -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->AuthorId) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'AuthorId -> '.$ExistingObj->AuthorId.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'AuthorId -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->EntryHtml)) {
+                    $ExistingValueStr = $ExistingObj->EntryHtml;
                 }
-                if ($ExistingObj->LastChangedDate) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'LastChangedDate -> '.$ExistingObj->LastChangedDate.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'LastChangedDate -> NULL<br>';
+                if ($ExistingObj->EntryHtml != $this->strEntryHtml) {
+                    $ChangedArray = array_merge($ChangedArray,array("EntryHtml" => array("Before" => $ExistingValueStr,"After" => $this->strEntryHtml)));
+                    //$ChangedArray = array_merge($ChangedArray,array("EntryHtml" => "From: ".$ExistingValueStr." to: ".$this->strEntryHtml));
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EntryHtml -> '.$this->strEntryHtml.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'AuthorId -> '.$this->strAuthorId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'LastChangedDate -> '.$this->dttLastChangedDate.'<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->AuthorId)) {
+                    $ExistingValueStr = $ExistingObj->AuthorId;
+                }
+                if ($ExistingObj->AuthorId != $this->strAuthorId) {
+                    $ChangedArray = array_merge($ChangedArray,array("AuthorId" => array("Before" => $ExistingValueStr,"After" => $this->strAuthorId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("AuthorId" => "From: ".$ExistingValueStr." to: ".$this->strAuthorId));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastChangedDate)) {
+                    $ExistingValueStr = $ExistingObj->LastChangedDate;
+                }
+                if ($ExistingObj->LastChangedDate != $this->dttLastChangedDate) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastChangedDate" => array("Before" => $ExistingValueStr,"After" => $this->dttLastChangedDate)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastChangedDate" => "From: ".$ExistingValueStr." to: ".$this->dttLastChangedDate));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving SummernoteEntry. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `SummernoteEntry` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `SummernoteEntry` (
 							`EntryHtml`,
 							`AuthorId`,
 							`LastChangedDate`
@@ -778,48 +802,60 @@
 							' . $objDatabase->SqlVariable($this->strAuthorId) . ',
 							' . $objDatabase->SqlVariable($this->dttLastChangedDate) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('SummernoteEntry', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('SummernoteEntry', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+					
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `SummernoteEntry` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`SummernoteEntry`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('SummernoteEntry');
+                }
+	
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `SummernoteEntry` SET
 							`EntryHtml` = ' . $objDatabase->SqlVariable($this->strEntryHtml) . ',
 							`AuthorId` = ' . $objDatabase->SqlVariable($this->strAuthorId) . ',
 							`LastChangedDate` = ' . $objDatabase->SqlVariable($this->dttLastChangedDate) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving SummernoteEntry. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving SummernoteEntry. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+					            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `SummernoteEntry` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+	
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this SummernoteEntry
@@ -832,20 +868,22 @@
 			// Get the Database Object for this Class
 			$objDatabase = SummernoteEntry::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'SummernoteEntry';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'EntryHtml -> '.$this->strEntryHtml.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'AuthorId -> '.$this->strAuthorId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'LastChangedDate -> '.$this->dttLastChangedDate.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("EntryHtml" => $this->strEntryHtml));
+            $ChangedArray = array_merge($ChangedArray,array("AuthorId" => $this->strAuthorId));
+            $ChangedArray = array_merge($ChangedArray,array("LastChangedDate" => $this->dttLastChangedDate));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting SummernoteEntry. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting SummernoteEntry. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -922,6 +960,7 @@
 			$this->strEntryHtml = $objReloaded->strEntryHtml;
 			$this->strAuthorId = $objReloaded->strAuthorId;
 			$this->dttLastChangedDate = $objReloaded->dttLastChangedDate;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 		}
 
 
@@ -969,6 +1008,13 @@
 					 * @return QDateTime
 					 */
 					return $this->dttLastChangedDate;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 
 				///////////////////
@@ -1121,6 +1167,7 @@
 			$strToReturn .= '<element name="EntryHtml" type="xsd:string"/>';
 			$strToReturn .= '<element name="AuthorId" type="xsd:string"/>';
 			$strToReturn .= '<element name="LastChangedDate" type="xsd:dateTime"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1151,6 +1198,8 @@
 				$objToReturn->strAuthorId = $objSoapObject->AuthorId;
 			if (property_exists($objSoapObject, 'LastChangedDate'))
 				$objToReturn->dttLastChangedDate = new QDateTime($objSoapObject->LastChangedDate);
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1189,6 +1238,7 @@
 			$iArray['EntryHtml'] = $this->strEntryHtml;
 			$iArray['AuthorId'] = $this->strAuthorId;
 			$iArray['LastChangedDate'] = $this->dttLastChangedDate;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1230,6 +1280,7 @@
      * @property-read QQNode $EntryHtml
      * @property-read QQNode $AuthorId
      * @property-read QQNode $LastChangedDate
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1249,6 +1300,8 @@
 					return new QQNode('AuthorId', 'AuthorId', 'VarChar', $this);
 				case 'LastChangedDate':
 					return new QQNode('LastChangedDate', 'LastChangedDate', 'DateTime', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1268,6 +1321,7 @@
      * @property-read QQNode $EntryHtml
      * @property-read QQNode $AuthorId
      * @property-read QQNode $LastChangedDate
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1287,6 +1341,8 @@
 					return new QQNode('AuthorId', 'AuthorId', 'string', $this);
 				case 'LastChangedDate':
 					return new QQNode('LastChangedDate', 'LastChangedDate', 'QDateTime', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

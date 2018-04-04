@@ -18,6 +18,7 @@
 	 * @property-read integer $Id the value for intId (Read-Only PK)
 	 * @property string $IpAddress the value for strIpAddress 
 	 * @property QDateTime $AccessDateTime the value for dttAccessDateTime 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class RemoteAccessGen extends QBaseClass implements IteratorAggregate {
@@ -52,6 +53,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column RemoteAccess.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
 		 * columns from the run-time database query result for this object).  Used by InstantiateDbRow and
 		 * GetVirtualAttribute.
@@ -83,6 +92,7 @@
 			$this->intId = RemoteAccess::IdDefault;
 			$this->strIpAddress = RemoteAccess::IpAddressDefault;
 			$this->dttAccessDateTime = (RemoteAccess::AccessDateTimeDefault === null)?null:new QDateTime(RemoteAccess::AccessDateTimeDefault);
+			$this->strLastUpdated = RemoteAccess::LastUpdatedDefault;
 		}
 
 
@@ -427,6 +437,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'Id', $strAliasPrefix . 'Id');
 			    $objBuilder->AddSelectItem($strTableName, 'IpAddress', $strAliasPrefix . 'IpAddress');
 			    $objBuilder->AddSelectItem($strTableName, 'AccessDateTime', $strAliasPrefix . 'AccessDateTime');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
             }
 		}
 
@@ -552,6 +563,9 @@
 			$strAlias = $strAliasPrefix . 'AccessDateTime';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->dttAccessDateTime = $objDbRow->GetColumn($strAliasName, 'DateTime');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -693,109 +707,129 @@
 		//////////////////////////
 
 		/**
-		 * Save this RemoteAccess
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this RemoteAccess
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = RemoteAccess::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = RemoteAccess::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = RemoteAccess::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'RemoteAccess';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'IpAddress -> '.$this->strIpAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'AccessDateTime -> '.$this->dttAccessDateTime.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("IpAddress" => $this->strIpAddress));
+                $ChangedArray = array_merge($ChangedArray,array("AccessDateTime" => $this->dttAccessDateTime));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->IpAddress) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'IpAddress -> '.$ExistingObj->IpAddress.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'IpAddress -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->AccessDateTime) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'AccessDateTime -> '.$ExistingObj->AccessDateTime.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'AccessDateTime -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->IpAddress)) {
+                    $ExistingValueStr = $ExistingObj->IpAddress;
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'IpAddress -> '.$this->strIpAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'AccessDateTime -> '.$this->dttAccessDateTime.'<br>';
+                if ($ExistingObj->IpAddress != $this->strIpAddress) {
+                    $ChangedArray = array_merge($ChangedArray,array("IpAddress" => array("Before" => $ExistingValueStr,"After" => $this->strIpAddress)));
+                    //$ChangedArray = array_merge($ChangedArray,array("IpAddress" => "From: ".$ExistingValueStr." to: ".$this->strIpAddress));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->AccessDateTime)) {
+                    $ExistingValueStr = $ExistingObj->AccessDateTime;
+                }
+                if ($ExistingObj->AccessDateTime != $this->dttAccessDateTime) {
+                    $ChangedArray = array_merge($ChangedArray,array("AccessDateTime" => array("Before" => $ExistingValueStr,"After" => $this->dttAccessDateTime)));
+                    //$ChangedArray = array_merge($ChangedArray,array("AccessDateTime" => "From: ".$ExistingValueStr." to: ".$this->dttAccessDateTime));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving RemoteAccess. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `RemoteAccess` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `RemoteAccess` (
 							`IpAddress`,
 							`AccessDateTime`
 						) VALUES (
 							' . $objDatabase->SqlVariable($this->strIpAddress) . ',
 							' . $objDatabase->SqlVariable($this->dttAccessDateTime) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('RemoteAccess', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('RemoteAccess', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+				
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `RemoteAccess` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`RemoteAccess`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('RemoteAccess');
+                }
+	
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `RemoteAccess` SET
 							`IpAddress` = ' . $objDatabase->SqlVariable($this->strIpAddress) . ',
 							`AccessDateTime` = ' . $objDatabase->SqlVariable($this->dttAccessDateTime) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving RemoteAccess. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving RemoteAccess. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+				            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `RemoteAccess` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+	
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this RemoteAccess
@@ -808,19 +842,21 @@
 			// Get the Database Object for this Class
 			$objDatabase = RemoteAccess::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'RemoteAccess';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'IpAddress -> '.$this->strIpAddress.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'AccessDateTime -> '.$this->dttAccessDateTime.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("IpAddress" => $this->strIpAddress));
+            $ChangedArray = array_merge($ChangedArray,array("AccessDateTime" => $this->dttAccessDateTime));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting RemoteAccess. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting RemoteAccess. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -896,6 +932,7 @@
 			// Update $this's local variables to match
 			$this->strIpAddress = $objReloaded->strIpAddress;
 			$this->dttAccessDateTime = $objReloaded->dttAccessDateTime;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 		}
 
 
@@ -936,6 +973,13 @@
 					 * @return QDateTime
 					 */
 					return $this->dttAccessDateTime;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 
 				///////////////////
@@ -1074,6 +1118,7 @@
 			$strToReturn .= '<element name="Id" type="xsd:int"/>';
 			$strToReturn .= '<element name="IpAddress" type="xsd:string"/>';
 			$strToReturn .= '<element name="AccessDateTime" type="xsd:dateTime"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1102,6 +1147,8 @@
 				$objToReturn->strIpAddress = $objSoapObject->IpAddress;
 			if (property_exists($objSoapObject, 'AccessDateTime'))
 				$objToReturn->dttAccessDateTime = new QDateTime($objSoapObject->AccessDateTime);
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1139,6 +1186,7 @@
 			$iArray['Id'] = $this->intId;
 			$iArray['IpAddress'] = $this->strIpAddress;
 			$iArray['AccessDateTime'] = $this->dttAccessDateTime;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1179,6 +1227,7 @@
      * @property-read QQNode $Id
      * @property-read QQNode $IpAddress
      * @property-read QQNode $AccessDateTime
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1196,6 +1245,8 @@
 					return new QQNode('IpAddress', 'IpAddress', 'VarChar', $this);
 				case 'AccessDateTime':
 					return new QQNode('AccessDateTime', 'AccessDateTime', 'DateTime', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1214,6 +1265,7 @@
      * @property-read QQNode $Id
      * @property-read QQNode $IpAddress
      * @property-read QQNode $AccessDateTime
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1231,6 +1283,8 @@
 					return new QQNode('IpAddress', 'IpAddress', 'string', $this);
 				case 'AccessDateTime':
 					return new QQNode('AccessDateTime', 'AccessDateTime', 'QDateTime', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

@@ -144,20 +144,21 @@ class PlaceHolderController_Base {
         $this->txtDummyThree->Text = '';
         
         $this->btnDummyFour->IsToggled = false;
-        $this->txtDummyFive->Text = '';$this->setDummyFiveTime();
+        $this->txtDummyFive->Text = '';
+        $this->setDummyFiveTime();
         $this->txtDummySix->Text = '';
 
         if (!$Object) {
             $this->refreshAll();
             return;
         }
-        if ($Object->DummyOne) {
+        if (!is_null($Object->DummyOne)) {
             $this->txtDummyOne->Text = $Object->DummyOne->format(DATE_TIME_FORMAT_HTML);
         }
         if ($Object->DummyTwo) {
             $this->lstDummyTwo->SelectedValue = $Object->DummyTwo;
         }
-        if ($Object->DummyThree) {
+        if (!is_null($Object->DummyThree)) {
             $this->txtDummyThree->Text = $Object->DummyThree;
         }
         if ($Object->DummyFour == 1) {
@@ -165,18 +166,18 @@ class PlaceHolderController_Base {
         } else {
             $this->btnDummyFour->Toggle(false);
         }
-        if ($Object->DummyFive) {
+        if (!is_null($Object->DummyFive)) {
             $this->txtDummyFive->Text = $Object->DummyFive->format(DATE_TIME_FORMAT_HTML);
             $this->setDummyFiveTime($Object->DummyFive);
         }
-        if ($Object->DummySix) {
+        if (!is_null($Object->DummySix)) {
             $this->txtDummySix->Text = $Object->DummySix;
         }
         
-        if ($Object->AccountObject) {
+        if (!is_null($Object->AccountObject)) {
             $this->lstAccount->SelectedValue = $Object->AccountObject->Id;
         }
-        if ($Object->UserRoleObject) {
+        if (!is_null($Object->UserRoleObject)) {
             $this->lstUserRole->SelectedValue = $Object->UserRoleObject->Id;
         }
 
@@ -667,7 +668,7 @@ class PlaceHolderController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev

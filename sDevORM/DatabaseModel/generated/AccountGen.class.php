@@ -23,6 +23,7 @@
 	 * @property string $Username the value for strUsername (Unique)
 	 * @property string $Password the value for strPassword 
 	 * @property string $ChangedBy the value for strChangedBy 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property integer $UserRole the value for intUserRole 
 	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
 	 * @property UserRole $UserRoleObject the value for the UserRole object referenced by intUserRole 
@@ -30,8 +31,6 @@
 	 * @property-read LoginToken[] $_LoginTokenArray the value for the private _objLoginTokenArray (Read-Only) if set due to an ExpandAsArray on the LoginToken.Account reverse relationship
 	 * @property-read PasswordReset $_PasswordReset the value for the private _objPasswordReset (Read-Only) if set due to an expansion on the PasswordReset.Account reverse relationship
 	 * @property-read PasswordReset[] $_PasswordResetArray the value for the private _objPasswordResetArray (Read-Only) if set due to an ExpandAsArray on the PasswordReset.Account reverse relationship
-	 * @property-read PlaceHolder $_PlaceHolder the value for the private _objPlaceHolder (Read-Only) if set due to an expansion on the PlaceHolder.Account reverse relationship
-	 * @property-read PlaceHolder[] $_PlaceHolderArray the value for the private _objPlaceHolderArray (Read-Only) if set due to an ExpandAsArray on the PlaceHolder.Account reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class AccountGen extends QBaseClass implements IteratorAggregate {
@@ -112,6 +111,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column Account.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
 		 * Protected member variable that maps to the database column Account.UserRole
 		 * @var integer intUserRole
 		 */
@@ -160,22 +167,6 @@
 		private $_objPasswordResetArray = null;
 
 		/**
-		 * Private member variable that stores a reference to a single PlaceHolder object
-		 * (of type PlaceHolder), if this Account object was restored with
-		 * an expansion on the PlaceHolder association table.
-		 * @var PlaceHolder _objPlaceHolder;
-		 */
-		private $_objPlaceHolder;
-
-		/**
-		 * Private member variable that stores a reference to an array of PlaceHolder objects
-		 * (of type PlaceHolder[]), if this Account object was restored with
-		 * an ExpandAsArray on the PlaceHolder association table.
-		 * @var PlaceHolder[] _objPlaceHolderArray;
-		 */
-		private $_objPlaceHolderArray = null;
-
-		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
 		 * columns from the run-time database query result for this object).  Used by InstantiateDbRow and
 		 * GetVirtualAttribute.
@@ -222,6 +213,7 @@
 			$this->strUsername = Account::UsernameDefault;
 			$this->strPassword = Account::PasswordDefault;
 			$this->strChangedBy = Account::ChangedByDefault;
+			$this->strLastUpdated = Account::LastUpdatedDefault;
 			$this->intUserRole = Account::UserRoleDefault;
 			$this->strSearchMetaInfo = Account::SearchMetaInfoDefault;
 		}
@@ -573,6 +565,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'Username', $strAliasPrefix . 'Username');
 			    $objBuilder->AddSelectItem($strTableName, 'Password', $strAliasPrefix . 'Password');
 			    $objBuilder->AddSelectItem($strTableName, 'ChangedBy', $strAliasPrefix . 'ChangedBy');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
 			    $objBuilder->AddSelectItem($strTableName, 'UserRole', $strAliasPrefix . 'UserRole');
 			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
             }
@@ -724,6 +717,9 @@
 			$strAlias = $strAliasPrefix . 'ChangedBy';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strChangedBy = $objDbRow->GetColumn($strAliasName, 'VarChar');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAlias = $strAliasPrefix . 'UserRole';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intUserRole = $objDbRow->GetColumn($strAliasName, 'Integer');
@@ -797,21 +793,6 @@
 					$objToReturn->_objPasswordResetArray[] = PasswordReset::InstantiateDbRow($objDbRow, $strAliasPrefix . 'passwordreset__', $objExpansionNode, null, $strColumnAliasArray);
 				} elseif (is_null($objToReturn->_objPasswordReset)) {
 					$objToReturn->_objPasswordReset = PasswordReset::InstantiateDbRow($objDbRow, $strAliasPrefix . 'passwordreset__', $objExpansionNode, null, $strColumnAliasArray);
-				}
-			}
-
-			// Check for PlaceHolder Virtual Binding
-			$strAlias = $strAliasPrefix . 'placeholder__Id';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objExpansionNode = (empty($objExpansionAliasArray['placeholder']) ? null : $objExpansionAliasArray['placeholder']);
-			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
-			if ($blnExpanded && null === $objToReturn->_objPlaceHolderArray)
-				$objToReturn->_objPlaceHolderArray = array();
-			if (!is_null($objDbRow->GetColumn($strAliasName))) {
-				if ($blnExpanded) {
-					$objToReturn->_objPlaceHolderArray[] = PlaceHolder::InstantiateDbRow($objDbRow, $strAliasPrefix . 'placeholder__', $objExpansionNode, null, $strColumnAliasArray);
-				} elseif (is_null($objToReturn->_objPlaceHolder)) {
-					$objToReturn->_objPlaceHolder = PlaceHolder::InstantiateDbRow($objDbRow, $strAliasPrefix . 'placeholder__', $objExpansionNode, null, $strColumnAliasArray);
 				}
 			}
 
@@ -971,111 +952,133 @@
 		//////////////////////////
 
 		/**
-		 * Save this Account
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this Account
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = Account::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = Account::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'Account';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> '.$this->strFullName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> '.$this->strFirstName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> '.$this->strLastName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> '.$this->strEmailAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$this->strUsername.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> '.$this->strPassword.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> '.$this->strChangedBy.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->intUserRole.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("FullName" => $this->strFullName));
+                $ChangedArray = array_merge($ChangedArray,array("FirstName" => $this->strFirstName));
+                $ChangedArray = array_merge($ChangedArray,array("LastName" => $this->strLastName));
+                $ChangedArray = array_merge($ChangedArray,array("EmailAddress" => $this->strEmailAddress));
+                $ChangedArray = array_merge($ChangedArray,array("Username" => $this->strUsername));
+                $ChangedArray = array_merge($ChangedArray,array("Password" => $this->strPassword));
+                $ChangedArray = array_merge($ChangedArray,array("ChangedBy" => $this->strChangedBy));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $ChangedArray = array_merge($ChangedArray,array("UserRole" => $this->intUserRole));
+                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->FullName) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> '.$ExistingObj->FullName.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->FirstName) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> '.$ExistingObj->FirstName.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->FullName)) {
+                    $ExistingValueStr = $ExistingObj->FullName;
                 }
-                if ($ExistingObj->LastName) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> '.$ExistingObj->LastName.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> NULL<br>';
+                if ($ExistingObj->FullName != $this->strFullName) {
+                    $ChangedArray = array_merge($ChangedArray,array("FullName" => array("Before" => $ExistingValueStr,"After" => $this->strFullName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("FullName" => "From: ".$ExistingValueStr." to: ".$this->strFullName));
                 }
-                if ($ExistingObj->EmailAddress) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> '.$ExistingObj->EmailAddress.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->FirstName)) {
+                    $ExistingValueStr = $ExistingObj->FirstName;
                 }
-                if ($ExistingObj->Username) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$ExistingObj->Username.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> NULL<br>';
+                if ($ExistingObj->FirstName != $this->strFirstName) {
+                    $ChangedArray = array_merge($ChangedArray,array("FirstName" => array("Before" => $ExistingValueStr,"After" => $this->strFirstName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("FirstName" => "From: ".$ExistingValueStr." to: ".$this->strFirstName));
                 }
-                if ($ExistingObj->Password) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> '.$ExistingObj->Password.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastName)) {
+                    $ExistingValueStr = $ExistingObj->LastName;
                 }
-                if ($ExistingObj->ChangedBy) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> '.$ExistingObj->ChangedBy.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> NULL<br>';
+                if ($ExistingObj->LastName != $this->strLastName) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastName" => array("Before" => $ExistingValueStr,"After" => $this->strLastName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastName" => "From: ".$ExistingValueStr." to: ".$this->strLastName));
                 }
-                if ($ExistingObj->UserRole) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$ExistingObj->UserRole.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->EmailAddress)) {
+                    $ExistingValueStr = $ExistingObj->EmailAddress;
                 }
-                if ($ExistingObj->SearchMetaInfo) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$ExistingObj->SearchMetaInfo.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> NULL<br>';
+                if ($ExistingObj->EmailAddress != $this->strEmailAddress) {
+                    $ChangedArray = array_merge($ChangedArray,array("EmailAddress" => array("Before" => $ExistingValueStr,"After" => $this->strEmailAddress)));
+                    //$ChangedArray = array_merge($ChangedArray,array("EmailAddress" => "From: ".$ExistingValueStr." to: ".$this->strEmailAddress));
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> '.$this->strFullName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> '.$this->strFirstName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> '.$this->strLastName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> '.$this->strEmailAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$this->strUsername.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> '.$this->strPassword.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> '.$this->strChangedBy.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->intUserRole.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Username)) {
+                    $ExistingValueStr = $ExistingObj->Username;
+                }
+                if ($ExistingObj->Username != $this->strUsername) {
+                    $ChangedArray = array_merge($ChangedArray,array("Username" => array("Before" => $ExistingValueStr,"After" => $this->strUsername)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Username" => "From: ".$ExistingValueStr." to: ".$this->strUsername));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Password)) {
+                    $ExistingValueStr = $ExistingObj->Password;
+                }
+                if ($ExistingObj->Password != $this->strPassword) {
+                    $ChangedArray = array_merge($ChangedArray,array("Password" => array("Before" => $ExistingValueStr,"After" => $this->strPassword)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Password" => "From: ".$ExistingValueStr." to: ".$this->strPassword));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->ChangedBy)) {
+                    $ExistingValueStr = $ExistingObj->ChangedBy;
+                }
+                if ($ExistingObj->ChangedBy != $this->strChangedBy) {
+                    $ChangedArray = array_merge($ChangedArray,array("ChangedBy" => array("Before" => $ExistingValueStr,"After" => $this->strChangedBy)));
+                    //$ChangedArray = array_merge($ChangedArray,array("ChangedBy" => "From: ".$ExistingValueStr." to: ".$this->strChangedBy));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->UserRole)) {
+                    $ExistingValueStr = $ExistingObj->UserRole;
+                }
+                if ($ExistingObj->UserRole != $this->intUserRole) {
+                    $ChangedArray = array_merge($ChangedArray,array("UserRole" => array("Before" => $ExistingValueStr,"After" => $this->intUserRole)));
+                    //$ChangedArray = array_merge($ChangedArray,array("UserRole" => "From: ".$ExistingValueStr." to: ".$this->intUserRole));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->SearchMetaInfo)) {
+                    $ExistingValueStr = $ExistingObj->SearchMetaInfo;
+                }
+                if ($ExistingObj->SearchMetaInfo != $this->strSearchMetaInfo) {
+                    $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
+                    //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `Account` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `Account` (
 							`FullName`,
 							`FirstName`,
 							`LastName`,
@@ -1096,20 +1099,27 @@
 							' . $objDatabase->SqlVariable($this->intUserRole) . ',
 							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('Account', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('Account', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+									
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `Account` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`Account`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('Account');
+                }
+			
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `Account` SET
 							`FullName` = ' . $objDatabase->SqlVariable($this->strFullName) . ',
 							`FirstName` = ' . $objDatabase->SqlVariable($this->strFirstName) . ',
 							`LastName` = ' . $objDatabase->SqlVariable($this->strLastName) . ',
@@ -1119,31 +1129,36 @@
 							`ChangedBy` = ' . $objDatabase->SqlVariable($this->strChangedBy) . ',
 							`UserRole` = ' . $objDatabase->SqlVariable($this->intUserRole) . ',
 							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+		            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+									            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `Account` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+			
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this Account
@@ -1156,26 +1171,28 @@
 			// Get the Database Object for this Class
 			$objDatabase = Account::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'Account';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> '.$this->strFullName.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> '.$this->strFirstName.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> '.$this->strLastName.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> '.$this->strEmailAddress.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$this->strUsername.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> '.$this->strPassword.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> '.$this->strChangedBy.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->intUserRole.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("FullName" => $this->strFullName));
+            $ChangedArray = array_merge($ChangedArray,array("FirstName" => $this->strFirstName));
+            $ChangedArray = array_merge($ChangedArray,array("LastName" => $this->strLastName));
+            $ChangedArray = array_merge($ChangedArray,array("EmailAddress" => $this->strEmailAddress));
+            $ChangedArray = array_merge($ChangedArray,array("Username" => $this->strUsername));
+            $ChangedArray = array_merge($ChangedArray,array("Password" => $this->strPassword));
+            $ChangedArray = array_merge($ChangedArray,array("ChangedBy" => $this->strChangedBy));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $ChangedArray = array_merge($ChangedArray,array("UserRole" => $this->intUserRole));
+            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -1256,6 +1273,7 @@
 			$this->strUsername = $objReloaded->strUsername;
 			$this->strPassword = $objReloaded->strPassword;
 			$this->strChangedBy = $objReloaded->strChangedBy;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 			$this->UserRole = $objReloaded->UserRole;
 			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 		}
@@ -1334,6 +1352,13 @@
 					 */
 					return $this->strChangedBy;
 
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
+
 				case 'UserRole':
 					/**
 					 * Gets the value for intUserRole 
@@ -1403,22 +1428,6 @@
 					 * @return PasswordReset[]
 					 */
 					return $this->_objPasswordResetArray;
-
-				case '_PlaceHolder':
-					/**
-					 * Gets the value for the private _objPlaceHolder (Read-Only)
-					 * if set due to an expansion on the PlaceHolder.Account reverse relationship
-					 * @return PlaceHolder
-					 */
-					return $this->_objPlaceHolder;
-
-				case '_PlaceHolderArray':
-					/**
-					 * Gets the value for the private _objPlaceHolderArray (Read-Only)
-					 * if set due to an ExpandAsArray on the PlaceHolder.Account reverse relationship
-					 * @return PlaceHolder[]
-					 */
-					return $this->_objPlaceHolderArray;
 
 
 				case '__Restored':
@@ -1928,155 +1937,6 @@
 		}
 
 
-		// Related Objects' Methods for PlaceHolder
-		//-------------------------------------------------------------------
-
-		/**
-		 * Gets all associated PlaceHolders as an array of PlaceHolder objects
-		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
-		 * @return PlaceHolder[]
-		*/
-		public function GetPlaceHolderArray($objOptionalClauses = null) {
-			if ((is_null($this->intId)))
-				return array();
-
-			try {
-				return PlaceHolder::LoadArrayByAccount($this->intId, $objOptionalClauses);
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-		}
-
-		/**
-		 * Counts all associated PlaceHolders
-		 * @return int
-		*/
-		public function CountPlaceHolders() {
-			if ((is_null($this->intId)))
-				return 0;
-
-			return PlaceHolder::CountByAccount($this->intId);
-		}
-
-		/**
-		 * Associates a PlaceHolder
-		 * @param PlaceHolder $objPlaceHolder
-		 * @return void
-		*/
-		public function AssociatePlaceHolder(PlaceHolder $objPlaceHolder) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePlaceHolder on this unsaved Account.');
-			if ((is_null($objPlaceHolder->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePlaceHolder on this Account with an unsaved PlaceHolder.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`PlaceHolder`
-				SET
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objPlaceHolder->Id) . '
-			');
-		}
-
-		/**
-		 * Unassociates a PlaceHolder
-		 * @param PlaceHolder $objPlaceHolder
-		 * @return void
-		*/
-		public function UnassociatePlaceHolder(PlaceHolder $objPlaceHolder) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved Account.');
-			if ((is_null($objPlaceHolder->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this Account with an unsaved PlaceHolder.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`PlaceHolder`
-				SET
-					`Account` = null
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objPlaceHolder->Id) . ' AND
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Unassociates all PlaceHolders
-		 * @return void
-		*/
-		public function UnassociateAllPlaceHolders() {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved Account.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`PlaceHolder`
-				SET
-					`Account` = null
-				WHERE
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Deletes an associated PlaceHolder
-		 * @param PlaceHolder $objPlaceHolder
-		 * @return void
-		*/
-		public function DeleteAssociatedPlaceHolder(PlaceHolder $objPlaceHolder) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved Account.');
-			if ((is_null($objPlaceHolder->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this Account with an unsaved PlaceHolder.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				DELETE FROM
-					`PlaceHolder`
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objPlaceHolder->Id) . ' AND
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Deletes all associated PlaceHolders
-		 * @return void
-		*/
-		public function DeleteAllPlaceHolders() {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved Account.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				DELETE FROM
-					`PlaceHolder`
-				WHERE
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-
 		
 		///////////////////////////////
 		// METHODS TO EXTRACT INFO ABOUT THE CLASS
@@ -2123,6 +1983,7 @@
 			$strToReturn .= '<element name="Username" type="xsd:string"/>';
 			$strToReturn .= '<element name="Password" type="xsd:string"/>';
 			$strToReturn .= '<element name="ChangedBy" type="xsd:string"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="UserRoleObject" type="xsd1:UserRole"/>';
 			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
@@ -2164,6 +2025,8 @@
 				$objToReturn->strPassword = $objSoapObject->Password;
 			if (property_exists($objSoapObject, 'ChangedBy'))
 				$objToReturn->strChangedBy = $objSoapObject->ChangedBy;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if ((property_exists($objSoapObject, 'UserRoleObject')) &&
 				($objSoapObject->UserRoleObject))
 				$objToReturn->UserRoleObject = UserRole::GetObjectFromSoapObject($objSoapObject->UserRoleObject);
@@ -2213,6 +2076,7 @@
 			$iArray['Username'] = $this->strUsername;
 			$iArray['Password'] = $this->strPassword;
 			$iArray['ChangedBy'] = $this->strChangedBy;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			$iArray['UserRole'] = $this->intUserRole;
 			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			return new ArrayIterator($iArray);
@@ -2260,6 +2124,7 @@
      * @property-read QQNode $Username
      * @property-read QQNode $Password
      * @property-read QQNode $ChangedBy
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $UserRole
      * @property-read QQNodeUserRole $UserRoleObject
      * @property-read QQNode $SearchMetaInfo
@@ -2267,7 +2132,6 @@
      *
      * @property-read QQReverseReferenceNodeLoginToken $LoginToken
      * @property-read QQReverseReferenceNodePasswordReset $PasswordReset
-     * @property-read QQReverseReferenceNodePlaceHolder $PlaceHolder
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -2293,6 +2157,8 @@
 					return new QQNode('Password', 'Password', 'VarChar', $this);
 				case 'ChangedBy':
 					return new QQNode('ChangedBy', 'ChangedBy', 'VarChar', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'UserRole':
 					return new QQNode('UserRole', 'UserRole', 'Integer', $this);
 				case 'UserRoleObject':
@@ -2303,8 +2169,6 @@
 					return new QQReverseReferenceNodeLoginToken($this, 'logintoken', 'reverse_reference', 'Account', 'LoginToken');
 				case 'PasswordReset':
 					return new QQReverseReferenceNodePasswordReset($this, 'passwordreset', 'reverse_reference', 'Account', 'PasswordReset');
-				case 'PlaceHolder':
-					return new QQReverseReferenceNodePlaceHolder($this, 'placeholder', 'reverse_reference', 'Account', 'PlaceHolder');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -2328,6 +2192,7 @@
      * @property-read QQNode $Username
      * @property-read QQNode $Password
      * @property-read QQNode $ChangedBy
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $UserRole
      * @property-read QQNodeUserRole $UserRoleObject
      * @property-read QQNode $SearchMetaInfo
@@ -2335,7 +2200,6 @@
      *
      * @property-read QQReverseReferenceNodeLoginToken $LoginToken
      * @property-read QQReverseReferenceNodePasswordReset $PasswordReset
-     * @property-read QQReverseReferenceNodePlaceHolder $PlaceHolder
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -2361,6 +2225,8 @@
 					return new QQNode('Password', 'Password', 'string', $this);
 				case 'ChangedBy':
 					return new QQNode('ChangedBy', 'ChangedBy', 'string', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'UserRole':
 					return new QQNode('UserRole', 'UserRole', 'integer', $this);
 				case 'UserRoleObject':
@@ -2371,8 +2237,6 @@
 					return new QQReverseReferenceNodeLoginToken($this, 'logintoken', 'reverse_reference', 'Account', 'LoginToken');
 				case 'PasswordReset':
 					return new QQReverseReferenceNodePasswordReset($this, 'passwordreset', 'reverse_reference', 'Account', 'PasswordReset');
-				case 'PlaceHolder':
-					return new QQReverseReferenceNodePlaceHolder($this, 'placeholder', 'reverse_reference', 'Account', 'PlaceHolder');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

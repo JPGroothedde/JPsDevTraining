@@ -37,6 +37,12 @@
 			return new QQNodeBackgroundProcessUpdate('BackgroundProcessUpdate', null, null);
 		}
 		/**
+		 * @return QQNodeCustomer
+		 */
+		static public function Customer() {
+			return new QQNodeCustomer('Customer', null, null);
+		}
+		/**
 		 * @return QQNodeEmailMessage
 		 */
 		static public function EmailMessage() {
@@ -67,6 +73,18 @@
 			return new QQNodeFileDocument('FileDocument', null, null);
 		}
 		/**
+		 * @return QQNodeInvoice
+		 */
+		static public function Invoice() {
+			return new QQNodeInvoice('Invoice', null, null);
+		}
+		/**
+		 * @return QQNodeLineItem
+		 */
+		static public function LineItem() {
+			return new QQNodeLineItem('LineItem', null, null);
+		}
+		/**
 		 * @return QQNodeLoginToken
 		 */
 		static public function LoginToken() {
@@ -85,10 +103,10 @@
 			return new QQNodePasswordReset('PasswordReset', null, null);
 		}
 		/**
-		 * @return QQNodePlaceHolder
+		 * @return QQNodeProduct
 		 */
-		static public function PlaceHolder() {
-			return new QQNodePlaceHolder('PlaceHolder', null, null);
+		static public function Product() {
+			return new QQNodeProduct('Product', null, null);
 		}
 		/**
 		 * @return QQNodeRemoteAccess

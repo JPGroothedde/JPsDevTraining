@@ -40,7 +40,7 @@ class UserRoleController_Base {
             $this->refreshAll();
             return;
         }
-        if ($Object->Role) {
+        if (!is_null($Object->Role)) {
             $this->txtRole->Text = $Object->Role;
         }
         
@@ -223,7 +223,7 @@ class UserRoleController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev

@@ -5,7 +5,7 @@ require(__SDEV_ORM__.'/Implementations/LoginToken/LoginTokenController.php');
 require(__SDEV_CONTROLS__.'/Implementations/LoginToken/LoginTokenDataGrid.php');
 
 // Define User roles that have access to this page here. If commented out, this page is accessible to anyone
-/*if (!checkRole(array('Administrator'))) {
+/*if (!AppSpecificFunctions::checkPageAccess(array('Administrator'))) {
         AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 }*/
 // Remove this line if the file needs to be accessible remotely(production)

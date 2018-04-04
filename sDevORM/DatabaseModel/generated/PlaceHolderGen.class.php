@@ -22,6 +22,7 @@
 	 * @property integer $DummyFour the value for intDummyFour 
 	 * @property QDateTime $DummyFive the value for dttDummyFive 
 	 * @property string $DummySix the value for strDummySix 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property integer $Account the value for intAccount 
 	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
 	 * @property integer $UserRole the value for intUserRole 
@@ -90,6 +91,14 @@
 		 */
 		protected $strDummySix;
 		const DummySixDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column PlaceHolder.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
 
 
 		/**
@@ -172,6 +181,7 @@
 			$this->intDummyFour = PlaceHolder::DummyFourDefault;
 			$this->dttDummyFive = (PlaceHolder::DummyFiveDefault === null)?null:new QDateTime(PlaceHolder::DummyFiveDefault);
 			$this->strDummySix = PlaceHolder::DummySixDefault;
+			$this->strLastUpdated = PlaceHolder::LastUpdatedDefault;
 			$this->intAccount = PlaceHolder::AccountDefault;
 			$this->strSearchMetaInfo = PlaceHolder::SearchMetaInfoDefault;
 			$this->intUserRole = PlaceHolder::UserRoleDefault;
@@ -523,6 +533,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'DummyFour', $strAliasPrefix . 'DummyFour');
 			    $objBuilder->AddSelectItem($strTableName, 'DummyFive', $strAliasPrefix . 'DummyFive');
 			    $objBuilder->AddSelectItem($strTableName, 'DummySix', $strAliasPrefix . 'DummySix');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
 			    $objBuilder->AddSelectItem($strTableName, 'Account', $strAliasPrefix . 'Account');
 			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
 			    $objBuilder->AddSelectItem($strTableName, 'UserRole', $strAliasPrefix . 'UserRole');
@@ -672,6 +683,9 @@
 			$strAlias = $strAliasPrefix . 'DummySix';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strDummySix = $objDbRow->GetColumn($strAliasName, 'VarChar');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAlias = $strAliasPrefix . 'Account';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intAccount = $objDbRow->GetColumn($strAliasName, 'Integer');
@@ -900,111 +914,133 @@
 		//////////////////////////
 
 		/**
-		 * Save this PlaceHolder
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this PlaceHolder
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = PlaceHolder::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = PlaceHolder::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = PlaceHolder::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'PlaceHolder';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyOne -> '.$this->dttDummyOne.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyTwo -> '.$this->strDummyTwo.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyThree -> '.$this->intDummyThree.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFour -> '.$this->intDummyFour.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFive -> '.$this->dttDummyFive.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummySix -> '.$this->strDummySix.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> '.$this->intAccount.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->intUserRole.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("DummyOne" => $this->dttDummyOne));
+                $ChangedArray = array_merge($ChangedArray,array("DummyTwo" => $this->strDummyTwo));
+                $ChangedArray = array_merge($ChangedArray,array("DummyThree" => $this->intDummyThree));
+                $ChangedArray = array_merge($ChangedArray,array("DummyFour" => $this->intDummyFour));
+                $ChangedArray = array_merge($ChangedArray,array("DummyFive" => $this->dttDummyFive));
+                $ChangedArray = array_merge($ChangedArray,array("DummySix" => $this->strDummySix));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $ChangedArray = array_merge($ChangedArray,array("Account" => $this->intAccount));
+                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+                $ChangedArray = array_merge($ChangedArray,array("UserRole" => $this->intUserRole));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->DummyOne) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyOne -> '.$ExistingObj->DummyOne.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyOne -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->DummyTwo) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyTwo -> '.$ExistingObj->DummyTwo.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyTwo -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->DummyOne)) {
+                    $ExistingValueStr = $ExistingObj->DummyOne;
                 }
-                if ($ExistingObj->DummyThree) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyThree -> '.$ExistingObj->DummyThree.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyThree -> NULL<br>';
+                if ($ExistingObj->DummyOne != $this->dttDummyOne) {
+                    $ChangedArray = array_merge($ChangedArray,array("DummyOne" => array("Before" => $ExistingValueStr,"After" => $this->dttDummyOne)));
+                    //$ChangedArray = array_merge($ChangedArray,array("DummyOne" => "From: ".$ExistingValueStr." to: ".$this->dttDummyOne));
                 }
-                if ($ExistingObj->DummyFour) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFour -> '.$ExistingObj->DummyFour.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFour -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->DummyTwo)) {
+                    $ExistingValueStr = $ExistingObj->DummyTwo;
                 }
-                if ($ExistingObj->DummyFive) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFive -> '.$ExistingObj->DummyFive.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFive -> NULL<br>';
+                if ($ExistingObj->DummyTwo != $this->strDummyTwo) {
+                    $ChangedArray = array_merge($ChangedArray,array("DummyTwo" => array("Before" => $ExistingValueStr,"After" => $this->strDummyTwo)));
+                    //$ChangedArray = array_merge($ChangedArray,array("DummyTwo" => "From: ".$ExistingValueStr." to: ".$this->strDummyTwo));
                 }
-                if ($ExistingObj->DummySix) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummySix -> '.$ExistingObj->DummySix.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'DummySix -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->DummyThree)) {
+                    $ExistingValueStr = $ExistingObj->DummyThree;
                 }
-                if ($ExistingObj->Account) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> '.$ExistingObj->Account.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> NULL<br>';
+                if ($ExistingObj->DummyThree != $this->intDummyThree) {
+                    $ChangedArray = array_merge($ChangedArray,array("DummyThree" => array("Before" => $ExistingValueStr,"After" => $this->intDummyThree)));
+                    //$ChangedArray = array_merge($ChangedArray,array("DummyThree" => "From: ".$ExistingValueStr." to: ".$this->intDummyThree));
                 }
-                if ($ExistingObj->SearchMetaInfo) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$ExistingObj->SearchMetaInfo.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->DummyFour)) {
+                    $ExistingValueStr = $ExistingObj->DummyFour;
                 }
-                if ($ExistingObj->UserRole) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$ExistingObj->UserRole.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> NULL<br>';
+                if ($ExistingObj->DummyFour != $this->intDummyFour) {
+                    $ChangedArray = array_merge($ChangedArray,array("DummyFour" => array("Before" => $ExistingValueStr,"After" => $this->intDummyFour)));
+                    //$ChangedArray = array_merge($ChangedArray,array("DummyFour" => "From: ".$ExistingValueStr." to: ".$this->intDummyFour));
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyOne -> '.$this->dttDummyOne.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyTwo -> '.$this->strDummyTwo.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyThree -> '.$this->intDummyThree.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFour -> '.$this->intDummyFour.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFive -> '.$this->dttDummyFive.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'DummySix -> '.$this->strDummySix.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> '.$this->intAccount.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->intUserRole.'<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->DummyFive)) {
+                    $ExistingValueStr = $ExistingObj->DummyFive;
+                }
+                if ($ExistingObj->DummyFive != $this->dttDummyFive) {
+                    $ChangedArray = array_merge($ChangedArray,array("DummyFive" => array("Before" => $ExistingValueStr,"After" => $this->dttDummyFive)));
+                    //$ChangedArray = array_merge($ChangedArray,array("DummyFive" => "From: ".$ExistingValueStr." to: ".$this->dttDummyFive));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->DummySix)) {
+                    $ExistingValueStr = $ExistingObj->DummySix;
+                }
+                if ($ExistingObj->DummySix != $this->strDummySix) {
+                    $ChangedArray = array_merge($ChangedArray,array("DummySix" => array("Before" => $ExistingValueStr,"After" => $this->strDummySix)));
+                    //$ChangedArray = array_merge($ChangedArray,array("DummySix" => "From: ".$ExistingValueStr." to: ".$this->strDummySix));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Account)) {
+                    $ExistingValueStr = $ExistingObj->Account;
+                }
+                if ($ExistingObj->Account != $this->intAccount) {
+                    $ChangedArray = array_merge($ChangedArray,array("Account" => array("Before" => $ExistingValueStr,"After" => $this->intAccount)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Account" => "From: ".$ExistingValueStr." to: ".$this->intAccount));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->SearchMetaInfo)) {
+                    $ExistingValueStr = $ExistingObj->SearchMetaInfo;
+                }
+                if ($ExistingObj->SearchMetaInfo != $this->strSearchMetaInfo) {
+                    $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
+                    //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->UserRole)) {
+                    $ExistingValueStr = $ExistingObj->UserRole;
+                }
+                if ($ExistingObj->UserRole != $this->intUserRole) {
+                    $ChangedArray = array_merge($ChangedArray,array("UserRole" => array("Before" => $ExistingValueStr,"After" => $this->intUserRole)));
+                    //$ChangedArray = array_merge($ChangedArray,array("UserRole" => "From: ".$ExistingValueStr." to: ".$this->intUserRole));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving PlaceHolder. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `PlaceHolder` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `PlaceHolder` (
 							`DummyOne`,
 							`DummyTwo`,
 							`DummyThree`,
@@ -1025,20 +1061,27 @@
 							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
 							' . $objDatabase->SqlVariable($this->intUserRole) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('PlaceHolder', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('PlaceHolder', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+								
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `PlaceHolder` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`PlaceHolder`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('PlaceHolder');
+                }
+				
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `PlaceHolder` SET
 							`DummyOne` = ' . $objDatabase->SqlVariable($this->dttDummyOne) . ',
 							`DummyTwo` = ' . $objDatabase->SqlVariable($this->strDummyTwo) . ',
 							`DummyThree` = ' . $objDatabase->SqlVariable($this->intDummyThree) . ',
@@ -1048,31 +1091,36 @@
 							`Account` = ' . $objDatabase->SqlVariable($this->intAccount) . ',
 							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
 							`UserRole` = ' . $objDatabase->SqlVariable($this->intUserRole) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving PlaceHolder. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving PlaceHolder. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+								            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `PlaceHolder` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+				
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this PlaceHolder
@@ -1085,26 +1133,28 @@
 			// Get the Database Object for this Class
 			$objDatabase = PlaceHolder::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'PlaceHolder';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'DummyOne -> '.$this->dttDummyOne.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'DummyTwo -> '.$this->strDummyTwo.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'DummyThree -> '.$this->intDummyThree.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFour -> '.$this->intDummyFour.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'DummyFive -> '.$this->dttDummyFive.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'DummySix -> '.$this->strDummySix.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> '.$this->intAccount.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->intUserRole.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("DummyOne" => $this->dttDummyOne));
+            $ChangedArray = array_merge($ChangedArray,array("DummyTwo" => $this->strDummyTwo));
+            $ChangedArray = array_merge($ChangedArray,array("DummyThree" => $this->intDummyThree));
+            $ChangedArray = array_merge($ChangedArray,array("DummyFour" => $this->intDummyFour));
+            $ChangedArray = array_merge($ChangedArray,array("DummyFive" => $this->dttDummyFive));
+            $ChangedArray = array_merge($ChangedArray,array("DummySix" => $this->strDummySix));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $ChangedArray = array_merge($ChangedArray,array("Account" => $this->intAccount));
+            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+            $ChangedArray = array_merge($ChangedArray,array("UserRole" => $this->intUserRole));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting PlaceHolder. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting PlaceHolder. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -1184,6 +1234,7 @@
 			$this->intDummyFour = $objReloaded->intDummyFour;
 			$this->dttDummyFive = $objReloaded->dttDummyFive;
 			$this->strDummySix = $objReloaded->strDummySix;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 			$this->Account = $objReloaded->Account;
 			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 			$this->UserRole = $objReloaded->UserRole;
@@ -1255,6 +1306,13 @@
 					 * @return string
 					 */
 					return $this->strDummySix;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 				case 'Account':
 					/**
@@ -1603,6 +1661,7 @@
 			$strToReturn .= '<element name="DummyFour" type="xsd:int"/>';
 			$strToReturn .= '<element name="DummyFive" type="xsd:dateTime"/>';
 			$strToReturn .= '<element name="DummySix" type="xsd:string"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="AccountObject" type="xsd1:Account"/>';
 			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="UserRoleObject" type="xsd1:UserRole"/>';
@@ -1644,6 +1703,8 @@
 				$objToReturn->dttDummyFive = new QDateTime($objSoapObject->DummyFive);
 			if (property_exists($objSoapObject, 'DummySix'))
 				$objToReturn->strDummySix = $objSoapObject->DummySix;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if ((property_exists($objSoapObject, 'AccountObject')) &&
 				($objSoapObject->AccountObject))
 				$objToReturn->AccountObject = Account::GetObjectFromSoapObject($objSoapObject->AccountObject);
@@ -1703,6 +1764,7 @@
 			$iArray['DummyFour'] = $this->intDummyFour;
 			$iArray['DummyFive'] = $this->dttDummyFive;
 			$iArray['DummySix'] = $this->strDummySix;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			$iArray['Account'] = $this->intAccount;
 			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			$iArray['UserRole'] = $this->intUserRole;
@@ -1750,6 +1812,7 @@
      * @property-read QQNode $DummyFour
      * @property-read QQNode $DummyFive
      * @property-read QQNode $DummySix
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $Account
      * @property-read QQNodeAccount $AccountObject
      * @property-read QQNode $SearchMetaInfo
@@ -1780,6 +1843,8 @@
 					return new QQNode('DummyFive', 'DummyFive', 'DateTime', $this);
 				case 'DummySix':
 					return new QQNode('DummySix', 'DummySix', 'VarChar', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'Account':
 					return new QQNode('Account', 'Account', 'Integer', $this);
 				case 'AccountObject':
@@ -1812,6 +1877,7 @@
      * @property-read QQNode $DummyFour
      * @property-read QQNode $DummyFive
      * @property-read QQNode $DummySix
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $Account
      * @property-read QQNodeAccount $AccountObject
      * @property-read QQNode $SearchMetaInfo
@@ -1842,6 +1908,8 @@
 					return new QQNode('DummyFive', 'DummyFive', 'QDateTime', $this);
 				case 'DummySix':
 					return new QQNode('DummySix', 'DummySix', 'string', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'Account':
 					return new QQNode('Account', 'Account', 'integer', $this);
 				case 'AccountObject':

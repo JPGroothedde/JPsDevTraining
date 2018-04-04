@@ -20,9 +20,9 @@ following minimum parameters:</p >
 <h2>Implementation</h2>
 <h3>Object Definition (PlaceHolder)</h3>
 <h5>Object Attributes</h5>
-["DummyOne","DummyTwo","DummyThree","DummyFour","DummyFive","DummySix"]
+[""]
 <h5>Object Relationships (Id for each associated object)</h5>
-["Account_Id","UserRole_Id"]  
+[]  
 <hr>
 <h2>Available Operations (CRUD)</h2>
 <p>The following base operations are available: (Additional Operations are defined at the bottom of this page)</p>
@@ -52,13 +52,13 @@ following minimum parameters:</p >
 <hr>
 <h4>UPDATE</h4>
 <h5>Input Data (POST FIELDS):</h5>
-{"APIKEY":"The Provided Api Key","OPERATION":"UPDATE","PlaceHolderId":"[The Id To Update]","DummyOne":"[new value]","DummyTwo":"[new value]","DummyThree":"[new value]","DummyFour":"[new value]","DummyFive":"[new value]","DummySix":"[new value]","Account_Id":"[Id of Account Object to associate]","UserRole_Id":"[Id of UserRole Object to associate]"}
+{"APIKEY":"The Provided Api Key","OPERATION":"UPDATE","PlaceHolderId":"[The Id To Update]","":"[new value]",}
 <h5>Expected Result:</h5>
 {"Result":"Success","Message":"Object Modified"}
 <hr>
 <h4>CREATE</h4>
 <h5>Input Data (POST FIELDS):</h5>
-{"APIKEY":"The Provided Api Key","OPERATION":"CREATE","DummyOne":"[new value]","DummyTwo":"[new value]","DummyThree":"[new value]","DummyFour":"[new value]","DummyFive":"[new value]","DummySix":"[new value]","Account_Id":"[Id of Account Object to associate]","UserRole_Id":"[Id of UserRole Object to associate]"}
+{"APIKEY":"The Provided Api Key","OPERATION":"CREATE","":"[new value]",}
 <h5 > Expected Result:</h5>
 {"Result":"Success","ObjId":"[Id of newly created object]"}
 <hr>

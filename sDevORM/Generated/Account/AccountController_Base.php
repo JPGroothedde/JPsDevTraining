@@ -90,29 +90,29 @@ class AccountController_Base {
             $this->refreshAll();
             return;
         }
-        if ($Object->FullName) {
+        if (!is_null($Object->FullName)) {
             $this->txtFullName->Text = $Object->FullName;
         }
-        if ($Object->FirstName) {
+        if (!is_null($Object->FirstName)) {
             $this->txtFirstName->Text = $Object->FirstName;
         }
-        if ($Object->LastName) {
+        if (!is_null($Object->LastName)) {
             $this->txtLastName->Text = $Object->LastName;
         }
-        if ($Object->EmailAddress) {
+        if (!is_null($Object->EmailAddress)) {
             $this->txtEmailAddress->Text = $Object->EmailAddress;
         }
-        if ($Object->Username) {
+        if (!is_null($Object->Username)) {
             $this->txtUsername->Text = $Object->Username;
         }
-        if ($Object->Password) {
+        if (!is_null($Object->Password)) {
             $this->txtPassword->Text = $Object->Password;
         }
-        if ($Object->ChangedBy) {
+        if (!is_null($Object->ChangedBy)) {
             $this->txtChangedBy->Text = $Object->ChangedBy;
         }
         
-        if ($Object->UserRoleObject) {
+        if (!is_null($Object->UserRoleObject)) {
             $this->lstUserRole->SelectedValue = $Object->UserRoleObject->Id;
         }
 
@@ -545,7 +545,7 @@ class AccountController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev
