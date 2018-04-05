@@ -92,16 +92,20 @@ class IndexForm extends QForm {
         $Date->AddMonths(-12);
         $CourseArray = Course::QueryArray(QQ::All());
         foreach ($CourseArray AS $Course) {
-            $SubscriptionArray = Subscription::QueryArray(
-                QQ::AndCondition(
-                    QQ::Equal(QQN::Subscription()->CourseObject->Id, $Course->Id),
-                    QQ::Equal(QQN::Subscription()->AccountObject->Id,1),
-                    QQ::OrCondition(
-                        QQ::GreaterThan(QQN::Subscription()->EndDate,$Date),
-                        QQ::GreaterThan(QQN::Subscription()->StartDate,$Date)
+            try {
+                $SubscriptionArray = Subscription::QueryArray(
+                    QQ::AndCondition(
+                        QQ::Equal(QQN::Subscription()->CourseObject->Id, $Course->Id),
+                        QQ::Equal(QQN::Subscription()->AccountObject->Id, 17),//1,3,5,17
+                        QQ::OrCondition(
+                            QQ::GreaterThan(QQN::Subscription()->EndDate, $Date),
+                            QQ::GreaterThan(QQN::Subscription()->StartDate, $Date)
+                        )
                     )
-                )
-            );
+                );
+            } catch (QCallerException $e) {
+
+            }
             foreach ($SubscriptionArray AS $Subscription) {
                 AppSpecificFunctions::AddCustomLog($Subscription->getJson());
             }
