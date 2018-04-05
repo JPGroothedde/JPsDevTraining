@@ -4,17 +4,21 @@ class DataModel extends DataModel_Base {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // define all the objects for your app here
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    var $ProjectObjects                = array("PlaceHolder");
+    var $ProjectObjects                = array("Course","Assignment","Subscription");
     var $ProjectObjectAttributes = array (																										// The attributes for each of the defined objects
-        "PlaceHolder"                   => array("DummyOne","DummyTwo","DummyThree","DummyFour","DummyFive","DummySix"),
+        "Course"        => array("Name","Price"),
+        "Assignment"    => array("Name","Status","FinalMark"),
+        "Subscription"  => array("StartDate","EndDate"),
     );
 
     var $ProjectObjectAttributeTypes = array (																									// The attribute type for each of the defined object attributes (Defines how it is stored in the db)
-        "PlaceHolder"                   => array("DATE","VARCHAR(20)","INT","INT","DATETIME","DOUBLE"),
+        "Course"        => array("VARCHAR(20)","INT(11)"),
+        "Assignment"    => array("VARCHAR(20)","VARCHAR(20)","INT(11)"),
+        "Subscription"  => array("DATE","DATE"),
     );
 
-    var $ProjectObjectSingleRelations = array (																									 // The list of objects that each object is related to once
-        "PlaceHolder"                   => array("Account","UserRole"),
+    var $ProjectObjectSingleRelations = array (
+        "Subscription"              => array("Account","Course","Assignment"),
     );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Special Renders

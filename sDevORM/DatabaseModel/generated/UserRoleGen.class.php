@@ -17,10 +17,9 @@
 	 * @subpackage GeneratedDataObjects
 	 * @property-read integer $Id the value for intId (Read-Only PK)
 	 * @property string $Role the value for strRole (Unique)
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property-read Account $_Account the value for the private _objAccount (Read-Only) if set due to an expansion on the Account.UserRole reverse relationship
 	 * @property-read Account[] $_AccountArray the value for the private _objAccountArray (Read-Only) if set due to an ExpandAsArray on the Account.UserRole reverse relationship
-	 * @property-read PlaceHolder $_PlaceHolder the value for the private _objPlaceHolder (Read-Only) if set due to an expansion on the PlaceHolder.UserRole reverse relationship
-	 * @property-read PlaceHolder[] $_PlaceHolderArray the value for the private _objPlaceHolderArray (Read-Only) if set due to an ExpandAsArray on the PlaceHolder.UserRole reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class UserRoleGen extends QBaseClass implements IteratorAggregate {
@@ -47,6 +46,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column UserRole.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
 		 * Private member variable that stores a reference to a single Account object
 		 * (of type Account), if this UserRole object was restored with
 		 * an expansion on the Account association table.
@@ -61,22 +68,6 @@
 		 * @var Account[] _objAccountArray;
 		 */
 		private $_objAccountArray = null;
-
-		/**
-		 * Private member variable that stores a reference to a single PlaceHolder object
-		 * (of type PlaceHolder), if this UserRole object was restored with
-		 * an expansion on the PlaceHolder association table.
-		 * @var PlaceHolder _objPlaceHolder;
-		 */
-		private $_objPlaceHolder;
-
-		/**
-		 * Private member variable that stores a reference to an array of PlaceHolder objects
-		 * (of type PlaceHolder[]), if this UserRole object was restored with
-		 * an ExpandAsArray on the PlaceHolder association table.
-		 * @var PlaceHolder[] _objPlaceHolderArray;
-		 */
-		private $_objPlaceHolderArray = null;
 
 		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
@@ -109,6 +100,7 @@
 		{
 			$this->intId = UserRole::IdDefault;
 			$this->strRole = UserRole::RoleDefault;
+			$this->strLastUpdated = UserRole::LastUpdatedDefault;
 		}
 
 
@@ -452,6 +444,7 @@
             } else {
 			    $objBuilder->AddSelectItem($strTableName, 'Id', $strAliasPrefix . 'Id');
 			    $objBuilder->AddSelectItem($strTableName, 'Role', $strAliasPrefix . 'Role');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
             }
 		}
 
@@ -583,6 +576,9 @@
 			$strAlias = $strAliasPrefix . 'Role';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strRole = $objDbRow->GetColumn($strAliasName, 'VarChar');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -628,21 +624,6 @@
 					$objToReturn->_objAccountArray[] = Account::InstantiateDbRow($objDbRow, $strAliasPrefix . 'account__', $objExpansionNode, null, $strColumnAliasArray);
 				} elseif (is_null($objToReturn->_objAccount)) {
 					$objToReturn->_objAccount = Account::InstantiateDbRow($objDbRow, $strAliasPrefix . 'account__', $objExpansionNode, null, $strColumnAliasArray);
-				}
-			}
-
-			// Check for PlaceHolder Virtual Binding
-			$strAlias = $strAliasPrefix . 'placeholder__Id';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objExpansionNode = (empty($objExpansionAliasArray['placeholder']) ? null : $objExpansionAliasArray['placeholder']);
-			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
-			if ($blnExpanded && null === $objToReturn->_objPlaceHolderArray)
-				$objToReturn->_objPlaceHolderArray = array();
-			if (!is_null($objDbRow->GetColumn($strAliasName))) {
-				if ($blnExpanded) {
-					$objToReturn->_objPlaceHolderArray[] = PlaceHolder::InstantiateDbRow($objDbRow, $strAliasPrefix . 'placeholder__', $objExpansionNode, null, $strColumnAliasArray);
-				} elseif (is_null($objToReturn->_objPlaceHolder)) {
-					$objToReturn->_objPlaceHolder = PlaceHolder::InstantiateDbRow($objDbRow, $strAliasPrefix . 'placeholder__', $objExpansionNode, null, $strColumnAliasArray);
 				}
 			}
 
@@ -770,99 +751,117 @@
 		//////////////////////////
 
 		/**
-		 * Save this UserRole
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this UserRole
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = UserRole::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = UserRole::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = UserRole::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'UserRole';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Role -> '.$this->strRole.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("Role" => $this->strRole));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->Role) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Role -> '.$ExistingObj->Role.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Role -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Role -> '.$this->strRole.'<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Role)) {
+                    $ExistingValueStr = $ExistingObj->Role;
+                }
+                if ($ExistingObj->Role != $this->strRole) {
+                    $ChangedArray = array_merge($ChangedArray,array("Role" => array("Before" => $ExistingValueStr,"After" => $this->strRole)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Role" => "From: ".$ExistingValueStr." to: ".$this->strRole));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving UserRole. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `UserRole` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `UserRole` (
 							`Role`
 						) VALUES (
 							' . $objDatabase->SqlVariable($this->strRole) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('UserRole', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('UserRole', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+			
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `UserRole` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`UserRole`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('UserRole');
+                }
+	
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `UserRole` SET
 							`Role` = ' . $objDatabase->SqlVariable($this->strRole) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+	            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving UserRole. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving UserRole. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+			            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `UserRole` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+	
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this UserRole
@@ -875,18 +874,20 @@
 			// Get the Database Object for this Class
 			$objDatabase = UserRole::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'UserRole';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Role -> '.$this->strRole.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("Role" => $this->strRole));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting UserRole. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting UserRole. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -961,6 +962,7 @@
 
 			// Update $this's local variables to match
 			$this->strRole = $objReloaded->strRole;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 		}
 
 
@@ -995,6 +997,13 @@
 					 */
 					return $this->strRole;
 
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
+
 
 				///////////////////
 				// Member Objects
@@ -1020,22 +1029,6 @@
 					 * @return Account[]
 					 */
 					return $this->_objAccountArray;
-
-				case '_PlaceHolder':
-					/**
-					 * Gets the value for the private _objPlaceHolder (Read-Only)
-					 * if set due to an expansion on the PlaceHolder.UserRole reverse relationship
-					 * @return PlaceHolder
-					 */
-					return $this->_objPlaceHolder;
-
-				case '_PlaceHolderArray':
-					/**
-					 * Gets the value for the private _objPlaceHolderArray (Read-Only)
-					 * if set due to an ExpandAsArray on the PlaceHolder.UserRole reverse relationship
-					 * @return PlaceHolder[]
-					 */
-					return $this->_objPlaceHolderArray;
 
 
 				case '__Restored':
@@ -1259,155 +1252,6 @@
 		}
 
 
-		// Related Objects' Methods for PlaceHolder
-		//-------------------------------------------------------------------
-
-		/**
-		 * Gets all associated PlaceHolders as an array of PlaceHolder objects
-		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
-		 * @return PlaceHolder[]
-		*/
-		public function GetPlaceHolderArray($objOptionalClauses = null) {
-			if ((is_null($this->intId)))
-				return array();
-
-			try {
-				return PlaceHolder::LoadArrayByUserRole($this->intId, $objOptionalClauses);
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-		}
-
-		/**
-		 * Counts all associated PlaceHolders
-		 * @return int
-		*/
-		public function CountPlaceHolders() {
-			if ((is_null($this->intId)))
-				return 0;
-
-			return PlaceHolder::CountByUserRole($this->intId);
-		}
-
-		/**
-		 * Associates a PlaceHolder
-		 * @param PlaceHolder $objPlaceHolder
-		 * @return void
-		*/
-		public function AssociatePlaceHolder(PlaceHolder $objPlaceHolder) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePlaceHolder on this unsaved UserRole.');
-			if ((is_null($objPlaceHolder->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePlaceHolder on this UserRole with an unsaved PlaceHolder.');
-
-			// Get the Database Object for this Class
-			$objDatabase = UserRole::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`PlaceHolder`
-				SET
-					`UserRole` = ' . $objDatabase->SqlVariable($this->intId) . '
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objPlaceHolder->Id) . '
-			');
-		}
-
-		/**
-		 * Unassociates a PlaceHolder
-		 * @param PlaceHolder $objPlaceHolder
-		 * @return void
-		*/
-		public function UnassociatePlaceHolder(PlaceHolder $objPlaceHolder) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved UserRole.');
-			if ((is_null($objPlaceHolder->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this UserRole with an unsaved PlaceHolder.');
-
-			// Get the Database Object for this Class
-			$objDatabase = UserRole::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`PlaceHolder`
-				SET
-					`UserRole` = null
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objPlaceHolder->Id) . ' AND
-					`UserRole` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Unassociates all PlaceHolders
-		 * @return void
-		*/
-		public function UnassociateAllPlaceHolders() {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved UserRole.');
-
-			// Get the Database Object for this Class
-			$objDatabase = UserRole::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`PlaceHolder`
-				SET
-					`UserRole` = null
-				WHERE
-					`UserRole` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Deletes an associated PlaceHolder
-		 * @param PlaceHolder $objPlaceHolder
-		 * @return void
-		*/
-		public function DeleteAssociatedPlaceHolder(PlaceHolder $objPlaceHolder) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved UserRole.');
-			if ((is_null($objPlaceHolder->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this UserRole with an unsaved PlaceHolder.');
-
-			// Get the Database Object for this Class
-			$objDatabase = UserRole::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				DELETE FROM
-					`PlaceHolder`
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objPlaceHolder->Id) . ' AND
-					`UserRole` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Deletes all associated PlaceHolders
-		 * @return void
-		*/
-		public function DeleteAllPlaceHolders() {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved UserRole.');
-
-			// Get the Database Object for this Class
-			$objDatabase = UserRole::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				DELETE FROM
-					`PlaceHolder`
-				WHERE
-					`UserRole` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-
 		
 		///////////////////////////////
 		// METHODS TO EXTRACT INFO ABOUT THE CLASS
@@ -1448,6 +1292,7 @@
 			$strToReturn = '<complexType name="UserRole"><sequence>';
 			$strToReturn .= '<element name="Id" type="xsd:int"/>';
 			$strToReturn .= '<element name="Role" type="xsd:string"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1474,6 +1319,8 @@
 				$objToReturn->intId = $objSoapObject->Id;
 			if (property_exists($objSoapObject, 'Role'))
 				$objToReturn->strRole = $objSoapObject->Role;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1508,6 +1355,7 @@
 			///////////////////
 			$iArray['Id'] = $this->intId;
 			$iArray['Role'] = $this->strRole;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1547,10 +1395,10 @@
      *
      * @property-read QQNode $Id
      * @property-read QQNode $Role
+     * @property-read QQNode $LastUpdated
      *
      *
      * @property-read QQReverseReferenceNodeAccount $Account
-     * @property-read QQReverseReferenceNodePlaceHolder $PlaceHolder
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -1564,10 +1412,10 @@
 					return new QQNode('Id', 'Id', 'Integer', $this);
 				case 'Role':
 					return new QQNode('Role', 'Role', 'VarChar', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'Account':
 					return new QQReverseReferenceNodeAccount($this, 'account', 'reverse_reference', 'UserRole', 'Account');
-				case 'PlaceHolder':
-					return new QQReverseReferenceNodePlaceHolder($this, 'placeholder', 'reverse_reference', 'UserRole', 'PlaceHolder');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1585,10 +1433,10 @@
     /**
      * @property-read QQNode $Id
      * @property-read QQNode $Role
+     * @property-read QQNode $LastUpdated
      *
      *
      * @property-read QQReverseReferenceNodeAccount $Account
-     * @property-read QQReverseReferenceNodePlaceHolder $PlaceHolder
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -1602,10 +1450,10 @@
 					return new QQNode('Id', 'Id', 'integer', $this);
 				case 'Role':
 					return new QQNode('Role', 'Role', 'string', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'Account':
 					return new QQReverseReferenceNodeAccount($this, 'account', 'reverse_reference', 'UserRole', 'Account');
-				case 'PlaceHolder':
-					return new QQReverseReferenceNodePlaceHolder($this, 'placeholder', 'reverse_reference', 'UserRole', 'PlaceHolder');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

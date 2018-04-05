@@ -80,7 +80,8 @@ class AuditLogEntryController_Base {
     }
 
     public function setValues($Object) {
-        $this->txtEntryTimeStamp->Text = '';$this->setEntryTimeStampTime();
+        $this->txtEntryTimeStamp->Text = '';
+        $this->setEntryTimeStampTime();
         $this->txtObjectName->Text = '';
         $this->txtModificationType->Text = '';
         $this->txtUserEmail->Text = '';
@@ -91,23 +92,23 @@ class AuditLogEntryController_Base {
             $this->refreshAll();
             return;
         }
-        if ($Object->EntryTimeStamp) {
+        if (!is_null($Object->EntryTimeStamp)) {
             $this->txtEntryTimeStamp->Text = $Object->EntryTimeStamp->format(DATE_TIME_FORMAT_HTML);
             $this->setEntryTimeStampTime($Object->EntryTimeStamp);
         }
-        if ($Object->ObjectName) {
+        if (!is_null($Object->ObjectName)) {
             $this->txtObjectName->Text = $Object->ObjectName;
         }
-        if ($Object->ModificationType) {
+        if (!is_null($Object->ModificationType)) {
             $this->txtModificationType->Text = $Object->ModificationType;
         }
-        if ($Object->UserEmail) {
+        if (!is_null($Object->UserEmail)) {
             $this->txtUserEmail->Text = $Object->UserEmail;
         }
-        if ($Object->ObjectId) {
+        if (!is_null($Object->ObjectId)) {
             $this->txtObjectId->Text = $Object->ObjectId;
         }
-        if ($Object->AuditLogEntryDetail) {
+        if (!is_null($Object->AuditLogEntryDetail)) {
             $this->txtAuditLogEntryDetail->Text = $Object->AuditLogEntryDetail;
         }
         
@@ -528,7 +529,7 @@ class AuditLogEntryController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev

@@ -110,7 +110,8 @@ class BackgroundProcessController_Base {
     public function setValues($Object) {
         $this->txtPId->Text = '';
         $this->txtUserId->Text = '';
-        $this->txtUpdateDateTime->Text = '';$this->setUpdateDateTimeTime();
+        $this->txtUpdateDateTime->Text = '';
+        $this->setUpdateDateTimeTime();
         $this->lstStatus->RemoveAllItems();
         $this->lstStatus->AddItem(new QListItem('Pending','Pending'));
         $this->lstStatus->AddItem(new QListItem('Running','Running'));
@@ -119,29 +120,30 @@ class BackgroundProcessController_Base {
         $this->lstStatus->AddItem(new QListItem('Completed Interrupted','Completed Interrupted'));
         
         $this->txtSummary->Text = '';
-        $this->txtStartDateTime->Text = '';$this->setStartDateTimeTime();
+        $this->txtStartDateTime->Text = '';
+        $this->setStartDateTimeTime();
 
         if (!$Object) {
             $this->refreshAll();
             return;
         }
-        if ($Object->PId) {
+        if (!is_null($Object->PId)) {
             $this->txtPId->Text = $Object->PId;
         }
-        if ($Object->UserId) {
+        if (!is_null($Object->UserId)) {
             $this->txtUserId->Text = $Object->UserId;
         }
-        if ($Object->UpdateDateTime) {
+        if (!is_null($Object->UpdateDateTime)) {
             $this->txtUpdateDateTime->Text = $Object->UpdateDateTime->format(DATE_TIME_FORMAT_HTML);
             $this->setUpdateDateTimeTime($Object->UpdateDateTime);
         }
         if ($Object->Status) {
             $this->lstStatus->SelectedValue = $Object->Status;
         }
-        if ($Object->Summary) {
+        if (!is_null($Object->Summary)) {
             $this->txtSummary->Text = $Object->Summary;
         }
-        if ($Object->StartDateTime) {
+        if (!is_null($Object->StartDateTime)) {
             $this->txtStartDateTime->Text = $Object->StartDateTime->format(DATE_TIME_FORMAT_HTML);
             $this->setStartDateTimeTime($Object->StartDateTime);
         }
@@ -624,7 +626,7 @@ class BackgroundProcessController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev

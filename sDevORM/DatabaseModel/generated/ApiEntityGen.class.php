@@ -17,6 +17,7 @@
 	 * @subpackage GeneratedDataObjects
 	 * @property-read integer $Id the value for intId (Read-Only PK)
 	 * @property string $EntityName the value for strEntityName 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property integer $ApiKey the value for intApiKey 
 	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
 	 * @property ApiKey $ApiKeyObject the value for the ApiKey object referenced by intApiKey 
@@ -43,6 +44,14 @@
 		protected $strEntityName;
 		const EntityNameMaxLength = 50;
 		const EntityNameDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column ApiEntity.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
 
 
 		/**
@@ -102,6 +111,7 @@
 		{
 			$this->intId = ApiEntity::IdDefault;
 			$this->strEntityName = ApiEntity::EntityNameDefault;
+			$this->strLastUpdated = ApiEntity::LastUpdatedDefault;
 			$this->intApiKey = ApiEntity::ApiKeyDefault;
 			$this->strSearchMetaInfo = ApiEntity::SearchMetaInfoDefault;
 		}
@@ -447,6 +457,7 @@
             } else {
 			    $objBuilder->AddSelectItem($strTableName, 'Id', $strAliasPrefix . 'Id');
 			    $objBuilder->AddSelectItem($strTableName, 'EntityName', $strAliasPrefix . 'EntityName');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
 			    $objBuilder->AddSelectItem($strTableName, 'ApiKey', $strAliasPrefix . 'ApiKey');
 			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
             }
@@ -580,6 +591,9 @@
 			$strAlias = $strAliasPrefix . 'EntityName';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strEntityName = $objDbRow->GetColumn($strAliasName, 'VarChar');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAlias = $strAliasPrefix . 'ApiKey';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intApiKey = $objDbRow->GetColumn($strAliasName, 'Integer');
@@ -766,69 +780,79 @@
 		//////////////////////////
 
 		/**
-		 * Save this ApiEntity
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this ApiEntity
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = ApiEntity::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = ApiEntity::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = ApiEntity::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'ApiEntity';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EntityName -> '.$this->strEntityName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ApiKey -> '.$this->intApiKey.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("EntityName" => $this->strEntityName));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $ChangedArray = array_merge($ChangedArray,array("ApiKey" => $this->intApiKey));
+                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->EntityName) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EntityName -> '.$ExistingObj->EntityName.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EntityName -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->ApiKey) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ApiKey -> '.$ExistingObj->ApiKey.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ApiKey -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->EntityName)) {
+                    $ExistingValueStr = $ExistingObj->EntityName;
                 }
-                if ($ExistingObj->SearchMetaInfo) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$ExistingObj->SearchMetaInfo.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> NULL<br>';
+                if ($ExistingObj->EntityName != $this->strEntityName) {
+                    $ChangedArray = array_merge($ChangedArray,array("EntityName" => array("Before" => $ExistingValueStr,"After" => $this->strEntityName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("EntityName" => "From: ".$ExistingValueStr." to: ".$this->strEntityName));
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EntityName -> '.$this->strEntityName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ApiKey -> '.$this->intApiKey.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->ApiKey)) {
+                    $ExistingValueStr = $ExistingObj->ApiKey;
+                }
+                if ($ExistingObj->ApiKey != $this->intApiKey) {
+                    $ChangedArray = array_merge($ChangedArray,array("ApiKey" => array("Before" => $ExistingValueStr,"After" => $this->intApiKey)));
+                    //$ChangedArray = array_merge($ChangedArray,array("ApiKey" => "From: ".$ExistingValueStr." to: ".$this->intApiKey));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->SearchMetaInfo)) {
+                    $ExistingValueStr = $ExistingObj->SearchMetaInfo;
+                }
+                if ($ExistingObj->SearchMetaInfo != $this->strSearchMetaInfo) {
+                    $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
+                    //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving ApiEntity. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `ApiEntity` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `ApiEntity` (
 							`EntityName`,
 							`ApiKey`,
 							`SearchMetaInfo`
@@ -837,48 +861,60 @@
 							' . $objDatabase->SqlVariable($this->intApiKey) . ',
 							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('ApiEntity', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('ApiEntity', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+			
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `ApiEntity` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`ApiEntity`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('ApiEntity');
+                }
+			
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `ApiEntity` SET
 							`EntityName` = ' . $objDatabase->SqlVariable($this->strEntityName) . ',
 							`ApiKey` = ' . $objDatabase->SqlVariable($this->intApiKey) . ',
 							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving ApiEntity. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving ApiEntity. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+			            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `ApiEntity` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+			
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this ApiEntity
@@ -891,20 +927,22 @@
 			// Get the Database Object for this Class
 			$objDatabase = ApiEntity::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'ApiEntity';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'EntityName -> '.$this->strEntityName.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'ApiKey -> '.$this->intApiKey.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("EntityName" => $this->strEntityName));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $ChangedArray = array_merge($ChangedArray,array("ApiKey" => $this->intApiKey));
+            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting ApiEntity. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting ApiEntity. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -979,6 +1017,7 @@
 
 			// Update $this's local variables to match
 			$this->strEntityName = $objReloaded->strEntityName;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 			$this->ApiKey = $objReloaded->ApiKey;
 			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 		}
@@ -1014,6 +1053,13 @@
 					 * @return string
 					 */
 					return $this->strEntityName;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 				case 'ApiKey':
 					/**
@@ -1225,6 +1271,7 @@
 			$strToReturn = '<complexType name="ApiEntity"><sequence>';
 			$strToReturn .= '<element name="Id" type="xsd:int"/>';
 			$strToReturn .= '<element name="EntityName" type="xsd:string"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="ApiKeyObject" type="xsd1:ApiKey"/>';
 			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
@@ -1254,6 +1301,8 @@
 				$objToReturn->intId = $objSoapObject->Id;
 			if (property_exists($objSoapObject, 'EntityName'))
 				$objToReturn->strEntityName = $objSoapObject->EntityName;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if ((property_exists($objSoapObject, 'ApiKeyObject')) &&
 				($objSoapObject->ApiKeyObject))
 				$objToReturn->ApiKeyObject = ApiKey::GetObjectFromSoapObject($objSoapObject->ApiKeyObject);
@@ -1297,6 +1346,7 @@
 			///////////////////
 			$iArray['Id'] = $this->intId;
 			$iArray['EntityName'] = $this->strEntityName;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			$iArray['ApiKey'] = $this->intApiKey;
 			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			return new ArrayIterator($iArray);
@@ -1338,6 +1388,7 @@
      *
      * @property-read QQNode $Id
      * @property-read QQNode $EntityName
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $ApiKey
      * @property-read QQNodeApiKey $ApiKeyObject
      * @property-read QQNode $SearchMetaInfo
@@ -1356,6 +1407,8 @@
 					return new QQNode('Id', 'Id', 'Integer', $this);
 				case 'EntityName':
 					return new QQNode('EntityName', 'EntityName', 'VarChar', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'ApiKey':
 					return new QQNode('ApiKey', 'ApiKey', 'Integer', $this);
 				case 'ApiKeyObject':
@@ -1379,6 +1432,7 @@
     /**
      * @property-read QQNode $Id
      * @property-read QQNode $EntityName
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $ApiKey
      * @property-read QQNodeApiKey $ApiKeyObject
      * @property-read QQNode $SearchMetaInfo
@@ -1397,6 +1451,8 @@
 					return new QQNode('Id', 'Id', 'integer', $this);
 				case 'EntityName':
 					return new QQNode('EntityName', 'EntityName', 'string', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'ApiKey':
 					return new QQNode('ApiKey', 'ApiKey', 'integer', $this);
 				case 'ApiKeyObject':

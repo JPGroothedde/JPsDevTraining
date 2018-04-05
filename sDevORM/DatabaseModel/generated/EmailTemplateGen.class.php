@@ -20,6 +20,7 @@
 	 * @property string $CcAddresses the value for strCcAddresses 
 	 * @property string $BccAddresses the value for strBccAddresses 
 	 * @property integer $Published the value for intPublished 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property-read EmailTemplateContentRow $_EmailTemplateContentRow the value for the private _objEmailTemplateContentRow (Read-Only) if set due to an expansion on the EmailTemplateContentRow.EmailTemplate reverse relationship
 	 * @property-read EmailTemplateContentRow[] $_EmailTemplateContentRowArray the value for the private _objEmailTemplateContentRowArray (Read-Only) if set due to an ExpandAsArray on the EmailTemplateContentRow.EmailTemplate reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
@@ -72,6 +73,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column EmailTemplate.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
 		 * Private member variable that stores a reference to a single EmailTemplateContentRow object
 		 * (of type EmailTemplateContentRow), if this EmailTemplate object was restored with
 		 * an expansion on the EmailTemplateContentRow association table.
@@ -121,6 +130,7 @@
 			$this->strCcAddresses = EmailTemplate::CcAddressesDefault;
 			$this->strBccAddresses = EmailTemplate::BccAddressesDefault;
 			$this->intPublished = EmailTemplate::PublishedDefault;
+			$this->strLastUpdated = EmailTemplate::LastUpdatedDefault;
 		}
 
 
@@ -467,6 +477,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'CcAddresses', $strAliasPrefix . 'CcAddresses');
 			    $objBuilder->AddSelectItem($strTableName, 'BccAddresses', $strAliasPrefix . 'BccAddresses');
 			    $objBuilder->AddSelectItem($strTableName, 'Published', $strAliasPrefix . 'Published');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
             }
 		}
 
@@ -607,6 +618,9 @@
 			$strAlias = $strAliasPrefix . 'Published';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intPublished = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -763,76 +777,88 @@
 		//////////////////////////
 
 		/**
-		 * Save this EmailTemplate
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this EmailTemplate
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = EmailTemplate::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = EmailTemplate::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = EmailTemplate::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'EmailTemplate';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'TemplateName -> '.$this->strTemplateName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'CcAddresses -> '.$this->strCcAddresses.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'BccAddresses -> '.$this->strBccAddresses.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Published -> '.$this->intPublished.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("TemplateName" => $this->strTemplateName));
+                $ChangedArray = array_merge($ChangedArray,array("CcAddresses" => $this->strCcAddresses));
+                $ChangedArray = array_merge($ChangedArray,array("BccAddresses" => $this->strBccAddresses));
+                $ChangedArray = array_merge($ChangedArray,array("Published" => $this->intPublished));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->TemplateName) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'TemplateName -> '.$ExistingObj->TemplateName.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'TemplateName -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->CcAddresses) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'CcAddresses -> '.$ExistingObj->CcAddresses.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'CcAddresses -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->TemplateName)) {
+                    $ExistingValueStr = $ExistingObj->TemplateName;
                 }
-                if ($ExistingObj->BccAddresses) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'BccAddresses -> '.$ExistingObj->BccAddresses.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'BccAddresses -> NULL<br>';
+                if ($ExistingObj->TemplateName != $this->strTemplateName) {
+                    $ChangedArray = array_merge($ChangedArray,array("TemplateName" => array("Before" => $ExistingValueStr,"After" => $this->strTemplateName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("TemplateName" => "From: ".$ExistingValueStr." to: ".$this->strTemplateName));
                 }
-                if ($ExistingObj->Published) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Published -> '.$ExistingObj->Published.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Published -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->CcAddresses)) {
+                    $ExistingValueStr = $ExistingObj->CcAddresses;
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'TemplateName -> '.$this->strTemplateName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'CcAddresses -> '.$this->strCcAddresses.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'BccAddresses -> '.$this->strBccAddresses.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Published -> '.$this->intPublished.'<br>';
+                if ($ExistingObj->CcAddresses != $this->strCcAddresses) {
+                    $ChangedArray = array_merge($ChangedArray,array("CcAddresses" => array("Before" => $ExistingValueStr,"After" => $this->strCcAddresses)));
+                    //$ChangedArray = array_merge($ChangedArray,array("CcAddresses" => "From: ".$ExistingValueStr." to: ".$this->strCcAddresses));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->BccAddresses)) {
+                    $ExistingValueStr = $ExistingObj->BccAddresses;
+                }
+                if ($ExistingObj->BccAddresses != $this->strBccAddresses) {
+                    $ChangedArray = array_merge($ChangedArray,array("BccAddresses" => array("Before" => $ExistingValueStr,"After" => $this->strBccAddresses)));
+                    //$ChangedArray = array_merge($ChangedArray,array("BccAddresses" => "From: ".$ExistingValueStr." to: ".$this->strBccAddresses));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Published)) {
+                    $ExistingValueStr = $ExistingObj->Published;
+                }
+                if ($ExistingObj->Published != $this->intPublished) {
+                    $ChangedArray = array_merge($ChangedArray,array("Published" => array("Before" => $ExistingValueStr,"After" => $this->intPublished)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Published" => "From: ".$ExistingValueStr." to: ".$this->intPublished));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving EmailTemplate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `EmailTemplate` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `EmailTemplate` (
 							`TemplateName`,
 							`CcAddresses`,
 							`BccAddresses`,
@@ -843,49 +869,61 @@
 							' . $objDatabase->SqlVariable($this->strBccAddresses) . ',
 							' . $objDatabase->SqlVariable($this->intPublished) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('EmailTemplate', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('EmailTemplate', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+						
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `EmailTemplate` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`EmailTemplate`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('EmailTemplate');
+                }
+	
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `EmailTemplate` SET
 							`TemplateName` = ' . $objDatabase->SqlVariable($this->strTemplateName) . ',
 							`CcAddresses` = ' . $objDatabase->SqlVariable($this->strCcAddresses) . ',
 							`BccAddresses` = ' . $objDatabase->SqlVariable($this->strBccAddresses) . ',
 							`Published` = ' . $objDatabase->SqlVariable($this->intPublished) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+	            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving EmailTemplate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving EmailTemplate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+						            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `EmailTemplate` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+	
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this EmailTemplate
@@ -898,21 +936,23 @@
 			// Get the Database Object for this Class
 			$objDatabase = EmailTemplate::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'EmailTemplate';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'TemplateName -> '.$this->strTemplateName.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'CcAddresses -> '.$this->strCcAddresses.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'BccAddresses -> '.$this->strBccAddresses.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Published -> '.$this->intPublished.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("TemplateName" => $this->strTemplateName));
+            $ChangedArray = array_merge($ChangedArray,array("CcAddresses" => $this->strCcAddresses));
+            $ChangedArray = array_merge($ChangedArray,array("BccAddresses" => $this->strBccAddresses));
+            $ChangedArray = array_merge($ChangedArray,array("Published" => $this->intPublished));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting EmailTemplate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting EmailTemplate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -990,6 +1030,7 @@
 			$this->strCcAddresses = $objReloaded->strCcAddresses;
 			$this->strBccAddresses = $objReloaded->strBccAddresses;
 			$this->intPublished = $objReloaded->intPublished;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 		}
 
 
@@ -1044,6 +1085,13 @@
 					 * @return integer
 					 */
 					return $this->intPublished;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 
 				///////////////////
@@ -1375,6 +1423,7 @@
 			$strToReturn .= '<element name="CcAddresses" type="xsd:string"/>';
 			$strToReturn .= '<element name="BccAddresses" type="xsd:string"/>';
 			$strToReturn .= '<element name="Published" type="xsd:int"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1407,6 +1456,8 @@
 				$objToReturn->strBccAddresses = $objSoapObject->BccAddresses;
 			if (property_exists($objSoapObject, 'Published'))
 				$objToReturn->intPublished = $objSoapObject->Published;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1444,6 +1495,7 @@
 			$iArray['CcAddresses'] = $this->strCcAddresses;
 			$iArray['BccAddresses'] = $this->strBccAddresses;
 			$iArray['Published'] = $this->intPublished;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1486,6 +1538,7 @@
      * @property-read QQNode $CcAddresses
      * @property-read QQNode $BccAddresses
      * @property-read QQNode $Published
+     * @property-read QQNode $LastUpdated
      *
      *
      * @property-read QQReverseReferenceNodeEmailTemplateContentRow $EmailTemplateContentRow
@@ -1508,6 +1561,8 @@
 					return new QQNode('BccAddresses', 'BccAddresses', 'Blob', $this);
 				case 'Published':
 					return new QQNode('Published', 'Published', 'Integer', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'EmailTemplateContentRow':
 					return new QQReverseReferenceNodeEmailTemplateContentRow($this, 'emailtemplatecontentrow', 'reverse_reference', 'EmailTemplate', 'EmailTemplateContentRow');
 
@@ -1530,6 +1585,7 @@
      * @property-read QQNode $CcAddresses
      * @property-read QQNode $BccAddresses
      * @property-read QQNode $Published
+     * @property-read QQNode $LastUpdated
      *
      *
      * @property-read QQReverseReferenceNodeEmailTemplateContentRow $EmailTemplateContentRow
@@ -1552,6 +1608,8 @@
 					return new QQNode('BccAddresses', 'BccAddresses', 'string', $this);
 				case 'Published':
 					return new QQNode('Published', 'Published', 'integer', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'EmailTemplateContentRow':
 					return new QQReverseReferenceNodeEmailTemplateContentRow($this, 'emailtemplatecontentrow', 'reverse_reference', 'EmailTemplate', 'EmailTemplateContentRow');
 

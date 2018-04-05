@@ -19,6 +19,12 @@
 			return new QQNodeApiKey('ApiKey', null, null);
 		}
 		/**
+		 * @return QQNodeAssignment
+		 */
+		static public function Assignment() {
+			return new QQNodeAssignment('Assignment', null, null);
+		}
+		/**
 		 * @return QQNodeAuditLogEntry
 		 */
 		static public function AuditLogEntry() {
@@ -35,6 +41,12 @@
 		 */
 		static public function BackgroundProcessUpdate() {
 			return new QQNodeBackgroundProcessUpdate('BackgroundProcessUpdate', null, null);
+		}
+		/**
+		 * @return QQNodeCourse
+		 */
+		static public function Course() {
+			return new QQNodeCourse('Course', null, null);
 		}
 		/**
 		 * @return QQNodeEmailMessage
@@ -85,16 +97,16 @@
 			return new QQNodePasswordReset('PasswordReset', null, null);
 		}
 		/**
-		 * @return QQNodePlaceHolder
-		 */
-		static public function PlaceHolder() {
-			return new QQNodePlaceHolder('PlaceHolder', null, null);
-		}
-		/**
 		 * @return QQNodeRemoteAccess
 		 */
 		static public function RemoteAccess() {
 			return new QQNodeRemoteAccess('RemoteAccess', null, null);
+		}
+		/**
+		 * @return QQNodeSubscription
+		 */
+		static public function Subscription() {
+			return new QQNodeSubscription('Subscription', null, null);
 		}
 		/**
 		 * @return QQNodeSummernoteEntry

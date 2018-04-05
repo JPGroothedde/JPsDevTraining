@@ -22,6 +22,7 @@
 	 * @property string $UserEmail the value for strUserEmail 
 	 * @property string $ObjectId the value for strObjectId 
 	 * @property string $AuditLogEntryDetail the value for strAuditLogEntryDetail 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class AuditLogEntryGen extends QBaseClass implements IteratorAggregate {
@@ -90,6 +91,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column AuditLogEntry.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
 		 * columns from the run-time database query result for this object).  Used by InstantiateDbRow and
 		 * GetVirtualAttribute.
@@ -125,6 +134,7 @@
 			$this->strUserEmail = AuditLogEntry::UserEmailDefault;
 			$this->strObjectId = AuditLogEntry::ObjectIdDefault;
 			$this->strAuditLogEntryDetail = AuditLogEntry::AuditLogEntryDetailDefault;
+			$this->strLastUpdated = AuditLogEntry::LastUpdatedDefault;
 		}
 
 
@@ -473,6 +483,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'UserEmail', $strAliasPrefix . 'UserEmail');
 			    $objBuilder->AddSelectItem($strTableName, 'ObjectId', $strAliasPrefix . 'ObjectId');
 			    $objBuilder->AddSelectItem($strTableName, 'AuditLogEntryDetail', $strAliasPrefix . 'AuditLogEntryDetail');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
             }
 		}
 
@@ -610,6 +621,9 @@
 			$strAlias = $strAliasPrefix . 'AuditLogEntryDetail';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strAuditLogEntryDetail = $objDbRow->GetColumn($strAliasName, 'Blob');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -751,21 +765,20 @@
 		//////////////////////////
 
 		/**
-		 * Save this AuditLogEntry
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this AuditLogEntry
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = AuditLogEntry::GetDatabase();
-
-			$mixToReturn = null;
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `AuditLogEntry` (
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = AuditLogEntry::GetDatabase();
+            $mixToReturn = null;
+            try {
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `AuditLogEntry` (
 							`EntryTimeStamp`,
 							`ObjectName`,
 							`ModificationType`,
@@ -780,51 +793,57 @@
 							' . $objDatabase->SqlVariable($this->strObjectId) . ',
 							' . $objDatabase->SqlVariable($this->strAuditLogEntryDetail) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('AuditLogEntry', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('AuditLogEntry', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+								
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `AuditLogEntry` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`AuditLogEntry`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('AuditLogEntry');
+                }
+	
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `AuditLogEntry` SET
 							`EntryTimeStamp` = ' . $objDatabase->SqlVariable($this->dttEntryTimeStamp) . ',
 							`ObjectName` = ' . $objDatabase->SqlVariable($this->strObjectName) . ',
 							`ModificationType` = ' . $objDatabase->SqlVariable($this->strModificationType) . ',
 							`UserEmail` = ' . $objDatabase->SqlVariable($this->strUserEmail) . ',
 							`ObjectId` = ' . $objDatabase->SqlVariable($this->strObjectId) . ',
 							`AuditLogEntryDetail` = ' . $objDatabase->SqlVariable($this->strAuditLogEntryDetail) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
+            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+								            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `AuditLogEntry` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
-            try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving AuditLogEntry. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
-
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+	
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this AuditLogEntry
@@ -914,6 +933,7 @@
 			$this->strUserEmail = $objReloaded->strUserEmail;
 			$this->strObjectId = $objReloaded->strObjectId;
 			$this->strAuditLogEntryDetail = $objReloaded->strAuditLogEntryDetail;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 		}
 
 
@@ -982,6 +1002,13 @@
 					 * @return string
 					 */
 					return $this->strAuditLogEntryDetail;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 
 				///////////////////
@@ -1176,6 +1203,7 @@
 			$strToReturn .= '<element name="UserEmail" type="xsd:string"/>';
 			$strToReturn .= '<element name="ObjectId" type="xsd:string"/>';
 			$strToReturn .= '<element name="AuditLogEntryDetail" type="xsd:string"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1212,6 +1240,8 @@
 				$objToReturn->strObjectId = $objSoapObject->ObjectId;
 			if (property_exists($objSoapObject, 'AuditLogEntryDetail'))
 				$objToReturn->strAuditLogEntryDetail = $objSoapObject->AuditLogEntryDetail;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1253,6 +1283,7 @@
 			$iArray['UserEmail'] = $this->strUserEmail;
 			$iArray['ObjectId'] = $this->strObjectId;
 			$iArray['AuditLogEntryDetail'] = $this->strAuditLogEntryDetail;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1297,6 +1328,7 @@
      * @property-read QQNode $UserEmail
      * @property-read QQNode $ObjectId
      * @property-read QQNode $AuditLogEntryDetail
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1322,6 +1354,8 @@
 					return new QQNode('ObjectId', 'ObjectId', 'Blob', $this);
 				case 'AuditLogEntryDetail':
 					return new QQNode('AuditLogEntryDetail', 'AuditLogEntryDetail', 'Blob', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1344,6 +1378,7 @@
      * @property-read QQNode $UserEmail
      * @property-read QQNode $ObjectId
      * @property-read QQNode $AuditLogEntryDetail
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1369,6 +1404,8 @@
 					return new QQNode('ObjectId', 'ObjectId', 'string', $this);
 				case 'AuditLogEntryDetail':
 					return new QQNode('AuditLogEntryDetail', 'AuditLogEntryDetail', 'string', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

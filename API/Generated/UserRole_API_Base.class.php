@@ -25,7 +25,7 @@ class UserRole_API_Base {
             $result = array("Result" => "Success","ObjId" => $newUserRoleObj->Id);
             return $result;
         } catch (QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not create UserRole object via API: '.$e->getMessage());
+            error_log('Could not create UserRole object via API: '.$e->getMessage());
             $result = array("Result" => "Failed","Message" => $e->getMessage());
             return $result;
         }
@@ -48,7 +48,7 @@ class UserRole_API_Base {
             $result = array("Result" => "Success","Message" => "Object Modified");
             return $result;
         } catch (QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not update UserRole object via API: '.$e->getMessage());
+            error_log('Could not update UserRole object via API: '.$e->getMessage());
             $result = array("Result" => "Failed","Message" => $e->getMessage());
             return $result;
         }

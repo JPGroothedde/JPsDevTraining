@@ -14,6 +14,11 @@
 		QApplicationBase::$ClassFile['qqnodeapikey'] = __MODEL__ . '/ApiKey.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodeapikey'] = __MODEL__ . '/ApiKey.class.php';
 
+	// ClassPaths for the Assignment class
+		QApplicationBase::$ClassFile['assignment'] = __MODEL__ . '/Assignment.class.php';
+		QApplicationBase::$ClassFile['qqnodeassignment'] = __MODEL__ . '/Assignment.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodeassignment'] = __MODEL__ . '/Assignment.class.php';
+
 	// ClassPaths for the AuditLogEntry class
 		QApplicationBase::$ClassFile['auditlogentry'] = __MODEL__ . '/AuditLogEntry.class.php';
 		QApplicationBase::$ClassFile['qqnodeauditlogentry'] = __MODEL__ . '/AuditLogEntry.class.php';
@@ -28,6 +33,11 @@
 		QApplicationBase::$ClassFile['backgroundprocessupdate'] = __MODEL__ . '/BackgroundProcessUpdate.class.php';
 		QApplicationBase::$ClassFile['qqnodebackgroundprocessupdate'] = __MODEL__ . '/BackgroundProcessUpdate.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodebackgroundprocessupdate'] = __MODEL__ . '/BackgroundProcessUpdate.class.php';
+
+	// ClassPaths for the Course class
+		QApplicationBase::$ClassFile['course'] = __MODEL__ . '/Course.class.php';
+		QApplicationBase::$ClassFile['qqnodecourse'] = __MODEL__ . '/Course.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodecourse'] = __MODEL__ . '/Course.class.php';
 
 	// ClassPaths for the EmailMessage class
 		QApplicationBase::$ClassFile['emailmessage'] = __MODEL__ . '/EmailMessage.class.php';
@@ -69,15 +79,15 @@
 		QApplicationBase::$ClassFile['qqnodepasswordreset'] = __MODEL__ . '/PasswordReset.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodepasswordreset'] = __MODEL__ . '/PasswordReset.class.php';
 
-	// ClassPaths for the PlaceHolder class
-		QApplicationBase::$ClassFile['placeholder'] = __MODEL__ . '/PlaceHolder.class.php';
-		QApplicationBase::$ClassFile['qqnodeplaceholder'] = __MODEL__ . '/PlaceHolder.class.php';
-		QApplicationBase::$ClassFile['qqreversereferencenodeplaceholder'] = __MODEL__ . '/PlaceHolder.class.php';
-
 	// ClassPaths for the RemoteAccess class
 		QApplicationBase::$ClassFile['remoteaccess'] = __MODEL__ . '/RemoteAccess.class.php';
 		QApplicationBase::$ClassFile['qqnoderemoteaccess'] = __MODEL__ . '/RemoteAccess.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenoderemoteaccess'] = __MODEL__ . '/RemoteAccess.class.php';
+
+	// ClassPaths for the Subscription class
+		QApplicationBase::$ClassFile['subscription'] = __MODEL__ . '/Subscription.class.php';
+		QApplicationBase::$ClassFile['qqnodesubscription'] = __MODEL__ . '/Subscription.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodesubscription'] = __MODEL__ . '/Subscription.class.php';
 
 	// ClassPaths for the SummernoteEntry class
 		QApplicationBase::$ClassFile['summernoteentry'] = __MODEL__ . '/SummernoteEntry.class.php';
