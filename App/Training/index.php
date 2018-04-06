@@ -11,6 +11,7 @@ class IndexForm extends QForm {
 		//Create input box
 		$this->txtInputBox = new QTextBox($this);
 		$this->txtInputBox->Name = "Course Name";
+		// This creates the output received from queryDataBase function to the screen
         $this->Result = new sUIElementsBase($this);
         //Create Button
         try {
