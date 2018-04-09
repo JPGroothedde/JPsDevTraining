@@ -3,7 +3,7 @@ require('../../../../sdev.inc.php');
 require(__SDEV_ORM__.'/Implementations/ApiEntity/ApiEntityController.php');
 
 // Define User roles that have access to this page here. If commented out, this page is accessible to anyone
-/*if (!checkRole(array('Administrator'))) {
+/*if (!AppSpecificFunctions::checkPageAccess(array('Administrator'))) {
         AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 }*/
 // Remove this line if the file needs to be accessible remotely(production)
@@ -47,18 +47,19 @@ class ApiEntity_DetailForm extends QForm {
         $this->ApiEntityInstance = new ApiEntityController($this);
 
         $this->btnSaveApiEntity = new QButton($this);
-        $this->btnSaveApiEntity->Text = 'Save ApiEntity';
+        $this->btnSaveApiEntity->Text = 'Save';
+        $this->btnSaveApiEntity->CssClass = 'btn btn-primary mrg-top10 rippleclick';
         $this->btnSaveApiEntity->AddAction(new QClickEvent(), new QAjaxAction('btnSaveApiEntity_Clicked'));
 
         $this->btnDeleteApiEntity = new QButton($this);
-        $this->btnDeleteApiEntity->Text = 'Delete ApiEntity';
-        $this->btnDeleteApiEntity->CssClass = 'btn btn-danger';
+        $this->btnDeleteApiEntity->Text = 'Delete';
+        $this->btnDeleteApiEntity->CssClass = 'btn btn-danger mrg-top10 rippleclick';
         $this->btnDeleteApiEntity->AddAction(new QClickEvent(), new QConfirmAction('Are you sure?'));
         $this->btnDeleteApiEntity->AddAction(new QClickEvent(), new QAjaxAction('btnDeleteApiEntity_Clicked'));
 
         $this->btnCancelApiEntity = new QButton($this);
         $this->btnCancelApiEntity->Text = 'Cancel';
-        $this->btnCancelApiEntity->CssClass = 'btn btn-default';
+        $this->btnCancelApiEntity->CssClass = 'btn btn-default mrg-top10 rippleclick';
         $this->btnCancelApiEntity->AddAction(new QClickEvent(), new QAjaxAction('btnCancelApiEntity_Clicked'));
     }
     protected function btnSaveApiEntity_Clicked($strFormId, $strControlId, $strParameter) {

@@ -8,4 +8,7 @@
     <div class="col-md-6">
         <?php $this->RemoteAccessInstance->renderControl('AccessDateTime');?>
     </div>
+    <div class="col-md-6">
+        <?php $this->RemoteAccessInstance->renderControl('AccessDateTimeTime',true,'Time');?>
+    </div>
 </div>

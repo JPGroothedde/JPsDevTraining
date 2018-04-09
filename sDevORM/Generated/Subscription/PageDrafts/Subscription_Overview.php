@@ -60,10 +60,10 @@ class Subscription_OverviewForm extends QForm {
         }
     }
     protected function InitSubscriptionDataGrid() {
-        $searchableAttributes = array(QQN::Subscription()->StartDate,QQN::Subscription()->EndDate,QQN::Subscription()->AccountObject->Id,QQN::Subscription()->CourseObject->Id,QQN::Subscription()->AssignmentObject->Id);
-        $headerItems = array('Start Date','End Date','Account Object','Course Object','Assignment Object');
-        $headerSortNodes = array(QQN::Subscription()->StartDate,QQN::Subscription()->EndDate,QQN::Subscription()->AccountObject->Id,QQN::Subscription()->CourseObject->Id,QQN::Subscription()->AssignmentObject->Id);
-        $columnItems = array('StartDate','EndDate','Account','Course','Assignment');
+        $searchableAttributes = array(QQN::Subscription()->StartDate,QQN::Subscription()->EndDate,QQN::Subscription()->AverageMark,QQN::Subscription()->StudentObject->Id,QQN::Subscription()->CourseObject->Id);
+        $headerItems = array('Start Date','End Date','Average Mark','Student Object','Course Object');
+        $headerSortNodes = array(QQN::Subscription()->StartDate,QQN::Subscription()->EndDate,QQN::Subscription()->AverageMark,QQN::Subscription()->StudentObject->Id,QQN::Subscription()->CourseObject->Id);
+        $columnItems = array('StartDate','EndDate','AverageMark','Student','Course');
         $this->SubscriptionWaitControlIcon = new QWaitIcon($this);
         $this->btnNewSubscription = new QButton($this);
         $this->btnNewSubscription->Text = 'Add Subscription';

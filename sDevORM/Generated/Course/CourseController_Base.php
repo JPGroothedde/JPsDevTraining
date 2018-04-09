@@ -1,15 +1,15 @@
 <?php
 class CourseController_Base {
     protected $Object;
-    public $txtName;
-    public $txtPrice;
+    public $txtCourseName;
+    public $txtCoursePrice;
     
     public function __construct($objParentObject,$InitObject = null) {
-        $this->txtName = new QTextBox($objParentObject);
-        $this->txtName->Name = 'Name';
+        $this->txtCourseName = new QTextBox($objParentObject);
+        $this->txtCourseName->Name = 'Course Name';
 
-        $this->txtPrice = new QTextBox($objParentObject);
-        $this->txtPrice->Name = 'Price';
+        $this->txtCoursePrice = new QTextBox($objParentObject);
+        $this->txtCoursePrice->Name = 'Course Price';
 
         if ($InitObject)
             $this->Object = $InitObject;
@@ -38,18 +38,18 @@ class CourseController_Base {
     }
 
     public function setValues($Object) {
-        $this->txtName->Text = '';
-        $this->txtPrice->Text = '';
+        $this->txtCourseName->Text = '';
+        $this->txtCoursePrice->Text = '';
 
         if (!$Object) {
             $this->refreshAll();
             return;
         }
-        if (!is_null($Object->Name)) {
-            $this->txtName->Text = $Object->Name;
+        if (!is_null($Object->CourseName)) {
+            $this->txtCourseName->Text = $Object->CourseName;
         }
-        if (!is_null($Object->Price)) {
-            $this->txtPrice->Text = $Object->Price;
+        if (!is_null($Object->CoursePrice)) {
+            $this->txtCoursePrice->Text = $Object->CoursePrice;
         }
         
 
@@ -61,61 +61,61 @@ class CourseController_Base {
 
     public function renderControl($strControl = '',$withName = true,$nameValue = '',$blnPrintOutput = true) {
         $output = '';
-        if (strtoupper($strControl) == 'NAME') {
+        if (strtoupper($strControl) == 'COURSENAME') {
             if (strlen($nameValue) > 0)
-                $this->txtName->Name = $nameValue;
-            $output = $withName ? $this->txtName->RenderWithName($blnPrintOutput):$this->txtName->Render($blnPrintOutput);
+                $this->txtCourseName->Name = $nameValue;
+            $output = $withName ? $this->txtCourseName->RenderWithName($blnPrintOutput):$this->txtCourseName->Render($blnPrintOutput);
         }
-        if (strtoupper($strControl) == 'PRICE') {
+        if (strtoupper($strControl) == 'COURSEPRICE') {
             if (strlen($nameValue) > 0)
-                $this->txtPrice->Name = $nameValue;
-            $output = $withName ? $this->txtPrice->RenderWithName($blnPrintOutput):$this->txtPrice->Render($blnPrintOutput);
+                $this->txtCoursePrice->Name = $nameValue;
+            $output = $withName ? $this->txtCoursePrice->RenderWithName($blnPrintOutput):$this->txtCoursePrice->Render($blnPrintOutput);
         }
         
         return $output;
     }
 
     public function renderAll($withName = true)  {
-        $this->renderControl('NAME',$withName);
-        $this->renderControl('PRICE',$withName);
+        $this->renderControl('COURSENAME',$withName);
+        $this->renderControl('COURSEPRICE',$withName);
     }
 
     public function getRenderedFrontEnd($withName = true)  {
         $html = '<div class="row">
                 <div class="col-md-6">
-                   '.$this->renderControl('Name',$withName, null, false).'
+                   '.$this->renderControl('CourseName',$withName, null, false).'
                 </div>
                 <div class="col-md-6">
-                   '.$this->renderControl('Price',$withName, null, false).'
+                   '.$this->renderControl('CoursePrice',$withName, null, false).'
                 </div>
             </div>';
         return $html;
     }
 
     public function hideAll() {
-        $this->txtName->Visible = false;
-        $this->txtPrice->Visible = false;
+        $this->txtCourseName->Visible = false;
+        $this->txtCoursePrice->Visible = false;
     }
 
     public function showAll() {
-        $this->txtName->Visible = true;
-        $this->txtPrice->Visible = true;
+        $this->txtCourseName->Visible = true;
+        $this->txtCoursePrice->Visible = true;
     }
 
     public function refreshAll() {
-        $this->txtName->Refresh();
-        $this->txtPrice->Refresh();
+        $this->txtCourseName->Refresh();
+        $this->txtCoursePrice->Refresh();
     }
 
     public function setValue($strAttr = '',$value = null) {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                $this->txtName->Text = $value;
+            case 'COURSENAME':
+                $this->txtCourseName->Text = $value;
                 break;
-            case 'PRICE':
-                $this->txtPrice->Text = $value;
+            case 'COURSEPRICE':
+                $this->txtCoursePrice->Text = $value;
                 break;
             default:
                 break;
@@ -128,13 +128,13 @@ class CourseController_Base {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                if ($this->txtName->Text)
-                    return $this->txtName->Text;
+            case 'COURSENAME':
+                if ($this->txtCourseName->Text)
+                    return $this->txtCourseName->Text;
                 break;
-            case 'PRICE':
-                if ($this->txtPrice->Text)
-                    return $this->txtPrice->Text;
+            case 'COURSEPRICE':
+                if ($this->txtCoursePrice->Text)
+                    return $this->txtCoursePrice->Text;
                 break;
             default:
                 break;
@@ -147,13 +147,13 @@ class CourseController_Base {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                if ($this->txtName)
-                    return $this->txtName->ControlId;
+            case 'COURSENAME':
+                if ($this->txtCourseName)
+                    return $this->txtCourseName->ControlId;
                 break;
-            case 'PRICE':
-                if ($this->txtPrice)
-                    return $this->txtPrice->ControlId;
+            case 'COURSEPRICE':
+                if ($this->txtCoursePrice)
+                    return $this->txtCoursePrice->ControlId;
                 break;
             default:
                 break;
@@ -166,13 +166,13 @@ class CourseController_Base {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                $this->txtName->Visible = false;
-                $this->txtName->Refresh();
+            case 'COURSENAME':
+                $this->txtCourseName->Visible = false;
+                $this->txtCourseName->Refresh();
                 break;
-            case 'PRICE':
-                $this->txtPrice->Visible = false;
-                $this->txtPrice->Refresh();
+            case 'COURSEPRICE':
+                $this->txtCoursePrice->Visible = false;
+                $this->txtCoursePrice->Refresh();
                 break;
             default:
                 break;
@@ -185,13 +185,13 @@ class CourseController_Base {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                $this->txtName->Visible = true;
-                $this->txtName->Refresh();
+            case 'COURSENAME':
+                $this->txtCourseName->Visible = true;
+                $this->txtCourseName->Refresh();
                 break;
-            case 'PRICE':
-                $this->txtPrice->Visible = true;
-                $this->txtPrice->Refresh();
+            case 'COURSEPRICE':
+                $this->txtCoursePrice->Visible = true;
+                $this->txtCoursePrice->Refresh();
                 break;
             default:
                 break;
@@ -201,7 +201,7 @@ class CourseController_Base {
 
 
     public function getFocusControlId() {
-        return $this->txtName->getJqControlId();
+        return $this->txtCourseName->getJqControlId();
     }
 
     public function getObject () {
@@ -219,8 +219,8 @@ class CourseController_Base {
         if (!$this->Object)
             $this->Object = new Course();
         
-        $this->Object->Name = $this->txtName->Text;
-        $this->Object->Price = $this->txtPrice->Text;
+        $this->Object->CourseName = $this->txtCourseName->Text;
+        $this->Object->CoursePrice = $this->txtCoursePrice->Text;
     }
 
     public function saveObject($validate = true)  {
@@ -245,19 +245,19 @@ class CourseController_Base {
         $hasNoErrors = true;
         //$this->resetValidation();
         // Example of validating a field as required
-        //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtName);
+        //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtCourseName);
         // Example of validating a field as required
-        //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtPrice);
+        //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtCoursePrice);
         // Example of validating an email address
         //$hasNoErrors &= AppSpecificFunctions::validateFieldAsEmailAddress($this->[FieldName]);';
         return $hasNoErrors;
     }
 
     public function resetValidation()  {
-            $this->txtName->WrapperCssClass = 'form-group';
-            $this->txtName->Placeholder = '';
-            $this->txtPrice->WrapperCssClass = 'form-group';
-            $this->txtPrice->Placeholder = '';
+            $this->txtCourseName->WrapperCssClass = 'form-group';
+            $this->txtCourseName->Placeholder = '';
+            $this->txtCoursePrice->WrapperCssClass = 'form-group';
+            $this->txtCoursePrice->Placeholder = '';
         $js = AppSpecificFunctions::GetDatePickerInitJs();
         AppSpecificFunctions::ExecuteJavaScript($js);
     }
@@ -277,12 +277,12 @@ class CourseController_Base {
             $previousValues = Course::Load($this->Object->Id);
         $changeText = '';
         if ($previousValues) {
-        $changeText = 'Name-> Value before: '.$previousValues->Name.', Value after: '.$this->Object->Name.'<br>
-        Price-> Value before: '.$previousValues->Price.', Value after: '.$this->Object->Price.'<br>
+        $changeText = 'CourseName-> Value before: '.$previousValues->CourseName.', Value after: '.$this->Object->CourseName.'<br>
+        CoursePrice-> Value before: '.$previousValues->CoursePrice.', Value after: '.$this->Object->CoursePrice.'<br>
         ';
         } else {
-        $changeText = 'Name-> Value: '.$this->Object->Name.'<br>
-        Price-> Value: '.$this->Object->Price.'<br>
+        $changeText = 'CourseName-> Value: '.$this->Object->CourseName.'<br>
+        CoursePrice-> Value: '.$this->Object->CoursePrice.'<br>
         ';
         }
         try {

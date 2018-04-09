@@ -4,21 +4,24 @@ class DataModel extends DataModel_Base {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // define all the objects for your app here
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    var $ProjectObjects                = array("Course","Assignment","Subscription");
+    var $ProjectObjects          = array("Student","Course","Assignment","Subscription");
     var $ProjectObjectAttributes = array (																										// The attributes for each of the defined objects
-        "Course"        => array("Name","Price"),
-        "Assignment"    => array("Name","Status","FinalMark"),
-        "Subscription"  => array("StartDate","EndDate"),
+	    "Student"       => array("FirstName","LastName","EmailAddress"),
+	    "Course"        => array("CourseName","CoursePrice"),
+        "Assignment"    => array("AssignmentName","Status","FinalMark"),
+        "Subscription"  => array("StartDate","EndDate","AverageMark"),
     );
 
-    var $ProjectObjectAttributeTypes = array (																									// The attribute type for each of the defined object attributes (Defines how it is stored in the db)
+    var $ProjectObjectAttributeTypes = array (
+	    "Student"       => array("VARCHAR(20)","VARCHAR(20)","VARCHAR(50)"),// The attribute type for each of the defined object attributes (Defines how it is stored in the db)
         "Course"        => array("VARCHAR(20)","INT(11)"),
         "Assignment"    => array("VARCHAR(20)","VARCHAR(20)","INT(11)"),
-        "Subscription"  => array("DATE","DATE"),
+        "Subscription"  => array("DATE","DATE","FLOAT(11)"),
     );
 
     var $ProjectObjectSingleRelations = array (
-        "Subscription"              => array("Account","Course","Assignment"),
+        "Subscription"  => array("Student","Course"),
+	    "Assignment"    => array("Subscription"),
     );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Special Renders

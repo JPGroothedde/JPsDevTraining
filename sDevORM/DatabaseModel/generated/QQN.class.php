@@ -103,6 +103,12 @@
 			return new QQNodeRemoteAccess('RemoteAccess', null, null);
 		}
 		/**
+		 * @return QQNodeStudent
+		 */
+		static public function Student() {
+			return new QQNodeStudent('Student', null, null);
+		}
+		/**
 		 * @return QQNodeSubscription
 		 */
 		static public function Subscription() {

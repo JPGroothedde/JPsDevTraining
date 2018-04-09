@@ -58,10 +58,10 @@ class Subscription_ListForm extends QForm {
         }
     }
     protected function InitSubscriptionDataList() {
-        $searchableAttributes = array(QQN::Subscription()->StartDate,QQN::Subscription()->EndDate,QQN::Subscription()->AccountObject->Id,QQN::Subscription()->CourseObject->Id,QQN::Subscription()->AssignmentObject->Id);
-        $SortAttributesShown = array('Start Date','End Date','Account Object','Course Object','Assignment Object');
-        $SortAttributes = array(QQN::Subscription()->StartDate,QQN::Subscription()->EndDate,QQN::Subscription()->AccountObject->Id,QQN::Subscription()->CourseObject->Id,QQN::Subscription()->AssignmentObject->Id);
-        $columnItems = array('StartDate','EndDate','Account','Course','Assignment');
+        $searchableAttributes = array(QQN::Subscription()->StartDate,QQN::Subscription()->EndDate,QQN::Subscription()->AverageMark,QQN::Subscription()->StudentObject->Id,QQN::Subscription()->CourseObject->Id);
+        $SortAttributesShown = array('Start Date','End Date','Average Mark','Student Object','Course Object');
+        $SortAttributes = array(QQN::Subscription()->StartDate,QQN::Subscription()->EndDate,QQN::Subscription()->AverageMark,QQN::Subscription()->StudentObject->Id,QQN::Subscription()->CourseObject->Id);
+        $columnItems = array('StartDate','EndDate','AverageMark','Student','Course');
         $this->btnNewSubscription = AppSpecificFunctions::getNewActionButton($this,'Add Subscription','btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss,'btnNewSubscription_Clicked');
         $this->SubscriptionList = new SubscriptionDataList($this, QQN::Subscription(),$searchableAttributes, null, $columnItems, $SortAttributes,$SortAttributesShown);
     }

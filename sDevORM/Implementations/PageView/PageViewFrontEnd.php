@@ -6,6 +6,9 @@
         <?php $this->PageViewInstance->renderControl('TimeStamped');?>
     </div>
     <div class="col-md-6">
+        <?php $this->PageViewInstance->renderControl('TimeStampedTime',true,'Time');?>
+    </div>
+    <div class="col-md-6">
         <?php $this->PageViewInstance->renderControl('IPAddress');?>
     </div>
     <div class="col-md-6">

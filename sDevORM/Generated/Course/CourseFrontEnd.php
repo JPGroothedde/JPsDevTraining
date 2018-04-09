@@ -3,9 +3,9 @@
 
 <div class="row">
     <div class="col-md-6">
-        <?php $this->CourseInstance->renderControl('Name');?>
+        <?php $this->CourseInstance->renderControl('CourseName');?>
     </div>
     <div class="col-md-6">
-        <?php $this->CourseInstance->renderControl('Price');?>
+        <?php $this->CourseInstance->renderControl('CoursePrice');?>
     </div>
 </div>

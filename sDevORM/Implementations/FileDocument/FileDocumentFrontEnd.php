@@ -11,4 +11,7 @@
     <div class="col-md-6">
         <?php $this->FileDocumentInstance->renderControl('CreatedDate');?>
     </div>
+    <div class="col-md-6">
+        <?php $this->FileDocumentInstance->renderControl('CreatedDateTime',true,'Time');?>
+    </div>
 </div>

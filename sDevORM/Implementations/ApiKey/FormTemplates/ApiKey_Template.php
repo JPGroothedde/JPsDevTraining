@@ -3,7 +3,7 @@ require('../../../../sdev.inc.php');
 require(__SDEV_ORM__.'/Implementations/ApiKey/ApiKeyController.php');
 
 // Define User roles that have access to this page here. If commented out, this page is accessible to anyone
-/*if (!checkRole(array('Administrator'))) {
+/*if (!AppSpecificFunctions::checkPageAccess(array('Administrator'))) {
         AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 }*/
 // Remove this line if the file needs to be accessible remotely(production)
@@ -47,18 +47,19 @@ class ApiKey_DetailForm extends QForm {
         $this->ApiKeyInstance = new ApiKeyController($this);
 
         $this->btnSaveApiKey = new QButton($this);
-        $this->btnSaveApiKey->Text = 'Save ApiKey';
+        $this->btnSaveApiKey->Text = 'Save';
+        $this->btnSaveApiKey->CssClass = 'btn btn-primary mrg-top10 rippleclick';
         $this->btnSaveApiKey->AddAction(new QClickEvent(), new QAjaxAction('btnSaveApiKey_Clicked'));
 
         $this->btnDeleteApiKey = new QButton($this);
-        $this->btnDeleteApiKey->Text = 'Delete ApiKey';
-        $this->btnDeleteApiKey->CssClass = 'btn btn-danger';
+        $this->btnDeleteApiKey->Text = 'Delete';
+        $this->btnDeleteApiKey->CssClass = 'btn btn-danger mrg-top10 rippleclick';
         $this->btnDeleteApiKey->AddAction(new QClickEvent(), new QConfirmAction('Are you sure?'));
         $this->btnDeleteApiKey->AddAction(new QClickEvent(), new QAjaxAction('btnDeleteApiKey_Clicked'));
 
         $this->btnCancelApiKey = new QButton($this);
         $this->btnCancelApiKey->Text = 'Cancel';
-        $this->btnCancelApiKey->CssClass = 'btn btn-default';
+        $this->btnCancelApiKey->CssClass = 'btn btn-default mrg-top10 rippleclick';
         $this->btnCancelApiKey->AddAction(new QClickEvent(), new QAjaxAction('btnCancelApiKey_Clicked'));
     }
     protected function btnSaveApiKey_Clicked($strFormId, $strControlId, $strParameter) {

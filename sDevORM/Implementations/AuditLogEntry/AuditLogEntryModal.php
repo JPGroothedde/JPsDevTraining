@@ -1,7 +1,7 @@
 <?php
 ?>
 <div id="AuditLogEntryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="AuditLogEntryModalLabel" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
@@ -11,7 +11,17 @@
                 <?php require(__SDEV_ORM__.'/Implementations/AuditLogEntry/AuditLogEntryFrontEnd.php');?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php $this->btnSaveAuditLogEntry->Render();?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $this->btnDeleteAuditLogEntry->Render();?>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-default rippleclick mrg-top10 fullWidth" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

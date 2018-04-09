@@ -3,7 +3,7 @@ require('../../../../sdev.inc.php');
 require(__SDEV_ORM__.'/Implementations/EmailTemplateContentBlock/EmailTemplateContentBlockController.php');
 
 // Define User roles that have access to this page here. If commented out, this page is accessible to anyone
-/*if (!checkRole(array('Administrator'))) {
+/*if (!AppSpecificFunctions::checkPageAccess(array('Administrator'))) {
         AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 }*/
 // Remove this line if the file needs to be accessible remotely(production)
@@ -47,18 +47,19 @@ class EmailTemplateContentBlock_DetailForm extends QForm {
         $this->EmailTemplateContentBlockInstance = new EmailTemplateContentBlockController($this);
 
         $this->btnSaveEmailTemplateContentBlock = new QButton($this);
-        $this->btnSaveEmailTemplateContentBlock->Text = 'Save EmailTemplateContentBlock';
+        $this->btnSaveEmailTemplateContentBlock->Text = 'Save';
+        $this->btnSaveEmailTemplateContentBlock->CssClass = 'btn btn-primary mrg-top10 rippleclick';
         $this->btnSaveEmailTemplateContentBlock->AddAction(new QClickEvent(), new QAjaxAction('btnSaveEmailTemplateContentBlock_Clicked'));
 
         $this->btnDeleteEmailTemplateContentBlock = new QButton($this);
-        $this->btnDeleteEmailTemplateContentBlock->Text = 'Delete EmailTemplateContentBlock';
-        $this->btnDeleteEmailTemplateContentBlock->CssClass = 'btn btn-danger';
+        $this->btnDeleteEmailTemplateContentBlock->Text = 'Delete';
+        $this->btnDeleteEmailTemplateContentBlock->CssClass = 'btn btn-danger mrg-top10 rippleclick';
         $this->btnDeleteEmailTemplateContentBlock->AddAction(new QClickEvent(), new QConfirmAction('Are you sure?'));
         $this->btnDeleteEmailTemplateContentBlock->AddAction(new QClickEvent(), new QAjaxAction('btnDeleteEmailTemplateContentBlock_Clicked'));
 
         $this->btnCancelEmailTemplateContentBlock = new QButton($this);
         $this->btnCancelEmailTemplateContentBlock->Text = 'Cancel';
-        $this->btnCancelEmailTemplateContentBlock->CssClass = 'btn btn-default';
+        $this->btnCancelEmailTemplateContentBlock->CssClass = 'btn btn-default mrg-top10 rippleclick';
         $this->btnCancelEmailTemplateContentBlock->AddAction(new QClickEvent(), new QAjaxAction('btnCancelEmailTemplateContentBlock_Clicked'));
     }
     protected function btnSaveEmailTemplateContentBlock_Clicked($strFormId, $strControlId, $strParameter) {

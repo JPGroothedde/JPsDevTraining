@@ -58,10 +58,10 @@ class Assignment_ListForm extends QForm {
         }
     }
     protected function InitAssignmentDataList() {
-        $searchableAttributes = array(QQN::Assignment()->Name,QQN::Assignment()->Status,QQN::Assignment()->FinalMark);
-        $SortAttributesShown = array('Name','Status','Final Mark');
-        $SortAttributes = array(QQN::Assignment()->Name,QQN::Assignment()->Status,QQN::Assignment()->FinalMark);
-        $columnItems = array('Name','Status','FinalMark');
+        $searchableAttributes = array(QQN::Assignment()->AssignmentName,QQN::Assignment()->Status,QQN::Assignment()->FinalMark,QQN::Assignment()->SubscriptionObject->Id);
+        $SortAttributesShown = array('Assignment Name','Status','Final Mark','Subscription Object');
+        $SortAttributes = array(QQN::Assignment()->AssignmentName,QQN::Assignment()->Status,QQN::Assignment()->FinalMark,QQN::Assignment()->SubscriptionObject->Id);
+        $columnItems = array('AssignmentName','Status','FinalMark','Subscription');
         $this->btnNewAssignment = AppSpecificFunctions::getNewActionButton($this,'Add Assignment','btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss,'btnNewAssignment_Clicked');
         $this->AssignmentList = new AssignmentDataList($this, QQN::Assignment(),$searchableAttributes, null, $columnItems, $SortAttributes,$SortAttributesShown);
     }

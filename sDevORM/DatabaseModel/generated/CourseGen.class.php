@@ -17,9 +17,8 @@
 	 * @subpackage GeneratedDataObjects
 	 * @property-read integer $Id the value for intId (Read-Only PK)
 	 * @property string $CourseName the value for strCourseName 
-	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
-	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
 	 * @property integer $CoursePrice the value for intCoursePrice 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property-read Subscription $_Subscription the value for the private _objSubscription (Read-Only) if set due to an expansion on the Subscription.Course reverse relationship
 	 * @property-read Subscription[] $_SubscriptionArray the value for the private _objSubscriptionArray (Read-Only) if set due to an ExpandAsArray on the Subscription.Course reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
@@ -48,27 +47,19 @@
 
 
 		/**
-		 * Protected member variable that maps to the database column Course.LastUpdated
-		 * @var string strLastUpdated
-		 */
-		protected $strLastUpdated;
-		const LastUpdatedDefault = null;
-
-
-		/**
-		 * Protected member variable that maps to the database column Course.SearchMetaInfo
-		 * @var string strSearchMetaInfo
-		 */
-		protected $strSearchMetaInfo;
-		const SearchMetaInfoDefault = null;
-
-
-		/**
 		 * Protected member variable that maps to the database column Course.CoursePrice
 		 * @var integer intCoursePrice
 		 */
 		protected $intCoursePrice;
 		const CoursePriceDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column Course.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
 
 
 		/**
@@ -118,9 +109,8 @@
 		{
 			$this->intId = Course::IdDefault;
 			$this->strCourseName = Course::CourseNameDefault;
-			$this->strLastUpdated = Course::LastUpdatedDefault;
-			$this->strSearchMetaInfo = Course::SearchMetaInfoDefault;
 			$this->intCoursePrice = Course::CoursePriceDefault;
+			$this->strLastUpdated = Course::LastUpdatedDefault;
 		}
 
 
@@ -464,9 +454,8 @@
             } else {
 			    $objBuilder->AddSelectItem($strTableName, 'Id', $strAliasPrefix . 'Id');
 			    $objBuilder->AddSelectItem($strTableName, 'CourseName', $strAliasPrefix . 'CourseName');
-			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
-			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
 			    $objBuilder->AddSelectItem($strTableName, 'CoursePrice', $strAliasPrefix . 'CoursePrice');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
             }
 		}
 
@@ -598,15 +587,12 @@
 			$strAlias = $strAliasPrefix . 'CourseName';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strCourseName = $objDbRow->GetColumn($strAliasName, 'VarChar');
-			$strAlias = $strAliasPrefix . 'LastUpdated';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
-			$strAlias = $strAliasPrefix . 'SearchMetaInfo';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objToReturn->strSearchMetaInfo = $objDbRow->GetColumn($strAliasName, 'Blob');
 			$strAlias = $strAliasPrefix . 'CoursePrice';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intCoursePrice = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -783,9 +769,8 @@
                 $newAuditLogEntry->ModificationType = 'Create';
                 $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
                 $ChangedArray = array_merge($ChangedArray,array("CourseName" => $this->strCourseName));
-                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
-                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
                 $ChangedArray = array_merge($ChangedArray,array("CoursePrice" => $this->intCoursePrice));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
@@ -806,28 +791,20 @@
                     //$ChangedArray = array_merge($ChangedArray,array("CourseName" => "From: ".$ExistingValueStr." to: ".$this->strCourseName));
                 }
                 $ExistingValueStr = "NULL";
-                if (!is_null($ExistingObj->LastUpdated)) {
-                    $ExistingValueStr = $ExistingObj->LastUpdated;
-                }
-                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
-                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
-                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
-                }
-                $ExistingValueStr = "NULL";
-                if (!is_null($ExistingObj->SearchMetaInfo)) {
-                    $ExistingValueStr = $ExistingObj->SearchMetaInfo;
-                }
-                if ($ExistingObj->SearchMetaInfo != $this->strSearchMetaInfo) {
-                    $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
-                    //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
-                }
-                $ExistingValueStr = "NULL";
                 if (!is_null($ExistingObj->CoursePrice)) {
                     $ExistingValueStr = $ExistingObj->CoursePrice;
                 }
                 if ($ExistingObj->CoursePrice != $this->intCoursePrice) {
                     $ChangedArray = array_merge($ChangedArray,array("CoursePrice" => array("Before" => $ExistingValueStr,"After" => $this->intCoursePrice)));
                     //$ChangedArray = array_merge($ChangedArray,array("CoursePrice" => "From: ".$ExistingValueStr." to: ".$this->intCoursePrice));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
                 }
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
@@ -837,11 +814,9 @@
                     $objDatabase->NonQuery('
                     INSERT INTO `Course` (
 							`CourseName`,
-							`SearchMetaInfo`,
 							`CoursePrice`
 						) VALUES (
 							' . $objDatabase->SqlVariable($this->strCourseName) . ',
-							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
 							' . $objDatabase->SqlVariable($this->intCoursePrice) . '
 						)
                     ');
@@ -850,7 +825,7 @@
                 } else {
                     // Perform an UPDATE query
                     // First checking for Optimistic Locking constraints (if applicable)
-			
+				
                     if (!$blnForceUpdate) {
                         // Perform the Optimistic Locking check
                         $objResult = $objDatabase->Query('
@@ -861,12 +836,11 @@
                     if ($objRow[0] != $this->strLastUpdated)
                         throw new QOptimisticLockingException('Course');
                 }
-			
+	
                 // Perform the UPDATE query
                 $objDatabase->NonQuery('
                 UPDATE `Course` SET
 							`CourseName` = ' . $objDatabase->SqlVariable($this->strCourseName) . ',
-							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
 							`CoursePrice` = ' . $objDatabase->SqlVariable($this->intCoursePrice) . '
                 WHERE
 							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
@@ -885,14 +859,14 @@
             // Update __blnRestored and any Non-Identity PK Columns (if applicable)
             $this->__blnRestored = true;
 	
-			            // Update Local Timestamp
+				            // Update Local Timestamp
             $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
                                                 `Course` WHERE
                     							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
             $objRow = $objResult->FetchArray();
             $this->strLastUpdated = $objRow[0];
-			
+	
             $this->DeleteCache();
             
             // Return
@@ -918,9 +892,8 @@
             $newAuditLogEntry->ModificationType = 'Delete';
             $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
             $ChangedArray = array_merge($ChangedArray,array("CourseName" => $this->strCourseName));
-            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
-            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
             $ChangedArray = array_merge($ChangedArray,array("CoursePrice" => $this->intCoursePrice));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
             $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
@@ -1000,9 +973,8 @@
 
 			// Update $this's local variables to match
 			$this->strCourseName = $objReloaded->strCourseName;
-			$this->strLastUpdated = $objReloaded->strLastUpdated;
-			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 			$this->intCoursePrice = $objReloaded->intCoursePrice;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 		}
 
 
@@ -1037,26 +1009,19 @@
 					 */
 					return $this->strCourseName;
 
-				case 'LastUpdated':
-					/**
-					 * Gets the value for strLastUpdated (Read-Only Timestamp)
-					 * @return string
-					 */
-					return $this->strLastUpdated;
-
-				case 'SearchMetaInfo':
-					/**
-					 * Gets the value for strSearchMetaInfo 
-					 * @return string
-					 */
-					return $this->strSearchMetaInfo;
-
 				case 'CoursePrice':
 					/**
 					 * Gets the value for intCoursePrice 
 					 * @return integer
 					 */
 					return $this->intCoursePrice;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 
 				///////////////////
@@ -1119,19 +1084,6 @@
 					 */
 					try {
 						return ($this->strCourseName = QType::Cast($mixValue, QType::String));
-					} catch (QCallerException $objExc) {
-						$objExc->IncrementOffset();
-						throw $objExc;
-					}
-
-				case 'SearchMetaInfo':
-					/**
-					 * Sets the value for strSearchMetaInfo 
-					 * @param string $mixValue
-					 * @return string
-					 */
-					try {
-						return ($this->strSearchMetaInfo = QType::Cast($mixValue, QType::String));
 					} catch (QCallerException $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
@@ -1372,9 +1324,8 @@
 			$strToReturn = '<complexType name="Course"><sequence>';
 			$strToReturn .= '<element name="Id" type="xsd:int"/>';
 			$strToReturn .= '<element name="CourseName" type="xsd:string"/>';
-			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
-			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="CoursePrice" type="xsd:int"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1401,12 +1352,10 @@
 				$objToReturn->intId = $objSoapObject->Id;
 			if (property_exists($objSoapObject, 'CourseName'))
 				$objToReturn->strCourseName = $objSoapObject->CourseName;
-			if (property_exists($objSoapObject, 'LastUpdated'))
-				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
-			if (property_exists($objSoapObject, 'SearchMetaInfo'))
-				$objToReturn->strSearchMetaInfo = $objSoapObject->SearchMetaInfo;
 			if (property_exists($objSoapObject, 'CoursePrice'))
 				$objToReturn->intCoursePrice = $objSoapObject->CoursePrice;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1441,9 +1390,8 @@
 			///////////////////
 			$iArray['Id'] = $this->intId;
 			$iArray['CourseName'] = $this->strCourseName;
-			$iArray['LastUpdated'] = $this->strLastUpdated;
-			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			$iArray['CoursePrice'] = $this->intCoursePrice;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1483,9 +1431,8 @@
      *
      * @property-read QQNode $Id
      * @property-read QQNode $CourseName
-     * @property-read QQNode $LastUpdated
-     * @property-read QQNode $SearchMetaInfo
      * @property-read QQNode $CoursePrice
+     * @property-read QQNode $LastUpdated
      *
      *
      * @property-read QQReverseReferenceNodeSubscription $Subscription
@@ -1502,12 +1449,10 @@
 					return new QQNode('Id', 'Id', 'Integer', $this);
 				case 'CourseName':
 					return new QQNode('CourseName', 'CourseName', 'VarChar', $this);
-				case 'LastUpdated':
-					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
-				case 'SearchMetaInfo':
-					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'Blob', $this);
 				case 'CoursePrice':
 					return new QQNode('CoursePrice', 'CoursePrice', 'Integer', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'Subscription':
 					return new QQReverseReferenceNodeSubscription($this, 'subscription', 'reverse_reference', 'Course', 'Subscription');
 
@@ -1527,9 +1472,8 @@
     /**
      * @property-read QQNode $Id
      * @property-read QQNode $CourseName
-     * @property-read QQNode $LastUpdated
-     * @property-read QQNode $SearchMetaInfo
      * @property-read QQNode $CoursePrice
+     * @property-read QQNode $LastUpdated
      *
      *
      * @property-read QQReverseReferenceNodeSubscription $Subscription
@@ -1546,12 +1490,10 @@
 					return new QQNode('Id', 'Id', 'integer', $this);
 				case 'CourseName':
 					return new QQNode('CourseName', 'CourseName', 'string', $this);
-				case 'LastUpdated':
-					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
-				case 'SearchMetaInfo':
-					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'string', $this);
 				case 'CoursePrice':
 					return new QQNode('CoursePrice', 'CoursePrice', 'integer', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'Subscription':
 					return new QQReverseReferenceNodeSubscription($this, 'subscription', 'reverse_reference', 'Course', 'Subscription');
 

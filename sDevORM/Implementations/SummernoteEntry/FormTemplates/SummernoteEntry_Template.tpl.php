@@ -1,6 +1,11 @@
 <?php $strPageTitle = 'SummernoteEntry Template';?>
-<?php require(__CONFIGURATION__ . '/header.inc.php');	?>
-
+<?php require(__CONFIGURATION__ . '/header_form_templates.inc.php');	?>
+<style>
+    body {
+        padding: 0px;
+        margin:0px;
+    }
+</style>
 <?php $this->RenderBegin() ?>
 <div class="row">
     <div class="col-md-12">
@@ -8,8 +13,8 @@
     </div>
     <div class="col-md-12">
         <?php $this->btnSaveSummernoteEntry->Render();?>
-        <?php $this->btnDeleteSummernoteEntry->Render();?>
-        <?php $this->btnCancelSummernoteEntry->Render();?>
+        <!--<?php $this->btnDeleteSummernoteEntry->Render();?>
+        <?php $this->btnCancelSummernoteEntry->Render();?>-->
     </div>
 </div>
 

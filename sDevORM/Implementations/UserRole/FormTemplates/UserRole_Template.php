@@ -1,11 +1,10 @@
 <?php
-require('../../sdev.inc.php');
-require(__PAGE_CONTROL__.'/pageManager.php');
+require('../../../../sdev.inc.php');
 require(__SDEV_ORM__.'/Implementations/UserRole/UserRoleController.php');
 
 // Define User roles that have access to this page here. If commented out, this page is accessible to anyone
-/*if (!checkRole(array('Administrator'))) {
-        QApplication::Redirect(__USRMNG__.'/login/');
+/*if (!AppSpecificFunctions::checkPageAccess(array('Administrator'))) {
+        AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 }*/
 // Remove this line if the file needs to be accessible remotely(production)
 AppSpecificFunctions::CheckRemoteAdmin();
@@ -15,20 +14,17 @@ class UserRole_DetailForm extends QForm {
     protected $btnSaveUserRole,$btnDeleteUserRole,$btnCancelUserRole;
 
     //Mobile detection
-    protected $deviceType;
     protected $buttonFullWidthCss = '';
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function Form_Create() {
         parent::Form_Create();
 
-        $detect = new Mobile_Detect;
-        $this->deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
-        if ($this->deviceType == 'phone')
+        if (AppSpecificFunctions::GetDeviceType() == 'phone')
             $this->buttonFullWidthCss = 'fullWidth mrg-bottom5';
 
         $this->InitUserRoleInstance();
 
-        $objId = QApplication::PathInfo(0);
+        $objId = AppSpecificFunctions::PathInfo(0);
         if (strlen($objId) > 0 ) {
             $theObject = UserRole::Load($objId);
             if ($theObject) {
@@ -51,32 +47,36 @@ class UserRole_DetailForm extends QForm {
         $this->UserRoleInstance = new UserRoleController($this);
 
         $this->btnSaveUserRole = new QButton($this);
-        $this->btnSaveUserRole->Text = 'Save UserRole';
+        $this->btnSaveUserRole->Text = 'Save';
+        $this->btnSaveUserRole->CssClass = 'btn btn-primary mrg-top10 rippleclick';
         $this->btnSaveUserRole->AddAction(new QClickEvent(), new QAjaxAction('btnSaveUserRole_Clicked'));
 
         $this->btnDeleteUserRole = new QButton($this);
-        $this->btnDeleteUserRole->Text = 'Delete UserRole';
-        $this->btnDeleteUserRole->CssClass = 'btn btn-danger';
+        $this->btnDeleteUserRole->Text = 'Delete';
+        $this->btnDeleteUserRole->CssClass = 'btn btn-danger mrg-top10 rippleclick';
         $this->btnDeleteUserRole->AddAction(new QClickEvent(), new QConfirmAction('Are you sure?'));
         $this->btnDeleteUserRole->AddAction(new QClickEvent(), new QAjaxAction('btnDeleteUserRole_Clicked'));
 
         $this->btnCancelUserRole = new QButton($this);
         $this->btnCancelUserRole->Text = 'Cancel';
-        $this->btnCancelUserRole->CssClass = 'btn btn-default';
+        $this->btnCancelUserRole->CssClass = 'btn btn-default mrg-top10 rippleclick';
         $this->btnCancelUserRole->AddAction(new QClickEvent(), new QAjaxAction('btnCancelUserRole_Clicked'));
     }
     protected function btnSaveUserRole_Clicked($strFormId, $strControlId, $strParameter) {
         if ($this->UserRoleInstance->saveObject()) {
-            QApplication::Redirect(loadPreviousPage());
-        }
+            AppSpecificFunctions::ShowNotedFeedback('Saved!');
+        } else
+            AppSpecificFunctions::ShowNotedFeedback('Could not save right now! Pleae try again.',false);
     }
     protected function btnDeleteUserRole_Clicked($strFormId, $strControlId, $strParameter) {
         if ($this->UserRoleInstance->deleteObject()) {
-            QApplication::Redirect(loadPreviousPage());
-        }
+            AppSpecificFunctions::ShowNotedFeedback('Deleted!');
+        } else
+            AppSpecificFunctions::ShowNotedFeedback('Could not delete right now! Pleae try again.',false);
     }
-    protected function btnCancelUserRole_Clicked($strFormId, $strControlId, $strParameter) {
-        QApplication::Redirect(loadPreviousPage());
+    protected function executeParentFunction($parentFormId, $strControlId, $strParameter) {
+        $js = 'window.parent.window.executeFormAction(\''.$parentFormId.'\',\''.$strControlId.'\',\''.$strParameter.'\');';
+        AppSpecificFunctions::ExecuteJavaScript($js);
     }
 }
 UserRole_DetailForm::Run('UserRole_DetailForm');

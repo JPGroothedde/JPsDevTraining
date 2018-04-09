@@ -1,11 +1,10 @@
 <?php
-require('../../sdev.inc.php');
-require(__PAGE_CONTROL__.'/pageManager.php');
+require('../../../../sdev.inc.php');
 require(__SDEV_ORM__.'/Implementations/PageView/PageViewController.php');
 
 // Define User roles that have access to this page here. If commented out, this page is accessible to anyone
-/*if (!checkRole(array('Administrator'))) {
-        QApplication::Redirect(__USRMNG__.'/login/');
+/*if (!AppSpecificFunctions::checkPageAccess(array('Administrator'))) {
+        AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 }*/
 // Remove this line if the file needs to be accessible remotely(production)
 AppSpecificFunctions::CheckRemoteAdmin();
@@ -15,20 +14,17 @@ class PageView_DetailForm extends QForm {
     protected $btnSavePageView,$btnDeletePageView,$btnCancelPageView;
 
     //Mobile detection
-    protected $deviceType;
     protected $buttonFullWidthCss = '';
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function Form_Create() {
         parent::Form_Create();
 
-        $detect = new Mobile_Detect;
-        $this->deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
-        if ($this->deviceType == 'phone')
+        if (AppSpecificFunctions::GetDeviceType() == 'phone')
             $this->buttonFullWidthCss = 'fullWidth mrg-bottom5';
 
         $this->InitPageViewInstance();
 
-        $objId = QApplication::PathInfo(0);
+        $objId = AppSpecificFunctions::PathInfo(0);
         if (strlen($objId) > 0 ) {
             $theObject = PageView::Load($objId);
             if ($theObject) {
@@ -51,32 +47,36 @@ class PageView_DetailForm extends QForm {
         $this->PageViewInstance = new PageViewController($this);
 
         $this->btnSavePageView = new QButton($this);
-        $this->btnSavePageView->Text = 'Save PageView';
+        $this->btnSavePageView->Text = 'Save';
+        $this->btnSavePageView->CssClass = 'btn btn-primary mrg-top10 rippleclick';
         $this->btnSavePageView->AddAction(new QClickEvent(), new QAjaxAction('btnSavePageView_Clicked'));
 
         $this->btnDeletePageView = new QButton($this);
-        $this->btnDeletePageView->Text = 'Delete PageView';
-        $this->btnDeletePageView->CssClass = 'btn btn-danger';
+        $this->btnDeletePageView->Text = 'Delete';
+        $this->btnDeletePageView->CssClass = 'btn btn-danger mrg-top10 rippleclick';
         $this->btnDeletePageView->AddAction(new QClickEvent(), new QConfirmAction('Are you sure?'));
         $this->btnDeletePageView->AddAction(new QClickEvent(), new QAjaxAction('btnDeletePageView_Clicked'));
 
         $this->btnCancelPageView = new QButton($this);
         $this->btnCancelPageView->Text = 'Cancel';
-        $this->btnCancelPageView->CssClass = 'btn btn-default';
+        $this->btnCancelPageView->CssClass = 'btn btn-default mrg-top10 rippleclick';
         $this->btnCancelPageView->AddAction(new QClickEvent(), new QAjaxAction('btnCancelPageView_Clicked'));
     }
     protected function btnSavePageView_Clicked($strFormId, $strControlId, $strParameter) {
         if ($this->PageViewInstance->saveObject()) {
-            QApplication::Redirect(loadPreviousPage());
-        }
+            AppSpecificFunctions::ShowNotedFeedback('Saved!');
+        } else
+            AppSpecificFunctions::ShowNotedFeedback('Could not save right now! Pleae try again.',false);
     }
     protected function btnDeletePageView_Clicked($strFormId, $strControlId, $strParameter) {
         if ($this->PageViewInstance->deleteObject()) {
-            QApplication::Redirect(loadPreviousPage());
-        }
+            AppSpecificFunctions::ShowNotedFeedback('Deleted!');
+        } else
+            AppSpecificFunctions::ShowNotedFeedback('Could not delete right now! Pleae try again.',false);
     }
-    protected function btnCancelPageView_Clicked($strFormId, $strControlId, $strParameter) {
-        QApplication::Redirect(loadPreviousPage());
+    protected function executeParentFunction($parentFormId, $strControlId, $strParameter) {
+        $js = 'window.parent.window.executeFormAction(\''.$parentFormId.'\',\''.$strControlId.'\',\''.$strParameter.'\');';
+        AppSpecificFunctions::ExecuteJavaScript($js);
     }
 }
 PageView_DetailForm::Run('PageView_DetailForm');

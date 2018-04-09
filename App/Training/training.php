@@ -18,9 +18,9 @@ class trainingForm extends QForm {
         for($i=0;$i<10;$i++) {
             $FirstName = AppSpecificFunctions::generateRandomString(10);
             $LastName = AppSpecificFunctions::generateRandomString(10);
-            $AccountObj = new Account();
-            $AccountObj->FirstName = $FirstName;
-            $AccountObj->LastName = $LastName;
+            $StudentObj = new Student();
+            $StudentObj->FirstName = $FirstName;
+            $StudentObj->LastName = $LastName;
             $CourseName = AppSpecificFunctions::generateRandomString(10);
             $CoursePrice = 1000;
             $CourseObj = new Course();
@@ -32,16 +32,16 @@ class trainingForm extends QForm {
             $AssignmentObj->AssignmentName = $AssignmentName;
             $AssignmentObj->FinalMark = $AssignmentFinalMark;
             try {
-                //$AccountObj->Save();
-                //$CourseObj->Save();
-                //$AssignmentObj->Save();
+                $StudentObj->Save();
+                $CourseObj->Save();
+                $AssignmentObj->Save();
             } catch (QCallerException $e){
 
             }
-            //AppSpecificFunctions::AddCustomLog($AccountObj->getJson());
+            //AppSpecificFunctions::AddCustomLog($StudentObj->getJson());
         }
 
-        for($i=0;$i<10;$i++) {
+        for($i=0;$i<30;$i++) {
             $StudentCount = Account::QueryCount(QQ::All());
             $RandomStudentId = rand(1, $StudentCount + 1);
             $CourseCount = Course::QueryCount(QQ::All());
@@ -55,13 +55,13 @@ class trainingForm extends QForm {
             $EndDate->AddMonths(-$RandomMonthsToDate);
             $EndDate->AddMonths(+12);
             $SubscriptionObj = new Subscription();
-            $SubscriptionObj->Account = $RandomStudentId;
+            $SubscriptionObj->Student = $RandomStudentId;
             $SubscriptionObj->Course = $RandomCourseId;
             $SubscriptionObj->Assignment = $RandomAssignmentCount;
             $SubscriptionObj->StartDate = $StartDate;
             $SubscriptionObj->EndDate = $EndDate;
             try {
-                //$SubscriptionObj->Save();
+                $SubscriptionObj->Save();
             } catch (QCallerException $e) {
 
             }
@@ -70,7 +70,7 @@ class trainingForm extends QForm {
 
         $SubscriptionObj = Subscription::QuerySingle(
             QQ::AndCondition(
-                QQ::Equal(QQN::Subscription()->AccountObject->FirstName,"QVSImPn508"),
+                QQ::Equal(QQN::Subscription()->StudentObject->FirstName,"QVSImPn508"),
                 QQ::Equal(QQN::Subscription()->CourseObject->CourseName,"aoXCUA1uhQ")
             )
         );
@@ -99,7 +99,7 @@ class trainingForm extends QForm {
                 $SubscriptionArray = Subscription::QueryArray(
                     QQ::AndCondition(
                         QQ::Equal(QQN::Subscription()->CourseObject->Id, $Course->Id),
-                        QQ::Equal(QQN::Subscription()->AccountObject->Id, 17),//1,3,5,17
+                        QQ::Equal(QQN::Subscription()->StudentObject->Id, 17),//1,3,5,17
                         QQ::OrCondition(
                             QQ::GreaterThan(QQN::Subscription()->EndDate, $Date),
                             QQ::GreaterThan(QQN::Subscription()->StartDate, $Date)
@@ -113,8 +113,6 @@ class trainingForm extends QForm {
                 AppSpecificFunctions::AddCustomLog($Subscription->getJson());
             }
         }
-
-
     }
 }
 trainingForm::Run('trainingForm');

@@ -16,13 +16,13 @@
 	 * @package sDev Base App
 	 * @subpackage GeneratedDataObjects
 	 * @property-read integer $Id the value for intId (Read-Only PK)
-	 * @property string $Status the value for strStatus 
-	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
-	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
 	 * @property string $AssignmentName the value for strAssignmentName 
+	 * @property string $Status the value for strStatus 
 	 * @property integer $FinalMark the value for intFinalMark 
-	 * @property-read Subscription $_Subscription the value for the private _objSubscription (Read-Only) if set due to an expansion on the Subscription.Assignment reverse relationship
-	 * @property-read Subscription[] $_SubscriptionArray the value for the private _objSubscriptionArray (Read-Only) if set due to an ExpandAsArray on the Subscription.Assignment reverse relationship
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
+	 * @property integer $Subscription the value for intSubscription 
+	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
+	 * @property Subscription $SubscriptionObject the value for the Subscription object referenced by intSubscription 
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class AssignmentGen extends QBaseClass implements IteratorAggregate {
@@ -40,37 +40,21 @@
 
 
 		/**
-		 * Protected member variable that maps to the database column Assignment.Status
-		 * @var string strStatus
-		 */
-		protected $strStatus;
-		const StatusMaxLength = 20;
-		const StatusDefault = null;
-
-
-		/**
-		 * Protected member variable that maps to the database column Assignment.LastUpdated
-		 * @var string strLastUpdated
-		 */
-		protected $strLastUpdated;
-		const LastUpdatedDefault = null;
-
-
-		/**
-		 * Protected member variable that maps to the database column Assignment.SearchMetaInfo
-		 * @var string strSearchMetaInfo
-		 */
-		protected $strSearchMetaInfo;
-		const SearchMetaInfoDefault = null;
-
-
-		/**
 		 * Protected member variable that maps to the database column Assignment.AssignmentName
 		 * @var string strAssignmentName
 		 */
 		protected $strAssignmentName;
 		const AssignmentNameMaxLength = 20;
 		const AssignmentNameDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column Assignment.Status
+		 * @var string strStatus
+		 */
+		protected $strStatus;
+		const StatusMaxLength = 20;
+		const StatusDefault = null;
 
 
 		/**
@@ -82,20 +66,28 @@
 
 
 		/**
-		 * Private member variable that stores a reference to a single Subscription object
-		 * (of type Subscription), if this Assignment object was restored with
-		 * an expansion on the Subscription association table.
-		 * @var Subscription _objSubscription;
+		 * Protected member variable that maps to the database column Assignment.LastUpdated
+		 * @var string strLastUpdated
 		 */
-		private $_objSubscription;
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
 
 		/**
-		 * Private member variable that stores a reference to an array of Subscription objects
-		 * (of type Subscription[]), if this Assignment object was restored with
-		 * an ExpandAsArray on the Subscription association table.
-		 * @var Subscription[] _objSubscriptionArray;
+		 * Protected member variable that maps to the database column Assignment.Subscription
+		 * @var integer intSubscription
 		 */
-		private $_objSubscriptionArray = null;
+		protected $intSubscription;
+		const SubscriptionDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column Assignment.SearchMetaInfo
+		 * @var string strSearchMetaInfo
+		 */
+		protected $strSearchMetaInfo;
+		const SearchMetaInfoDefault = null;
+
 
 		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
@@ -119,6 +111,16 @@
 		// PROTECTED MEMBER OBJECTS
 		///////////////////////////////
 
+		/**
+		 * Protected member variable that contains the object pointed by the reference
+		 * in the database column Assignment.Subscription.
+		 *
+		 * NOTE: Always use the SubscriptionObject property getter to correctly retrieve this Subscription object.
+		 * (Because this class implements late binding, this variable reference MAY be null.)
+		 * @var Subscription objSubscriptionObject
+		 */
+		protected $objSubscriptionObject;
+
 
 
 		/**
@@ -127,11 +129,12 @@
 		public function Initialize()
 		{
 			$this->intId = Assignment::IdDefault;
-			$this->strStatus = Assignment::StatusDefault;
-			$this->strLastUpdated = Assignment::LastUpdatedDefault;
-			$this->strSearchMetaInfo = Assignment::SearchMetaInfoDefault;
 			$this->strAssignmentName = Assignment::AssignmentNameDefault;
+			$this->strStatus = Assignment::StatusDefault;
 			$this->intFinalMark = Assignment::FinalMarkDefault;
+			$this->strLastUpdated = Assignment::LastUpdatedDefault;
+			$this->intSubscription = Assignment::SubscriptionDefault;
+			$this->strSearchMetaInfo = Assignment::SearchMetaInfoDefault;
 		}
 
 
@@ -474,11 +477,12 @@
                 $objSelect->AddSelectItems($objBuilder, $strTableName, $strAliasPrefix);
             } else {
 			    $objBuilder->AddSelectItem($strTableName, 'Id', $strAliasPrefix . 'Id');
-			    $objBuilder->AddSelectItem($strTableName, 'Status', $strAliasPrefix . 'Status');
-			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
-			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
 			    $objBuilder->AddSelectItem($strTableName, 'AssignmentName', $strAliasPrefix . 'AssignmentName');
+			    $objBuilder->AddSelectItem($strTableName, 'Status', $strAliasPrefix . 'Status');
 			    $objBuilder->AddSelectItem($strTableName, 'FinalMark', $strAliasPrefix . 'FinalMark');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
+			    $objBuilder->AddSelectItem($strTableName, 'Subscription', $strAliasPrefix . 'Subscription');
+			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
             }
 		}
 
@@ -607,21 +611,24 @@
 			$strAlias = $strAliasPrefix . 'Id';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intId = $objDbRow->GetColumn($strAliasName, 'Integer');
-			$strAlias = $strAliasPrefix . 'Status';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objToReturn->strStatus = $objDbRow->GetColumn($strAliasName, 'VarChar');
-			$strAlias = $strAliasPrefix . 'LastUpdated';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
-			$strAlias = $strAliasPrefix . 'SearchMetaInfo';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objToReturn->strSearchMetaInfo = $objDbRow->GetColumn($strAliasName, 'Blob');
 			$strAlias = $strAliasPrefix . 'AssignmentName';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strAssignmentName = $objDbRow->GetColumn($strAliasName, 'VarChar');
+			$strAlias = $strAliasPrefix . 'Status';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strStatus = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAlias = $strAliasPrefix . 'FinalMark';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intFinalMark = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
+			$strAlias = $strAliasPrefix . 'Subscription';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->intSubscription = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$strAlias = $strAliasPrefix . 'SearchMetaInfo';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strSearchMetaInfo = $objDbRow->GetColumn($strAliasName, 'Blob');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -652,23 +659,15 @@
 			if (!$strAliasPrefix)
 				$strAliasPrefix = 'Assignment__';
 
+			// Check for SubscriptionObject Early Binding
+			$strAlias = $strAliasPrefix . 'Subscription__Id';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				$objExpansionNode = (empty($objExpansionAliasArray['Subscription']) ? null : $objExpansionAliasArray['Subscription']);
+				$objToReturn->objSubscriptionObject = Subscription::InstantiateDbRow($objDbRow, $strAliasPrefix . 'Subscription__', $objExpansionNode, null, $strColumnAliasArray);
+			}
 
 				
-
-			// Check for Subscription Virtual Binding
-			$strAlias = $strAliasPrefix . 'subscription__Id';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objExpansionNode = (empty($objExpansionAliasArray['subscription']) ? null : $objExpansionAliasArray['subscription']);
-			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
-			if ($blnExpanded && null === $objToReturn->_objSubscriptionArray)
-				$objToReturn->_objSubscriptionArray = array();
-			if (!is_null($objDbRow->GetColumn($strAliasName))) {
-				if ($blnExpanded) {
-					$objToReturn->_objSubscriptionArray[] = Subscription::InstantiateDbRow($objDbRow, $strAliasPrefix . 'subscription__', $objExpansionNode, null, $strColumnAliasArray);
-				} elseif (is_null($objToReturn->_objSubscription)) {
-					$objToReturn->_objSubscription = Subscription::InstantiateDbRow($objDbRow, $strAliasPrefix . 'subscription__', $objExpansionNode, null, $strColumnAliasArray);
-				}
-			}
 
 			return $objToReturn;
 		}
@@ -763,6 +762,38 @@
 			);
 		}
 
+		/**
+		 * Load an array of Assignment objects,
+		 * by Subscription Index(es)
+		 * @param integer $intSubscription
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return Assignment[]
+		*/
+		public static function LoadArrayBySubscription($intSubscription, $objOptionalClauses = null) {
+			// Call Assignment::QueryArray to perform the LoadArrayBySubscription query
+			try {
+				return Assignment::QueryArray(
+					QQ::Equal(QQN::Assignment()->Subscription, $intSubscription),
+					$objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Count Assignments
+		 * by Subscription Index(es)
+		 * @param integer $intSubscription
+		 * @return int
+		*/
+		public static function CountBySubscription($intSubscription) {
+			// Call Assignment::QueryCount to perform the CountBySubscription query
+			return Assignment::QueryCount(
+				QQ::Equal(QQN::Assignment()->Subscription, $intSubscription)
+			);
+		}
+
 
 
 		////////////////////////////////////////////////////
@@ -797,11 +828,12 @@
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
                 $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
-                $ChangedArray = array_merge($ChangedArray,array("Status" => $this->strStatus));
-                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
-                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
                 $ChangedArray = array_merge($ChangedArray,array("AssignmentName" => $this->strAssignmentName));
+                $ChangedArray = array_merge($ChangedArray,array("Status" => $this->strStatus));
                 $ChangedArray = array_merge($ChangedArray,array("FinalMark" => $this->intFinalMark));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $ChangedArray = array_merge($ChangedArray,array("Subscription" => $this->intSubscription));
+                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
@@ -814,12 +846,28 @@
                     //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
                 $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->AssignmentName)) {
+                    $ExistingValueStr = $ExistingObj->AssignmentName;
+                }
+                if ($ExistingObj->AssignmentName != $this->strAssignmentName) {
+                    $ChangedArray = array_merge($ChangedArray,array("AssignmentName" => array("Before" => $ExistingValueStr,"After" => $this->strAssignmentName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("AssignmentName" => "From: ".$ExistingValueStr." to: ".$this->strAssignmentName));
+                }
+                $ExistingValueStr = "NULL";
                 if (!is_null($ExistingObj->Status)) {
                     $ExistingValueStr = $ExistingObj->Status;
                 }
                 if ($ExistingObj->Status != $this->strStatus) {
                     $ChangedArray = array_merge($ChangedArray,array("Status" => array("Before" => $ExistingValueStr,"After" => $this->strStatus)));
                     //$ChangedArray = array_merge($ChangedArray,array("Status" => "From: ".$ExistingValueStr." to: ".$this->strStatus));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->FinalMark)) {
+                    $ExistingValueStr = $ExistingObj->FinalMark;
+                }
+                if ($ExistingObj->FinalMark != $this->intFinalMark) {
+                    $ChangedArray = array_merge($ChangedArray,array("FinalMark" => array("Before" => $ExistingValueStr,"After" => $this->intFinalMark)));
+                    //$ChangedArray = array_merge($ChangedArray,array("FinalMark" => "From: ".$ExistingValueStr." to: ".$this->intFinalMark));
                 }
                 $ExistingValueStr = "NULL";
                 if (!is_null($ExistingObj->LastUpdated)) {
@@ -830,28 +878,20 @@
                     //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
                 }
                 $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Subscription)) {
+                    $ExistingValueStr = $ExistingObj->Subscription;
+                }
+                if ($ExistingObj->Subscription != $this->intSubscription) {
+                    $ChangedArray = array_merge($ChangedArray,array("Subscription" => array("Before" => $ExistingValueStr,"After" => $this->intSubscription)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Subscription" => "From: ".$ExistingValueStr." to: ".$this->intSubscription));
+                }
+                $ExistingValueStr = "NULL";
                 if (!is_null($ExistingObj->SearchMetaInfo)) {
                     $ExistingValueStr = $ExistingObj->SearchMetaInfo;
                 }
                 if ($ExistingObj->SearchMetaInfo != $this->strSearchMetaInfo) {
                     $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
                     //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
-                }
-                $ExistingValueStr = "NULL";
-                if (!is_null($ExistingObj->AssignmentName)) {
-                    $ExistingValueStr = $ExistingObj->AssignmentName;
-                }
-                if ($ExistingObj->AssignmentName != $this->strAssignmentName) {
-                    $ChangedArray = array_merge($ChangedArray,array("AssignmentName" => array("Before" => $ExistingValueStr,"After" => $this->strAssignmentName)));
-                    //$ChangedArray = array_merge($ChangedArray,array("AssignmentName" => "From: ".$ExistingValueStr." to: ".$this->strAssignmentName));
-                }
-                $ExistingValueStr = "NULL";
-                if (!is_null($ExistingObj->FinalMark)) {
-                    $ExistingValueStr = $ExistingObj->FinalMark;
-                }
-                if ($ExistingObj->FinalMark != $this->intFinalMark) {
-                    $ChangedArray = array_merge($ChangedArray,array("FinalMark" => array("Before" => $ExistingValueStr,"After" => $this->intFinalMark)));
-                    //$ChangedArray = array_merge($ChangedArray,array("FinalMark" => "From: ".$ExistingValueStr." to: ".$this->intFinalMark));
                 }
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
@@ -860,15 +900,17 @@
                     // Perform an INSERT query
                     $objDatabase->NonQuery('
                     INSERT INTO `Assignment` (
-							`Status`,
-							`SearchMetaInfo`,
 							`AssignmentName`,
-							`FinalMark`
+							`Status`,
+							`FinalMark`,
+							`Subscription`,
+							`SearchMetaInfo`
 						) VALUES (
-							' . $objDatabase->SqlVariable($this->strStatus) . ',
-							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
 							' . $objDatabase->SqlVariable($this->strAssignmentName) . ',
-							' . $objDatabase->SqlVariable($this->intFinalMark) . '
+							' . $objDatabase->SqlVariable($this->strStatus) . ',
+							' . $objDatabase->SqlVariable($this->intFinalMark) . ',
+							' . $objDatabase->SqlVariable($this->intSubscription) . ',
+							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
 						)
                     ');
 					// Update Identity column and return its value
@@ -876,7 +918,7 @@
                 } else {
                     // Perform an UPDATE query
                     // First checking for Optimistic Locking constraints (if applicable)
-			
+					
                     if (!$blnForceUpdate) {
                         // Perform the Optimistic Locking check
                         $objResult = $objDatabase->Query('
@@ -887,19 +929,20 @@
                     if ($objRow[0] != $this->strLastUpdated)
                         throw new QOptimisticLockingException('Assignment');
                 }
-				
+			
                 // Perform the UPDATE query
                 $objDatabase->NonQuery('
                 UPDATE `Assignment` SET
-							`Status` = ' . $objDatabase->SqlVariable($this->strStatus) . ',
-							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
 							`AssignmentName` = ' . $objDatabase->SqlVariable($this->strAssignmentName) . ',
-							`FinalMark` = ' . $objDatabase->SqlVariable($this->intFinalMark) . '
+							`Status` = ' . $objDatabase->SqlVariable($this->strStatus) . ',
+							`FinalMark` = ' . $objDatabase->SqlVariable($this->intFinalMark) . ',
+							`Subscription` = ' . $objDatabase->SqlVariable($this->intSubscription) . ',
+							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
                 WHERE
 							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
                 }
 
-	            } catch (QCallerException $objExc) {
+            } catch (QCallerException $objExc) {
                 $objExc->IncrementOffset();
                 throw $objExc;
             }
@@ -912,14 +955,14 @@
             // Update __blnRestored and any Non-Identity PK Columns (if applicable)
             $this->__blnRestored = true;
 	
-			            // Update Local Timestamp
+					            // Update Local Timestamp
             $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
                                                 `Assignment` WHERE
                     							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
             $objRow = $objResult->FetchArray();
             $this->strLastUpdated = $objRow[0];
-				
+			
             $this->DeleteCache();
             
             // Return
@@ -944,11 +987,12 @@
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
             $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
-            $ChangedArray = array_merge($ChangedArray,array("Status" => $this->strStatus));
-            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
-            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
             $ChangedArray = array_merge($ChangedArray,array("AssignmentName" => $this->strAssignmentName));
+            $ChangedArray = array_merge($ChangedArray,array("Status" => $this->strStatus));
             $ChangedArray = array_merge($ChangedArray,array("FinalMark" => $this->intFinalMark));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $ChangedArray = array_merge($ChangedArray,array("Subscription" => $this->intSubscription));
+            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
             $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
@@ -1027,11 +1071,12 @@
 			$objReloaded = Assignment::Load($this->intId);
 
 			// Update $this's local variables to match
-			$this->strStatus = $objReloaded->strStatus;
-			$this->strLastUpdated = $objReloaded->strLastUpdated;
-			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 			$this->strAssignmentName = $objReloaded->strAssignmentName;
+			$this->strStatus = $objReloaded->strStatus;
 			$this->intFinalMark = $objReloaded->intFinalMark;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
+			$this->Subscription = $objReloaded->Subscription;
+			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 		}
 
 
@@ -1059,33 +1104,19 @@
 					 */
 					return $this->intId;
 
-				case 'Status':
-					/**
-					 * Gets the value for strStatus 
-					 * @return string
-					 */
-					return $this->strStatus;
-
-				case 'LastUpdated':
-					/**
-					 * Gets the value for strLastUpdated (Read-Only Timestamp)
-					 * @return string
-					 */
-					return $this->strLastUpdated;
-
-				case 'SearchMetaInfo':
-					/**
-					 * Gets the value for strSearchMetaInfo 
-					 * @return string
-					 */
-					return $this->strSearchMetaInfo;
-
 				case 'AssignmentName':
 					/**
 					 * Gets the value for strAssignmentName 
 					 * @return string
 					 */
 					return $this->strAssignmentName;
+
+				case 'Status':
+					/**
+					 * Gets the value for strStatus 
+					 * @return string
+					 */
+					return $this->strStatus;
 
 				case 'FinalMark':
 					/**
@@ -1094,31 +1125,50 @@
 					 */
 					return $this->intFinalMark;
 
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
+
+				case 'Subscription':
+					/**
+					 * Gets the value for intSubscription 
+					 * @return integer
+					 */
+					return $this->intSubscription;
+
+				case 'SearchMetaInfo':
+					/**
+					 * Gets the value for strSearchMetaInfo 
+					 * @return string
+					 */
+					return $this->strSearchMetaInfo;
+
 
 				///////////////////
 				// Member Objects
 				///////////////////
+				case 'SubscriptionObject':
+					/**
+					 * Gets the value for the Subscription object referenced by intSubscription 
+					 * @return Subscription
+					 */
+					try {
+						if ((!$this->objSubscriptionObject) && (!is_null($this->intSubscription)))
+							$this->objSubscriptionObject = Subscription::Load($this->intSubscription);
+						return $this->objSubscriptionObject;
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
 
 				////////////////////////////
 				// Virtual Object References (Many to Many and Reverse References)
 				// (If restored via a "Many-to" expansion)
 				////////////////////////////
-
-				case '_Subscription':
-					/**
-					 * Gets the value for the private _objSubscription (Read-Only)
-					 * if set due to an expansion on the Subscription.Assignment reverse relationship
-					 * @return Subscription
-					 */
-					return $this->_objSubscription;
-
-				case '_SubscriptionArray':
-					/**
-					 * Gets the value for the private _objSubscriptionArray (Read-Only)
-					 * if set due to an ExpandAsArray on the Subscription.Assignment reverse relationship
-					 * @return Subscription[]
-					 */
-					return $this->_objSubscriptionArray;
 
 
 				case '__Restored':
@@ -1147,32 +1197,6 @@
 				///////////////////
 				// Member Variables
 				///////////////////
-				case 'Status':
-					/**
-					 * Sets the value for strStatus 
-					 * @param string $mixValue
-					 * @return string
-					 */
-					try {
-						return ($this->strStatus = QType::Cast($mixValue, QType::String));
-					} catch (QCallerException $objExc) {
-						$objExc->IncrementOffset();
-						throw $objExc;
-					}
-
-				case 'SearchMetaInfo':
-					/**
-					 * Sets the value for strSearchMetaInfo 
-					 * @param string $mixValue
-					 * @return string
-					 */
-					try {
-						return ($this->strSearchMetaInfo = QType::Cast($mixValue, QType::String));
-					} catch (QCallerException $objExc) {
-						$objExc->IncrementOffset();
-						throw $objExc;
-					}
-
 				case 'AssignmentName':
 					/**
 					 * Sets the value for strAssignmentName 
@@ -1181,6 +1205,19 @@
 					 */
 					try {
 						return ($this->strAssignmentName = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
+				case 'Status':
+					/**
+					 * Sets the value for strStatus 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strStatus = QType::Cast($mixValue, QType::String));
 					} catch (QCallerException $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
@@ -1199,10 +1236,69 @@
 						throw $objExc;
 					}
 
+				case 'Subscription':
+					/**
+					 * Sets the value for intSubscription 
+					 * @param integer $mixValue
+					 * @return integer
+					 */
+					try {
+						$this->objSubscriptionObject = null;
+						return ($this->intSubscription = QType::Cast($mixValue, QType::Integer));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
+				case 'SearchMetaInfo':
+					/**
+					 * Sets the value for strSearchMetaInfo 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strSearchMetaInfo = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
 
 				///////////////////
 				// Member Objects
 				///////////////////
+				case 'SubscriptionObject':
+					/**
+					 * Sets the value for the Subscription object referenced by intSubscription 
+					 * @param Subscription $mixValue
+					 * @return Subscription
+					 */
+					if (is_null($mixValue)) {
+						$this->intSubscription = null;
+						$this->objSubscriptionObject = null;
+						return null;
+					} else {
+						// Make sure $mixValue actually is a Subscription object
+						try {
+							$mixValue = QType::Cast($mixValue, 'Subscription');
+						} catch (QInvalidCastException $objExc) {
+							$objExc->IncrementOffset();
+							throw $objExc;
+						}
+
+						// Make sure $mixValue is a SAVED Subscription object
+						if (is_null($mixValue->Id))
+							throw new QCallerException('Unable to set an unsaved SubscriptionObject for this Assignment');
+
+						// Update Local Member Variables
+						$this->objSubscriptionObject = $mixValue;
+						$this->intSubscription = $mixValue->Id;
+
+						// Return $mixValue
+						return $mixValue;
+					}
+					break;
+
 				default:
 					try {
 						return parent::__set($strName, $mixValue);
@@ -1230,155 +1326,6 @@
 		// ASSOCIATED OBJECTS' METHODS
 		///////////////////////////////
 
-
-
-		// Related Objects' Methods for Subscription
-		//-------------------------------------------------------------------
-
-		/**
-		 * Gets all associated Subscriptions as an array of Subscription objects
-		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
-		 * @return Subscription[]
-		*/
-		public function GetSubscriptionArray($objOptionalClauses = null) {
-			if ((is_null($this->intId)))
-				return array();
-
-			try {
-				return Subscription::LoadArrayByAssignment($this->intId, $objOptionalClauses);
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-		}
-
-		/**
-		 * Counts all associated Subscriptions
-		 * @return int
-		*/
-		public function CountSubscriptions() {
-			if ((is_null($this->intId)))
-				return 0;
-
-			return Subscription::CountByAssignment($this->intId);
-		}
-
-		/**
-		 * Associates a Subscription
-		 * @param Subscription $objSubscription
-		 * @return void
-		*/
-		public function AssociateSubscription(Subscription $objSubscription) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociateSubscription on this unsaved Assignment.');
-			if ((is_null($objSubscription->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociateSubscription on this Assignment with an unsaved Subscription.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Assignment::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`Subscription`
-				SET
-					`Assignment` = ' . $objDatabase->SqlVariable($this->intId) . '
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objSubscription->Id) . '
-			');
-		}
-
-		/**
-		 * Unassociates a Subscription
-		 * @param Subscription $objSubscription
-		 * @return void
-		*/
-		public function UnassociateSubscription(Subscription $objSubscription) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this unsaved Assignment.');
-			if ((is_null($objSubscription->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this Assignment with an unsaved Subscription.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Assignment::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`Subscription`
-				SET
-					`Assignment` = null
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objSubscription->Id) . ' AND
-					`Assignment` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Unassociates all Subscriptions
-		 * @return void
-		*/
-		public function UnassociateAllSubscriptions() {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this unsaved Assignment.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Assignment::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`Subscription`
-				SET
-					`Assignment` = null
-				WHERE
-					`Assignment` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Deletes an associated Subscription
-		 * @param Subscription $objSubscription
-		 * @return void
-		*/
-		public function DeleteAssociatedSubscription(Subscription $objSubscription) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this unsaved Assignment.');
-			if ((is_null($objSubscription->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this Assignment with an unsaved Subscription.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Assignment::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				DELETE FROM
-					`Subscription`
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objSubscription->Id) . ' AND
-					`Assignment` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Deletes all associated Subscriptions
-		 * @return void
-		*/
-		public function DeleteAllSubscriptions() {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this unsaved Assignment.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Assignment::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				DELETE FROM
-					`Subscription`
-				WHERE
-					`Assignment` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
 
 
 		
@@ -1420,11 +1367,12 @@
 		public static function GetSoapComplexTypeXml() {
 			$strToReturn = '<complexType name="Assignment"><sequence>';
 			$strToReturn .= '<element name="Id" type="xsd:int"/>';
-			$strToReturn .= '<element name="Status" type="xsd:string"/>';
-			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
-			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="AssignmentName" type="xsd:string"/>';
+			$strToReturn .= '<element name="Status" type="xsd:string"/>';
 			$strToReturn .= '<element name="FinalMark" type="xsd:int"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
+			$strToReturn .= '<element name="SubscriptionObject" type="xsd1:Subscription"/>';
+			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1433,6 +1381,7 @@
 		public static function AlterSoapComplexTypeArray(&$strComplexTypeArray) {
 			if (!array_key_exists('Assignment', $strComplexTypeArray)) {
 				$strComplexTypeArray['Assignment'] = Assignment::GetSoapComplexTypeXml();
+				Subscription::AlterSoapComplexTypeArray($strComplexTypeArray);
 			}
 		}
 
@@ -1449,16 +1398,19 @@
 			$objToReturn = new Assignment();
 			if (property_exists($objSoapObject, 'Id'))
 				$objToReturn->intId = $objSoapObject->Id;
-			if (property_exists($objSoapObject, 'Status'))
-				$objToReturn->strStatus = $objSoapObject->Status;
-			if (property_exists($objSoapObject, 'LastUpdated'))
-				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
-			if (property_exists($objSoapObject, 'SearchMetaInfo'))
-				$objToReturn->strSearchMetaInfo = $objSoapObject->SearchMetaInfo;
 			if (property_exists($objSoapObject, 'AssignmentName'))
 				$objToReturn->strAssignmentName = $objSoapObject->AssignmentName;
+			if (property_exists($objSoapObject, 'Status'))
+				$objToReturn->strStatus = $objSoapObject->Status;
 			if (property_exists($objSoapObject, 'FinalMark'))
 				$objToReturn->intFinalMark = $objSoapObject->FinalMark;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
+			if ((property_exists($objSoapObject, 'SubscriptionObject')) &&
+				($objSoapObject->SubscriptionObject))
+				$objToReturn->SubscriptionObject = Subscription::GetObjectFromSoapObject($objSoapObject->SubscriptionObject);
+			if (property_exists($objSoapObject, 'SearchMetaInfo'))
+				$objToReturn->strSearchMetaInfo = $objSoapObject->SearchMetaInfo;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1477,6 +1429,10 @@
 		}
 
 		public static function GetSoapObjectFromObject($objObject, $blnBindRelatedObjects) {
+			if ($objObject->objSubscriptionObject)
+				$objObject->objSubscriptionObject = Subscription::GetSoapObjectFromObject($objObject->objSubscriptionObject, false);
+			else if (!$blnBindRelatedObjects)
+				$objObject->intSubscription = null;
 			return $objObject;
 		}
 
@@ -1492,11 +1448,12 @@
 			// Member Variables
 			///////////////////
 			$iArray['Id'] = $this->intId;
-			$iArray['Status'] = $this->strStatus;
-			$iArray['LastUpdated'] = $this->strLastUpdated;
-			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			$iArray['AssignmentName'] = $this->strAssignmentName;
+			$iArray['Status'] = $this->strStatus;
 			$iArray['FinalMark'] = $this->intFinalMark;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
+			$iArray['Subscription'] = $this->intSubscription;
+			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1535,14 +1492,15 @@
      * @uses QQNode
      *
      * @property-read QQNode $Id
-     * @property-read QQNode $Status
-     * @property-read QQNode $LastUpdated
-     * @property-read QQNode $SearchMetaInfo
      * @property-read QQNode $AssignmentName
+     * @property-read QQNode $Status
      * @property-read QQNode $FinalMark
+     * @property-read QQNode $LastUpdated
+     * @property-read QQNode $Subscription
+     * @property-read QQNodeSubscription $SubscriptionObject
+     * @property-read QQNode $SearchMetaInfo
      *
      *
-     * @property-read QQReverseReferenceNodeSubscription $Subscription
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -1554,18 +1512,20 @@
 			switch ($strName) {
 				case 'Id':
 					return new QQNode('Id', 'Id', 'Integer', $this);
-				case 'Status':
-					return new QQNode('Status', 'Status', 'VarChar', $this);
-				case 'LastUpdated':
-					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
-				case 'SearchMetaInfo':
-					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'Blob', $this);
 				case 'AssignmentName':
 					return new QQNode('AssignmentName', 'AssignmentName', 'VarChar', $this);
+				case 'Status':
+					return new QQNode('Status', 'Status', 'VarChar', $this);
 				case 'FinalMark':
 					return new QQNode('FinalMark', 'FinalMark', 'Integer', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'Subscription':
-					return new QQReverseReferenceNodeSubscription($this, 'subscription', 'reverse_reference', 'Assignment', 'Subscription');
+					return new QQNode('Subscription', 'Subscription', 'Integer', $this);
+				case 'SubscriptionObject':
+					return new QQNodeSubscription('Subscription', 'SubscriptionObject', 'Integer', $this);
+				case 'SearchMetaInfo':
+					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'Blob', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1582,14 +1542,15 @@
 
     /**
      * @property-read QQNode $Id
-     * @property-read QQNode $Status
-     * @property-read QQNode $LastUpdated
-     * @property-read QQNode $SearchMetaInfo
      * @property-read QQNode $AssignmentName
+     * @property-read QQNode $Status
      * @property-read QQNode $FinalMark
+     * @property-read QQNode $LastUpdated
+     * @property-read QQNode $Subscription
+     * @property-read QQNodeSubscription $SubscriptionObject
+     * @property-read QQNode $SearchMetaInfo
      *
      *
-     * @property-read QQReverseReferenceNodeSubscription $Subscription
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -1601,18 +1562,20 @@
 			switch ($strName) {
 				case 'Id':
 					return new QQNode('Id', 'Id', 'integer', $this);
-				case 'Status':
-					return new QQNode('Status', 'Status', 'string', $this);
-				case 'LastUpdated':
-					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
-				case 'SearchMetaInfo':
-					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'string', $this);
 				case 'AssignmentName':
 					return new QQNode('AssignmentName', 'AssignmentName', 'string', $this);
+				case 'Status':
+					return new QQNode('Status', 'Status', 'string', $this);
 				case 'FinalMark':
 					return new QQNode('FinalMark', 'FinalMark', 'integer', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'Subscription':
-					return new QQReverseReferenceNodeSubscription($this, 'subscription', 'reverse_reference', 'Assignment', 'Subscription');
+					return new QQNode('Subscription', 'Subscription', 'integer', $this);
+				case 'SubscriptionObject':
+					return new QQNodeSubscription('Subscription', 'SubscriptionObject', 'integer', $this);
+				case 'SearchMetaInfo':
+					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'string', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

@@ -1,19 +1,29 @@
 <?php
 class AssignmentController_Base {
     protected $Object;
-    public $txtName;
+    public $txtAssignmentName;
     public $txtStatus;
     public $txtFinalMark;
+    public $lstSubscription,$saveUsingLstSubscription = false;
     
     public function __construct($objParentObject,$InitObject = null) {
-        $this->txtName = new QTextBox($objParentObject);
-        $this->txtName->Name = 'Name';
+        $this->txtAssignmentName = new QTextBox($objParentObject);
+        $this->txtAssignmentName->Name = 'Assignment Name';
 
         $this->txtStatus = new QTextBox($objParentObject);
         $this->txtStatus->Name = 'Status';
 
         $this->txtFinalMark = new QTextBox($objParentObject);
         $this->txtFinalMark->Name = 'Final Mark';
+
+        $this->lstSubscription = new QListBox($objParentObject);
+        $this->lstSubscription->Name = 'Subscription';
+        $this->lstSubscription->AddCssClass('fullWidth');
+        // This is limited to 20 objects to ensure no memory overrun for huge data sets. Customise if so desired...
+        $allSubscription = Subscription::LoadAll(QQ::Clause(QQ::LimitInfo(20)));
+        foreach ($allSubscription as $Subscription) {
+            $this->lstSubscription->AddItem(new QListItem($Subscription->Id,$Subscription->Id));
+        }
 
         if ($InitObject)
             $this->Object = $InitObject;
@@ -33,16 +43,26 @@ class AssignmentController_Base {
 
     public function setReferenceListObjectDisplayAttribute($ReferenceObject = null,$ReferenceAttribute = null) {
         if ($ReferenceObject && $ReferenceAttribute) {
+            if ($ReferenceObject == 'Subscription') {
+                $this->lstSubscription->RemoveAllItems();
+                $allSubscription_list = Subscription::LoadAll();
+                foreach ($allSubscription_list as $Subscription) {
+                    $this->lstSubscription->AddItem(new QListItem($Subscription->__get($ReferenceAttribute),$Subscription->Id));
+                }
+            }
         }
     }
 
     public function setOverrideSaveForReferenceObject($ReferenceObject = null,$useListValue = true) {
         if ($ReferenceObject) {
+            if ($ReferenceObject == 'Subscription') {
+                $this->saveUsingLstSubscription = $useListValue;
+            }
         }
     }
 
     public function setValues($Object) {
-        $this->txtName->Text = '';
+        $this->txtAssignmentName->Text = '';
         $this->txtStatus->Text = '';
         $this->txtFinalMark->Text = '';
 
@@ -50,8 +70,8 @@ class AssignmentController_Base {
             $this->refreshAll();
             return;
         }
-        if (!is_null($Object->Name)) {
-            $this->txtName->Text = $Object->Name;
+        if (!is_null($Object->AssignmentName)) {
+            $this->txtAssignmentName->Text = $Object->AssignmentName;
         }
         if (!is_null($Object->Status)) {
             $this->txtStatus->Text = $Object->Status;
@@ -60,6 +80,9 @@ class AssignmentController_Base {
             $this->txtFinalMark->Text = $Object->FinalMark;
         }
         
+        if (!is_null($Object->SubscriptionObject)) {
+            $this->lstSubscription->SelectedValue = $Object->SubscriptionObject->Id;
+        }
 
         $this->resetValidation();
         $this->refreshAll();
@@ -69,10 +92,10 @@ class AssignmentController_Base {
 
     public function renderControl($strControl = '',$withName = true,$nameValue = '',$blnPrintOutput = true) {
         $output = '';
-        if (strtoupper($strControl) == 'NAME') {
+        if (strtoupper($strControl) == 'ASSIGNMENTNAME') {
             if (strlen($nameValue) > 0)
-                $this->txtName->Name = $nameValue;
-            $output = $withName ? $this->txtName->RenderWithName($blnPrintOutput):$this->txtName->Render($blnPrintOutput);
+                $this->txtAssignmentName->Name = $nameValue;
+            $output = $withName ? $this->txtAssignmentName->RenderWithName($blnPrintOutput):$this->txtAssignmentName->Render($blnPrintOutput);
         }
         if (strtoupper($strControl) == 'STATUS') {
             if (strlen($nameValue) > 0)
@@ -84,20 +107,26 @@ class AssignmentController_Base {
                 $this->txtFinalMark->Name = $nameValue;
             $output = $withName ? $this->txtFinalMark->RenderWithName($blnPrintOutput):$this->txtFinalMark->Render($blnPrintOutput);
         }
+        if (strtoupper($strControl) == 'SUBSCRIPTION') {
+            if (strlen($nameValue) > 0)
+                $this->lstSubscription->Name = $nameValue;
+            $output = $withName ? $this->lstSubscription->RenderWithName($blnPrintOutput):$this->lstSubscription->Render($blnPrintOutput);
+        }
         
         return $output;
     }
 
     public function renderAll($withName = true)  {
-        $this->renderControl('NAME',$withName);
+        $this->renderControl('ASSIGNMENTNAME',$withName);
         $this->renderControl('STATUS',$withName);
         $this->renderControl('FINALMARK',$withName);
+        $this->renderControl('SUBSCRIPTION',$withName);
     }
 
     public function getRenderedFrontEnd($withName = true)  {
         $html = '<div class="row">
                 <div class="col-md-6">
-                   '.$this->renderControl('Name',$withName, null, false).'
+                   '.$this->renderControl('AssignmentName',$withName, null, false).'
                 </div>
                 <div class="col-md-6">
                    '.$this->renderControl('Status',$withName, null, false).'
@@ -110,35 +139,41 @@ class AssignmentController_Base {
     }
 
     public function hideAll() {
-        $this->txtName->Visible = false;
+        $this->txtAssignmentName->Visible = false;
         $this->txtStatus->Visible = false;
         $this->txtFinalMark->Visible = false;
+        $this->lstSubscription->Visible = false;
     }
 
     public function showAll() {
-        $this->txtName->Visible = true;
+        $this->txtAssignmentName->Visible = true;
         $this->txtStatus->Visible = true;
         $this->txtFinalMark->Visible = true;
+        $this->lstSubscription->Visible = true;
     }
 
     public function refreshAll() {
-        $this->txtName->Refresh();
+        $this->txtAssignmentName->Refresh();
         $this->txtStatus->Refresh();
         $this->txtFinalMark->Refresh();
+        $this->lstSubscription->Refresh();
     }
 
     public function setValue($strAttr = '',$value = null) {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                $this->txtName->Text = $value;
+            case 'ASSIGNMENTNAME':
+                $this->txtAssignmentName->Text = $value;
                 break;
             case 'STATUS':
                 $this->txtStatus->Text = $value;
                 break;
             case 'FINALMARK':
                 $this->txtFinalMark->Text = $value;
+                break;
+            case 'SUBSCRIPTION':
+                $this->lstSubscription->SelectedValue = $value;
                 break;
             default:
                 break;
@@ -151,9 +186,9 @@ class AssignmentController_Base {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                if ($this->txtName->Text)
-                    return $this->txtName->Text;
+            case 'ASSIGNMENTNAME':
+                if ($this->txtAssignmentName->Text)
+                    return $this->txtAssignmentName->Text;
                 break;
             case 'STATUS':
                 if ($this->txtStatus->Text)
@@ -162,6 +197,10 @@ class AssignmentController_Base {
             case 'FINALMARK':
                 if ($this->txtFinalMark->Text)
                     return $this->txtFinalMark->Text;
+                break;
+            case 'SUBSCRIPTION':
+                if ($this->lstSubscription->SelectedValue)
+                    return $this->lstSubscription->SelectedValue;
                 break;
             default:
                 break;
@@ -174,9 +213,9 @@ class AssignmentController_Base {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                if ($this->txtName)
-                    return $this->txtName->ControlId;
+            case 'ASSIGNMENTNAME':
+                if ($this->txtAssignmentName)
+                    return $this->txtAssignmentName->ControlId;
                 break;
             case 'STATUS':
                 if ($this->txtStatus)
@@ -185,6 +224,10 @@ class AssignmentController_Base {
             case 'FINALMARK':
                 if ($this->txtFinalMark)
                     return $this->txtFinalMark->ControlId;
+                break;
+            case 'SUBSCRIPTION':
+                if ($this->lstSubscription)
+                    return $this->lstSubscription->ControlId;
                 break;
             default:
                 break;
@@ -197,9 +240,9 @@ class AssignmentController_Base {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                $this->txtName->Visible = false;
-                $this->txtName->Refresh();
+            case 'ASSIGNMENTNAME':
+                $this->txtAssignmentName->Visible = false;
+                $this->txtAssignmentName->Refresh();
                 break;
             case 'STATUS':
                 $this->txtStatus->Visible = false;
@@ -208,6 +251,10 @@ class AssignmentController_Base {
             case 'FINALMARK':
                 $this->txtFinalMark->Visible = false;
                 $this->txtFinalMark->Refresh();
+                break;
+            case 'SUBSCRIPTION':
+                $this->lstSubscription->Visible = false;
+                $this->lstSubscription->Refresh();
                 break;
             default:
                 break;
@@ -220,9 +267,9 @@ class AssignmentController_Base {
         switch (strtoupper($strAttr)) {
             case '':
                 break;
-            case 'NAME':
-                $this->txtName->Visible = true;
-                $this->txtName->Refresh();
+            case 'ASSIGNMENTNAME':
+                $this->txtAssignmentName->Visible = true;
+                $this->txtAssignmentName->Refresh();
                 break;
             case 'STATUS':
                 $this->txtStatus->Visible = true;
@@ -232,6 +279,10 @@ class AssignmentController_Base {
                 $this->txtFinalMark->Visible = true;
                 $this->txtFinalMark->Refresh();
                 break;
+            case 'SUBSCRIPTION':
+                $this->lstSubscription->Visible = true;
+                $this->lstSubscription->Refresh();
+                break;
             default:
                 break;
         }
@@ -240,7 +291,7 @@ class AssignmentController_Base {
 
 
     public function getFocusControlId() {
-        return $this->txtName->getJqControlId();
+        return $this->txtAssignmentName->getJqControlId();
     }
 
     public function getObject () {
@@ -254,21 +305,28 @@ class AssignmentController_Base {
             return -1;
     }
 
-    public function applyValuesBeforeSaveObject()  {
+    public function applyValuesBeforeSaveObject($Subscription = null)  {
         if (!$this->Object)
             $this->Object = new Assignment();
         
-        $this->Object->Name = $this->txtName->Text;
+        $this->Object->AssignmentName = $this->txtAssignmentName->Text;
         $this->Object->Status = $this->txtStatus->Text;
         $this->Object->FinalMark = $this->txtFinalMark->Text;
+        if ($Subscription) {
+            $this->Object->SubscriptionObject = $Subscription;
+        }
+        if ($this->saveUsingLstSubscription) {
+            $linkedSubscription = Subscription::Load($this->lstSubscription->SelectedValue);
+            $this->Object->SubscriptionObject = $linkedSubscription;
+        }
     }
 
-    public function saveObject($validate = true)  {
+    public function saveObject($validate = true,$Subscription = null)  {
         if ($validate){
             if (!$this->validateObject())
                 return false;
         }
-        $this->applyValuesBeforeSaveObject();
+        $this->applyValuesBeforeSaveObject($Subscription);
         
         return $this->saveWithAudit();
     }
@@ -285,7 +343,7 @@ class AssignmentController_Base {
         $hasNoErrors = true;
         //$this->resetValidation();
         // Example of validating a field as required
-        //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtName);
+        //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtAssignmentName);
         // Example of validating a field as required
         //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtStatus);
         // Example of validating a field as required
@@ -296,8 +354,8 @@ class AssignmentController_Base {
     }
 
     public function resetValidation()  {
-            $this->txtName->WrapperCssClass = 'form-group';
-            $this->txtName->Placeholder = '';
+            $this->txtAssignmentName->WrapperCssClass = 'form-group';
+            $this->txtAssignmentName->Placeholder = '';
             $this->txtStatus->WrapperCssClass = 'form-group';
             $this->txtStatus->Placeholder = '';
             $this->txtFinalMark->WrapperCssClass = 'form-group';
@@ -321,12 +379,12 @@ class AssignmentController_Base {
             $previousValues = Assignment::Load($this->Object->Id);
         $changeText = '';
         if ($previousValues) {
-        $changeText = 'Name-> Value before: '.$previousValues->Name.', Value after: '.$this->Object->Name.'<br>
+        $changeText = 'AssignmentName-> Value before: '.$previousValues->AssignmentName.', Value after: '.$this->Object->AssignmentName.'<br>
         Status-> Value before: '.$previousValues->Status.', Value after: '.$this->Object->Status.'<br>
         FinalMark-> Value before: '.$previousValues->FinalMark.', Value after: '.$this->Object->FinalMark.'<br>
         ';
         } else {
-        $changeText = 'Name-> Value: '.$this->Object->Name.'<br>
+        $changeText = 'AssignmentName-> Value: '.$this->Object->AssignmentName.'<br>
         Status-> Value: '.$this->Object->Status.'<br>
         FinalMark-> Value: '.$this->Object->FinalMark.'<br>
         ';

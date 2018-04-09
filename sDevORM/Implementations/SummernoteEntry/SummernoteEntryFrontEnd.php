@@ -11,4 +11,7 @@
     <div class="col-md-6">
         <?php $this->SummernoteEntryInstance->renderControl('LastChangedDate');?>
     </div>
+    <div class="col-md-6">
+        <?php $this->SummernoteEntryInstance->renderControl('LastChangedDateTime',true,'Time');?>
+    </div>
 </div>

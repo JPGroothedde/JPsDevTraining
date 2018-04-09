@@ -11,9 +11,17 @@
                 <?php require(__SDEV_ORM__.'/Implementations/RemoteAccess/RemoteAccessFrontEnd.php');?>
             </div>
             <div class="modal-footer">
-                <?php $this->btnSaveRemoteAccess->Render();?>
-                <?php $this->btnDeleteRemoteAccess->Render();?>
-                <button type="button" class="btn btn-default  <?php echo $this->buttonFullWidthCss;?>" data-dismiss="modal">Cancel</button>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php $this->btnSaveRemoteAccess->Render();?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $this->btnDeleteRemoteAccess->Render();?>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-default rippleclick mrg-top10 fullWidth" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

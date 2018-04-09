@@ -60,10 +60,10 @@ class Assignment_OverviewForm extends QForm {
         }
     }
     protected function InitAssignmentDataGrid() {
-        $searchableAttributes = array(QQN::Assignment()->Name,QQN::Assignment()->Status,QQN::Assignment()->FinalMark);
-        $headerItems = array('Name','Status','Final Mark');
-        $headerSortNodes = array(QQN::Assignment()->Name,QQN::Assignment()->Status,QQN::Assignment()->FinalMark);
-        $columnItems = array('Name','Status','FinalMark');
+        $searchableAttributes = array(QQN::Assignment()->AssignmentName,QQN::Assignment()->Status,QQN::Assignment()->FinalMark,QQN::Assignment()->SubscriptionObject->Id);
+        $headerItems = array('Assignment Name','Status','Final Mark','Subscription Object');
+        $headerSortNodes = array(QQN::Assignment()->AssignmentName,QQN::Assignment()->Status,QQN::Assignment()->FinalMark,QQN::Assignment()->SubscriptionObject->Id);
+        $columnItems = array('AssignmentName','Status','FinalMark','Subscription');
         $this->AssignmentWaitControlIcon = new QWaitIcon($this);
         $this->btnNewAssignment = new QButton($this);
         $this->btnNewAssignment->Text = 'Add Assignment';

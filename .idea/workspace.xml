@@ -2,7 +2,379 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de105970-ee06-4441-a939-70ec740783fe" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/App/Training/index.php" afterPath="$PROJECT_DIR$/App/Training/index.php" />
+      <change afterPath="$PROJECT_DIR$/App/User/Student_Overview.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/User/Student_Overview.tpl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Training/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/Training/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Training/index.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/Training/index.tpl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Training/training.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/Training/training.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/User/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/User/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Coordinates.json" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Coordinates.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Delta.json" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Delta.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/_core/php/DeveloperMode/CustomLog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/_core/php/DeveloperMode/CustomLog.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevControls/Implementations/Assignment/AssignmentDataGrid.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevControls/Implementations/Assignment/AssignmentDataGrid.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevControls/Implementations/Subscription/SubscriptionDataGrid.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevControls/Implementations/Subscription/SubscriptionDataGrid.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevFunctions/AppMenus.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevFunctions/AppMenus.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AccountGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AccountGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AssignmentGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AssignmentGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/CourseGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/CourseGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/QQN.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/QQN.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/SubscriptionGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/SubscriptionGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/_class_paths.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/_class_paths.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/AccountController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/AccountFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/AccountModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/FormTemplates/Account_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/FormTemplates/Account_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/ApiEntityController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/ApiEntityFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/ApiEntityModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/FormTemplates/ApiEntity_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/FormTemplates/ApiEntity_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/ApiKeyController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/ApiKeyFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/ApiKeyModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/FormTemplates/ApiKey_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/FormTemplates/ApiKey_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/AssignmentController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/AssignmentFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/AssignmentModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/FormTemplates/Assignment_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/FormTemplates/Assignment_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/PageDrafts/Assignment_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/PageDrafts/Assignment_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/PageDrafts/Assignment_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/PageDrafts/Assignment_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/PageDrafts/Assignment_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/User/Assignment_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Assignment/PageDrafts/Assignment_Overview.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/User/Assignment_Overview.tpl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/AuditLogEntryController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/AuditLogEntryFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/AuditLogEntryModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/FormTemplates/AuditLogEntry_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/FormTemplates/AuditLogEntry_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/BackgroundProcessController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/BackgroundProcessFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/BackgroundProcessModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/FormTemplates/BackgroundProcess_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/FormTemplates/BackgroundProcess_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/BackgroundProcessUpdateController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/BackgroundProcessUpdateFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/BackgroundProcessUpdateModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/FormTemplates/BackgroundProcessUpdate_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/FormTemplates/BackgroundProcessUpdate_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/CourseController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/CourseFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/CourseModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/FormTemplates/Course_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/FormTemplates/Course_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/PageDrafts/Course_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/PageDrafts/Course_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/PageDrafts/Course_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/PageDrafts/Course_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/PageDrafts/Course_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/User/Course_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Course/PageDrafts/Course_Overview.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/User/Course_Overview.tpl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/EmailMessageController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/EmailMessageFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/EmailMessageModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/FormTemplates/EmailMessage_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/FormTemplates/EmailMessage_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/EmailTemplateController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/EmailTemplateFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/EmailTemplateModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/FormTemplates/EmailTemplate_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/FormTemplates/EmailTemplate_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/EmailTemplateContentBlockController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/EmailTemplateContentBlockFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/EmailTemplateContentBlockModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/FormTemplates/EmailTemplateContentBlock_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/FormTemplates/EmailTemplateContentBlock_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/EmailTemplateContentRowController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/EmailTemplateContentRowFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/EmailTemplateContentRowModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/FormTemplates/EmailTemplateContentRow_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/FormTemplates/EmailTemplateContentRow_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FileDocumentController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FileDocumentFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FileDocumentModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FormTemplates/FileDocument_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FormTemplates/FileDocument_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/FormTemplates/LoginToken_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/FormTemplates/LoginToken_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/LoginTokenController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/LoginTokenFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/LoginTokenModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/FormTemplates/PageView_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/FormTemplates/PageView_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageViewController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageViewFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageViewModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/FormTemplates/PasswordReset_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/FormTemplates/PasswordReset_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PasswordResetController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PasswordResetFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PasswordResetModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/FormTemplates/PlaceHolder_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/FormTemplates/PlaceHolder_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/PageDrafts/PlaceHolder_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/PageDrafts/PlaceHolder_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/PageDrafts/PlaceHolder_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/PageDrafts/PlaceHolder_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/PageDrafts/PlaceHolder_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/PageDrafts/PlaceHolder_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/PlaceHolderController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/PlaceHolderFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PlaceHolder/PlaceHolderModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/FormTemplates/RemoteAccess_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/FormTemplates/RemoteAccess_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/RemoteAccessController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/RemoteAccessFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/RemoteAccessModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/FormTemplates/Subscription_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/FormTemplates/Subscription_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/PageDrafts/Subscription_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/PageDrafts/Subscription_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/PageDrafts/Subscription_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/PageDrafts/Subscription_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/PageDrafts/Subscription_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/User/Subscription_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/PageDrafts/Subscription_Overview.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/User/Subscription_Overview.tpl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/SubscriptionController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/SubscriptionFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Subscription/SubscriptionModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/FormTemplates/SummernoteEntry_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/FormTemplates/SummernoteEntry_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/SummernoteEntryController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/SummernoteEntryFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/SummernoteEntryModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Task/FormTemplates/Task_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Task/FormTemplates/Task_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Task/PageDrafts/Task_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Task/PageDrafts/Task_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Task/PageDrafts/Task_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Task/PageDrafts/Task_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Task/TaskController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Task/TaskFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Task/TaskModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/FormTemplates/UserRole_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/FormTemplates/UserRole_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Detail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Detail.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_List.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_List.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Overview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Overview.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/UserRoleController_Base.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/UserRoleFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/UserRoleModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountController_Self.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountFrontEnd_Self.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Account/FormTemplates/Account_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Account/FormTemplates/Account_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiEntity/ApiEntityController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiEntity/ApiEntityFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiEntity/ApiEntityModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiEntity/FormTemplates/ApiEntity_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiEntity/FormTemplates/ApiEntity_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiKey/ApiKeyController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiKey/ApiKeyFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiKey/ApiKeyModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiKey/FormTemplates/ApiKey_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ApiKey/FormTemplates/ApiKey_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Assignment/AssignmentController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Assignment/AssignmentFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Assignment/AssignmentModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Assignment/FormTemplates/Assignment_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Assignment/FormTemplates/Assignment_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/AuditLogEntry/AuditLogEntryController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/AuditLogEntry/AuditLogEntryFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/AuditLogEntry/AuditLogEntryModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/AuditLogEntry/FormTemplates/AuditLogEntry_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/AuditLogEntry/FormTemplates/AuditLogEntry_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcess/BackgroundProcessController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcess/BackgroundProcessFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcess/BackgroundProcessModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcess/FormTemplates/BackgroundProcess_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcess/FormTemplates/BackgroundProcess_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcessUpdate/BackgroundProcessUpdateController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcessUpdate/BackgroundProcessUpdateFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcessUpdate/BackgroundProcessUpdateModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcessUpdate/FormTemplates/BackgroundProcessUpdate_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/BackgroundProcessUpdate/FormTemplates/BackgroundProcessUpdate_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Course/CourseController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Course/CourseFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Course/CourseModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Course/FormTemplates/Course_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Course/FormTemplates/Course_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailMessage/EmailMessageController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailMessage/EmailMessageFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailMessage/EmailMessageModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailMessage/FormTemplates/EmailMessage_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailMessage/FormTemplates/EmailMessage_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplate/EmailTemplateController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplate/EmailTemplateFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplate/EmailTemplateModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplate/FormTemplates/EmailTemplate_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplate/FormTemplates/EmailTemplate_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentBlock/EmailTemplateContentBlockController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentBlock/EmailTemplateContentBlockFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentBlock/EmailTemplateContentBlockModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentBlock/FormTemplates/EmailTemplateContentBlock_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentBlock/FormTemplates/EmailTemplateContentBlock_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentRow/EmailTemplateContentRowController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentRow/EmailTemplateContentRowFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentRow/EmailTemplateContentRowModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentRow/FormTemplates/EmailTemplateContentRow_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/EmailTemplateContentRow/FormTemplates/EmailTemplateContentRow_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/FileDocument/FileDocumentController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/FileDocument/FileDocumentFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/FileDocument/FileDocumentModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/FileDocument/FormTemplates/FileDocument_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/FileDocument/FormTemplates/FileDocument_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/LoginToken/FormTemplates/LoginToken_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/LoginToken/FormTemplates/LoginToken_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/LoginToken/LoginTokenController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/LoginToken/LoginTokenFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/LoginToken/LoginTokenModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PageView/FormTemplates/PageView_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PageView/FormTemplates/PageView_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PageView/PageViewController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PageView/PageViewFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PageView/PageViewModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PasswordReset/FormTemplates/PasswordReset_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PasswordReset/FormTemplates/PasswordReset_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PasswordReset/PasswordResetController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PasswordReset/PasswordResetFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PasswordReset/PasswordResetModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PlaceHolder/FormTemplates/PlaceHolder_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PlaceHolder/FormTemplates/PlaceHolder_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PlaceHolder/PlaceHolderController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PlaceHolder/PlaceHolderFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/PlaceHolder/PlaceHolderModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/RemoteAccess/FormTemplates/RemoteAccess_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/RemoteAccess/FormTemplates/RemoteAccess_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/RemoteAccess/RemoteAccessController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/RemoteAccess/RemoteAccessFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/RemoteAccess/RemoteAccessModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Subscription/FormTemplates/Subscription_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Subscription/FormTemplates/Subscription_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Subscription/SubscriptionController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Subscription/SubscriptionFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Subscription/SubscriptionModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/SummernoteEntry/FormTemplates/SummernoteEntry_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/SummernoteEntry/FormTemplates/SummernoteEntry_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/SummernoteEntry/SummernoteEntryController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/SummernoteEntry/SummernoteEntryFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/SummernoteEntry/SummernoteEntryModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Task/FormTemplates/Task_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Task/FormTemplates/Task_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Task/TaskController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Task/TaskFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Task/TaskModal.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/UserRole/FormTemplates/UserRole_Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/UserRole/FormTemplates/UserRole_Template.tpl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/UserRole/UserRoleController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/UserRole/UserRoleFrontEnd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/UserRole/UserRoleModal.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,30 +388,92 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/App/Training/index.php">
+      <file leaf-file-name="Course_Overview.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/User/Course_Overview.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-340">
-              <caret line="13" column="71" lean-forward="false" selection-start-line="13" selection-start-column="71" selection-end-line="13" selection-end-column="71" />
+            <state relative-caret-position="85">
+              <caret line="5" column="37" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Subscription_Overview.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/App/User/Subscription_Overview.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="61" lean-forward="true" selection-start-line="8" selection-start-column="61" selection-end-line="8" selection-end-column="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QApplicationBase.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/framework/QApplicationBase.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="326">
+              <caret line="740" column="21" lean-forward="true" selection-start-line="740" selection-start-column="8" selection-end-line="740" selection-end-column="21" />
               <folding>
-                <element signature="n#queryDataBase#0;n#IndexForm#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#1;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.tpl.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/User/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="37" lean-forward="false" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+            <state relative-caret-position="170">
+              <caret line="10" column="103" selection-start-line="10" selection-start-column="103" selection-end-line="10" selection-end-column="103" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Student_Overview.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/User/Student_Overview.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" selection-start-line="6" selection-end-line="11" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Assignment_Overview.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/User/Assignment_Overview.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="61" lean-forward="true" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sDataGrid.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sDevControls/BaseControls/sDataGrid.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="590" column="19" selection-start-line="590" selection-start-column="19" selection-end-line="590" selection-end-column="19" />
               <folding>
-                <element signature="e#0#5#0#PHP" expanded="true" />
-                <element signature="e#34#39#0#PHP" expanded="true" />
-                <element signature="e#99#104#0#PHP" expanded="true" />
-                <element signature="e#162#167#0#PHP" expanded="true" />
-                <element signature="e#269#274#0#PHP" expanded="true" />
+                <element signature="e#6#670#0#PHP" expanded="true" />
+                <element signature="n#style#0;n#ul#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="simpleHTML.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SimpleEnhancements/simpleHTML.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="30" column="24" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CourseController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Course/CourseController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="46" selection-start-line="3" selection-start-column="46" selection-end-line="3" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -55,8 +489,44 @@
     </option>
   </component>
   <component name="FindInProjectRecents">
+    <findStrings>
+      <find>$this-&gt;Result</find>
+      <find>RenderWithName</find>
+      <find>$btnNewCourse</find>
+      <find>btnNewCourse</find>
+      <find>btnNewStudent_Clicked</find>
+      <find>btnDeleteCourse</find>
+      <find>$CourseInstance</find>
+      <find>CourseInstance</find>
+      <find>saveObject</find>
+      <find>Account</find>
+      <find>$queryConditions</find>
+      <find>ConstrainingCourseId</find>
+      <find>$AccountObj</find>
+      <find>$ConstrainingAssignmentId</find>
+      <find>main</find>
+      <find>ConstrainingAssignmentId</find>
+      <find>ConstrainingSubscritionId</find>
+      <find>__get</find>
+      <find>save</find>
+      <find>btnSaveSubscription_Clicked</find>
+      <find>addA</find>
+      <find>AddAction</find>
+      <find>setObject</find>
+      <find>refreshAll</find>
+      <find>sh_ApplySearchClickChangeAction</find>
+      <find>ApplySearchClickChangeAction_Triggered</find>
+      <find>u</find>
+      <find>update</find>
+      <find>_ApplySearchClickChangeAction_Triggered</find>
+    </findStrings>
     <replaceStrings>
       <replace />
+      <replace>$this-&gt;html_Result</replace>
+      <replace>Student</replace>
+      <replace>$StudentObj</replace>
+      <replace>ConstrainingSubscritionId</replace>
+      <replace>ConstrainingSubscriptionId</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -65,12 +535,30 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php" />
-        <option value="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" />
         <option value="$PROJECT_DIR$/App/Training/training.tpl.php" />
-        <option value="$PROJECT_DIR$/App/Training/training.php" />
         <option value="$PROJECT_DIR$/App/Training/index.tpl.php" />
         <option value="$PROJECT_DIR$/App/Training/index.php" />
+        <option value="$PROJECT_DIR$/App/User/Student_Overview.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Implementations/Course/CourseFrontEnd.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Implementations/Subscription/SubscriptionModal.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Generated/Course/CourseModal.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Implementations/Course/CourseModal.php" />
+        <option value="$USER_HOME$/Desktop/Old_files/Assignment_Overview.php" />
+        <option value="$PROJECT_DIR$/App/Training/training.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountController.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountFrontEnd.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountModal.php" />
+        <option value="$PROJECT_DIR$/sDevFunctions/AppMenus.class.php" />
+        <option value="$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Implementations/Subscription/SubscriptionFrontEnd.php" />
+        <option value="$PROJECT_DIR$/sDevControls/Implementations/Assignment/AssignmentDataGrid.php" />
+        <option value="$PROJECT_DIR$/sDevControls/Implementations/Subscription/SubscriptionDataGrid.php" />
+        <option value="$PROJECT_DIR$/App/User/Assignment_Overview.php" />
+        <option value="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Generated/Subscription/SubscriptionController_Base.php" />
+        <option value="$PROJECT_DIR$/App/User/index.php" />
+        <option value="$PROJECT_DIR$/App/User/Course_Overview.php" />
+        <option value="$PROJECT_DIR$/App/User/Subscription_Overview.php" />
       </list>
     </option>
   </component>
@@ -80,31 +568,19 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-126" />
-    <option name="width" value="862" />
-    <option name="height" value="504" />
+    <option name="x" value="311" />
+    <option name="width" value="852" />
+    <option name="height" value="503" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -115,18 +591,13 @@
             <path>
               <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
               <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="API" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="API" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Object" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
               <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="User" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
@@ -136,18 +607,74 @@
             <path>
               <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
               <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="includes" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevFunctions" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
               <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Generated" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="DatabaseModel" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
               <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="SimpleEnhancements" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Implementations" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Implementations" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Assignment" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Implementations" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Assignment" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="FormTemplates" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Implementations" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Course" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Implementations" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Course" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="FormTemplates" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Implementations" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Subscription" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Implementations" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Subscription" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="FormTemplates" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -157,9 +684,15 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///opt/lampp/htdocs/JPsDevTraining/App/Training/training.php" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/App/User" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -172,9 +705,6 @@
         </RuleState>
       </list>
     </option>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -191,35 +721,48 @@
       <workItem from="1522848540776" duration="5174000" />
       <workItem from="1522906234189" duration="102000" />
       <workItem from="1522906345800" duration="22119000" />
-      <workItem from="1522991980494" duration="3806000" />
+      <workItem from="1522991980494" duration="29447000" />
+      <workItem from="1523172712337" duration="4269000" />
+      <workItem from="1523250899807" duration="23334000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40547000" />
+    <option name="totallyTimeSpent" value="93791000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-126" y="0" width="1366" height="732" extended-state="6" />
+    <frame x="0" y="0" width="1366" height="732" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32874355" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32874355" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32874355" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32874355" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32874355" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="7" weight="0.32874355" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,335 +772,895 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
-    <watches-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/App/Training/index.php">
+    <entry file="file://$PROJECT_DIR$/App/User/Assignment_Overview.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state>
           <folding>
-            <element signature="n#queryDataBase#0;n#IndexForm#0;n#!!top" expanded="true" />
+            <element signature="e#0#5#0#PHP" />
+            <element signature="e#47#52#0#PHP" />
+            <element signature="e#114#119#0#PHP" />
+            <element signature="e#144#149#0#PHP" />
+            <element signature="e#225#457#0#HTML" />
+            <element signature="e#247#450#0#HTML" />
+            <element signature="e#340#345#0#PHP" />
+            <element signature="e#393#398#0#PHP" />
+            <element signature="e#459#464#0#PHP" />
+            <element signature="e#487#492#0#PHP" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleEnhancements/sUIElementsBase.php">
+    <entry file="file://$PROJECT_DIR$/sDevORM/Generated/Course/CourseModal.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="16" column="35" lean-forward="false" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-          <folding />
+        <state relative-caret-position="126">
+          <caret line="10" column="85" selection-start-line="10" selection-start-column="85" selection-end-line="10" selection-end-column="85" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Course/CourseModal.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="13" />
+        <state relative-caret-position="211">
+          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/Old_files/Course_Overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="57" column="5" lean-forward="true" selection-start-line="55" selection-start-column="4" selection-end-line="57" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Subscription/SubscriptionModal.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="56" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="56" />
           <folding>
             <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="e#34#39#0#PHP" expanded="true" />
-            <element signature="e#99#104#0#PHP" expanded="true" />
-            <element signature="e#162#167#0#PHP" expanded="true" />
-            <element signature="e#269#274#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="61" column="52" lean-forward="false" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="61" column="52" lean-forward="false" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/qcubed/controls/QForm.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="22" column="19" lean-forward="false" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
-          <folding>
-            <element signature="n#QForm#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/base_controls/QFormBase.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31">
-          <caret line="307" column="31" lean-forward="false" selection-start-line="307" selection-start-column="31" selection-end-line="307" selection-end-column="31" />
-          <folding>
-            <element signature="n#Run#0;n#QFormBase#0;n#!!top" expanded="true" />
-            <marker date="1514801973000" expanded="true" signature="59300:59452" ph="..." />
-            <marker date="1514801973000" expanded="true" signature="59335:59442" ph="{...}" />
-            <marker date="1514801973000" expanded="true" signature="59401:59430" ph="{...}" />
-            <marker date="1514801973000" expanded="true" signature="59719:59733" ph="..." />
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#590#595#0#PHP" expanded="true" />
+            <element signature="n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#977#982#0#PHP" expanded="true" />
+            <element signature="n#div#2;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Training/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="2" lean-forward="true" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="61" column="52" lean-forward="false" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DatabaseManagement/DataModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
-          <caret line="28" column="49" lean-forward="false" selection-start-line="28" selection-start-column="49" selection-end-line="28" selection-end-column="49" />
+          <caret line="28" column="80" selection-start-line="28" selection-start-column="80" selection-end-line="28" selection-end-column="80" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
+    <entry file="file://$USER_HOME$/Desktop/Old_files/Assignment_Overview.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="49" column="2" lean-forward="false" selection-start-line="49" selection-start-column="2" selection-end-line="49" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="61" column="52" lean-forward="false" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DatabaseManagement/DataModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="49" lean-forward="true" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="19" column="2" lean-forward="true" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="61" column="52" lean-forward="false" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="61" column="52" lean-forward="false" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/qcubed/controls/QForm.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="22" column="19" lean-forward="false" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/base_controls/QFormBase.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31">
-          <caret line="307" column="31" lean-forward="false" selection-start-line="307" selection-start-column="31" selection-end-line="307" selection-end-column="31" />
-          <folding>
-            <element signature="n#Run#0;n#QFormBase#0;n#!!top" expanded="true" />
-            <marker date="1514801973000" expanded="true" signature="59300:59452" ph="..." />
-            <marker date="1514801973000" expanded="true" signature="59335:59442" ph="{...}" />
-            <marker date="1514801973000" expanded="true" signature="59401:59430" ph="{...}" />
-            <marker date="1514801973000" expanded="true" signature="59719:59733" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/date/date_c.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="10" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/framework/QDateTime.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevORM/Generated/Course/PageDrafts/Course_Overview.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevORM/Generated/Course/PageDrafts/Course_Overview.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-625">
-          <caret line="12" column="25" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/User/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="2" lean-forward="true" selection-start-line="0" selection-start-column="1" selection-end-line="14" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/User/index.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="48" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DatabaseManagement/DataModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="75" lean-forward="false" selection-start-line="6" selection-start-column="75" selection-end-line="6" selection-end-column="75" />
+        <state relative-caret-position="192">
+          <caret line="34" column="80" lean-forward="true" selection-start-line="33" selection-start-column="8" selection-end-line="34" selection-end-column="80" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Training/training.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        <state relative-caret-position="554">
+          <caret line="77" column="31" lean-forward="true" selection-start-line="77" selection-start-column="31" selection-end-line="77" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/training.tpl.php">
+    <entry file="file://$PROJECT_DIR$/includes/app_includes/app_includes.inc.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Account/AccountModal.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="340">
+          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Account/AccountFrontEnd.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Account/AccountController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="141" column="2" selection-start-line="141" selection-start-column="2" selection-end-line="141" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/User/Student_Overview.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="39" selection-start-column="23" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="39" selection-start-line="39" selection-end-line="39" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UserManagement/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="49" lean-forward="true" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/Old_files/Subscription_Overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="67" column="104" lean-forward="true" selection-start-line="67" selection-start-column="52" selection-end-line="67" selection-end-column="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UserManagement/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-51" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.htaccess">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/User/index.tpl.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="47">
+          <caret line="25" column="7" lean-forward="true" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="61" column="52" selection-start-line="61" selection-start-column="38" selection-end-line="61" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevFunctions/AppMenus.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="153" column="92" selection-start-line="153" selection-start-column="92" selection-end-line="153" selection-end-column="92" />
+          <folding>
+            <element signature="e#7#196#0#PHP" />
+            <element signature="e#227#299#0#PHP" />
+            <element signature="n#__construct#0;n#AppMenus#0;n#!!top" />
+            <element signature="e#429#645#0#PHP" />
+            <element signature="n#getMenu#0;n#AppMenus#0;n#!!top" />
+            <element signature="e#1221#2589#0#PHP" />
+            <element signature="e#1953#2589#0#PHP" />
+            <element signature="e#2838#3029#0#PHP" />
+            <element signature="e#3115#3288#0#PHP" />
+            <element signature="e#3817#3952#0#PHP" />
+            <element signature="n#renderMenuItems#0;n#AppMenus#0;n#!!top" />
+            <element signature="e#4135#6105#0#PHP" />
+            <element signature="e#4210#6095#0#PHP" />
+            <element signature="e#4282#4599#0#PHP" />
+            <element signature="e#4336#4451#0#PHP" />
+            <element signature="e#4470#4599#0#PHP" />
+            <element signature="e#4616#6081#0#PHP" />
+            <element signature="e#5183#6081#0#PHP" />
+            <element signature="e#5365#5738#0#PHP" />
+            <element signature="n#ExampleMenu#0;n#AppMenus#0;n#!!top" />
+            <element signature="n#MenuType#0;n#!!top" />
+            <element signature="n#MenuItem#0;n#!!top" />
+            <element signature="n#__construct#0;n#MenuItem#0;n#!!top" />
+            <element signature="n#CheckMenuItemUserRole#0;n#MenuItem#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Assignment/AssignmentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="53" selection-start-line="3" selection-start-column="53" selection-end-line="3" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AssignmentGen.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1197">
+          <caret line="1094" column="29" selection-start-line="1094" selection-start-column="24" selection-end-line="1094" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/DatabaseModel/Account.class.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Subscription/SubscriptionFrontEnd.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/User/Subscription_Overview.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Generated/Assignment/AssignmentController_Base.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="323" column="68" selection-start-line="323" selection-start-column="48" selection-end-line="323" selection-end-column="68" />
+          <folding>
+            <element signature="n#__construct#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#1009#1161#0#PHP" />
+            <element signature="n#setObject#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#setReferenceListObjectDisplayAttribute#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#1604#2065#0#PHP" />
+            <element signature="e#1663#2055#0#PHP" />
+            <element signature="e#1844#2041#0#PHP" />
+            <element signature="n#setOverrideSaveForReferenceObject#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#2183#2349#0#PHP" />
+            <element signature="e#2219#2339#0#PHP" />
+            <element signature="n#setValues#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#2529#2607#0#PHP" />
+            <element signature="e#2616#2736#0#PHP" />
+            <element signature="e#2745#2841#0#PHP" />
+            <element signature="e#2850#2955#0#PHP" />
+            <element signature="e#2973#3112#0#PHP" />
+            <element signature="n#renderControl#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#3330#3634#0#PHP" />
+            <element signature="e#3643#3915#0#PHP" />
+            <element signature="e#3924#4208#0#PHP" />
+            <element signature="e#4217#4513#0#PHP" />
+            <element signature="n#renderAll#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#getRenderedFrontEnd#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#hideAll#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#showAll#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#refreshAll#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#setValue#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#6130#6698#0#PHP" />
+            <element signature="e#6174#6205#0#PHP" />
+            <element signature="e#6218#6320#0#PHP" />
+            <element signature="e#6333#6419#0#PHP" />
+            <element signature="e#6432#6524#0#PHP" />
+            <element signature="e#6537#6644#0#PHP" />
+            <element signature="e#6657#6688#0#PHP" />
+            <element signature="n#getValue#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#6782#7560#0#PHP" />
+            <element signature="e#6826#6857#0#PHP" />
+            <element signature="e#6870#7026#0#PHP" />
+            <element signature="e#7039#7171#0#PHP" />
+            <element signature="e#7184#7325#0#PHP" />
+            <element signature="e#7338#7506#0#PHP" />
+            <element signature="e#7519#7550#0#PHP" />
+            <element signature="n#getControlId#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#7648#8404#0#PHP" />
+            <element signature="e#7692#7723#0#PHP" />
+            <element signature="e#7736#7891#0#PHP" />
+            <element signature="e#7904#8035#0#PHP" />
+            <element signature="e#8048#8188#0#PHP" />
+            <element signature="e#8201#8350#0#PHP" />
+            <element signature="e#8363#8394#0#PHP" />
+            <element signature="n#hideControl#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#8491#9255#0#PHP" />
+            <element signature="e#8535#8566#0#PHP" />
+            <element signature="e#8579#8736#0#PHP" />
+            <element signature="e#8749#8882#0#PHP" />
+            <element signature="e#8895#9037#0#PHP" />
+            <element signature="e#9050#9201#0#PHP" />
+            <element signature="e#9214#9245#0#PHP" />
+            <element signature="n#showControl#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#9342#10102#0#PHP" />
+            <element signature="e#9386#9417#0#PHP" />
+            <element signature="e#9430#9586#0#PHP" />
+            <element signature="e#9599#9731#0#PHP" />
+            <element signature="e#9744#9885#0#PHP" />
+            <element signature="e#9898#10048#0#PHP" />
+            <element signature="e#10061#10092#0#PHP" />
+            <element signature="n#getFocusControlId#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#getObject#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#getObjectId#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#applyValuesBeforeSaveObject#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#10810#10903#0#PHP" />
+            <element signature="e#10912#11122#0#PHP" />
+            <element signature="n#saveObject#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#11211#11308#0#PHP" />
+            <element signature="n#deleteObject#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#11469#11653#0#PHP" />
+            <element signature="n#validateObject#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#11759#11786#0#PHP" />
+            <element signature="n#resetValidation#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="n#saveWithAudit#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#12974#13188#0#PHP" />
+            <element signature="e#13050#13188#0#PHP" />
+            <element signature="e#13372#14978#0#PHP" />
+            <element signature="n#deleteWithAudit#0;n#AssignmentController_Base#0;n#!!top" />
+            <element signature="e#15263#16023#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevControls/Implementations/Subscription/SubscriptionDataGrid.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevControls/Implementations/Assignment/AssignmentDataGrid.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseManagement/DataModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="53" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/Old_files/SubscriptionFrontEnd.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="10" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="18" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/DatabaseModel/generated/StudentGen.class.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/DatabaseModel/generated/SubscriptionGen.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="1076" column="9" lean-forward="true" selection-start-line="1074" selection-start-column="12" selection-end-line="1076" selection-end-column="9" />
+          <folding>
+            <element signature="e#7#1937#0#PHP" />
+            <element signature="e#2237#2362#0#PHP" />
+            <element signature="e#2413#2542#0#PHP" />
+            <element signature="e#2607#2732#0#PHP" />
+            <element signature="e#2793#2923#0#PHP" />
+            <element signature="e#2992#3122#0#PHP" />
+            <element signature="e#3191#3314#0#PHP" />
+            <element signature="e#3375#3511#0#PHP" />
+            <element signature="e#3586#3707#0#PHP" />
+            <element signature="e#3766#4023#0#PHP" />
+            <element signature="e#4054#4328#0#PHP" />
+            <element signature="e#4371#4666#0#PHP" />
+            <element signature="e#4721#4954#0#PHP" />
+            <element signature="e#5088#5455#0#PHP" />
+            <element signature="e#5490#5852#0#PHP" />
+            <element signature="e#5888#5972#0#PHP" />
+            <element signature="e#5975#6579#0#PHP" />
+            <element signature="e#6692#6860#0#PHP" />
+            <element signature="e#6863#6943#0#PHP" />
+            <element signature="e#6947#7142#0#PHP" />
+            <element signature="e#7145#7950#0#PHP" />
+            <element signature="e#7239#7619#0#PHP" />
+            <element signature="e#7545#7614#0#PHP" />
+            <element signature="e#7681#7813#0#PHP" />
+            <element signature="e#7712#7783#0#PHP" />
+            <element signature="e#7818#7922#0#PHP" />
+            <element signature="e#7954#8114#0#PHP" />
+            <element signature="e#8117#8568#0#PHP" />
+            <element signature="e#8181#8325#0#PHP" />
+            <element signature="e#8394#8564#0#PHP" />
+            <element signature="e#8474#8564#0#PHP" />
+            <element signature="e#8572#8627#0#PHP" />
+            <element signature="e#8630#8782#0#PHP" />
+            <element signature="e#8892#9543#0#PHP" />
+            <element signature="e#9546#12365#0#PHP" />
+            <element signature="e#9997#10613#0#PHP" />
+            <element signature="e#10143#10608#0#PHP" />
+            <element signature="e#10195#10343#0#PHP" />
+            <element signature="e#10355#10608#0#PHP" />
+            <element signature="e#10397#10602#0#PHP" />
+            <element signature="e#10449#10595#0#PHP" />
+            <element signature="e#10617#10762#0#PHP" />
+            <element signature="e#10978#11142#0#PHP" />
+            <element signature="e#11049#11142#0#PHP" />
+            <element signature="e#11227#11640#0#PHP" />
+            <element signature="e#11793#12314#0#PHP" />
+            <element signature="e#11823#12309#0#PHP" />
+            <element signature="e#12369#12827#0#PHP" />
+            <element signature="e#12830#14298#0#PHP" />
+            <element signature="e#12983#13217#0#PHP" />
+            <element signature="e#13127#13217#0#PHP" />
+            <element signature="e#13410#14294#0#PHP" />
+            <element signature="e#13518#13848#0#PHP" />
+            <element signature="e#13729#13842#0#PHP" />
+            <element signature="e#13853#14036#0#PHP" />
+            <element signature="e#14006#14036#0#PHP" />
+            <element signature="e#14042#14294#0#PHP" />
+            <element signature="e#14302#14779#0#PHP" />
+            <element signature="e#14782#15426#0#PHP" />
+            <element signature="e#14934#15168#0#PHP" />
+            <element signature="e#15078#15168#0#PHP" />
+            <element signature="e#15430#15930#0#PHP" />
+            <element signature="e#15933#16520#0#PHP" />
+            <element signature="e#16086#16320#0#PHP" />
+            <element signature="e#16230#16320#0#PHP" />
+            <element signature="e#16524#17004#0#PHP" />
+            <element signature="e#17007#18405#0#PHP" />
+            <element signature="e#17159#17392#0#PHP" />
+            <element signature="e#17302#17392#0#PHP" />
+            <element signature="e#17583#18081#0#PHP" />
+            <element signature="e#17614#18076#0#PHP" />
+            <element signature="e#17666#17746#0#PHP" />
+            <element signature="e#17758#18076#0#PHP" />
+            <element signature="e#17800#17946#0#PHP" />
+            <element signature="e#17852#17939#0#PHP" />
+            <element signature="e#17953#18076#0#PHP" />
+            <element signature="e#18234#18401#0#PHP" />
+            <element signature="e#18409#19263#0#PHP" />
+            <element signature="e#18888#19236#0#PHP" />
+            <element signature="e#19183#19236#0#PHP" />
+            <element signature="e#19267#19497#0#PHP" />
+            <element signature="e#19500#20768#0#PHP" />
+            <element signature="e#19618#19787#0#PHP" />
+            <element signature="e#19714#19787#0#PHP" />
+            <element signature="e#19801#20764#0#PHP" />
+            <element signature="e#20002#20764#0#PHP" />
+            <element signature="e#20878#21286#0#PHP" />
+            <element signature="e#21292#23693#0#PHP" />
+            <element signature="e#21416#21471#0#PHP" />
+            <element signature="e#21655#23665#0#PHP" />
+            <element signature="e#21713#21816#0#PHP" />
+            <element signature="e#21826#23659#0#PHP" />
+            <element signature="e#22069#23653#0#PHP" />
+            <element signature="e#22164#22265#0#PHP" />
+            <element signature="e#22272#22960#0#PHP" />
+            <element signature="e#22415#22521#0#PHP" />
+            <element signature="e#22762#22952#0#PHP" />
+            <element signature="e#22880#22952#0#PHP" />
+            <element signature="e#22968#23653#0#PHP" />
+            <element signature="e#23065#23245#0#PHP" />
+            <element signature="e#23187#23245#0#PHP" />
+            <element signature="e#23259#23333#0#PHP" />
+            <element signature="e#23591#23644#0#PHP" />
+            <element signature="e#23699#24312#0#PHP" />
+            <element signature="e#24315#30343#0#PHP" />
+            <element signature="e#24519#24558#0#PHP" />
+            <element signature="e#24566#24886#0#PHP" />
+            <element signature="e#24963#25284#0#PHP" />
+            <element signature="e#25076#25279#0#PHP" />
+            <element signature="e#27258#27606#0#PHP" />
+            <element signature="e#27333#27601#0#PHP" />
+            <element signature="e#27392#27462#0#PHP" />
+            <element signature="e#27754#28023#0#PHP" />
+            <element signature="e#28117#28219#0#PHP" />
+            <element signature="e#28488#28811#0#PHP" />
+            <element signature="e#29011#29329#0#PHP" />
+            <element signature="e#29849#30314#0#PHP" />
+            <element signature="e#29906#30309#0#PHP" />
+            <element signature="e#30097#30309#0#PHP" />
+            <element signature="e#30349#30583#0#PHP" />
+            <element signature="e#30586#31563#0#PHP" />
+            <element signature="e#30965#31534#0#PHP" />
+            <element signature="e#31059#31361#0#PHP" />
+            <element signature="e#31242#31355#0#PHP" />
+            <element signature="e#31367#31534#0#PHP" />
+            <element signature="e#31568#31946#0#PHP" />
+            <element signature="e#31949#32788#0#PHP" />
+            <element signature="e#32507#32633#0#PHP" />
+            <element signature="e#32958#33175#0#PHP" />
+            <element signature="e#33178#33395#0#PHP" />
+            <element signature="e#33258#33390#0#PHP" />
+            <element signature="e#33289#33360#0#PHP" />
+            <element signature="e#33399#33632#0#PHP" />
+            <element signature="e#33635#34027#0#PHP" />
+            <element signature="e#33799#34023#0#PHP" />
+            <element signature="e#33816#33926#0#PHP" />
+            <element signature="e#33933#34023#0#PHP" />
+            <element signature="e#34031#34139#0#PHP" />
+            <element signature="e#34142#34369#0#PHP" />
+            <element signature="e#34277#34364#0#PHP" />
+            <element signature="e#34373#34604#0#PHP" />
+            <element signature="e#34607#34994#0#PHP" />
+            <element signature="e#34768#34990#0#PHP" />
+            <element signature="e#34785#34893#0#PHP" />
+            <element signature="e#34900#34990#0#PHP" />
+            <element signature="e#34998#35104#0#PHP" />
+            <element signature="e#35107#35329#0#PHP" />
+            <element signature="e#35239#35324#0#PHP" />
+            <element signature="e#35593#35701#0#PHP" />
+            <element signature="e#45434#45491#0#PHP" />
+            <element signature="e#45494#47511#0#PHP" />
+            <element signature="e#47048#47315#0#PHP" />
+            <element signature="e#47111#47315#0#PHP" />
+            <element signature="e#47348#47480#0#PHP" />
+            <element signature="e#47521#47603#0#PHP" />
+            <element signature="e#47606#47917#0#PHP" />
+            <element signature="e#47641#47913#0#PHP" />
+            <element signature="e#47921#47978#0#PHP" />
+            <element signature="e#47981#48342#0#PHP" />
+            <element signature="e#48138#48200#0#PHP" />
+            <element signature="e#48206#48338#0#PHP" />
+            <element signature="e#48346#48406#0#PHP" />
+            <element signature="e#48409#48761#0#PHP" />
+            <element signature="e#48565#48619#0#PHP" />
+            <element signature="e#48625#48757#0#PHP" />
+            <element signature="e#48765#48841#0#PHP" />
+            <element signature="e#48844#49571#0#PHP" />
+            <element signature="e#49649#49828#0#PHP" />
+            <element signature="e#49831#52974#0#PHP" />
+            <element signature="e#49868#52970#0#PHP" />
+            <element signature="e#49964#50090#0#PHP" />
+            <element signature="e#49980#50064#0#PHP" />
+            <element signature="e#50096#50231#0#PHP" />
+            <element signature="e#50119#50198#0#PHP" />
+            <element signature="e#50237#50366#0#PHP" />
+            <element signature="e#50258#50335#0#PHP" />
+            <element signature="e#50372#50510#0#PHP" />
+            <element signature="e#50397#50475#0#PHP" />
+            <element signature="e#50516#50675#0#PHP" />
+            <element signature="e#50541#50640#0#PHP" />
+            <element signature="e#50681#50808#0#PHP" />
+            <element signature="e#50702#50777#0#PHP" />
+            <element signature="e#50814#50961#0#PHP" />
+            <element signature="e#50842#50923#0#PHP" />
+            <element signature="e#50967#51091#0#PHP" />
+            <element signature="e#50987#51061#0#PHP" />
+            <element signature="e#51168#51594#0#PHP" />
+            <element signature="e#51195#51303#0#PHP" />
+            <element signature="e#51309#51594#1#PHP" />
+            <element signature="e#51498#51594#0#PHP" />
+            <element signature="e#51600#52016#0#PHP" />
+            <element signature="e#51626#51731#0#PHP" />
+            <element signature="e#51737#52016#1#PHP" />
+            <element signature="e#51920#52016#0#PHP" />
+            <element signature="e#52023#52051#0#PHP" />
+            <element signature="e#52208#52460#0#PHP" />
+            <element signature="e#52233#52425#0#PHP" />
+            <element signature="e#52466#52739#0#PHP" />
+            <element signature="e#52496#52699#0#PHP" />
+            <element signature="e#52746#52798#0#PHP" />
+            <element signature="e#52804#52965#0#PHP" />
+            <element signature="e#52818#52965#1#PHP" />
+            <element signature="e#52869#52965#0#PHP" />
+            <element signature="e#52980#53230#0#PHP" />
+            <element signature="e#53233#57536#0#PHP" />
+            <element signature="e#53281#57532#0#PHP" />
+            <element signature="e#53377#53707#0#PHP" />
+            <element signature="e#53400#53514#0#PHP" />
+            <element signature="e#53520#53707#1#PHP" />
+            <element signature="e#53611#53707#0#PHP" />
+            <element signature="e#53713#54037#0#PHP" />
+            <element signature="e#53734#53846#0#PHP" />
+            <element signature="e#53852#54037#1#PHP" />
+            <element signature="e#53941#54037#0#PHP" />
+            <element signature="e#54043#54370#0#PHP" />
+            <element signature="e#54068#54178#0#PHP" />
+            <element signature="e#54184#54370#1#PHP" />
+            <element signature="e#54274#54370#0#PHP" />
+            <element signature="e#54376#54733#0#PHP" />
+            <element signature="e#54397#54505#0#PHP" />
+            <element signature="e#54511#54733#1#PHP" />
+            <element signature="e#54637#54733#0#PHP" />
+            <element signature="e#54739#55076#0#PHP" />
+            <element signature="e#54767#54880#0#PHP" />
+            <element signature="e#54886#55076#1#PHP" />
+            <element signature="e#54980#55076#0#PHP" />
+            <element signature="e#55082#55435#0#PHP" />
+            <element signature="e#55102#55209#0#PHP" />
+            <element signature="e#55215#55435#1#PHP" />
+            <element signature="e#55339#55435#0#PHP" />
+            <element signature="e#55512#56434#0#PHP" />
+            <element signature="e#55539#55680#0#PHP" />
+            <element signature="e#55686#56422#0#PHP" />
+            <element signature="e#55808#56422#0#PHP" />
+            <element signature="e#55879#56051#0#PHP" />
+            <element signature="e#55947#56051#0#PHP" />
+            <element signature="e#56440#57349#0#PHP" />
+            <element signature="e#56466#56603#0#PHP" />
+            <element signature="e#56609#57337#0#PHP" />
+            <element signature="e#56729#57337#0#PHP" />
+            <element signature="e#56799#56970#0#PHP" />
+            <element signature="e#56866#56970#0#PHP" />
+            <element signature="e#57355#57527#0#PHP" />
+            <element signature="e#57369#57527#1#PHP" />
+            <element signature="e#57431#57527#0#PHP" />
+            <element signature="e#57540#57680#0#PHP" />
+            <element signature="e#57683#57876#0#PHP" />
+            <element signature="e#58104#58304#0#PHP" />
+            <element signature="e#58307#58616#0#PHP" />
+            <element signature="e#58428#58612#0#PHP" />
+            <element signature="e#58522#58612#0#PHP" />
+            <element signature="e#58620#58684#0#PHP" />
+            <element signature="e#58687#58831#0#PHP" />
+            <element signature="e#58835#58928#0#PHP" />
+            <element signature="e#58931#59654#0#PHP" />
+            <element signature="e#59436#59649#0#PHP" />
+            <element signature="e#59658#59753#0#PHP" />
+            <element signature="e#59756#60516#0#PHP" />
+            <element signature="e#60267#60511#0#PHP" />
+            <element signature="e#60520#60580#0#PHP" />
+            <element signature="e#60583#61080#0#PHP" />
+            <element signature="e#60901#61075#0#PHP" />
+            <element signature="e#61084#61186#0#PHP" />
+            <element signature="e#61189#61924#0#PHP" />
+            <element signature="e#61705#61919#0#PHP" />
+            <element signature="e#61928#61994#0#PHP" />
+            <element signature="e#61997#62459#0#PHP" />
+            <element signature="e#62310#62454#0#PHP" />
+            <element signature="e#62581#62741#0#PHP" />
+            <element signature="e#62744#62813#0#PHP" />
+            <element signature="e#62817#62990#0#PHP" />
+            <element signature="e#62993#63118#0#PHP" />
+            <element signature="e#63122#63500#0#PHP" />
+            <element signature="e#63503#63563#0#PHP" />
+            <element signature="e#63695#64511#0#PHP" />
+            <element signature="e#64515#64868#0#PHP" />
+            <element signature="e#64592#64864#0#PHP" />
+            <element signature="e#64872#65135#0#PHP" />
+            <element signature="e#65139#66488#0#PHP" />
+            <element signature="e#66492#66806#0#PHP" />
+            <element signature="e#66810#67583#0#PHP" />
+            <element signature="e#67811#68319#0#PHP" />
+            <element signature="e#68417#68493#0#PHP" />
+            <element signature="e#68497#68933#0#PHP" />
+            <element signature="e#68936#69074#0#PHP" />
+            <element signature="e#69207#69789#0#PHP" />
+            <element signature="n#QQNodeSubscription#0;n#!!top" />
+            <element signature="n#__get#0;n#QQNodeSubscription#0;n#!!top" />
+            <element signature="e#69995#71309#0#PHP" />
+            <element signature="e#70019#70083#0#PHP" />
+            <element signature="e#70088#70170#0#PHP" />
+            <element signature="e#70175#70251#0#PHP" />
+            <element signature="e#70256#70345#0#PHP" />
+            <element signature="e#70350#70441#0#PHP" />
+            <element signature="e#70446#70525#0#PHP" />
+            <element signature="e#70530#70628#0#PHP" />
+            <element signature="e#70633#70730#0#PHP" />
+            <element signature="e#70735#70811#0#PHP" />
+            <element signature="e#70816#70910#0#PHP" />
+            <element signature="e#70915#71055#0#PHP" />
+            <element signature="e#71061#71138#0#PHP" />
+            <element signature="e#71143#71304#0#PHP" />
+            <element signature="e#71157#71304#1#PHP" />
+            <element signature="e#71208#71304#0#PHP" />
+            <element signature="e#71322#71877#0#PHP" />
+            <element signature="n#QQReverseReferenceNodeSubscription#0;n#!!top" />
+            <element signature="n#__get#0;n#QQReverseReferenceNodeSubscription#0;n#!!top" />
+            <element signature="e#72115#73441#0#PHP" />
+            <element signature="e#72139#72203#0#PHP" />
+            <element signature="e#72208#72295#0#PHP" />
+            <element signature="e#72300#72381#0#PHP" />
+            <element signature="e#72386#72476#0#PHP" />
+            <element signature="e#72481#72571#0#PHP" />
+            <element signature="e#72576#72655#0#PHP" />
+            <element signature="e#72660#72758#0#PHP" />
+            <element signature="e#72763#72862#0#PHP" />
+            <element signature="e#72867#72943#0#PHP" />
+            <element signature="e#72948#73042#0#PHP" />
+            <element signature="e#73047#73187#0#PHP" />
+            <element signature="e#73193#73270#0#PHP" />
+            <element signature="e#73275#73436#0#PHP" />
+            <element signature="e#73289#73436#1#PHP" />
+            <element signature="e#73340#73436#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Generated/Subscription/SubscriptionController_Base.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="433" column="21" selection-start-line="433" selection-start-column="21" selection-end-line="433" selection-end-column="21" />
+          <folding>
+            <element signature="n#__construct#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#1147#1274#0#PHP" />
+            <element signature="e#1623#1745#0#PHP" />
+            <element signature="n#setObject#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="n#setReferenceListObjectDisplayAttribute#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#2188#2955#0#PHP" />
+            <element signature="e#2247#2594#0#PHP" />
+            <element signature="e#2408#2580#0#PHP" />
+            <element signature="e#2607#2945#0#PHP" />
+            <element signature="e#2764#2931#0#PHP" />
+            <element signature="n#setOverrideSaveForReferenceObject#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#3073#3350#0#PHP" />
+            <element signature="e#3109#3219#0#PHP" />
+            <element signature="e#3232#3340#0#PHP" />
+            <element signature="n#setValues#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="n#renderControl#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#4500#4784#0#PHP" />
+            <element signature="e#4793#5069#0#PHP" />
+            <element signature="e#5078#5370#0#PHP" />
+            <element signature="e#5379#5655#0#PHP" />
+            <element signature="e#5664#5936#0#PHP" />
+            <element signature="n#renderAll#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="n#getRenderedFrontEnd#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="n#hideAll#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="n#showAll#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="n#refreshAll#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="n#setValue#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#7695#8357#0#PHP" />
+            <element signature="e#7739#7770#0#PHP" />
+            <element signature="e#7783#7875#0#PHP" />
+            <element signature="e#7888#7976#0#PHP" />
+            <element signature="e#7989#8085#0#PHP" />
+            <element signature="e#8098#8195#0#PHP" />
+            <element signature="e#8208#8303#0#PHP" />
+            <element signature="e#8316#8347#0#PHP" />
+            <element signature="n#getValue#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#8441#9361#0#PHP" />
+            <element signature="e#8485#8516#0#PHP" />
+            <element signature="e#8529#8670#0#PHP" />
+            <element signature="e#8683#8818#0#PHP" />
+            <element signature="e#8831#8978#0#PHP" />
+            <element signature="e#8991#9144#0#PHP" />
+            <element signature="e#9157#9307#0#PHP" />
+            <element signature="e#9320#9351#0#PHP" />
+            <element signature="n#getControlId#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#9449#10328#0#PHP" />
+            <element signature="e#9493#9524#0#PHP" />
+            <element signature="e#9537#9677#0#PHP" />
+            <element signature="e#9690#9824#0#PHP" />
+            <element signature="e#9837#9983#0#PHP" />
+            <element signature="e#9996#10130#0#PHP" />
+            <element signature="e#10143#10274#0#PHP" />
+            <element signature="e#10287#10318#0#PHP" />
+            <element signature="n#hideControl#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#10415#11304#0#PHP" />
+            <element signature="e#10459#10490#0#PHP" />
+            <element signature="e#10503#10645#0#PHP" />
+            <element signature="e#10658#10794#0#PHP" />
+            <element signature="e#10807#10955#0#PHP" />
+            <element signature="e#10968#11104#0#PHP" />
+            <element signature="e#11117#11250#0#PHP" />
+            <element signature="e#11263#11294#0#PHP" />
+            <element signature="n#showControl#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#11391#12275#0#PHP" />
+            <element signature="e#11435#11466#0#PHP" />
+            <element signature="e#11479#11620#0#PHP" />
+            <element signature="e#11633#11768#0#PHP" />
+            <element signature="e#11781#11928#0#PHP" />
+            <element signature="e#11941#12076#0#PHP" />
+            <element signature="e#12089#12221#0#PHP" />
+            <element signature="e#12234#12265#0#PHP" />
+            <element signature="n#getFocusControlId#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="n#getObject#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="n#deleteObject#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#14042#14226#0#PHP" />
+            <element signature="n#resetValidation#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#15939#17539#0#PHP" />
+            <element signature="n#deleteWithAudit#0;n#SubscriptionController_Base#0;n#!!top" />
+            <element signature="e#17824#18586#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Subscription/SubscriptionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="48" selection-start-line="3" selection-start-column="48" selection-end-line="3" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/DatabaseModel/generated/CourseGen.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1938" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageControl/pageManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-599" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevControls/Implementations/Course/CourseDataGrid.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Generated/Course/CourseController_Base.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="105" column="32" lean-forward="true" selection-start-line="105" selection-start-column="32" selection-end-line="105" selection-end-column="32" />
+          <folding>
+            <element signature="e#7134#7161#0#PHP" />
+            <element signature="e#8487#9918#0#PHP" />
+            <element signature="e#10203#10959#0#PHP" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/base_controls/QControlBase.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="459" column="55" lean-forward="false" selection-start-line="459" selection-start-column="45" selection-end-line="459" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/base_controls/_events.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="87" column="10" lean-forward="false" selection-start-line="87" selection-start-column="10" selection-end-line="87" selection-end-column="10" />
+          <caret line="1145" column="24" selection-start-line="1145" selection-start-column="24" selection-end-line="1145" selection-end-column="24" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SimpleEnhancements/simpleHTML.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="30" column="24" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Course/CourseController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="46" selection-start-line="3" selection-start-column="46" selection-end-line="3" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevControls/BaseControls/sDataGrid.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="590" column="19" selection-start-line="590" selection-start-column="19" selection-end-line="590" selection-end-column="19" />
+          <folding>
+            <element signature="e#6#670#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/User/Assignment_Overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="61" lean-forward="true" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UserManagement/currentAccount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/User/index.php">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="16" column="6" lean-forward="false" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+          <caret line="10" column="103" selection-start-line="10" selection-start-column="103" selection-end-line="10" selection-end-column="103" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleEnhancements/sUIElementsBase.php">
+    <entry file="file://$PROJECT_DIR$/App/User/Student_Overview.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="16" column="35" lean-forward="false" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-          <folding />
+        <state relative-caret-position="102">
+          <caret line="6" selection-start-line="6" selection-end-line="11" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/html5/tables.rnc">
+    <entry file="file://$PROJECT_DIR$/App/User/Course_Overview.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="237" column="16" lean-forward="false" selection-start-line="237" selection-start-column="16" selection-end-line="237" selection-end-column="16" />
-          <folding />
+        <state relative-caret-position="85">
+          <caret line="5" column="37" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.tpl.php">
+    <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/framework/QApplicationBase.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="37" lean-forward="false" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+        <state relative-caret-position="326">
+          <caret line="740" column="21" lean-forward="true" selection-start-line="740" selection-start-column="8" selection-end-line="740" selection-end-column="21" />
           <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="e#34#39#0#PHP" expanded="true" />
-            <element signature="e#99#104#0#PHP" expanded="true" />
-            <element signature="e#162#167#0#PHP" expanded="true" />
-            <element signature="e#269#274#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#li#1;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Training/index.php">
+    <entry file="file://$PROJECT_DIR$/App/User/Subscription_Overview.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340">
-          <caret line="13" column="71" lean-forward="false" selection-start-line="13" selection-start-column="71" selection-end-line="13" selection-end-column="71" />
-          <folding>
-            <element signature="n#queryDataBase#0;n#IndexForm#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="136">
+          <caret line="8" column="61" lean-forward="true" selection-start-line="8" selection-start-column="61" selection-end-line="8" selection-end-column="61" />
         </state>
       </provider>
     </entry>

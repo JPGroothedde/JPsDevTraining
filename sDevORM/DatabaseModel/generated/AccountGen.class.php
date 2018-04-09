@@ -31,8 +31,6 @@
 	 * @property-read LoginToken[] $_LoginTokenArray the value for the private _objLoginTokenArray (Read-Only) if set due to an ExpandAsArray on the LoginToken.Account reverse relationship
 	 * @property-read PasswordReset $_PasswordReset the value for the private _objPasswordReset (Read-Only) if set due to an expansion on the PasswordReset.Account reverse relationship
 	 * @property-read PasswordReset[] $_PasswordResetArray the value for the private _objPasswordResetArray (Read-Only) if set due to an ExpandAsArray on the PasswordReset.Account reverse relationship
-	 * @property-read Subscription $_Subscription the value for the private _objSubscription (Read-Only) if set due to an expansion on the Subscription.Account reverse relationship
-	 * @property-read Subscription[] $_SubscriptionArray the value for the private _objSubscriptionArray (Read-Only) if set due to an ExpandAsArray on the Subscription.Account reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class AccountGen extends QBaseClass implements IteratorAggregate {
@@ -167,22 +165,6 @@
 		 * @var PasswordReset[] _objPasswordResetArray;
 		 */
 		private $_objPasswordResetArray = null;
-
-		/**
-		 * Private member variable that stores a reference to a single Subscription object
-		 * (of type Subscription), if this Account object was restored with
-		 * an expansion on the Subscription association table.
-		 * @var Subscription _objSubscription;
-		 */
-		private $_objSubscription;
-
-		/**
-		 * Private member variable that stores a reference to an array of Subscription objects
-		 * (of type Subscription[]), if this Account object was restored with
-		 * an ExpandAsArray on the Subscription association table.
-		 * @var Subscription[] _objSubscriptionArray;
-		 */
-		private $_objSubscriptionArray = null;
 
 		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
@@ -814,21 +796,6 @@
 				}
 			}
 
-			// Check for Subscription Virtual Binding
-			$strAlias = $strAliasPrefix . 'subscription__Id';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objExpansionNode = (empty($objExpansionAliasArray['subscription']) ? null : $objExpansionAliasArray['subscription']);
-			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
-			if ($blnExpanded && null === $objToReturn->_objSubscriptionArray)
-				$objToReturn->_objSubscriptionArray = array();
-			if (!is_null($objDbRow->GetColumn($strAliasName))) {
-				if ($blnExpanded) {
-					$objToReturn->_objSubscriptionArray[] = Subscription::InstantiateDbRow($objDbRow, $strAliasPrefix . 'subscription__', $objExpansionNode, null, $strColumnAliasArray);
-				} elseif (is_null($objToReturn->_objSubscription)) {
-					$objToReturn->_objSubscription = Subscription::InstantiateDbRow($objDbRow, $strAliasPrefix . 'subscription__', $objExpansionNode, null, $strColumnAliasArray);
-				}
-			}
-
 			return $objToReturn;
 		}
 		
@@ -1166,7 +1133,7 @@
 							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
                 }
 
-			            } catch (QCallerException $objExc) {
+		            } catch (QCallerException $objExc) {
                 $objExc->IncrementOffset();
                 throw $objExc;
             }
@@ -1461,22 +1428,6 @@
 					 * @return PasswordReset[]
 					 */
 					return $this->_objPasswordResetArray;
-
-				case '_Subscription':
-					/**
-					 * Gets the value for the private _objSubscription (Read-Only)
-					 * if set due to an expansion on the Subscription.Account reverse relationship
-					 * @return Subscription
-					 */
-					return $this->_objSubscription;
-
-				case '_SubscriptionArray':
-					/**
-					 * Gets the value for the private _objSubscriptionArray (Read-Only)
-					 * if set due to an ExpandAsArray on the Subscription.Account reverse relationship
-					 * @return Subscription[]
-					 */
-					return $this->_objSubscriptionArray;
 
 
 				case '__Restored':
@@ -1986,155 +1937,6 @@
 		}
 
 
-		// Related Objects' Methods for Subscription
-		//-------------------------------------------------------------------
-
-		/**
-		 * Gets all associated Subscriptions as an array of Subscription objects
-		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
-		 * @return Subscription[]
-		*/
-		public function GetSubscriptionArray($objOptionalClauses = null) {
-			if ((is_null($this->intId)))
-				return array();
-
-			try {
-				return Subscription::LoadArrayByAccount($this->intId, $objOptionalClauses);
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-		}
-
-		/**
-		 * Counts all associated Subscriptions
-		 * @return int
-		*/
-		public function CountSubscriptions() {
-			if ((is_null($this->intId)))
-				return 0;
-
-			return Subscription::CountByAccount($this->intId);
-		}
-
-		/**
-		 * Associates a Subscription
-		 * @param Subscription $objSubscription
-		 * @return void
-		*/
-		public function AssociateSubscription(Subscription $objSubscription) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociateSubscription on this unsaved Account.');
-			if ((is_null($objSubscription->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociateSubscription on this Account with an unsaved Subscription.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`Subscription`
-				SET
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objSubscription->Id) . '
-			');
-		}
-
-		/**
-		 * Unassociates a Subscription
-		 * @param Subscription $objSubscription
-		 * @return void
-		*/
-		public function UnassociateSubscription(Subscription $objSubscription) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this unsaved Account.');
-			if ((is_null($objSubscription->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this Account with an unsaved Subscription.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`Subscription`
-				SET
-					`Account` = null
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objSubscription->Id) . ' AND
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Unassociates all Subscriptions
-		 * @return void
-		*/
-		public function UnassociateAllSubscriptions() {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this unsaved Account.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`Subscription`
-				SET
-					`Account` = null
-				WHERE
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Deletes an associated Subscription
-		 * @param Subscription $objSubscription
-		 * @return void
-		*/
-		public function DeleteAssociatedSubscription(Subscription $objSubscription) {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this unsaved Account.');
-			if ((is_null($objSubscription->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this Account with an unsaved Subscription.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				DELETE FROM
-					`Subscription`
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objSubscription->Id) . ' AND
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Deletes all associated Subscriptions
-		 * @return void
-		*/
-		public function DeleteAllSubscriptions() {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSubscription on this unsaved Account.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				DELETE FROM
-					`Subscription`
-				WHERE
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-
 		
 		///////////////////////////////
 		// METHODS TO EXTRACT INFO ABOUT THE CLASS
@@ -2330,7 +2132,6 @@
      *
      * @property-read QQReverseReferenceNodeLoginToken $LoginToken
      * @property-read QQReverseReferenceNodePasswordReset $PasswordReset
-     * @property-read QQReverseReferenceNodeSubscription $Subscription
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -2368,8 +2169,6 @@
 					return new QQReverseReferenceNodeLoginToken($this, 'logintoken', 'reverse_reference', 'Account', 'LoginToken');
 				case 'PasswordReset':
 					return new QQReverseReferenceNodePasswordReset($this, 'passwordreset', 'reverse_reference', 'Account', 'PasswordReset');
-				case 'Subscription':
-					return new QQReverseReferenceNodeSubscription($this, 'subscription', 'reverse_reference', 'Account', 'Subscription');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -2401,7 +2200,6 @@
      *
      * @property-read QQReverseReferenceNodeLoginToken $LoginToken
      * @property-read QQReverseReferenceNodePasswordReset $PasswordReset
-     * @property-read QQReverseReferenceNodeSubscription $Subscription
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -2439,8 +2237,6 @@
 					return new QQReverseReferenceNodeLoginToken($this, 'logintoken', 'reverse_reference', 'Account', 'LoginToken');
 				case 'PasswordReset':
 					return new QQReverseReferenceNodePasswordReset($this, 'passwordreset', 'reverse_reference', 'Account', 'PasswordReset');
-				case 'Subscription':
-					return new QQReverseReferenceNodeSubscription($this, 'subscription', 'reverse_reference', 'Account', 'Subscription');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

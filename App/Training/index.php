@@ -5,14 +5,14 @@ require(__PAGE_CONTROL__.'/pageManager.php');
 class IndexForm extends QForm {
     protected $txtInputBox;
     protected $btnProcessInput;
-    protected $Result;
+    protected $html_Result;
 	public function Form_Create() {
 		parent::Form_Create();
 		//Create input box
 		$this->txtInputBox = new QTextBox($this);
 		$this->txtInputBox->Name = "Course Name";
 		// This creates the output received from queryDataBase function to the screen
-        $this->Result = new sUIElementsBase($this);
+        $this->html_Result = new sUIElementsBase($this);
         //Create Button
         try {
             $this->btnProcessInput = new QButton($this);
@@ -21,17 +21,18 @@ class IndexForm extends QForm {
         }
         $this->btnProcessInput->Text = "Search Course";
         try {
-            $this->btnProcessInput->AddAction(new QClickEvent(), new QAjaxAction("queryDataBase"));
+            $this->btnProcessInput->AddAction(new QClickEvent(), new QAjaxAction("handleProcessInput"));
         } catch (QCallerException $e) {
 
         }
+        
+        //AppSpecificFunctions::DisplayAlert(AppSpecificFunctions::PathInfo(0));
 	}
-	protected function queryDataBase() {
+	protected function handleProcessInput($strFormId,$strControlId,$strParameter) {
+		$html = '';
         try {
             $CourseArray = Course::QueryArray(
-                QQ::AndCondition(
-                    QQ::Like(QQN::Course()->CourseName, '%' . $this->txtInputBox->Text . '%')
-                )
+                QQ::Like(QQN::Course()->Name, '%' . $this->txtInputBox->Text . '%')
             );
         } catch (QCallerException $e) {
 
@@ -47,16 +48,15 @@ class IndexForm extends QForm {
 	        $html.= '</thead>';
 	        $html.= '<tbody>';
 	        foreach($CourseArray AS $Course) {
-		        $html.= '<tr><td> '.$Course->Id.' </td><td>'.$Course->CourseName.'</td><td>'.$Course->CoursePrice.'</td></tr>';
+		        $html.= '<tr class="NoPointer"><td> '.$Course->Id.' </td><td>'.$Course->Name.'</td><td>'.$Course->Price.'</td></tr>';
 		        //AppSpecificFunctions::AddCustomLog($Course->getJson());
 	        }
-	        $this->Result->updateControl($html);
 	        $html.= '</tbody></table>';
+	       
         } else {
-        	AppSpecificFunctions::DisplayAlert('No courses found.');
+            $html = '<div class="alert alert-danger" role="alert"><strong>Oops! </strong> No courses found...</div>';
         }
-        
-        return $html;
+		$this->html_Result->updateControl($html);
     }
 }
 

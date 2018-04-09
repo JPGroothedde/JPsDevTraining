@@ -4,8 +4,6 @@ require_once(__SDEV_ORM__.'/Generated/BackgroundProcess/BackgroundProcessControl
 class BackgroundProcessController extends BackgroundProcessController_Base {
     public function __construct($objParentObject,$InitObject = null) {
         parent::__construct($objParentObject,$InitObject);
-        $this->txtSummary->TextMode = QTextMode::MultiLine;
-        $this->txtSummary->Rows = 7;
     }
 };
 ?>

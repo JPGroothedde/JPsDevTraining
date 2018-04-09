@@ -18,14 +18,15 @@
 	 * @property-read integer $Id the value for intId (Read-Only PK)
 	 * @property QDateTime $StartDate the value for dttStartDate 
 	 * @property QDateTime $EndDate the value for dttEndDate 
+	 * @property double $AverageMark the value for fltAverageMark 
 	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
+	 * @property integer $Student the value for intStudent 
 	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
-	 * @property integer $Account the value for intAccount 
 	 * @property integer $Course the value for intCourse 
-	 * @property integer $Assignment the value for intAssignment 
-	 * @property Account $AccountObject the value for the Account object referenced by intAccount 
+	 * @property Student $StudentObject the value for the Student object referenced by intStudent 
 	 * @property Course $CourseObject the value for the Course object referenced by intCourse 
-	 * @property Assignment $AssignmentObject the value for the Assignment object referenced by intAssignment 
+	 * @property-read Assignment $_Assignment the value for the private _objAssignment (Read-Only) if set due to an expansion on the Assignment.Subscription reverse relationship
+	 * @property-read Assignment[] $_AssignmentArray the value for the private _objAssignmentArray (Read-Only) if set due to an ExpandAsArray on the Assignment.Subscription reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class SubscriptionGen extends QBaseClass implements IteratorAggregate {
@@ -59,11 +60,27 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column Subscription.AverageMark
+		 * @var double fltAverageMark
+		 */
+		protected $fltAverageMark;
+		const AverageMarkDefault = null;
+
+
+		/**
 		 * Protected member variable that maps to the database column Subscription.LastUpdated
 		 * @var string strLastUpdated
 		 */
 		protected $strLastUpdated;
 		const LastUpdatedDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column Subscription.Student
+		 * @var integer intStudent
+		 */
+		protected $intStudent;
+		const StudentDefault = null;
 
 
 		/**
@@ -75,14 +92,6 @@
 
 
 		/**
-		 * Protected member variable that maps to the database column Subscription.Account
-		 * @var integer intAccount
-		 */
-		protected $intAccount;
-		const AccountDefault = null;
-
-
-		/**
 		 * Protected member variable that maps to the database column Subscription.Course
 		 * @var integer intCourse
 		 */
@@ -91,12 +100,20 @@
 
 
 		/**
-		 * Protected member variable that maps to the database column Subscription.Assignment
-		 * @var integer intAssignment
+		 * Private member variable that stores a reference to a single Assignment object
+		 * (of type Assignment), if this Subscription object was restored with
+		 * an expansion on the Assignment association table.
+		 * @var Assignment _objAssignment;
 		 */
-		protected $intAssignment;
-		const AssignmentDefault = null;
+		private $_objAssignment;
 
+		/**
+		 * Private member variable that stores a reference to an array of Assignment objects
+		 * (of type Assignment[]), if this Subscription object was restored with
+		 * an ExpandAsArray on the Assignment association table.
+		 * @var Assignment[] _objAssignmentArray;
+		 */
+		private $_objAssignmentArray = null;
 
 		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
@@ -122,13 +139,13 @@
 
 		/**
 		 * Protected member variable that contains the object pointed by the reference
-		 * in the database column Subscription.Account.
+		 * in the database column Subscription.Student.
 		 *
-		 * NOTE: Always use the AccountObject property getter to correctly retrieve this Account object.
+		 * NOTE: Always use the StudentObject property getter to correctly retrieve this Student object.
 		 * (Because this class implements late binding, this variable reference MAY be null.)
-		 * @var Account objAccountObject
+		 * @var Student objStudentObject
 		 */
-		protected $objAccountObject;
+		protected $objStudentObject;
 
 		/**
 		 * Protected member variable that contains the object pointed by the reference
@@ -140,16 +157,6 @@
 		 */
 		protected $objCourseObject;
 
-		/**
-		 * Protected member variable that contains the object pointed by the reference
-		 * in the database column Subscription.Assignment.
-		 *
-		 * NOTE: Always use the AssignmentObject property getter to correctly retrieve this Assignment object.
-		 * (Because this class implements late binding, this variable reference MAY be null.)
-		 * @var Assignment objAssignmentObject
-		 */
-		protected $objAssignmentObject;
-
 
 
 		/**
@@ -160,11 +167,11 @@
 			$this->intId = Subscription::IdDefault;
 			$this->dttStartDate = (Subscription::StartDateDefault === null)?null:new QDateTime(Subscription::StartDateDefault);
 			$this->dttEndDate = (Subscription::EndDateDefault === null)?null:new QDateTime(Subscription::EndDateDefault);
+			$this->fltAverageMark = Subscription::AverageMarkDefault;
 			$this->strLastUpdated = Subscription::LastUpdatedDefault;
+			$this->intStudent = Subscription::StudentDefault;
 			$this->strSearchMetaInfo = Subscription::SearchMetaInfoDefault;
-			$this->intAccount = Subscription::AccountDefault;
 			$this->intCourse = Subscription::CourseDefault;
-			$this->intAssignment = Subscription::AssignmentDefault;
 		}
 
 
@@ -509,11 +516,11 @@
 			    $objBuilder->AddSelectItem($strTableName, 'Id', $strAliasPrefix . 'Id');
 			    $objBuilder->AddSelectItem($strTableName, 'StartDate', $strAliasPrefix . 'StartDate');
 			    $objBuilder->AddSelectItem($strTableName, 'EndDate', $strAliasPrefix . 'EndDate');
+			    $objBuilder->AddSelectItem($strTableName, 'AverageMark', $strAliasPrefix . 'AverageMark');
 			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
+			    $objBuilder->AddSelectItem($strTableName, 'Student', $strAliasPrefix . 'Student');
 			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
-			    $objBuilder->AddSelectItem($strTableName, 'Account', $strAliasPrefix . 'Account');
 			    $objBuilder->AddSelectItem($strTableName, 'Course', $strAliasPrefix . 'Course');
-			    $objBuilder->AddSelectItem($strTableName, 'Assignment', $strAliasPrefix . 'Assignment');
             }
 		}
 
@@ -648,21 +655,21 @@
 			$strAlias = $strAliasPrefix . 'EndDate';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->dttEndDate = $objDbRow->GetColumn($strAliasName, 'Date');
+			$strAlias = $strAliasPrefix . 'AverageMark';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->fltAverageMark = $objDbRow->GetColumn($strAliasName, 'Float');
 			$strAlias = $strAliasPrefix . 'LastUpdated';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
+			$strAlias = $strAliasPrefix . 'Student';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->intStudent = $objDbRow->GetColumn($strAliasName, 'Integer');
 			$strAlias = $strAliasPrefix . 'SearchMetaInfo';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strSearchMetaInfo = $objDbRow->GetColumn($strAliasName, 'Blob');
-			$strAlias = $strAliasPrefix . 'Account';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objToReturn->intAccount = $objDbRow->GetColumn($strAliasName, 'Integer');
 			$strAlias = $strAliasPrefix . 'Course';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intCourse = $objDbRow->GetColumn($strAliasName, 'Integer');
-			$strAlias = $strAliasPrefix . 'Assignment';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objToReturn->intAssignment = $objDbRow->GetColumn($strAliasName, 'Integer');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -693,12 +700,12 @@
 			if (!$strAliasPrefix)
 				$strAliasPrefix = 'Subscription__';
 
-			// Check for AccountObject Early Binding
-			$strAlias = $strAliasPrefix . 'Account__Id';
+			// Check for StudentObject Early Binding
+			$strAlias = $strAliasPrefix . 'Student__Id';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			if (!is_null($objDbRow->GetColumn($strAliasName))) {
-				$objExpansionNode = (empty($objExpansionAliasArray['Account']) ? null : $objExpansionAliasArray['Account']);
-				$objToReturn->objAccountObject = Account::InstantiateDbRow($objDbRow, $strAliasPrefix . 'Account__', $objExpansionNode, null, $strColumnAliasArray);
+				$objExpansionNode = (empty($objExpansionAliasArray['Student']) ? null : $objExpansionAliasArray['Student']);
+				$objToReturn->objStudentObject = Student::InstantiateDbRow($objDbRow, $strAliasPrefix . 'Student__', $objExpansionNode, null, $strColumnAliasArray);
 			}
 			// Check for CourseObject Early Binding
 			$strAlias = $strAliasPrefix . 'Course__Id';
@@ -707,15 +714,23 @@
 				$objExpansionNode = (empty($objExpansionAliasArray['Course']) ? null : $objExpansionAliasArray['Course']);
 				$objToReturn->objCourseObject = Course::InstantiateDbRow($objDbRow, $strAliasPrefix . 'Course__', $objExpansionNode, null, $strColumnAliasArray);
 			}
-			// Check for AssignmentObject Early Binding
-			$strAlias = $strAliasPrefix . 'Assignment__Id';
-			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			if (!is_null($objDbRow->GetColumn($strAliasName))) {
-				$objExpansionNode = (empty($objExpansionAliasArray['Assignment']) ? null : $objExpansionAliasArray['Assignment']);
-				$objToReturn->objAssignmentObject = Assignment::InstantiateDbRow($objDbRow, $strAliasPrefix . 'Assignment__', $objExpansionNode, null, $strColumnAliasArray);
-			}
 
 				
+
+			// Check for Assignment Virtual Binding
+			$strAlias = $strAliasPrefix . 'assignment__Id';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objExpansionNode = (empty($objExpansionAliasArray['assignment']) ? null : $objExpansionAliasArray['assignment']);
+			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
+			if ($blnExpanded && null === $objToReturn->_objAssignmentArray)
+				$objToReturn->_objAssignmentArray = array();
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if ($blnExpanded) {
+					$objToReturn->_objAssignmentArray[] = Assignment::InstantiateDbRow($objDbRow, $strAliasPrefix . 'assignment__', $objExpansionNode, null, $strColumnAliasArray);
+				} elseif (is_null($objToReturn->_objAssignment)) {
+					$objToReturn->_objAssignment = Assignment::InstantiateDbRow($objDbRow, $strAliasPrefix . 'assignment__', $objExpansionNode, null, $strColumnAliasArray);
+				}
+			}
 
 			return $objToReturn;
 		}
@@ -812,16 +827,16 @@
 
 		/**
 		 * Load an array of Subscription objects,
-		 * by Account Index(es)
-		 * @param integer $intAccount
+		 * by Student Index(es)
+		 * @param integer $intStudent
 		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
 		 * @return Subscription[]
 		*/
-		public static function LoadArrayByAccount($intAccount, $objOptionalClauses = null) {
-			// Call Subscription::QueryArray to perform the LoadArrayByAccount query
+		public static function LoadArrayByStudent($intStudent, $objOptionalClauses = null) {
+			// Call Subscription::QueryArray to perform the LoadArrayByStudent query
 			try {
 				return Subscription::QueryArray(
-					QQ::Equal(QQN::Subscription()->Account, $intAccount),
+					QQ::Equal(QQN::Subscription()->Student, $intStudent),
 					$objOptionalClauses);
 			} catch (QCallerException $objExc) {
 				$objExc->IncrementOffset();
@@ -831,14 +846,14 @@
 
 		/**
 		 * Count Subscriptions
-		 * by Account Index(es)
-		 * @param integer $intAccount
+		 * by Student Index(es)
+		 * @param integer $intStudent
 		 * @return int
 		*/
-		public static function CountByAccount($intAccount) {
-			// Call Subscription::QueryCount to perform the CountByAccount query
+		public static function CountByStudent($intStudent) {
+			// Call Subscription::QueryCount to perform the CountByStudent query
 			return Subscription::QueryCount(
-				QQ::Equal(QQN::Subscription()->Account, $intAccount)
+				QQ::Equal(QQN::Subscription()->Student, $intStudent)
 			);
 		}
 
@@ -871,38 +886,6 @@
 			// Call Subscription::QueryCount to perform the CountByCourse query
 			return Subscription::QueryCount(
 				QQ::Equal(QQN::Subscription()->Course, $intCourse)
-			);
-		}
-
-		/**
-		 * Load an array of Subscription objects,
-		 * by Assignment Index(es)
-		 * @param integer $intAssignment
-		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
-		 * @return Subscription[]
-		*/
-		public static function LoadArrayByAssignment($intAssignment, $objOptionalClauses = null) {
-			// Call Subscription::QueryArray to perform the LoadArrayByAssignment query
-			try {
-				return Subscription::QueryArray(
-					QQ::Equal(QQN::Subscription()->Assignment, $intAssignment),
-					$objOptionalClauses);
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-		}
-
-		/**
-		 * Count Subscriptions
-		 * by Assignment Index(es)
-		 * @param integer $intAssignment
-		 * @return int
-		*/
-		public static function CountByAssignment($intAssignment) {
-			// Call Subscription::QueryCount to perform the CountByAssignment query
-			return Subscription::QueryCount(
-				QQ::Equal(QQN::Subscription()->Assignment, $intAssignment)
 			);
 		}
 
@@ -942,11 +925,11 @@
                 $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
                 $ChangedArray = array_merge($ChangedArray,array("StartDate" => $this->dttStartDate));
                 $ChangedArray = array_merge($ChangedArray,array("EndDate" => $this->dttEndDate));
+                $ChangedArray = array_merge($ChangedArray,array("AverageMark" => $this->fltAverageMark));
                 $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $ChangedArray = array_merge($ChangedArray,array("Student" => $this->intStudent));
                 $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
-                $ChangedArray = array_merge($ChangedArray,array("Account" => $this->intAccount));
                 $ChangedArray = array_merge($ChangedArray,array("Course" => $this->intCourse));
-                $ChangedArray = array_merge($ChangedArray,array("Assignment" => $this->intAssignment));
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
@@ -975,12 +958,28 @@
                     //$ChangedArray = array_merge($ChangedArray,array("EndDate" => "From: ".$ExistingValueStr." to: ".$this->dttEndDate));
                 }
                 $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->AverageMark)) {
+                    $ExistingValueStr = $ExistingObj->AverageMark;
+                }
+                if ($ExistingObj->AverageMark != $this->fltAverageMark) {
+                    $ChangedArray = array_merge($ChangedArray,array("AverageMark" => array("Before" => $ExistingValueStr,"After" => $this->fltAverageMark)));
+                    //$ChangedArray = array_merge($ChangedArray,array("AverageMark" => "From: ".$ExistingValueStr." to: ".$this->fltAverageMark));
+                }
+                $ExistingValueStr = "NULL";
                 if (!is_null($ExistingObj->LastUpdated)) {
                     $ExistingValueStr = $ExistingObj->LastUpdated;
                 }
                 if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
                     $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
                     //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Student)) {
+                    $ExistingValueStr = $ExistingObj->Student;
+                }
+                if ($ExistingObj->Student != $this->intStudent) {
+                    $ChangedArray = array_merge($ChangedArray,array("Student" => array("Before" => $ExistingValueStr,"After" => $this->intStudent)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Student" => "From: ".$ExistingValueStr." to: ".$this->intStudent));
                 }
                 $ExistingValueStr = "NULL";
                 if (!is_null($ExistingObj->SearchMetaInfo)) {
@@ -991,28 +990,12 @@
                     //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
                 }
                 $ExistingValueStr = "NULL";
-                if (!is_null($ExistingObj->Account)) {
-                    $ExistingValueStr = $ExistingObj->Account;
-                }
-                if ($ExistingObj->Account != $this->intAccount) {
-                    $ChangedArray = array_merge($ChangedArray,array("Account" => array("Before" => $ExistingValueStr,"After" => $this->intAccount)));
-                    //$ChangedArray = array_merge($ChangedArray,array("Account" => "From: ".$ExistingValueStr." to: ".$this->intAccount));
-                }
-                $ExistingValueStr = "NULL";
                 if (!is_null($ExistingObj->Course)) {
                     $ExistingValueStr = $ExistingObj->Course;
                 }
                 if ($ExistingObj->Course != $this->intCourse) {
                     $ChangedArray = array_merge($ChangedArray,array("Course" => array("Before" => $ExistingValueStr,"After" => $this->intCourse)));
                     //$ChangedArray = array_merge($ChangedArray,array("Course" => "From: ".$ExistingValueStr." to: ".$this->intCourse));
-                }
-                $ExistingValueStr = "NULL";
-                if (!is_null($ExistingObj->Assignment)) {
-                    $ExistingValueStr = $ExistingObj->Assignment;
-                }
-                if ($ExistingObj->Assignment != $this->intAssignment) {
-                    $ChangedArray = array_merge($ChangedArray,array("Assignment" => array("Before" => $ExistingValueStr,"After" => $this->intAssignment)));
-                    //$ChangedArray = array_merge($ChangedArray,array("Assignment" => "From: ".$ExistingValueStr." to: ".$this->intAssignment));
                 }
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
@@ -1023,17 +1006,17 @@
                     INSERT INTO `Subscription` (
 							`StartDate`,
 							`EndDate`,
+							`AverageMark`,
+							`Student`,
 							`SearchMetaInfo`,
-							`Account`,
-							`Course`,
-							`Assignment`
+							`Course`
 						) VALUES (
 							' . $objDatabase->SqlVariable($this->dttStartDate) . ',
 							' . $objDatabase->SqlVariable($this->dttEndDate) . ',
+							' . $objDatabase->SqlVariable($this->fltAverageMark) . ',
+							' . $objDatabase->SqlVariable($this->intStudent) . ',
 							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
-							' . $objDatabase->SqlVariable($this->intAccount) . ',
-							' . $objDatabase->SqlVariable($this->intCourse) . ',
-							' . $objDatabase->SqlVariable($this->intAssignment) . '
+							' . $objDatabase->SqlVariable($this->intCourse) . '
 						)
                     ');
 					// Update Identity column and return its value
@@ -1041,7 +1024,7 @@
                 } else {
                     // Perform an UPDATE query
                     // First checking for Optimistic Locking constraints (if applicable)
-				
+					
                     if (!$blnForceUpdate) {
                         // Perform the Optimistic Locking check
                         $objResult = $objDatabase->Query('
@@ -1052,21 +1035,21 @@
                     if ($objRow[0] != $this->strLastUpdated)
                         throw new QOptimisticLockingException('Subscription');
                 }
-					
+				
                 // Perform the UPDATE query
                 $objDatabase->NonQuery('
                 UPDATE `Subscription` SET
 							`StartDate` = ' . $objDatabase->SqlVariable($this->dttStartDate) . ',
 							`EndDate` = ' . $objDatabase->SqlVariable($this->dttEndDate) . ',
+							`AverageMark` = ' . $objDatabase->SqlVariable($this->fltAverageMark) . ',
+							`Student` = ' . $objDatabase->SqlVariable($this->intStudent) . ',
 							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
-							`Account` = ' . $objDatabase->SqlVariable($this->intAccount) . ',
-							`Course` = ' . $objDatabase->SqlVariable($this->intCourse) . ',
-							`Assignment` = ' . $objDatabase->SqlVariable($this->intAssignment) . '
+							`Course` = ' . $objDatabase->SqlVariable($this->intCourse) . '
                 WHERE
 							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
                 }
 
-            } catch (QCallerException $objExc) {
+	            } catch (QCallerException $objExc) {
                 $objExc->IncrementOffset();
                 throw $objExc;
             }
@@ -1079,14 +1062,14 @@
             // Update __blnRestored and any Non-Identity PK Columns (if applicable)
             $this->__blnRestored = true;
 	
-				            // Update Local Timestamp
+					            // Update Local Timestamp
             $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
                                                 `Subscription` WHERE
                     							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
             $objRow = $objResult->FetchArray();
             $this->strLastUpdated = $objRow[0];
-					
+				
             $this->DeleteCache();
             
             // Return
@@ -1113,11 +1096,11 @@
             $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
             $ChangedArray = array_merge($ChangedArray,array("StartDate" => $this->dttStartDate));
             $ChangedArray = array_merge($ChangedArray,array("EndDate" => $this->dttEndDate));
+            $ChangedArray = array_merge($ChangedArray,array("AverageMark" => $this->fltAverageMark));
             $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $ChangedArray = array_merge($ChangedArray,array("Student" => $this->intStudent));
             $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
-            $ChangedArray = array_merge($ChangedArray,array("Account" => $this->intAccount));
             $ChangedArray = array_merge($ChangedArray,array("Course" => $this->intCourse));
-            $ChangedArray = array_merge($ChangedArray,array("Assignment" => $this->intAssignment));
             $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
@@ -1198,11 +1181,11 @@
 			// Update $this's local variables to match
 			$this->dttStartDate = $objReloaded->dttStartDate;
 			$this->dttEndDate = $objReloaded->dttEndDate;
+			$this->fltAverageMark = $objReloaded->fltAverageMark;
 			$this->strLastUpdated = $objReloaded->strLastUpdated;
+			$this->Student = $objReloaded->Student;
 			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
-			$this->Account = $objReloaded->Account;
 			$this->Course = $objReloaded->Course;
-			$this->Assignment = $objReloaded->Assignment;
 		}
 
 
@@ -1244,12 +1227,26 @@
 					 */
 					return $this->dttEndDate;
 
+				case 'AverageMark':
+					/**
+					 * Gets the value for fltAverageMark 
+					 * @return double
+					 */
+					return $this->fltAverageMark;
+
 				case 'LastUpdated':
 					/**
 					 * Gets the value for strLastUpdated (Read-Only Timestamp)
 					 * @return string
 					 */
 					return $this->strLastUpdated;
+
+				case 'Student':
+					/**
+					 * Gets the value for intStudent 
+					 * @return integer
+					 */
+					return $this->intStudent;
 
 				case 'SearchMetaInfo':
 					/**
@@ -1258,13 +1255,6 @@
 					 */
 					return $this->strSearchMetaInfo;
 
-				case 'Account':
-					/**
-					 * Gets the value for intAccount 
-					 * @return integer
-					 */
-					return $this->intAccount;
-
 				case 'Course':
 					/**
 					 * Gets the value for intCourse 
@@ -1272,26 +1262,19 @@
 					 */
 					return $this->intCourse;
 
-				case 'Assignment':
-					/**
-					 * Gets the value for intAssignment 
-					 * @return integer
-					 */
-					return $this->intAssignment;
-
 
 				///////////////////
 				// Member Objects
 				///////////////////
-				case 'AccountObject':
+				case 'StudentObject':
 					/**
-					 * Gets the value for the Account object referenced by intAccount 
-					 * @return Account
+					 * Gets the value for the Student object referenced by intStudent 
+					 * @return Student
 					 */
 					try {
-						if ((!$this->objAccountObject) && (!is_null($this->intAccount)))
-							$this->objAccountObject = Account::Load($this->intAccount);
-						return $this->objAccountObject;
+						if ((!$this->objStudentObject) && (!is_null($this->intStudent)))
+							$this->objStudentObject = Student::Load($this->intStudent);
+						return $this->objStudentObject;
 					} catch (QCallerException $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
@@ -1311,25 +1294,27 @@
 						throw $objExc;
 					}
 
-				case 'AssignmentObject':
-					/**
-					 * Gets the value for the Assignment object referenced by intAssignment 
-					 * @return Assignment
-					 */
-					try {
-						if ((!$this->objAssignmentObject) && (!is_null($this->intAssignment)))
-							$this->objAssignmentObject = Assignment::Load($this->intAssignment);
-						return $this->objAssignmentObject;
-					} catch (QCallerException $objExc) {
-						$objExc->IncrementOffset();
-						throw $objExc;
-					}
-
 
 				////////////////////////////
 				// Virtual Object References (Many to Many and Reverse References)
 				// (If restored via a "Many-to" expansion)
 				////////////////////////////
+
+				case '_Assignment':
+					/**
+					 * Gets the value for the private _objAssignment (Read-Only)
+					 * if set due to an expansion on the Assignment.Subscription reverse relationship
+					 * @return Assignment
+					 */
+					return $this->_objAssignment;
+
+				case '_AssignmentArray':
+					/**
+					 * Gets the value for the private _objAssignmentArray (Read-Only)
+					 * if set due to an ExpandAsArray on the Assignment.Subscription reverse relationship
+					 * @return Assignment[]
+					 */
+					return $this->_objAssignmentArray;
 
 
 				case '__Restored':
@@ -1384,6 +1369,33 @@
 						throw $objExc;
 					}
 
+				case 'AverageMark':
+					/**
+					 * Sets the value for fltAverageMark 
+					 * @param double $mixValue
+					 * @return double
+					 */
+					try {
+						return ($this->fltAverageMark = QType::Cast($mixValue, QType::Float));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
+				case 'Student':
+					/**
+					 * Sets the value for intStudent 
+					 * @param integer $mixValue
+					 * @return integer
+					 */
+					try {
+						$this->objStudentObject = null;
+						return ($this->intStudent = QType::Cast($mixValue, QType::Integer));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
 				case 'SearchMetaInfo':
 					/**
 					 * Sets the value for strSearchMetaInfo 
@@ -1392,20 +1404,6 @@
 					 */
 					try {
 						return ($this->strSearchMetaInfo = QType::Cast($mixValue, QType::String));
-					} catch (QCallerException $objExc) {
-						$objExc->IncrementOffset();
-						throw $objExc;
-					}
-
-				case 'Account':
-					/**
-					 * Sets the value for intAccount 
-					 * @param integer $mixValue
-					 * @return integer
-					 */
-					try {
-						$this->objAccountObject = null;
-						return ($this->intAccount = QType::Cast($mixValue, QType::Integer));
 					} catch (QCallerException $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
@@ -1425,50 +1423,36 @@
 						throw $objExc;
 					}
 
-				case 'Assignment':
-					/**
-					 * Sets the value for intAssignment 
-					 * @param integer $mixValue
-					 * @return integer
-					 */
-					try {
-						$this->objAssignmentObject = null;
-						return ($this->intAssignment = QType::Cast($mixValue, QType::Integer));
-					} catch (QCallerException $objExc) {
-						$objExc->IncrementOffset();
-						throw $objExc;
-					}
-
 
 				///////////////////
 				// Member Objects
 				///////////////////
-				case 'AccountObject':
+				case 'StudentObject':
 					/**
-					 * Sets the value for the Account object referenced by intAccount 
-					 * @param Account $mixValue
-					 * @return Account
+					 * Sets the value for the Student object referenced by intStudent 
+					 * @param Student $mixValue
+					 * @return Student
 					 */
 					if (is_null($mixValue)) {
-						$this->intAccount = null;
-						$this->objAccountObject = null;
+						$this->intStudent = null;
+						$this->objStudentObject = null;
 						return null;
 					} else {
-						// Make sure $mixValue actually is a Account object
+						// Make sure $mixValue actually is a Student object
 						try {
-							$mixValue = QType::Cast($mixValue, 'Account');
+							$mixValue = QType::Cast($mixValue, 'Student');
 						} catch (QInvalidCastException $objExc) {
 							$objExc->IncrementOffset();
 							throw $objExc;
 						}
 
-						// Make sure $mixValue is a SAVED Account object
+						// Make sure $mixValue is a SAVED Student object
 						if (is_null($mixValue->Id))
-							throw new QCallerException('Unable to set an unsaved AccountObject for this Subscription');
+							throw new QCallerException('Unable to set an unsaved StudentObject for this Subscription');
 
 						// Update Local Member Variables
-						$this->objAccountObject = $mixValue;
-						$this->intAccount = $mixValue->Id;
+						$this->objStudentObject = $mixValue;
+						$this->intStudent = $mixValue->Id;
 
 						// Return $mixValue
 						return $mixValue;
@@ -1507,38 +1491,6 @@
 					}
 					break;
 
-				case 'AssignmentObject':
-					/**
-					 * Sets the value for the Assignment object referenced by intAssignment 
-					 * @param Assignment $mixValue
-					 * @return Assignment
-					 */
-					if (is_null($mixValue)) {
-						$this->intAssignment = null;
-						$this->objAssignmentObject = null;
-						return null;
-					} else {
-						// Make sure $mixValue actually is a Assignment object
-						try {
-							$mixValue = QType::Cast($mixValue, 'Assignment');
-						} catch (QInvalidCastException $objExc) {
-							$objExc->IncrementOffset();
-							throw $objExc;
-						}
-
-						// Make sure $mixValue is a SAVED Assignment object
-						if (is_null($mixValue->Id))
-							throw new QCallerException('Unable to set an unsaved AssignmentObject for this Subscription');
-
-						// Update Local Member Variables
-						$this->objAssignmentObject = $mixValue;
-						$this->intAssignment = $mixValue->Id;
-
-						// Return $mixValue
-						return $mixValue;
-					}
-					break;
-
 				default:
 					try {
 						return parent::__set($strName, $mixValue);
@@ -1566,6 +1518,155 @@
 		// ASSOCIATED OBJECTS' METHODS
 		///////////////////////////////
 
+
+
+		// Related Objects' Methods for Assignment
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated Assignments as an array of Assignment objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return Assignment[]
+		*/
+		public function GetAssignmentArray($objOptionalClauses = null) {
+			if ((is_null($this->intId)))
+				return array();
+
+			try {
+				return Assignment::LoadArrayBySubscription($this->intId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated Assignments
+		 * @return int
+		*/
+		public function CountAssignments() {
+			if ((is_null($this->intId)))
+				return 0;
+
+			return Assignment::CountBySubscription($this->intId);
+		}
+
+		/**
+		 * Associates a Assignment
+		 * @param Assignment $objAssignment
+		 * @return void
+		*/
+		public function AssociateAssignment(Assignment $objAssignment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateAssignment on this unsaved Subscription.');
+			if ((is_null($objAssignment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateAssignment on this Subscription with an unsaved Assignment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Subscription::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`Assignment`
+				SET
+					`Subscription` = ' . $objDatabase->SqlVariable($this->intId) . '
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objAssignment->Id) . '
+			');
+		}
+
+		/**
+		 * Unassociates a Assignment
+		 * @param Assignment $objAssignment
+		 * @return void
+		*/
+		public function UnassociateAssignment(Assignment $objAssignment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateAssignment on this unsaved Subscription.');
+			if ((is_null($objAssignment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateAssignment on this Subscription with an unsaved Assignment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Subscription::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`Assignment`
+				SET
+					`Subscription` = null
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objAssignment->Id) . ' AND
+					`Subscription` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Unassociates all Assignments
+		 * @return void
+		*/
+		public function UnassociateAllAssignments() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateAssignment on this unsaved Subscription.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Subscription::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`Assignment`
+				SET
+					`Subscription` = null
+				WHERE
+					`Subscription` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated Assignment
+		 * @param Assignment $objAssignment
+		 * @return void
+		*/
+		public function DeleteAssociatedAssignment(Assignment $objAssignment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateAssignment on this unsaved Subscription.');
+			if ((is_null($objAssignment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateAssignment on this Subscription with an unsaved Assignment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Subscription::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`Assignment`
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objAssignment->Id) . ' AND
+					`Subscription` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes all associated Assignments
+		 * @return void
+		*/
+		public function DeleteAllAssignments() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateAssignment on this unsaved Subscription.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Subscription::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`Assignment`
+				WHERE
+					`Subscription` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
 
 
 		
@@ -1609,11 +1710,11 @@
 			$strToReturn .= '<element name="Id" type="xsd:int"/>';
 			$strToReturn .= '<element name="StartDate" type="xsd:dateTime"/>';
 			$strToReturn .= '<element name="EndDate" type="xsd:dateTime"/>';
+			$strToReturn .= '<element name="AverageMark" type="xsd:float"/>';
 			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
+			$strToReturn .= '<element name="StudentObject" type="xsd1:Student"/>';
 			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
-			$strToReturn .= '<element name="AccountObject" type="xsd1:Account"/>';
 			$strToReturn .= '<element name="CourseObject" type="xsd1:Course"/>';
-			$strToReturn .= '<element name="AssignmentObject" type="xsd1:Assignment"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1622,9 +1723,8 @@
 		public static function AlterSoapComplexTypeArray(&$strComplexTypeArray) {
 			if (!array_key_exists('Subscription', $strComplexTypeArray)) {
 				$strComplexTypeArray['Subscription'] = Subscription::GetSoapComplexTypeXml();
-				Account::AlterSoapComplexTypeArray($strComplexTypeArray);
+				Student::AlterSoapComplexTypeArray($strComplexTypeArray);
 				Course::AlterSoapComplexTypeArray($strComplexTypeArray);
-				Assignment::AlterSoapComplexTypeArray($strComplexTypeArray);
 			}
 		}
 
@@ -1645,19 +1745,18 @@
 				$objToReturn->dttStartDate = new QDateTime($objSoapObject->StartDate);
 			if (property_exists($objSoapObject, 'EndDate'))
 				$objToReturn->dttEndDate = new QDateTime($objSoapObject->EndDate);
+			if (property_exists($objSoapObject, 'AverageMark'))
+				$objToReturn->fltAverageMark = $objSoapObject->AverageMark;
 			if (property_exists($objSoapObject, 'LastUpdated'))
 				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
+			if ((property_exists($objSoapObject, 'StudentObject')) &&
+				($objSoapObject->StudentObject))
+				$objToReturn->StudentObject = Student::GetObjectFromSoapObject($objSoapObject->StudentObject);
 			if (property_exists($objSoapObject, 'SearchMetaInfo'))
 				$objToReturn->strSearchMetaInfo = $objSoapObject->SearchMetaInfo;
-			if ((property_exists($objSoapObject, 'AccountObject')) &&
-				($objSoapObject->AccountObject))
-				$objToReturn->AccountObject = Account::GetObjectFromSoapObject($objSoapObject->AccountObject);
 			if ((property_exists($objSoapObject, 'CourseObject')) &&
 				($objSoapObject->CourseObject))
 				$objToReturn->CourseObject = Course::GetObjectFromSoapObject($objSoapObject->CourseObject);
-			if ((property_exists($objSoapObject, 'AssignmentObject')) &&
-				($objSoapObject->AssignmentObject))
-				$objToReturn->AssignmentObject = Assignment::GetObjectFromSoapObject($objSoapObject->AssignmentObject);
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1680,18 +1779,14 @@
 				$objObject->dttStartDate = $objObject->dttStartDate->qFormat(QDateTime::FormatSoap);
 			if ($objObject->dttEndDate)
 				$objObject->dttEndDate = $objObject->dttEndDate->qFormat(QDateTime::FormatSoap);
-			if ($objObject->objAccountObject)
-				$objObject->objAccountObject = Account::GetSoapObjectFromObject($objObject->objAccountObject, false);
+			if ($objObject->objStudentObject)
+				$objObject->objStudentObject = Student::GetSoapObjectFromObject($objObject->objStudentObject, false);
 			else if (!$blnBindRelatedObjects)
-				$objObject->intAccount = null;
+				$objObject->intStudent = null;
 			if ($objObject->objCourseObject)
 				$objObject->objCourseObject = Course::GetSoapObjectFromObject($objObject->objCourseObject, false);
 			else if (!$blnBindRelatedObjects)
 				$objObject->intCourse = null;
-			if ($objObject->objAssignmentObject)
-				$objObject->objAssignmentObject = Assignment::GetSoapObjectFromObject($objObject->objAssignmentObject, false);
-			else if (!$blnBindRelatedObjects)
-				$objObject->intAssignment = null;
 			return $objObject;
 		}
 
@@ -1709,11 +1804,11 @@
 			$iArray['Id'] = $this->intId;
 			$iArray['StartDate'] = $this->dttStartDate;
 			$iArray['EndDate'] = $this->dttEndDate;
+			$iArray['AverageMark'] = $this->fltAverageMark;
 			$iArray['LastUpdated'] = $this->strLastUpdated;
+			$iArray['Student'] = $this->intStudent;
 			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
-			$iArray['Account'] = $this->intAccount;
 			$iArray['Course'] = $this->intCourse;
-			$iArray['Assignment'] = $this->intAssignment;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1754,16 +1849,16 @@
      * @property-read QQNode $Id
      * @property-read QQNode $StartDate
      * @property-read QQNode $EndDate
+     * @property-read QQNode $AverageMark
      * @property-read QQNode $LastUpdated
+     * @property-read QQNode $Student
+     * @property-read QQNodeStudent $StudentObject
      * @property-read QQNode $SearchMetaInfo
-     * @property-read QQNode $Account
-     * @property-read QQNodeAccount $AccountObject
      * @property-read QQNode $Course
      * @property-read QQNodeCourse $CourseObject
-     * @property-read QQNode $Assignment
-     * @property-read QQNodeAssignment $AssignmentObject
      *
      *
+     * @property-read QQReverseReferenceNodeAssignment $Assignment
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -1779,22 +1874,22 @@
 					return new QQNode('StartDate', 'StartDate', 'Date', $this);
 				case 'EndDate':
 					return new QQNode('EndDate', 'EndDate', 'Date', $this);
+				case 'AverageMark':
+					return new QQNode('AverageMark', 'AverageMark', 'Float', $this);
 				case 'LastUpdated':
 					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
+				case 'Student':
+					return new QQNode('Student', 'Student', 'Integer', $this);
+				case 'StudentObject':
+					return new QQNodeStudent('Student', 'StudentObject', 'Integer', $this);
 				case 'SearchMetaInfo':
 					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'Blob', $this);
-				case 'Account':
-					return new QQNode('Account', 'Account', 'Integer', $this);
-				case 'AccountObject':
-					return new QQNodeAccount('Account', 'AccountObject', 'Integer', $this);
 				case 'Course':
 					return new QQNode('Course', 'Course', 'Integer', $this);
 				case 'CourseObject':
 					return new QQNodeCourse('Course', 'CourseObject', 'Integer', $this);
 				case 'Assignment':
-					return new QQNode('Assignment', 'Assignment', 'Integer', $this);
-				case 'AssignmentObject':
-					return new QQNodeAssignment('Assignment', 'AssignmentObject', 'Integer', $this);
+					return new QQReverseReferenceNodeAssignment($this, 'assignment', 'reverse_reference', 'Subscription', 'Assignment');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1813,16 +1908,16 @@
      * @property-read QQNode $Id
      * @property-read QQNode $StartDate
      * @property-read QQNode $EndDate
+     * @property-read QQNode $AverageMark
      * @property-read QQNode $LastUpdated
+     * @property-read QQNode $Student
+     * @property-read QQNodeStudent $StudentObject
      * @property-read QQNode $SearchMetaInfo
-     * @property-read QQNode $Account
-     * @property-read QQNodeAccount $AccountObject
      * @property-read QQNode $Course
      * @property-read QQNodeCourse $CourseObject
-     * @property-read QQNode $Assignment
-     * @property-read QQNodeAssignment $AssignmentObject
      *
      *
+     * @property-read QQReverseReferenceNodeAssignment $Assignment
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -1838,22 +1933,22 @@
 					return new QQNode('StartDate', 'StartDate', 'QDateTime', $this);
 				case 'EndDate':
 					return new QQNode('EndDate', 'EndDate', 'QDateTime', $this);
+				case 'AverageMark':
+					return new QQNode('AverageMark', 'AverageMark', 'double', $this);
 				case 'LastUpdated':
 					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
+				case 'Student':
+					return new QQNode('Student', 'Student', 'integer', $this);
+				case 'StudentObject':
+					return new QQNodeStudent('Student', 'StudentObject', 'integer', $this);
 				case 'SearchMetaInfo':
 					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'string', $this);
-				case 'Account':
-					return new QQNode('Account', 'Account', 'integer', $this);
-				case 'AccountObject':
-					return new QQNodeAccount('Account', 'AccountObject', 'integer', $this);
 				case 'Course':
 					return new QQNode('Course', 'Course', 'integer', $this);
 				case 'CourseObject':
 					return new QQNodeCourse('Course', 'CourseObject', 'integer', $this);
 				case 'Assignment':
-					return new QQNode('Assignment', 'Assignment', 'integer', $this);
-				case 'AssignmentObject':
-					return new QQNodeAssignment('Assignment', 'AssignmentObject', 'integer', $this);
+					return new QQReverseReferenceNodeAssignment($this, 'assignment', 'reverse_reference', 'Subscription', 'Assignment');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

@@ -9,6 +9,11 @@
             </div>
             <div class="modal-body">
                 <?php require(__SDEV_ORM__.'/Implementations/Course/CourseFrontEnd.php');?>
+                <div class="row">
+                    <div class="col-md-4">
+			            <?php $this->btnViewCourseSubscriptions->Render();?>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="row">

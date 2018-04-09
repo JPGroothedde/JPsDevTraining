@@ -3,9 +3,9 @@ class SubscriptionController_Base {
     protected $Object;
     public $txtStartDate;
     public $txtEndDate;
-    public $lstAccount,$saveUsingLstAccount = false;
+    public $txtAverageMark;
+    public $lstStudent,$saveUsingLstStudent = false;
     public $lstCourse,$saveUsingLstCourse = false;
-    public $lstAssignment,$saveUsingLstAssignment = false;
     
     public function __construct($objParentObject,$InitObject = null) {
         $this->txtStartDate = new QTextBox($objParentObject);
@@ -16,13 +16,16 @@ class SubscriptionController_Base {
         $this->txtEndDate->Name = 'End Date';
         $this->txtEndDate->CssClass = 'form-control input-date';
 
-        $this->lstAccount = new QListBox($objParentObject);
-        $this->lstAccount->Name = 'Account';
-        $this->lstAccount->AddCssClass('fullWidth');
+        $this->txtAverageMark = new QTextBox($objParentObject);
+        $this->txtAverageMark->Name = 'Average Mark';
+
+        $this->lstStudent = new QListBox($objParentObject);
+        $this->lstStudent->Name = 'Student';
+        $this->lstStudent->AddCssClass('fullWidth');
         // This is limited to 20 objects to ensure no memory overrun for huge data sets. Customise if so desired...
-        $allAccount = Account::LoadAll(QQ::Clause(QQ::LimitInfo(20)));
-        foreach ($allAccount as $Account) {
-            $this->lstAccount->AddItem(new QListItem($Account->Id,$Account->Id));
+        $allStudent = Student::LoadAll(QQ::Clause(QQ::LimitInfo(20)));
+        foreach ($allStudent as $Student) {
+            $this->lstStudent->AddItem(new QListItem($Student->Id,$Student->Id));
         }
 
         $this->lstCourse = new QListBox($objParentObject);
@@ -32,15 +35,6 @@ class SubscriptionController_Base {
         $allCourse = Course::LoadAll(QQ::Clause(QQ::LimitInfo(20)));
         foreach ($allCourse as $Course) {
             $this->lstCourse->AddItem(new QListItem($Course->Id,$Course->Id));
-        }
-
-        $this->lstAssignment = new QListBox($objParentObject);
-        $this->lstAssignment->Name = 'Assignment';
-        $this->lstAssignment->AddCssClass('fullWidth');
-        // This is limited to 20 objects to ensure no memory overrun for huge data sets. Customise if so desired...
-        $allAssignment = Assignment::LoadAll(QQ::Clause(QQ::LimitInfo(20)));
-        foreach ($allAssignment as $Assignment) {
-            $this->lstAssignment->AddItem(new QListItem($Assignment->Id,$Assignment->Id));
         }
 
         if ($InitObject)
@@ -61,11 +55,11 @@ class SubscriptionController_Base {
 
     public function setReferenceListObjectDisplayAttribute($ReferenceObject = null,$ReferenceAttribute = null) {
         if ($ReferenceObject && $ReferenceAttribute) {
-            if ($ReferenceObject == 'Account') {
-                $this->lstAccount->RemoveAllItems();
-                $allAccount_list = Account::LoadAll();
-                foreach ($allAccount_list as $Account) {
-                    $this->lstAccount->AddItem(new QListItem($Account->__get($ReferenceAttribute),$Account->Id));
+            if ($ReferenceObject == 'Student') {
+                $this->lstStudent->RemoveAllItems();
+                $allStudent_list = Student::LoadAll();
+                foreach ($allStudent_list as $Student) {
+                    $this->lstStudent->AddItem(new QListItem($Student->__get($ReferenceAttribute),$Student->Id));
                 }
             }
             if ($ReferenceObject == 'Course') {
@@ -75,26 +69,16 @@ class SubscriptionController_Base {
                     $this->lstCourse->AddItem(new QListItem($Course->__get($ReferenceAttribute),$Course->Id));
                 }
             }
-            if ($ReferenceObject == 'Assignment') {
-                $this->lstAssignment->RemoveAllItems();
-                $allAssignment_list = Assignment::LoadAll();
-                foreach ($allAssignment_list as $Assignment) {
-                    $this->lstAssignment->AddItem(new QListItem($Assignment->__get($ReferenceAttribute),$Assignment->Id));
-                }
-            }
         }
     }
 
     public function setOverrideSaveForReferenceObject($ReferenceObject = null,$useListValue = true) {
         if ($ReferenceObject) {
-            if ($ReferenceObject == 'Account') {
-                $this->saveUsingLstAccount = $useListValue;
+            if ($ReferenceObject == 'Student') {
+                $this->saveUsingLstStudent = $useListValue;
             }
             if ($ReferenceObject == 'Course') {
                 $this->saveUsingLstCourse = $useListValue;
-            }
-            if ($ReferenceObject == 'Assignment') {
-                $this->saveUsingLstAssignment = $useListValue;
             }
         }
     }
@@ -102,6 +86,7 @@ class SubscriptionController_Base {
     public function setValues($Object) {
         $this->txtStartDate->Text = '';
         $this->txtEndDate->Text = '';
+        $this->txtAverageMark->Text = '';
 
         if (!$Object) {
             $this->refreshAll();
@@ -113,15 +98,15 @@ class SubscriptionController_Base {
         if (!is_null($Object->EndDate)) {
             $this->txtEndDate->Text = $Object->EndDate->format(DATE_TIME_FORMAT_HTML);
         }
+        if (!is_null($Object->AverageMark)) {
+            $this->txtAverageMark->Text = $Object->AverageMark;
+        }
         
-        if (!is_null($Object->AccountObject)) {
-            $this->lstAccount->SelectedValue = $Object->AccountObject->Id;
+        if (!is_null($Object->StudentObject)) {
+            $this->lstStudent->SelectedValue = $Object->StudentObject->Id;
         }
         if (!is_null($Object->CourseObject)) {
             $this->lstCourse->SelectedValue = $Object->CourseObject->Id;
-        }
-        if (!is_null($Object->AssignmentObject)) {
-            $this->lstAssignment->SelectedValue = $Object->AssignmentObject->Id;
         }
 
         $this->resetValidation();
@@ -142,20 +127,20 @@ class SubscriptionController_Base {
                 $this->txtEndDate->Name = $nameValue;
             $output = $withName ? $this->txtEndDate->RenderWithName($blnPrintOutput):$this->txtEndDate->Render($blnPrintOutput);
         }
-        if (strtoupper($strControl) == 'ACCOUNT') {
+        if (strtoupper($strControl) == 'AVERAGEMARK') {
             if (strlen($nameValue) > 0)
-                $this->lstAccount->Name = $nameValue;
-            $output = $withName ? $this->lstAccount->RenderWithName($blnPrintOutput):$this->lstAccount->Render($blnPrintOutput);
+                $this->txtAverageMark->Name = $nameValue;
+            $output = $withName ? $this->txtAverageMark->RenderWithName($blnPrintOutput):$this->txtAverageMark->Render($blnPrintOutput);
+        }
+        if (strtoupper($strControl) == 'STUDENT') {
+            if (strlen($nameValue) > 0)
+                $this->lstStudent->Name = $nameValue;
+            $output = $withName ? $this->lstStudent->RenderWithName($blnPrintOutput):$this->lstStudent->Render($blnPrintOutput);
         }
         if (strtoupper($strControl) == 'COURSE') {
             if (strlen($nameValue) > 0)
                 $this->lstCourse->Name = $nameValue;
             $output = $withName ? $this->lstCourse->RenderWithName($blnPrintOutput):$this->lstCourse->Render($blnPrintOutput);
-        }
-        if (strtoupper($strControl) == 'ASSIGNMENT') {
-            if (strlen($nameValue) > 0)
-                $this->lstAssignment->Name = $nameValue;
-            $output = $withName ? $this->lstAssignment->RenderWithName($blnPrintOutput):$this->lstAssignment->Render($blnPrintOutput);
         }
         
         return $output;
@@ -164,9 +149,9 @@ class SubscriptionController_Base {
     public function renderAll($withName = true)  {
         $this->renderControl('STARTDATE',$withName);
         $this->renderControl('ENDDATE',$withName);
-        $this->renderControl('ACCOUNT',$withName);
+        $this->renderControl('AVERAGEMARK',$withName);
+        $this->renderControl('STUDENT',$withName);
         $this->renderControl('COURSE',$withName);
-        $this->renderControl('ASSIGNMENT',$withName);
     }
 
     public function getRenderedFrontEnd($withName = true)  {
@@ -177,6 +162,9 @@ class SubscriptionController_Base {
                 <div class="col-md-6">
                    '.$this->renderControl('EndDate',$withName, null, false).'
                 </div>
+                <div class="col-md-6">
+                   '.$this->renderControl('AverageMark',$withName, null, false).'
+                </div>
             </div>';
         return $html;
     }
@@ -184,25 +172,25 @@ class SubscriptionController_Base {
     public function hideAll() {
         $this->txtStartDate->Visible = false;
         $this->txtEndDate->Visible = false;
-        $this->lstAccount->Visible = false;
+        $this->txtAverageMark->Visible = false;
+        $this->lstStudent->Visible = false;
         $this->lstCourse->Visible = false;
-        $this->lstAssignment->Visible = false;
     }
 
     public function showAll() {
         $this->txtStartDate->Visible = true;
         $this->txtEndDate->Visible = true;
-        $this->lstAccount->Visible = true;
+        $this->txtAverageMark->Visible = true;
+        $this->lstStudent->Visible = true;
         $this->lstCourse->Visible = true;
-        $this->lstAssignment->Visible = true;
     }
 
     public function refreshAll() {
         $this->txtStartDate->Refresh();
         $this->txtEndDate->Refresh();
-        $this->lstAccount->Refresh();
+        $this->txtAverageMark->Refresh();
+        $this->lstStudent->Refresh();
         $this->lstCourse->Refresh();
-        $this->lstAssignment->Refresh();
     }
 
     public function setValue($strAttr = '',$value = null) {
@@ -215,14 +203,14 @@ class SubscriptionController_Base {
             case 'ENDDATE':
                 $this->txtEndDate->Text = $value;
                 break;
-            case 'ACCOUNT':
-                $this->lstAccount->SelectedValue = $value;
+            case 'AVERAGEMARK':
+                $this->txtAverageMark->Text = $value;
+                break;
+            case 'STUDENT':
+                $this->lstStudent->SelectedValue = $value;
                 break;
             case 'COURSE':
                 $this->lstCourse->SelectedValue = $value;
-                break;
-            case 'ASSIGNMENT':
-                $this->lstAssignment->SelectedValue = $value;
                 break;
             default:
                 break;
@@ -243,17 +231,17 @@ class SubscriptionController_Base {
                 if ($this->txtEndDate->Text)
                     return $this->txtEndDate->Text;
                 break;
-            case 'ACCOUNT':
-                if ($this->lstAccount->SelectedValue)
-                    return $this->lstAccount->SelectedValue;
+            case 'AVERAGEMARK':
+                if ($this->txtAverageMark->Text)
+                    return $this->txtAverageMark->Text;
+                break;
+            case 'STUDENT':
+                if ($this->lstStudent->SelectedValue)
+                    return $this->lstStudent->SelectedValue;
                 break;
             case 'COURSE':
                 if ($this->lstCourse->SelectedValue)
                     return $this->lstCourse->SelectedValue;
-                break;
-            case 'ASSIGNMENT':
-                if ($this->lstAssignment->SelectedValue)
-                    return $this->lstAssignment->SelectedValue;
                 break;
             default:
                 break;
@@ -274,17 +262,17 @@ class SubscriptionController_Base {
                 if ($this->txtEndDate)
                     return $this->txtEndDate->ControlId;
                 break;
-            case 'ACCOUNT':
-                if ($this->lstAccount)
-                    return $this->lstAccount->ControlId;
+            case 'AVERAGEMARK':
+                if ($this->txtAverageMark)
+                    return $this->txtAverageMark->ControlId;
+                break;
+            case 'STUDENT':
+                if ($this->lstStudent)
+                    return $this->lstStudent->ControlId;
                 break;
             case 'COURSE':
                 if ($this->lstCourse)
                     return $this->lstCourse->ControlId;
-                break;
-            case 'ASSIGNMENT':
-                if ($this->lstAssignment)
-                    return $this->lstAssignment->ControlId;
                 break;
             default:
                 break;
@@ -305,17 +293,17 @@ class SubscriptionController_Base {
                 $this->txtEndDate->Visible = false;
                 $this->txtEndDate->Refresh();
                 break;
-            case 'ACCOUNT':
-                $this->lstAccount->Visible = false;
-                $this->lstAccount->Refresh();
+            case 'AVERAGEMARK':
+                $this->txtAverageMark->Visible = false;
+                $this->txtAverageMark->Refresh();
+                break;
+            case 'STUDENT':
+                $this->lstStudent->Visible = false;
+                $this->lstStudent->Refresh();
                 break;
             case 'COURSE':
                 $this->lstCourse->Visible = false;
                 $this->lstCourse->Refresh();
-                break;
-            case 'ASSIGNMENT':
-                $this->lstAssignment->Visible = false;
-                $this->lstAssignment->Refresh();
                 break;
             default:
                 break;
@@ -336,17 +324,17 @@ class SubscriptionController_Base {
                 $this->txtEndDate->Visible = true;
                 $this->txtEndDate->Refresh();
                 break;
-            case 'ACCOUNT':
-                $this->lstAccount->Visible = true;
-                $this->lstAccount->Refresh();
+            case 'AVERAGEMARK':
+                $this->txtAverageMark->Visible = true;
+                $this->txtAverageMark->Refresh();
+                break;
+            case 'STUDENT':
+                $this->lstStudent->Visible = true;
+                $this->lstStudent->Refresh();
                 break;
             case 'COURSE':
                 $this->lstCourse->Visible = true;
                 $this->lstCourse->Refresh();
-                break;
-            case 'ASSIGNMENT':
-                $this->lstAssignment->Visible = true;
-                $this->lstAssignment->Refresh();
                 break;
             default:
                 break;
@@ -370,7 +358,7 @@ class SubscriptionController_Base {
             return -1;
     }
 
-    public function applyValuesBeforeSaveObject($Account = null,$Course = null,$Assignment = null)  {
+    public function applyValuesBeforeSaveObject($Student = null,$Course = null)  {
         if (!$this->Object)
             $this->Object = new Subscription();
         
@@ -380,12 +368,13 @@ class SubscriptionController_Base {
         if (strlen($this->txtEndDate->Text) > 0) {
             $this->Object->EndDate = new QDateTime($this->txtEndDate->Text);
         }
-        if ($Account) {
-            $this->Object->AccountObject = $Account;
+        $this->Object->AverageMark = $this->txtAverageMark->Text;
+        if ($Student) {
+            $this->Object->StudentObject = $Student;
         }
-        if ($this->saveUsingLstAccount) {
-            $linkedAccount = Account::Load($this->lstAccount->SelectedValue);
-            $this->Object->AccountObject = $linkedAccount;
+        if ($this->saveUsingLstStudent) {
+            $linkedStudent = Student::Load($this->lstStudent->SelectedValue);
+            $this->Object->StudentObject = $linkedStudent;
         }
         if ($Course) {
             $this->Object->CourseObject = $Course;
@@ -394,21 +383,14 @@ class SubscriptionController_Base {
             $linkedCourse = Course::Load($this->lstCourse->SelectedValue);
             $this->Object->CourseObject = $linkedCourse;
         }
-        if ($Assignment) {
-            $this->Object->AssignmentObject = $Assignment;
-        }
-        if ($this->saveUsingLstAssignment) {
-            $linkedAssignment = Assignment::Load($this->lstAssignment->SelectedValue);
-            $this->Object->AssignmentObject = $linkedAssignment;
-        }
     }
 
-    public function saveObject($validate = true,$Account = null,$Course = null,$Assignment = null)  {
+    public function saveObject($validate = true,$Student = null,$Course = null)  {
         if ($validate){
             if (!$this->validateObject())
                 return false;
         }
-        $this->applyValuesBeforeSaveObject($Account,$Course,$Assignment);
+        $this->applyValuesBeforeSaveObject($Student,$Course);
         
         return $this->saveWithAudit();
     }
@@ -425,9 +407,11 @@ class SubscriptionController_Base {
         $hasNoErrors = true;
         //$this->resetValidation();
         // Example of validating a field as required
-        //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtStartDate);
+        $hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtStartDate);
         // Example of validating a field as required
         //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtEndDate);
+        // Example of validating a field as required
+        //$hasNoErrors &= AppSpecificFunctions::validateFieldAsRequired($this->txtAverageMark);
         // Example of validating an email address
         //$hasNoErrors &= AppSpecificFunctions::validateFieldAsEmailAddress($this->[FieldName]);';
         return $hasNoErrors;
@@ -438,6 +422,8 @@ class SubscriptionController_Base {
             $this->txtStartDate->Placeholder = '';
             $this->txtEndDate->WrapperCssClass = 'form-group';
             $this->txtEndDate->Placeholder = '';
+            $this->txtAverageMark->WrapperCssClass = 'form-group';
+            $this->txtAverageMark->Placeholder = '';
         $js = AppSpecificFunctions::GetDatePickerInitJs();
         AppSpecificFunctions::ExecuteJavaScript($js);
     }
@@ -459,10 +445,12 @@ class SubscriptionController_Base {
         if ($previousValues) {
         $changeText = 'StartDate-> Value before: '.$previousValues->StartDate.', Value after: '.$this->Object->StartDate.'<br>
         EndDate-> Value before: '.$previousValues->EndDate.', Value after: '.$this->Object->EndDate.'<br>
+        AverageMark-> Value before: '.$previousValues->AverageMark.', Value after: '.$this->Object->AverageMark.'<br>
         ';
         } else {
         $changeText = 'StartDate-> Value: '.$this->Object->StartDate.'<br>
         EndDate-> Value: '.$this->Object->EndDate.'<br>
+        AverageMark-> Value: '.$this->Object->AverageMark.'<br>
         ';
         }
         try {

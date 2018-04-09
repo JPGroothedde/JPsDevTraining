@@ -59,7 +59,7 @@ switch (SERVER_INSTANCE) {
 		 */
 		define ('__DOCROOT__', '/opt/lampp/htdocs');
 		define ('__VIRTUAL_DIRECTORY__', '');
-		define ('__SUBDIRECTORY__', '/JPsDevTraining');
+		define ('__SUBDIRECTORY__', '/JPsDevTraining/');
 		// The App name
 		define ('__APPNAME__','sDev-Base');
 		/* Database Connection SerialArrays
@@ -90,7 +90,7 @@ switch (SERVER_INSTANCE) {
 			'adapter' => 'MySqli5',
 			'server' => 'localhost',
 			'port' => null,
-			'database' => 'sdevbase',
+			'database' => 'exercise3',
 			'username' => 'sdevbase',
 			'password' => '123',
 			'caching' => false,

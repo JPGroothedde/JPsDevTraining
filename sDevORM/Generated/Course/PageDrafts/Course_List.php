@@ -58,10 +58,10 @@ class Course_ListForm extends QForm {
         }
     }
     protected function InitCourseDataList() {
-        $searchableAttributes = array(QQN::Course()->Name,QQN::Course()->Price);
-        $SortAttributesShown = array('Name','Price');
-        $SortAttributes = array(QQN::Course()->Name,QQN::Course()->Price);
-        $columnItems = array('Name','Price');
+        $searchableAttributes = array(QQN::Course()->CourseName,QQN::Course()->CoursePrice);
+        $SortAttributesShown = array('Course Name','Course Price');
+        $SortAttributes = array(QQN::Course()->CourseName,QQN::Course()->CoursePrice);
+        $columnItems = array('CourseName','CoursePrice');
         $this->btnNewCourse = AppSpecificFunctions::getNewActionButton($this,'Add Course','btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss,'btnNewCourse_Clicked');
         $this->CourseList = new CourseDataList($this, QQN::Course(),$searchableAttributes, null, $columnItems, $SortAttributes,$SortAttributesShown);
     }

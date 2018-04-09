@@ -1,6 +1,11 @@
 <?php $strPageTitle = 'LoginToken Template';?>
-<?php require(__CONFIGURATION__ . '/header.inc.php');	?>
-
+<?php require(__CONFIGURATION__ . '/header_form_templates.inc.php');	?>
+<style>
+    body {
+        padding: 0px;
+        margin:0px;
+    }
+</style>
 <?php $this->RenderBegin() ?>
 <div class="row">
     <div class="col-md-12">
@@ -8,8 +13,8 @@
     </div>
     <div class="col-md-12">
         <?php $this->btnSaveLoginToken->Render();?>
-        <?php $this->btnDeleteLoginToken->Render();?>
-        <?php $this->btnCancelLoginToken->Render();?>
+        <!--<?php $this->btnDeleteLoginToken->Render();?>
+        <?php $this->btnCancelLoginToken->Render();?>-->
     </div>
 </div>
 

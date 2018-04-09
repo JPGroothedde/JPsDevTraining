@@ -3,7 +3,7 @@ require('../../../../sdev.inc.php');
 require(__SDEV_ORM__.'/Implementations/EmailTemplate/EmailTemplateController.php');
 
 // Define User roles that have access to this page here. If commented out, this page is accessible to anyone
-/*if (!checkRole(array('Administrator'))) {
+/*if (!AppSpecificFunctions::checkPageAccess(array('Administrator'))) {
         AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 }*/
 // Remove this line if the file needs to be accessible remotely(production)
@@ -47,18 +47,19 @@ class EmailTemplate_DetailForm extends QForm {
         $this->EmailTemplateInstance = new EmailTemplateController($this);
 
         $this->btnSaveEmailTemplate = new QButton($this);
-        $this->btnSaveEmailTemplate->Text = 'Save EmailTemplate';
+        $this->btnSaveEmailTemplate->Text = 'Save';
+        $this->btnSaveEmailTemplate->CssClass = 'btn btn-primary mrg-top10 rippleclick';
         $this->btnSaveEmailTemplate->AddAction(new QClickEvent(), new QAjaxAction('btnSaveEmailTemplate_Clicked'));
 
         $this->btnDeleteEmailTemplate = new QButton($this);
-        $this->btnDeleteEmailTemplate->Text = 'Delete EmailTemplate';
-        $this->btnDeleteEmailTemplate->CssClass = 'btn btn-danger';
+        $this->btnDeleteEmailTemplate->Text = 'Delete';
+        $this->btnDeleteEmailTemplate->CssClass = 'btn btn-danger mrg-top10 rippleclick';
         $this->btnDeleteEmailTemplate->AddAction(new QClickEvent(), new QConfirmAction('Are you sure?'));
         $this->btnDeleteEmailTemplate->AddAction(new QClickEvent(), new QAjaxAction('btnDeleteEmailTemplate_Clicked'));
 
         $this->btnCancelEmailTemplate = new QButton($this);
         $this->btnCancelEmailTemplate->Text = 'Cancel';
-        $this->btnCancelEmailTemplate->CssClass = 'btn btn-default';
+        $this->btnCancelEmailTemplate->CssClass = 'btn btn-default mrg-top10 rippleclick';
         $this->btnCancelEmailTemplate->AddAction(new QClickEvent(), new QAjaxAction('btnCancelEmailTemplate_Clicked'));
     }
     protected function btnSaveEmailTemplate_Clicked($strFormId, $strControlId, $strParameter) {
@@ -77,6 +78,11 @@ class EmailTemplate_DetailForm extends QForm {
         $js = 'window.parent.window.executeFormAction(\''.$parentFormId.'\',\''.$strControlId.'\',\''.$strParameter.'\');';
         AppSpecificFunctions::ExecuteJavaScript($js);
     }
+    protected function btnPublished_Clicked($strFormId, $strControlId, $strParameter) {
+        $this->GetControl($this->EmailTemplateInstance->getControlId('Published'))->Toggle(!$this->GetControl($this->EmailTemplateInstance->getControlId('Published'))->IsToggled);
+    }
+
+    
 }
 EmailTemplate_DetailForm::Run('EmailTemplate_DetailForm');
 ?>

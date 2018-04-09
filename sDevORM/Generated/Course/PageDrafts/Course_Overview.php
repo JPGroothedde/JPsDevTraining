@@ -60,10 +60,10 @@ class Course_OverviewForm extends QForm {
         }
     }
     protected function InitCourseDataGrid() {
-        $searchableAttributes = array(QQN::Course()->Name,QQN::Course()->Price);
-        $headerItems = array('Name','Price');
-        $headerSortNodes = array(QQN::Course()->Name,QQN::Course()->Price);
-        $columnItems = array('Name','Price');
+        $searchableAttributes = array(QQN::Course()->CourseName,QQN::Course()->CoursePrice);
+        $headerItems = array('Course Name','Course Price');
+        $headerSortNodes = array(QQN::Course()->CourseName,QQN::Course()->CoursePrice);
+        $columnItems = array('CourseName','CoursePrice');
         $this->CourseWaitControlIcon = new QWaitIcon($this);
         $this->btnNewCourse = new QButton($this);
         $this->btnNewCourse->Text = 'Add Course';

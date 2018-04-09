@@ -12,5 +12,32 @@ class SubscriptionDataGrid extends sDataGrid{
             $sessionIdentifier, $rememberState, $exportHeaderItems, $exportColumnItems);
 
     }
+    protected function getColumnItemText($ArrayIndex = -1, $TheItem = null) {
+        // This function can be overridden in the child class to display attributes in a custom way
+        if (!$TheItem)
+            return ' - ';
+        if ($ArrayIndex < 0)
+            return ' - ';
+        if ($ArrayIndex > count($this->columnItems))
+            return ' - ';
+        if($this->columnItems[$ArrayIndex] == 'Student') {
+            if ($TheItem->StudentObject) {
+                if ($TheItem->StudentObject) {
+                    return $TheItem->StudentObject->FirstName.' '.$TheItem->StudentObject->LastName;
+                }
+            }
+            return 'N/A';
+        }
+        if($this->columnItems[$ArrayIndex] == 'Course') {
+            if ($TheItem->CourseObject) {
+                if($TheItem->CourseObject) {
+                    return $TheItem->CourseObject->CourseName;
+                }
+            }
+            return 'N/A';
+        }
+        // Default:
+        return $TheItem->__get($this->columnItems[$ArrayIndex]);
+    }
 }
 ?>

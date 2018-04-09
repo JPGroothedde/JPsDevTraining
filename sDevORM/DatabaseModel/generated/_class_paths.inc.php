@@ -84,6 +84,11 @@
 		QApplicationBase::$ClassFile['qqnoderemoteaccess'] = __MODEL__ . '/RemoteAccess.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenoderemoteaccess'] = __MODEL__ . '/RemoteAccess.class.php';
 
+	// ClassPaths for the Student class
+		QApplicationBase::$ClassFile['student'] = __MODEL__ . '/Student.class.php';
+		QApplicationBase::$ClassFile['qqnodestudent'] = __MODEL__ . '/Student.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodestudent'] = __MODEL__ . '/Student.class.php';
+
 	// ClassPaths for the Subscription class
 		QApplicationBase::$ClassFile['subscription'] = __MODEL__ . '/Subscription.class.php';
 		QApplicationBase::$ClassFile['qqnodesubscription'] = __MODEL__ . '/Subscription.class.php';

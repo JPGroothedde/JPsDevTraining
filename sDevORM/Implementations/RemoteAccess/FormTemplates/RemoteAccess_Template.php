@@ -3,7 +3,7 @@ require('../../../../sdev.inc.php');
 require(__SDEV_ORM__.'/Implementations/RemoteAccess/RemoteAccessController.php');
 
 // Define User roles that have access to this page here. If commented out, this page is accessible to anyone
-/*if (!checkRole(array('Administrator'))) {
+/*if (!AppSpecificFunctions::checkPageAccess(array('Administrator'))) {
         AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 }*/
 // Remove this line if the file needs to be accessible remotely(production)
@@ -47,18 +47,19 @@ class RemoteAccess_DetailForm extends QForm {
         $this->RemoteAccessInstance = new RemoteAccessController($this);
 
         $this->btnSaveRemoteAccess = new QButton($this);
-        $this->btnSaveRemoteAccess->Text = 'Save RemoteAccess';
+        $this->btnSaveRemoteAccess->Text = 'Save';
+        $this->btnSaveRemoteAccess->CssClass = 'btn btn-primary mrg-top10 rippleclick';
         $this->btnSaveRemoteAccess->AddAction(new QClickEvent(), new QAjaxAction('btnSaveRemoteAccess_Clicked'));
 
         $this->btnDeleteRemoteAccess = new QButton($this);
-        $this->btnDeleteRemoteAccess->Text = 'Delete RemoteAccess';
-        $this->btnDeleteRemoteAccess->CssClass = 'btn btn-danger';
+        $this->btnDeleteRemoteAccess->Text = 'Delete';
+        $this->btnDeleteRemoteAccess->CssClass = 'btn btn-danger mrg-top10 rippleclick';
         $this->btnDeleteRemoteAccess->AddAction(new QClickEvent(), new QConfirmAction('Are you sure?'));
         $this->btnDeleteRemoteAccess->AddAction(new QClickEvent(), new QAjaxAction('btnDeleteRemoteAccess_Clicked'));
 
         $this->btnCancelRemoteAccess = new QButton($this);
         $this->btnCancelRemoteAccess->Text = 'Cancel';
-        $this->btnCancelRemoteAccess->CssClass = 'btn btn-default';
+        $this->btnCancelRemoteAccess->CssClass = 'btn btn-default mrg-top10 rippleclick';
         $this->btnCancelRemoteAccess->AddAction(new QClickEvent(), new QAjaxAction('btnCancelRemoteAccess_Clicked'));
     }
     protected function btnSaveRemoteAccess_Clicked($strFormId, $strControlId, $strParameter) {

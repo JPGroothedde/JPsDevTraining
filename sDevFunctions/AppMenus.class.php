@@ -150,6 +150,8 @@ abstract class AppMenus {
         $items = array(new MenuItem(array('User','Administrator'),$UserNameToDisplay,'#','Right','','','User Home',false,
                         array(new MenuItem(array('User','Administrator'),'My Account',__USRMNG__.'/account_edit/','','','My Account'),
                         new MenuItem(array('User','Administrator'),'Logout',__USRMNG__.'/logout/','','','','',true))),
+            new MenuItem(array('User'),'Students',__SUBDIRECTORY__.'/App/User/Student_Overview/','Left','','','Student Overview'),
+            new MenuItem(array('User'),'Courses',__SUBDIRECTORY__.'/App/User/Course_Overview/','Left','','','Course Overview'),
             new MenuItem(array('Administrator'),'Accounts',__SUBDIRECTORY__.'/App/Administrator/Account_Overview/','Left','','','Account Overview'),
             new MenuItem(array('Administrator'),'API Keys',__SUBDIRECTORY__.'/App/Administrator/ApiKey_Overview/','Left','','','API Keys'),
             new MenuItem(array('Administrator'),'Audit Log',__SUBDIRECTORY__.'/App/Administrator/AuditLogEntry_Overview/','Left','','','AuditLogEntry Overview'),

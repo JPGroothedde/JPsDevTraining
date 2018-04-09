@@ -5,16 +5,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="ApiKeyModalLabel">Api Key Details</h4>
+                <h4 class="modal-title" id="ApiKeyModalLabel">ApiKey Details</h4>
             </div>
             <div class="modal-body">
                 <?php require(__SDEV_ORM__.'/Implementations/ApiKey/ApiKeyFrontEnd.php');?>
-                <?php $this->html_ApiEntityList->Render();?>
             </div>
             <div class="modal-footer">
-                <?php $this->btnSaveApiKey->Render();?>
-                <?php $this->btnDeleteApiKey->Render();?>
-                <button type="button" class="btn btn-default  <?php echo $this->buttonFullWidthCss;?>" data-dismiss="modal">Cancel</button>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php $this->btnSaveApiKey->Render();?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $this->btnDeleteApiKey->Render();?>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-default rippleclick mrg-top10 fullWidth" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
