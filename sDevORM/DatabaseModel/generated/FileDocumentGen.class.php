@@ -19,6 +19,9 @@
 	 * @property string $FileName the value for strFileName 
 	 * @property string $Path the value for strPath 
 	 * @property QDateTime $CreatedDate the value for dttCreatedDate 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
+	 * @property-read ProfilePicture $_ProfilePicture the value for the private _objProfilePicture (Read-Only) if set due to an expansion on the ProfilePicture.FileDocument reverse relationship
+	 * @property-read ProfilePicture[] $_ProfilePictureArray the value for the private _objProfilePictureArray (Read-Only) if set due to an ExpandAsArray on the ProfilePicture.FileDocument reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class FileDocumentGen extends QBaseClass implements IteratorAggregate {
@@ -62,6 +65,30 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column FileDocument.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
+		 * Private member variable that stores a reference to a single ProfilePicture object
+		 * (of type ProfilePicture), if this FileDocument object was restored with
+		 * an expansion on the ProfilePicture association table.
+		 * @var ProfilePicture _objProfilePicture;
+		 */
+		private $_objProfilePicture;
+
+		/**
+		 * Private member variable that stores a reference to an array of ProfilePicture objects
+		 * (of type ProfilePicture[]), if this FileDocument object was restored with
+		 * an ExpandAsArray on the ProfilePicture association table.
+		 * @var ProfilePicture[] _objProfilePictureArray;
+		 */
+		private $_objProfilePictureArray = null;
+
+		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
 		 * columns from the run-time database query result for this object).  Used by InstantiateDbRow and
 		 * GetVirtualAttribute.
@@ -94,6 +121,7 @@
 			$this->strFileName = FileDocument::FileNameDefault;
 			$this->strPath = FileDocument::PathDefault;
 			$this->dttCreatedDate = (FileDocument::CreatedDateDefault === null)?null:new QDateTime(FileDocument::CreatedDateDefault);
+			$this->strLastUpdated = FileDocument::LastUpdatedDefault;
 		}
 
 
@@ -439,6 +467,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'FileName', $strAliasPrefix . 'FileName');
 			    $objBuilder->AddSelectItem($strTableName, 'Path', $strAliasPrefix . 'Path');
 			    $objBuilder->AddSelectItem($strTableName, 'CreatedDate', $strAliasPrefix . 'CreatedDate');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
             }
 		}
 
@@ -550,6 +579,15 @@
 			}
 			
 			
+			// See if we're doing an array expansion on the previous item
+			if ($objExpandAsArrayNode && 
+					is_array($objPreviousItemArray) && 
+					count($objPreviousItemArray)) {
+
+				if (FileDocument::ExpandArray ($objDbRow, $strAliasPrefix, $objExpandAsArrayNode, $objPreviousItemArray, $strColumnAliasArray)) {
+					return false; // db row was used but no new object was created
+				}
+			}
 
 			// Create a new instance of the FileDocument object
 			$objToReturn = new FileDocument();
@@ -567,6 +605,9 @@
 			$strAlias = $strAliasPrefix . 'CreatedDate';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->dttCreatedDate = $objDbRow->GetColumn($strAliasName, 'DateTime');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -599,6 +640,21 @@
 
 
 				
+
+			// Check for ProfilePicture Virtual Binding
+			$strAlias = $strAliasPrefix . 'profilepicture__Id';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objExpansionNode = (empty($objExpansionAliasArray['profilepicture']) ? null : $objExpansionAliasArray['profilepicture']);
+			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
+			if ($blnExpanded && null === $objToReturn->_objProfilePictureArray)
+				$objToReturn->_objProfilePictureArray = array();
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if ($blnExpanded) {
+					$objToReturn->_objProfilePictureArray[] = ProfilePicture::InstantiateDbRow($objDbRow, $strAliasPrefix . 'profilepicture__', $objExpansionNode, null, $strColumnAliasArray);
+				} elseif (is_null($objToReturn->_objProfilePicture)) {
+					$objToReturn->_objProfilePicture = ProfilePicture::InstantiateDbRow($objDbRow, $strAliasPrefix . 'profilepicture__', $objExpansionNode, null, $strColumnAliasArray);
+				}
+			}
 
 			return $objToReturn;
 		}
@@ -708,69 +764,79 @@
 		//////////////////////////
 
 		/**
-		 * Save this FileDocument
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this FileDocument
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = FileDocument::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = FileDocument::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = FileDocument::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'FileDocument';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FileName -> '.$this->strFileName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Path -> '.$this->strPath.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDate -> '.$this->dttCreatedDate.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("FileName" => $this->strFileName));
+                $ChangedArray = array_merge($ChangedArray,array("Path" => $this->strPath));
+                $ChangedArray = array_merge($ChangedArray,array("CreatedDate" => $this->dttCreatedDate));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->FileName) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FileName -> '.$ExistingObj->FileName.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FileName -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->Path) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Path -> '.$ExistingObj->Path.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Path -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->FileName)) {
+                    $ExistingValueStr = $ExistingObj->FileName;
                 }
-                if ($ExistingObj->CreatedDate) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDate -> '.$ExistingObj->CreatedDate.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDate -> NULL<br>';
+                if ($ExistingObj->FileName != $this->strFileName) {
+                    $ChangedArray = array_merge($ChangedArray,array("FileName" => array("Before" => $ExistingValueStr,"After" => $this->strFileName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("FileName" => "From: ".$ExistingValueStr." to: ".$this->strFileName));
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FileName -> '.$this->strFileName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Path -> '.$this->strPath.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDate -> '.$this->dttCreatedDate.'<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Path)) {
+                    $ExistingValueStr = $ExistingObj->Path;
+                }
+                if ($ExistingObj->Path != $this->strPath) {
+                    $ChangedArray = array_merge($ChangedArray,array("Path" => array("Before" => $ExistingValueStr,"After" => $this->strPath)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Path" => "From: ".$ExistingValueStr." to: ".$this->strPath));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->CreatedDate)) {
+                    $ExistingValueStr = $ExistingObj->CreatedDate;
+                }
+                if ($ExistingObj->CreatedDate != $this->dttCreatedDate) {
+                    $ChangedArray = array_merge($ChangedArray,array("CreatedDate" => array("Before" => $ExistingValueStr,"After" => $this->dttCreatedDate)));
+                    //$ChangedArray = array_merge($ChangedArray,array("CreatedDate" => "From: ".$ExistingValueStr." to: ".$this->dttCreatedDate));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving FileDocument. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `FileDocument` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `FileDocument` (
 							`FileName`,
 							`Path`,
 							`CreatedDate`
@@ -779,48 +845,60 @@
 							' . $objDatabase->SqlVariable($this->strPath) . ',
 							' . $objDatabase->SqlVariable($this->dttCreatedDate) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('FileDocument', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('FileDocument', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+					
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `FileDocument` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`FileDocument`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('FileDocument');
+                }
+	
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `FileDocument` SET
 							`FileName` = ' . $objDatabase->SqlVariable($this->strFileName) . ',
 							`Path` = ' . $objDatabase->SqlVariable($this->strPath) . ',
 							`CreatedDate` = ' . $objDatabase->SqlVariable($this->dttCreatedDate) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+	            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving FileDocument. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving FileDocument. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+					            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `FileDocument` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+	
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this FileDocument
@@ -833,20 +911,22 @@
 			// Get the Database Object for this Class
 			$objDatabase = FileDocument::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'FileDocument';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'FileName -> '.$this->strFileName.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Path -> '.$this->strPath.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDate -> '.$this->dttCreatedDate.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("FileName" => $this->strFileName));
+            $ChangedArray = array_merge($ChangedArray,array("Path" => $this->strPath));
+            $ChangedArray = array_merge($ChangedArray,array("CreatedDate" => $this->dttCreatedDate));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting FileDocument. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting FileDocument. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -923,6 +1003,7 @@
 			$this->strFileName = $objReloaded->strFileName;
 			$this->strPath = $objReloaded->strPath;
 			$this->dttCreatedDate = $objReloaded->dttCreatedDate;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 		}
 
 
@@ -971,6 +1052,13 @@
 					 */
 					return $this->dttCreatedDate;
 
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
+
 
 				///////////////////
 				// Member Objects
@@ -980,6 +1068,22 @@
 				// Virtual Object References (Many to Many and Reverse References)
 				// (If restored via a "Many-to" expansion)
 				////////////////////////////
+
+				case '_ProfilePicture':
+					/**
+					 * Gets the value for the private _objProfilePicture (Read-Only)
+					 * if set due to an expansion on the ProfilePicture.FileDocument reverse relationship
+					 * @return ProfilePicture
+					 */
+					return $this->_objProfilePicture;
+
+				case '_ProfilePictureArray':
+					/**
+					 * Gets the value for the private _objProfilePictureArray (Read-Only)
+					 * if set due to an ExpandAsArray on the ProfilePicture.FileDocument reverse relationship
+					 * @return ProfilePicture[]
+					 */
+					return $this->_objProfilePictureArray;
 
 
 				case '__Restored':
@@ -1080,6 +1184,155 @@
 
 
 
+		// Related Objects' Methods for ProfilePicture
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated ProfilePictures as an array of ProfilePicture objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return ProfilePicture[]
+		*/
+		public function GetProfilePictureArray($objOptionalClauses = null) {
+			if ((is_null($this->intId)))
+				return array();
+
+			try {
+				return ProfilePicture::LoadArrayByFileDocument($this->intId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated ProfilePictures
+		 * @return int
+		*/
+		public function CountProfilePictures() {
+			if ((is_null($this->intId)))
+				return 0;
+
+			return ProfilePicture::CountByFileDocument($this->intId);
+		}
+
+		/**
+		 * Associates a ProfilePicture
+		 * @param ProfilePicture $objProfilePicture
+		 * @return void
+		*/
+		public function AssociateProfilePicture(ProfilePicture $objProfilePicture) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateProfilePicture on this unsaved FileDocument.');
+			if ((is_null($objProfilePicture->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateProfilePicture on this FileDocument with an unsaved ProfilePicture.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`ProfilePicture`
+				SET
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objProfilePicture->Id) . '
+			');
+		}
+
+		/**
+		 * Unassociates a ProfilePicture
+		 * @param ProfilePicture $objProfilePicture
+		 * @return void
+		*/
+		public function UnassociateProfilePicture(ProfilePicture $objProfilePicture) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this unsaved FileDocument.');
+			if ((is_null($objProfilePicture->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this FileDocument with an unsaved ProfilePicture.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`ProfilePicture`
+				SET
+					`FileDocument` = null
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objProfilePicture->Id) . ' AND
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Unassociates all ProfilePictures
+		 * @return void
+		*/
+		public function UnassociateAllProfilePictures() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this unsaved FileDocument.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`ProfilePicture`
+				SET
+					`FileDocument` = null
+				WHERE
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated ProfilePicture
+		 * @param ProfilePicture $objProfilePicture
+		 * @return void
+		*/
+		public function DeleteAssociatedProfilePicture(ProfilePicture $objProfilePicture) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this unsaved FileDocument.');
+			if ((is_null($objProfilePicture->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this FileDocument with an unsaved ProfilePicture.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`ProfilePicture`
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objProfilePicture->Id) . ' AND
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes all associated ProfilePictures
+		 * @return void
+		*/
+		public function DeleteAllProfilePictures() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this unsaved FileDocument.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`ProfilePicture`
+				WHERE
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+
 		
 		///////////////////////////////
 		// METHODS TO EXTRACT INFO ABOUT THE CLASS
@@ -1122,6 +1375,7 @@
 			$strToReturn .= '<element name="FileName" type="xsd:string"/>';
 			$strToReturn .= '<element name="Path" type="xsd:string"/>';
 			$strToReturn .= '<element name="CreatedDate" type="xsd:dateTime"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1152,6 +1406,8 @@
 				$objToReturn->strPath = $objSoapObject->Path;
 			if (property_exists($objSoapObject, 'CreatedDate'))
 				$objToReturn->dttCreatedDate = new QDateTime($objSoapObject->CreatedDate);
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1190,6 +1446,7 @@
 			$iArray['FileName'] = $this->strFileName;
 			$iArray['Path'] = $this->strPath;
 			$iArray['CreatedDate'] = $this->dttCreatedDate;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1231,8 +1488,10 @@
      * @property-read QQNode $FileName
      * @property-read QQNode $Path
      * @property-read QQNode $CreatedDate
+     * @property-read QQNode $LastUpdated
      *
      *
+     * @property-read QQReverseReferenceNodeProfilePicture $ProfilePicture
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -1250,6 +1509,10 @@
 					return new QQNode('Path', 'Path', 'VarChar', $this);
 				case 'CreatedDate':
 					return new QQNode('CreatedDate', 'CreatedDate', 'DateTime', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
+				case 'ProfilePicture':
+					return new QQReverseReferenceNodeProfilePicture($this, 'profilepicture', 'reverse_reference', 'FileDocument', 'ProfilePicture');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1269,8 +1532,10 @@
      * @property-read QQNode $FileName
      * @property-read QQNode $Path
      * @property-read QQNode $CreatedDate
+     * @property-read QQNode $LastUpdated
      *
      *
+     * @property-read QQReverseReferenceNodeProfilePicture $ProfilePicture
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -1288,6 +1553,10 @@
 					return new QQNode('Path', 'Path', 'string', $this);
 				case 'CreatedDate':
 					return new QQNode('CreatedDate', 'CreatedDate', 'QDateTime', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
+				case 'ProfilePicture':
+					return new QQReverseReferenceNodeProfilePicture($this, 'profilepicture', 'reverse_reference', 'FileDocument', 'ProfilePicture');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

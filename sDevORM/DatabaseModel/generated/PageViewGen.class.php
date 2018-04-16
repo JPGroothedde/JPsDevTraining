@@ -22,6 +22,7 @@
 	 * @property string $UserAgentDetails the value for strUserAgentDetails 
 	 * @property string $UserRole the value for strUserRole 
 	 * @property string $Username the value for strUsername 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class PageViewGen extends QBaseClass implements IteratorAggregate {
@@ -91,6 +92,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column PageView.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
 		 * columns from the run-time database query result for this object).  Used by InstantiateDbRow and
 		 * GetVirtualAttribute.
@@ -126,6 +135,7 @@
 			$this->strUserAgentDetails = PageView::UserAgentDetailsDefault;
 			$this->strUserRole = PageView::UserRoleDefault;
 			$this->strUsername = PageView::UsernameDefault;
+			$this->strLastUpdated = PageView::LastUpdatedDefault;
 		}
 
 
@@ -474,6 +484,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'UserAgentDetails', $strAliasPrefix . 'UserAgentDetails');
 			    $objBuilder->AddSelectItem($strTableName, 'UserRole', $strAliasPrefix . 'UserRole');
 			    $objBuilder->AddSelectItem($strTableName, 'Username', $strAliasPrefix . 'Username');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
             }
 		}
 
@@ -611,6 +622,9 @@
 			$strAlias = $strAliasPrefix . 'Username';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strUsername = $objDbRow->GetColumn($strAliasName, 'VarChar');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -752,90 +766,20 @@
 		//////////////////////////
 
 		/**
-		 * Save this PageView
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this PageView
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = PageView::GetDatabase();
-
-			$mixToReturn = null;
-            $ExistingObj = PageView::Load($this->intId);
-            $newAuditLogEntry = new AuditLogEntry();
-            $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
-            $newAuditLogEntry->ObjectId = $this->intId;
-            $newAuditLogEntry->ObjectName = 'PageView';
-            $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
-            if (!$ExistingObj) {
-                $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'TimeStamped -> '.$this->dttTimeStamped.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'IPAddress -> '.$this->strIPAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'PageDetails -> '.$this->strPageDetails.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserAgentDetails -> '.$this->strUserAgentDetails.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->strUserRole.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$this->strUsername.'<br>';
-            } else {
-                $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
-                }
-                if ($ExistingObj->TimeStamped) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'TimeStamped -> '.$ExistingObj->TimeStamped.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'TimeStamped -> NULL<br>';
-                }
-                if ($ExistingObj->IPAddress) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'IPAddress -> '.$ExistingObj->IPAddress.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'IPAddress -> NULL<br>';
-                }
-                if ($ExistingObj->PageDetails) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'PageDetails -> '.$ExistingObj->PageDetails.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'PageDetails -> NULL<br>';
-                }
-                if ($ExistingObj->UserAgentDetails) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserAgentDetails -> '.$ExistingObj->UserAgentDetails.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserAgentDetails -> NULL<br>';
-                }
-                if ($ExistingObj->UserRole) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$ExistingObj->UserRole.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> NULL<br>';
-                }
-                if ($ExistingObj->Username) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$ExistingObj->Username.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> NULL<br>';
-                }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'TimeStamped -> '.$this->dttTimeStamped.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'IPAddress -> '.$this->strIPAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'PageDetails -> '.$this->strPageDetails.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserAgentDetails -> '.$this->strUserAgentDetails.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->strUserRole.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$this->strUsername.'<br>';
-            }
-
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = PageView::GetDatabase();
+            $mixToReturn = null;
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving PageView. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `PageView` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `PageView` (
 							`TimeStamped`,
 							`IPAddress`,
 							`PageDetails`,
@@ -850,51 +794,57 @@
 							' . $objDatabase->SqlVariable($this->strUserRole) . ',
 							' . $objDatabase->SqlVariable($this->strUsername) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('PageView', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('PageView', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+								
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `PageView` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`PageView`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('PageView');
+                }
+	
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `PageView` SET
 							`TimeStamped` = ' . $objDatabase->SqlVariable($this->dttTimeStamped) . ',
 							`IPAddress` = ' . $objDatabase->SqlVariable($this->strIPAddress) . ',
 							`PageDetails` = ' . $objDatabase->SqlVariable($this->strPageDetails) . ',
 							`UserAgentDetails` = ' . $objDatabase->SqlVariable($this->strUserAgentDetails) . ',
 							`UserRole` = ' . $objDatabase->SqlVariable($this->strUserRole) . ',
 							`Username` = ' . $objDatabase->SqlVariable($this->strUsername) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
+            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+								            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `PageView` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
-            try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving PageView. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
-
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+	
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this PageView
@@ -906,25 +856,6 @@
 
 			// Get the Database Object for this Class
 			$objDatabase = PageView::GetDatabase();
-            $newAuditLogEntry = new AuditLogEntry();
-            $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
-            $newAuditLogEntry->ObjectId = $this->intId;
-            $newAuditLogEntry->ObjectName = 'PageView';
-            $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
-            $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'TimeStamped -> '.$this->dttTimeStamped.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'IPAddress -> '.$this->strIPAddress.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'PageDetails -> '.$this->strPageDetails.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'UserAgentDetails -> '.$this->strUserAgentDetails.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->strUserRole.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$this->strUsername.'<br>';
-            try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting PageView. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
 
 			// Perform the SQL Query
 			$objDatabase->NonQuery('
@@ -1003,6 +934,7 @@
 			$this->strUserAgentDetails = $objReloaded->strUserAgentDetails;
 			$this->strUserRole = $objReloaded->strUserRole;
 			$this->strUsername = $objReloaded->strUsername;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 		}
 
 
@@ -1071,6 +1003,13 @@
 					 * @return string
 					 */
 					return $this->strUsername;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 
 				///////////////////
@@ -1265,6 +1204,7 @@
 			$strToReturn .= '<element name="UserAgentDetails" type="xsd:string"/>';
 			$strToReturn .= '<element name="UserRole" type="xsd:string"/>';
 			$strToReturn .= '<element name="Username" type="xsd:string"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1301,6 +1241,8 @@
 				$objToReturn->strUserRole = $objSoapObject->UserRole;
 			if (property_exists($objSoapObject, 'Username'))
 				$objToReturn->strUsername = $objSoapObject->Username;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1342,6 +1284,7 @@
 			$iArray['UserAgentDetails'] = $this->strUserAgentDetails;
 			$iArray['UserRole'] = $this->strUserRole;
 			$iArray['Username'] = $this->strUsername;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1386,6 +1329,7 @@
      * @property-read QQNode $UserAgentDetails
      * @property-read QQNode $UserRole
      * @property-read QQNode $Username
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1411,6 +1355,8 @@
 					return new QQNode('UserRole', 'UserRole', 'VarChar', $this);
 				case 'Username':
 					return new QQNode('Username', 'Username', 'VarChar', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1433,6 +1379,7 @@
      * @property-read QQNode $UserAgentDetails
      * @property-read QQNode $UserRole
      * @property-read QQNode $Username
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1458,6 +1405,8 @@
 					return new QQNode('UserRole', 'UserRole', 'string', $this);
 				case 'Username':
 					return new QQNode('Username', 'Username', 'string', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

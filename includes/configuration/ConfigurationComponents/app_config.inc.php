@@ -90,7 +90,7 @@ switch (SERVER_INSTANCE) {
 			'adapter' => 'MySqli5',
 			'server' => 'localhost',
 			'port' => null,
-			'database' => 'sdevbase',
+			'database' => 'socialMedia',
 			'username' => 'sdevbase',
 			'password' => '123',
 			'caching' => false,

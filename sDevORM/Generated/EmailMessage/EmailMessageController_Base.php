@@ -96,7 +96,8 @@ class EmailMessageController_Base {
     }
 
     public function setValues($Object) {
-        $this->txtSentDate->Text = '';$this->setSentDateTime();
+        $this->txtSentDate->Text = '';
+        $this->setSentDateTime();
         $this->txtFromAddress->Text = '';
         $this->txtReplyEmail->Text = '';
         $this->txtRecipients->Text = '';
@@ -111,35 +112,35 @@ class EmailMessageController_Base {
             $this->refreshAll();
             return;
         }
-        if ($Object->SentDate) {
+        if (!is_null($Object->SentDate)) {
             $this->txtSentDate->Text = $Object->SentDate->format(DATE_TIME_FORMAT_HTML);
             $this->setSentDateTime($Object->SentDate);
         }
-        if ($Object->FromAddress) {
+        if (!is_null($Object->FromAddress)) {
             $this->txtFromAddress->Text = $Object->FromAddress;
         }
-        if ($Object->ReplyEmail) {
+        if (!is_null($Object->ReplyEmail)) {
             $this->txtReplyEmail->Text = $Object->ReplyEmail;
         }
-        if ($Object->Recipients) {
+        if (!is_null($Object->Recipients)) {
             $this->txtRecipients->Text = $Object->Recipients;
         }
-        if ($Object->Cc) {
+        if (!is_null($Object->Cc)) {
             $this->txtCc->Text = $Object->Cc;
         }
-        if ($Object->Bcc) {
+        if (!is_null($Object->Bcc)) {
             $this->txtBcc->Text = $Object->Bcc;
         }
-        if ($Object->Subject) {
+        if (!is_null($Object->Subject)) {
             $this->txtSubject->Text = $Object->Subject;
         }
-        if ($Object->EmailMessage) {
+        if (!is_null($Object->EmailMessage)) {
             $this->txtEmailMessage->Text = $Object->EmailMessage;
         }
-        if ($Object->Attachments) {
+        if (!is_null($Object->Attachments)) {
             $this->txtAttachments->Text = $Object->Attachments;
         }
-        if ($Object->ErrorInfo) {
+        if (!is_null($Object->ErrorInfo)) {
             $this->txtErrorInfo->Text = $Object->ErrorInfo;
         }
         
@@ -704,7 +705,7 @@ class EmailMessageController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev

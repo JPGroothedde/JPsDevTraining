@@ -65,16 +65,17 @@ class RemoteAccessController_Base {
 
     public function setValues($Object) {
         $this->txtIpAddress->Text = '';
-        $this->txtAccessDateTime->Text = '';$this->setAccessDateTimeTime();
+        $this->txtAccessDateTime->Text = '';
+        $this->setAccessDateTimeTime();
 
         if (!$Object) {
             $this->refreshAll();
             return;
         }
-        if ($Object->IpAddress) {
+        if (!is_null($Object->IpAddress)) {
             $this->txtIpAddress->Text = $Object->IpAddress;
         }
-        if ($Object->AccessDateTime) {
+        if (!is_null($Object->AccessDateTime)) {
             $this->txtAccessDateTime->Text = $Object->AccessDateTime->format(DATE_TIME_FORMAT_HTML);
             $this->setAccessDateTimeTime($Object->AccessDateTime);
         }
@@ -352,7 +353,7 @@ class RemoteAccessController_Base {
             $this->Object->Save();
             return true;
         } catch(QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not save object. Error: '.$e->getMessage());
+            error_log('Could not save object. Error: '.$e->getMessage());
             return false;
         }
         //This is the OLD method that is to be removed. Keeping it here for reference for the next few minor versions of sDev

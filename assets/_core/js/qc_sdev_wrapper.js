@@ -659,7 +659,6 @@ $j.ajaxSync.data = [];
 			},
 			success: function (xml) {
 				removeAjaxOverlay();
-				
 				// First check that the XML returned is valid, else return to error page.
 				var oParser = new DOMParser();
 				var oDOM = oParser.parseFromString(xml, "text/xml");

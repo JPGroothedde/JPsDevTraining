@@ -21,5 +21,4 @@
     <div class="col-md-6">
         <?php $this->AccountInstance->renderControl('Password');?>
     </div>
-
 </div>

@@ -793,83 +793,88 @@
 		//////////////////////////
 
 		/**
-		 * Save this BackgroundProcessUpdate
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this BackgroundProcessUpdate
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = BackgroundProcessUpdate::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = BackgroundProcessUpdate::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = BackgroundProcessUpdate::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'BackgroundProcessUpdate';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateDateTime -> '.$this->dttUpdateDateTime.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateMessage -> '.$this->strUpdateMessage.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'LastUpdated -> '.$this->strLastUpdated.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'BackgroundProcess -> '.$this->intBackgroundProcess.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("UpdateDateTime" => $this->dttUpdateDateTime));
+                $ChangedArray = array_merge($ChangedArray,array("UpdateMessage" => $this->strUpdateMessage));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $ChangedArray = array_merge($ChangedArray,array("BackgroundProcess" => $this->intBackgroundProcess));
+                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->UpdateDateTime) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateDateTime -> '.$ExistingObj->UpdateDateTime.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateDateTime -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->UpdateMessage) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateMessage -> '.$ExistingObj->UpdateMessage.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateMessage -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->UpdateDateTime)) {
+                    $ExistingValueStr = $ExistingObj->UpdateDateTime;
                 }
-                if ($ExistingObj->LastUpdated) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'LastUpdated -> '.$ExistingObj->LastUpdated.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'LastUpdated -> NULL<br>';
+                if ($ExistingObj->UpdateDateTime != $this->dttUpdateDateTime) {
+                    $ChangedArray = array_merge($ChangedArray,array("UpdateDateTime" => array("Before" => $ExistingValueStr,"After" => $this->dttUpdateDateTime)));
+                    //$ChangedArray = array_merge($ChangedArray,array("UpdateDateTime" => "From: ".$ExistingValueStr." to: ".$this->dttUpdateDateTime));
                 }
-                if ($ExistingObj->BackgroundProcess) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'BackgroundProcess -> '.$ExistingObj->BackgroundProcess.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'BackgroundProcess -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->UpdateMessage)) {
+                    $ExistingValueStr = $ExistingObj->UpdateMessage;
                 }
-                if ($ExistingObj->SearchMetaInfo) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$ExistingObj->SearchMetaInfo.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> NULL<br>';
+                if ($ExistingObj->UpdateMessage != $this->strUpdateMessage) {
+                    $ChangedArray = array_merge($ChangedArray,array("UpdateMessage" => array("Before" => $ExistingValueStr,"After" => $this->strUpdateMessage)));
+                    //$ChangedArray = array_merge($ChangedArray,array("UpdateMessage" => "From: ".$ExistingValueStr." to: ".$this->strUpdateMessage));
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateDateTime -> '.$this->dttUpdateDateTime.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateMessage -> '.$this->strUpdateMessage.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'LastUpdated -> '.$this->strLastUpdated.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'BackgroundProcess -> '.$this->intBackgroundProcess.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->BackgroundProcess)) {
+                    $ExistingValueStr = $ExistingObj->BackgroundProcess;
+                }
+                if ($ExistingObj->BackgroundProcess != $this->intBackgroundProcess) {
+                    $ChangedArray = array_merge($ChangedArray,array("BackgroundProcess" => array("Before" => $ExistingValueStr,"After" => $this->intBackgroundProcess)));
+                    //$ChangedArray = array_merge($ChangedArray,array("BackgroundProcess" => "From: ".$ExistingValueStr." to: ".$this->intBackgroundProcess));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->SearchMetaInfo)) {
+                    $ExistingValueStr = $ExistingObj->SearchMetaInfo;
+                }
+                if ($ExistingObj->SearchMetaInfo != $this->strSearchMetaInfo) {
+                    $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
+                    //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving BackgroundProcessUpdate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `BackgroundProcessUpdate` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `BackgroundProcessUpdate` (
 							`UpdateDateTime`,
 							`UpdateMessage`,
 							`BackgroundProcess`,
@@ -880,76 +885,61 @@
 							' . $objDatabase->SqlVariable($this->intBackgroundProcess) . ',
 							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('BackgroundProcessUpdate', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('BackgroundProcessUpdate', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+				
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `BackgroundProcessUpdate` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-					if (!$blnForceUpdate) {
-						// Perform the Optimistic Locking check
-						$objResult = $objDatabase->Query('
-							SELECT
-								`LastUpdated`
-							FROM
-								`BackgroundProcessUpdate`
-							WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-						');
-
-						$objRow = $objResult->FetchArray();
-						if ($objRow[0] != $this->strLastUpdated)
-							throw new QOptimisticLockingException('BackgroundProcessUpdate');
-					}
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`BackgroundProcessUpdate`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('BackgroundProcessUpdate');
+                }
+			
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `BackgroundProcessUpdate` SET
 							`UpdateDateTime` = ' . $objDatabase->SqlVariable($this->dttUpdateDateTime) . ',
 							`UpdateMessage` = ' . $objDatabase->SqlVariable($this->strUpdateMessage) . ',
 							`BackgroundProcess` = ' . $objDatabase->SqlVariable($this->intBackgroundProcess) . ',
 							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-			// Update Local Timestamp
-			$objResult = $objDatabase->Query('
-				SELECT
-					`LastUpdated`
-				FROM
-					`BackgroundProcessUpdate`
-				WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-
-			$objRow = $objResult->FetchArray();
-			$this->strLastUpdated = $objRow[0];
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving BackgroundProcessUpdate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving BackgroundProcessUpdate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+				            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `BackgroundProcessUpdate` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+			
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this BackgroundProcessUpdate
@@ -962,22 +952,23 @@
 			// Get the Database Object for this Class
 			$objDatabase = BackgroundProcessUpdate::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'BackgroundProcessUpdate';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateDateTime -> '.$this->dttUpdateDateTime.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'UpdateMessage -> '.$this->strUpdateMessage.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'LastUpdated -> '.$this->strLastUpdated.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'BackgroundProcess -> '.$this->intBackgroundProcess.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("UpdateDateTime" => $this->dttUpdateDateTime));
+            $ChangedArray = array_merge($ChangedArray,array("UpdateMessage" => $this->strUpdateMessage));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $ChangedArray = array_merge($ChangedArray,array("BackgroundProcess" => $this->intBackgroundProcess));
+            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting BackgroundProcessUpdate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting BackgroundProcessUpdate. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query

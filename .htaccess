@@ -1,0 +1,23 @@
+Options +FollowSymlinks
+#Uncomment the following 2 lines to force https
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !(/$|\.)
+RewriteRule (.*) %{REQUEST_URI}/ [R=301,L]
+RewriteRule ^App/uploaded/summernote_uploads/(.*) App/uploaded/summernote_uploads/$1 [NC,L]
+RewriteRule ^App/Downloads/CSVExportForDownload/(.*) App/Downloads/CSVExportForDownload/$1 [NC,L]
+RewriteRule ^App/([a-z]+)/([a-z_0-9]+)/(.*) App/$1/$2.php/$3 [NC]
+RewriteRule ^UserManagement/([a-z_0-9]+)/(.*) UserManagement/$1.php/$2[NC]
+RewriteRule ^Licensing/InvalidLicense/ Licensing/InvalidLicense.php/[NC]
+RewriteRule ^Error/ error.php/ [NC]
+RewriteRule ^RemoteAccess/ RemoteAccess.php/ [NC]
+
+#Set this to override the server max file upload size
+php_value post_max_size 500M
+php_value upload_max_filesize 500M
+
+# Asset caching: One month for most static assets
+<filesMatch ".(css|jpg|jpeg|png|gif|js|ico)$">
+Header set Cache-Control "max-age=2628000, public"
+</filesMatch>

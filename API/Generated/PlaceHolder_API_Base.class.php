@@ -16,38 +16,22 @@ class PlaceHolder_API_Base {
         $result = array("Result" => "Failed","Message" => "Invalid Object Id");
         return $result;
     }
-    public function createPlaceHolder($DummyOne = '',$DummyTwo = '',$DummyThree = '',$DummyFour = '',$DummyFive = '',$DummySix = '',$Account_Id = '',$UserRole_Id = '') { 
+    public function createPlaceHolder($ = '') { 
         $newPlaceHolderObj = new PlaceHolder();
-        if (strlen($DummyOne) > 0)
-            $newPlaceHolderObj->DummyOne = $DummyOne;
-        if (strlen($DummyTwo) > 0)
-            $newPlaceHolderObj->DummyTwo = $DummyTwo;
-        if (strlen($DummyThree) > 0)
-            $newPlaceHolderObj->DummyThree = $DummyThree;
-        if (strlen($DummyFour) > 0)
-            $newPlaceHolderObj->DummyFour = $DummyFour;
-        if (strlen($DummyFive) > 0)
-            $newPlaceHolderObj->DummyFive = $DummyFive;
-        if (strlen($DummySix) > 0)
-            $newPlaceHolderObj->DummySix = $DummySix;
-        $AccountObjToAssociate = Account::Load($Account_Id);
-        if ($AccountObjToAssociate)
-            $newPlaceHolderObj->AccountObject = $AccountObjToAssociate;
-        $UserRoleObjToAssociate = UserRole::Load($UserRole_Id);
-        if ($UserRoleObjToAssociate)
-            $newPlaceHolderObj->UserRoleObject = $UserRoleObjToAssociate;
+        if (strlen($) > 0)
+            $newPlaceHolderObj-> = $;
         try {
             $newPlaceHolderObj->Save();
             $result = array("Result" => "Success","ObjId" => $newPlaceHolderObj->Id);
             return $result;
         } catch (QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not create PlaceHolder object via API: '.$e->getMessage());
+            error_log('Could not create PlaceHolder object via API: '.$e->getMessage());
             $result = array("Result" => "Failed","Message" => $e->getMessage());
             return $result;
         }
         return null;
     }
-    public function updatePlaceHolder($PlaceHolderId = null,$DummyOne = '',$DummyTwo = '',$DummyThree = '',$DummyFour = '',$DummyFive = '',$DummySix = '',$Account_Id = '',$UserRole_Id = '') {
+    public function updatePlaceHolder($PlaceHolderId = null,$ = '') {
         if (!$PlaceHolderId) {
             $result = array("Result" => "Failed","Message" => "Invalid Object Id");
             return $result;
@@ -57,30 +41,14 @@ class PlaceHolder_API_Base {
             $result = array("Result" => "Failed","Message" => "Object not found");
             return $result;
         }
-        if (strlen($DummyOne) > 0)
-            $existingPlaceHolderObj->DummyOne = $DummyOne;
-        if (strlen($DummyTwo) > 0)
-            $existingPlaceHolderObj->DummyTwo = $DummyTwo;
-        if (strlen($DummyThree) > 0)
-            $existingPlaceHolderObj->DummyThree = $DummyThree;
-        if (strlen($DummyFour) > 0)
-            $existingPlaceHolderObj->DummyFour = $DummyFour;
-        if (strlen($DummyFive) > 0)
-            $existingPlaceHolderObj->DummyFive = $DummyFive;
-        if (strlen($DummySix) > 0)
-            $existingPlaceHolderObj->DummySix = $DummySix;
-        $AccountObjToAssociate = Account::Load($Account_Id);
-        if ($AccountObjToAssociate)
-            $existingPlaceHolderObj->AccountObject = $AccountObjToAssociate;
-        $UserRoleObjToAssociate = UserRole::Load($UserRole_Id);
-        if ($UserRoleObjToAssociate)
-            $existingPlaceHolderObj->UserRoleObject = $UserRoleObjToAssociate;
+        if (strlen($) > 0)
+            $existingPlaceHolderObj-> = $;
         try {
             $existingPlaceHolderObj->Save();
             $result = array("Result" => "Success","Message" => "Object Modified");
             return $result;
         } catch (QCallerException $e) {
-            AppSpecificFunctions::AddCustomLog('Could not update PlaceHolder object via API: '.$e->getMessage());
+            error_log('Could not update PlaceHolder object via API: '.$e->getMessage());
             $result = array("Result" => "Failed","Message" => $e->getMessage());
             return $result;
         }

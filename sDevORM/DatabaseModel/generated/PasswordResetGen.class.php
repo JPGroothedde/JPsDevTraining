@@ -18,6 +18,7 @@
 	 * @property-read integer $Id the value for intId (Read-Only PK)
 	 * @property string $Token the value for strToken (Unique)
 	 * @property QDateTime $CreatedDateTime the value for dttCreatedDateTime 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property integer $Account the value for intAccount 
 	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
 	 * @property Account $AccountObject the value for the Account object referenced by intAccount 
@@ -52,6 +53,14 @@
 		 */
 		protected $dttCreatedDateTime;
 		const CreatedDateTimeDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column PasswordReset.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
 
 
 		/**
@@ -112,6 +121,7 @@
 			$this->intId = PasswordReset::IdDefault;
 			$this->strToken = PasswordReset::TokenDefault;
 			$this->dttCreatedDateTime = (PasswordReset::CreatedDateTimeDefault === null)?null:new QDateTime(PasswordReset::CreatedDateTimeDefault);
+			$this->strLastUpdated = PasswordReset::LastUpdatedDefault;
 			$this->intAccount = PasswordReset::AccountDefault;
 			$this->strSearchMetaInfo = PasswordReset::SearchMetaInfoDefault;
 		}
@@ -458,6 +468,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'Id', $strAliasPrefix . 'Id');
 			    $objBuilder->AddSelectItem($strTableName, 'Token', $strAliasPrefix . 'Token');
 			    $objBuilder->AddSelectItem($strTableName, 'CreatedDateTime', $strAliasPrefix . 'CreatedDateTime');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
 			    $objBuilder->AddSelectItem($strTableName, 'Account', $strAliasPrefix . 'Account');
 			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
             }
@@ -594,6 +605,9 @@
 			$strAlias = $strAliasPrefix . 'CreatedDateTime';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->dttCreatedDateTime = $objDbRow->GetColumn($strAliasName, 'DateTime');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAlias = $strAliasPrefix . 'Account';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intAccount = $objDbRow->GetColumn($strAliasName, 'Integer');
@@ -796,76 +810,88 @@
 		//////////////////////////
 
 		/**
-		 * Save this PasswordReset
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this PasswordReset
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = PasswordReset::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = PasswordReset::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = PasswordReset::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'PasswordReset';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Token -> '.$this->strToken.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDateTime -> '.$this->dttCreatedDateTime.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> '.$this->intAccount.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("Token" => $this->strToken));
+                $ChangedArray = array_merge($ChangedArray,array("CreatedDateTime" => $this->dttCreatedDateTime));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $ChangedArray = array_merge($ChangedArray,array("Account" => $this->intAccount));
+                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->Token) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Token -> '.$ExistingObj->Token.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Token -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->CreatedDateTime) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDateTime -> '.$ExistingObj->CreatedDateTime.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDateTime -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Token)) {
+                    $ExistingValueStr = $ExistingObj->Token;
                 }
-                if ($ExistingObj->Account) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> '.$ExistingObj->Account.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> NULL<br>';
+                if ($ExistingObj->Token != $this->strToken) {
+                    $ChangedArray = array_merge($ChangedArray,array("Token" => array("Before" => $ExistingValueStr,"After" => $this->strToken)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Token" => "From: ".$ExistingValueStr." to: ".$this->strToken));
                 }
-                if ($ExistingObj->SearchMetaInfo) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$ExistingObj->SearchMetaInfo.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->CreatedDateTime)) {
+                    $ExistingValueStr = $ExistingObj->CreatedDateTime;
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Token -> '.$this->strToken.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDateTime -> '.$this->dttCreatedDateTime.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> '.$this->intAccount.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                if ($ExistingObj->CreatedDateTime != $this->dttCreatedDateTime) {
+                    $ChangedArray = array_merge($ChangedArray,array("CreatedDateTime" => array("Before" => $ExistingValueStr,"After" => $this->dttCreatedDateTime)));
+                    //$ChangedArray = array_merge($ChangedArray,array("CreatedDateTime" => "From: ".$ExistingValueStr." to: ".$this->dttCreatedDateTime));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Account)) {
+                    $ExistingValueStr = $ExistingObj->Account;
+                }
+                if ($ExistingObj->Account != $this->intAccount) {
+                    $ChangedArray = array_merge($ChangedArray,array("Account" => array("Before" => $ExistingValueStr,"After" => $this->intAccount)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Account" => "From: ".$ExistingValueStr." to: ".$this->intAccount));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->SearchMetaInfo)) {
+                    $ExistingValueStr = $ExistingObj->SearchMetaInfo;
+                }
+                if ($ExistingObj->SearchMetaInfo != $this->strSearchMetaInfo) {
+                    $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
+                    //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving PasswordReset. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `PasswordReset` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `PasswordReset` (
 							`Token`,
 							`CreatedDateTime`,
 							`Account`,
@@ -876,49 +902,61 @@
 							' . $objDatabase->SqlVariable($this->intAccount) . ',
 							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('PasswordReset', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('PasswordReset', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+				
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `PasswordReset` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`PasswordReset`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('PasswordReset');
+                }
+			
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `PasswordReset` SET
 							`Token` = ' . $objDatabase->SqlVariable($this->strToken) . ',
 							`CreatedDateTime` = ' . $objDatabase->SqlVariable($this->dttCreatedDateTime) . ',
 							`Account` = ' . $objDatabase->SqlVariable($this->intAccount) . ',
 							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving PasswordReset. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving PasswordReset. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+				            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `PasswordReset` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+			
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this PasswordReset
@@ -931,21 +969,23 @@
 			// Get the Database Object for this Class
 			$objDatabase = PasswordReset::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'PasswordReset';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Token -> '.$this->strToken.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'CreatedDateTime -> '.$this->dttCreatedDateTime.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Account -> '.$this->intAccount.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("Token" => $this->strToken));
+            $ChangedArray = array_merge($ChangedArray,array("CreatedDateTime" => $this->dttCreatedDateTime));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $ChangedArray = array_merge($ChangedArray,array("Account" => $this->intAccount));
+            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting PasswordReset. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting PasswordReset. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -1021,6 +1061,7 @@
 			// Update $this's local variables to match
 			$this->strToken = $objReloaded->strToken;
 			$this->dttCreatedDateTime = $objReloaded->dttCreatedDateTime;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 			$this->Account = $objReloaded->Account;
 			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 		}
@@ -1063,6 +1104,13 @@
 					 * @return QDateTime
 					 */
 					return $this->dttCreatedDateTime;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 				case 'Account':
 					/**
@@ -1288,6 +1336,7 @@
 			$strToReturn .= '<element name="Id" type="xsd:int"/>';
 			$strToReturn .= '<element name="Token" type="xsd:string"/>';
 			$strToReturn .= '<element name="CreatedDateTime" type="xsd:dateTime"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="AccountObject" type="xsd1:Account"/>';
 			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
@@ -1319,6 +1368,8 @@
 				$objToReturn->strToken = $objSoapObject->Token;
 			if (property_exists($objSoapObject, 'CreatedDateTime'))
 				$objToReturn->dttCreatedDateTime = new QDateTime($objSoapObject->CreatedDateTime);
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if ((property_exists($objSoapObject, 'AccountObject')) &&
 				($objSoapObject->AccountObject))
 				$objToReturn->AccountObject = Account::GetObjectFromSoapObject($objSoapObject->AccountObject);
@@ -1365,6 +1416,7 @@
 			$iArray['Id'] = $this->intId;
 			$iArray['Token'] = $this->strToken;
 			$iArray['CreatedDateTime'] = $this->dttCreatedDateTime;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			$iArray['Account'] = $this->intAccount;
 			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			return new ArrayIterator($iArray);
@@ -1407,6 +1459,7 @@
      * @property-read QQNode $Id
      * @property-read QQNode $Token
      * @property-read QQNode $CreatedDateTime
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $Account
      * @property-read QQNodeAccount $AccountObject
      * @property-read QQNode $SearchMetaInfo
@@ -1427,6 +1480,8 @@
 					return new QQNode('Token', 'Token', 'VarChar', $this);
 				case 'CreatedDateTime':
 					return new QQNode('CreatedDateTime', 'CreatedDateTime', 'DateTime', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'Account':
 					return new QQNode('Account', 'Account', 'Integer', $this);
 				case 'AccountObject':
@@ -1451,6 +1506,7 @@
      * @property-read QQNode $Id
      * @property-read QQNode $Token
      * @property-read QQNode $CreatedDateTime
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $Account
      * @property-read QQNodeAccount $AccountObject
      * @property-read QQNode $SearchMetaInfo
@@ -1471,6 +1527,8 @@
 					return new QQNode('Token', 'Token', 'string', $this);
 				case 'CreatedDateTime':
 					return new QQNode('CreatedDateTime', 'CreatedDateTime', 'QDateTime', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'Account':
 					return new QQNode('Account', 'Account', 'integer', $this);
 				case 'AccountObject':

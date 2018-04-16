@@ -23,6 +23,7 @@
 	 * @property string $Username the value for strUsername (Unique)
 	 * @property string $Password the value for strPassword 
 	 * @property string $ChangedBy the value for strChangedBy 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property integer $UserRole the value for intUserRole 
 	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
 	 * @property UserRole $UserRoleObject the value for the UserRole object referenced by intUserRole 
@@ -30,8 +31,14 @@
 	 * @property-read LoginToken[] $_LoginTokenArray the value for the private _objLoginTokenArray (Read-Only) if set due to an ExpandAsArray on the LoginToken.Account reverse relationship
 	 * @property-read PasswordReset $_PasswordReset the value for the private _objPasswordReset (Read-Only) if set due to an expansion on the PasswordReset.Account reverse relationship
 	 * @property-read PasswordReset[] $_PasswordResetArray the value for the private _objPasswordResetArray (Read-Only) if set due to an ExpandAsArray on the PasswordReset.Account reverse relationship
-	 * @property-read PlaceHolder $_PlaceHolder the value for the private _objPlaceHolder (Read-Only) if set due to an expansion on the PlaceHolder.Account reverse relationship
-	 * @property-read PlaceHolder[] $_PlaceHolderArray the value for the private _objPlaceHolderArray (Read-Only) if set due to an ExpandAsArray on the PlaceHolder.Account reverse relationship
+	 * @property-read Post $_Post the value for the private _objPost (Read-Only) if set due to an expansion on the Post.Account reverse relationship
+	 * @property-read Post[] $_PostArray the value for the private _objPostArray (Read-Only) if set due to an ExpandAsArray on the Post.Account reverse relationship
+	 * @property-read PostComment $_PostComment the value for the private _objPostComment (Read-Only) if set due to an expansion on the PostComment.Account reverse relationship
+	 * @property-read PostComment[] $_PostCommentArray the value for the private _objPostCommentArray (Read-Only) if set due to an ExpandAsArray on the PostComment.Account reverse relationship
+	 * @property-read PostLike $_PostLike the value for the private _objPostLike (Read-Only) if set due to an expansion on the PostLike.Account reverse relationship
+	 * @property-read PostLike[] $_PostLikeArray the value for the private _objPostLikeArray (Read-Only) if set due to an ExpandAsArray on the PostLike.Account reverse relationship
+	 * @property-read ProfilePicture $_ProfilePicture the value for the private _objProfilePicture (Read-Only) if set due to an expansion on the ProfilePicture.Account reverse relationship
+	 * @property-read ProfilePicture[] $_ProfilePictureArray the value for the private _objProfilePictureArray (Read-Only) if set due to an ExpandAsArray on the ProfilePicture.Account reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class AccountGen extends QBaseClass implements IteratorAggregate {
@@ -112,6 +119,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column Account.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
 		 * Protected member variable that maps to the database column Account.UserRole
 		 * @var integer intUserRole
 		 */
@@ -160,20 +175,68 @@
 		private $_objPasswordResetArray = null;
 
 		/**
-		 * Private member variable that stores a reference to a single PlaceHolder object
-		 * (of type PlaceHolder), if this Account object was restored with
-		 * an expansion on the PlaceHolder association table.
-		 * @var PlaceHolder _objPlaceHolder;
+		 * Private member variable that stores a reference to a single Post object
+		 * (of type Post), if this Account object was restored with
+		 * an expansion on the Post association table.
+		 * @var Post _objPost;
 		 */
-		private $_objPlaceHolder;
+		private $_objPost;
 
 		/**
-		 * Private member variable that stores a reference to an array of PlaceHolder objects
-		 * (of type PlaceHolder[]), if this Account object was restored with
-		 * an ExpandAsArray on the PlaceHolder association table.
-		 * @var PlaceHolder[] _objPlaceHolderArray;
+		 * Private member variable that stores a reference to an array of Post objects
+		 * (of type Post[]), if this Account object was restored with
+		 * an ExpandAsArray on the Post association table.
+		 * @var Post[] _objPostArray;
 		 */
-		private $_objPlaceHolderArray = null;
+		private $_objPostArray = null;
+
+		/**
+		 * Private member variable that stores a reference to a single PostComment object
+		 * (of type PostComment), if this Account object was restored with
+		 * an expansion on the PostComment association table.
+		 * @var PostComment _objPostComment;
+		 */
+		private $_objPostComment;
+
+		/**
+		 * Private member variable that stores a reference to an array of PostComment objects
+		 * (of type PostComment[]), if this Account object was restored with
+		 * an ExpandAsArray on the PostComment association table.
+		 * @var PostComment[] _objPostCommentArray;
+		 */
+		private $_objPostCommentArray = null;
+
+		/**
+		 * Private member variable that stores a reference to a single PostLike object
+		 * (of type PostLike), if this Account object was restored with
+		 * an expansion on the PostLike association table.
+		 * @var PostLike _objPostLike;
+		 */
+		private $_objPostLike;
+
+		/**
+		 * Private member variable that stores a reference to an array of PostLike objects
+		 * (of type PostLike[]), if this Account object was restored with
+		 * an ExpandAsArray on the PostLike association table.
+		 * @var PostLike[] _objPostLikeArray;
+		 */
+		private $_objPostLikeArray = null;
+
+		/**
+		 * Private member variable that stores a reference to a single ProfilePicture object
+		 * (of type ProfilePicture), if this Account object was restored with
+		 * an expansion on the ProfilePicture association table.
+		 * @var ProfilePicture _objProfilePicture;
+		 */
+		private $_objProfilePicture;
+
+		/**
+		 * Private member variable that stores a reference to an array of ProfilePicture objects
+		 * (of type ProfilePicture[]), if this Account object was restored with
+		 * an ExpandAsArray on the ProfilePicture association table.
+		 * @var ProfilePicture[] _objProfilePictureArray;
+		 */
+		private $_objProfilePictureArray = null;
 
 		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
@@ -222,6 +285,7 @@
 			$this->strUsername = Account::UsernameDefault;
 			$this->strPassword = Account::PasswordDefault;
 			$this->strChangedBy = Account::ChangedByDefault;
+			$this->strLastUpdated = Account::LastUpdatedDefault;
 			$this->intUserRole = Account::UserRoleDefault;
 			$this->strSearchMetaInfo = Account::SearchMetaInfoDefault;
 		}
@@ -573,6 +637,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'Username', $strAliasPrefix . 'Username');
 			    $objBuilder->AddSelectItem($strTableName, 'Password', $strAliasPrefix . 'Password');
 			    $objBuilder->AddSelectItem($strTableName, 'ChangedBy', $strAliasPrefix . 'ChangedBy');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
 			    $objBuilder->AddSelectItem($strTableName, 'UserRole', $strAliasPrefix . 'UserRole');
 			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
             }
@@ -724,6 +789,9 @@
 			$strAlias = $strAliasPrefix . 'ChangedBy';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strChangedBy = $objDbRow->GetColumn($strAliasName, 'VarChar');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAlias = $strAliasPrefix . 'UserRole';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intUserRole = $objDbRow->GetColumn($strAliasName, 'Integer');
@@ -800,18 +868,63 @@
 				}
 			}
 
-			// Check for PlaceHolder Virtual Binding
-			$strAlias = $strAliasPrefix . 'placeholder__Id';
+			// Check for Post Virtual Binding
+			$strAlias = $strAliasPrefix . 'post__Id';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objExpansionNode = (empty($objExpansionAliasArray['placeholder']) ? null : $objExpansionAliasArray['placeholder']);
+			$objExpansionNode = (empty($objExpansionAliasArray['post']) ? null : $objExpansionAliasArray['post']);
 			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
-			if ($blnExpanded && null === $objToReturn->_objPlaceHolderArray)
-				$objToReturn->_objPlaceHolderArray = array();
+			if ($blnExpanded && null === $objToReturn->_objPostArray)
+				$objToReturn->_objPostArray = array();
 			if (!is_null($objDbRow->GetColumn($strAliasName))) {
 				if ($blnExpanded) {
-					$objToReturn->_objPlaceHolderArray[] = PlaceHolder::InstantiateDbRow($objDbRow, $strAliasPrefix . 'placeholder__', $objExpansionNode, null, $strColumnAliasArray);
-				} elseif (is_null($objToReturn->_objPlaceHolder)) {
-					$objToReturn->_objPlaceHolder = PlaceHolder::InstantiateDbRow($objDbRow, $strAliasPrefix . 'placeholder__', $objExpansionNode, null, $strColumnAliasArray);
+					$objToReturn->_objPostArray[] = Post::InstantiateDbRow($objDbRow, $strAliasPrefix . 'post__', $objExpansionNode, null, $strColumnAliasArray);
+				} elseif (is_null($objToReturn->_objPost)) {
+					$objToReturn->_objPost = Post::InstantiateDbRow($objDbRow, $strAliasPrefix . 'post__', $objExpansionNode, null, $strColumnAliasArray);
+				}
+			}
+
+			// Check for PostComment Virtual Binding
+			$strAlias = $strAliasPrefix . 'postcomment__Id';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objExpansionNode = (empty($objExpansionAliasArray['postcomment']) ? null : $objExpansionAliasArray['postcomment']);
+			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
+			if ($blnExpanded && null === $objToReturn->_objPostCommentArray)
+				$objToReturn->_objPostCommentArray = array();
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if ($blnExpanded) {
+					$objToReturn->_objPostCommentArray[] = PostComment::InstantiateDbRow($objDbRow, $strAliasPrefix . 'postcomment__', $objExpansionNode, null, $strColumnAliasArray);
+				} elseif (is_null($objToReturn->_objPostComment)) {
+					$objToReturn->_objPostComment = PostComment::InstantiateDbRow($objDbRow, $strAliasPrefix . 'postcomment__', $objExpansionNode, null, $strColumnAliasArray);
+				}
+			}
+
+			// Check for PostLike Virtual Binding
+			$strAlias = $strAliasPrefix . 'postlike__Id';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objExpansionNode = (empty($objExpansionAliasArray['postlike']) ? null : $objExpansionAliasArray['postlike']);
+			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
+			if ($blnExpanded && null === $objToReturn->_objPostLikeArray)
+				$objToReturn->_objPostLikeArray = array();
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if ($blnExpanded) {
+					$objToReturn->_objPostLikeArray[] = PostLike::InstantiateDbRow($objDbRow, $strAliasPrefix . 'postlike__', $objExpansionNode, null, $strColumnAliasArray);
+				} elseif (is_null($objToReturn->_objPostLike)) {
+					$objToReturn->_objPostLike = PostLike::InstantiateDbRow($objDbRow, $strAliasPrefix . 'postlike__', $objExpansionNode, null, $strColumnAliasArray);
+				}
+			}
+
+			// Check for ProfilePicture Virtual Binding
+			$strAlias = $strAliasPrefix . 'profilepicture__Id';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objExpansionNode = (empty($objExpansionAliasArray['profilepicture']) ? null : $objExpansionAliasArray['profilepicture']);
+			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
+			if ($blnExpanded && null === $objToReturn->_objProfilePictureArray)
+				$objToReturn->_objProfilePictureArray = array();
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if ($blnExpanded) {
+					$objToReturn->_objProfilePictureArray[] = ProfilePicture::InstantiateDbRow($objDbRow, $strAliasPrefix . 'profilepicture__', $objExpansionNode, null, $strColumnAliasArray);
+				} elseif (is_null($objToReturn->_objProfilePicture)) {
+					$objToReturn->_objProfilePicture = ProfilePicture::InstantiateDbRow($objDbRow, $strAliasPrefix . 'profilepicture__', $objExpansionNode, null, $strColumnAliasArray);
 				}
 			}
 
@@ -971,111 +1084,133 @@
 		//////////////////////////
 
 		/**
-		 * Save this Account
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this Account
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = Account::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = Account::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'Account';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> '.$this->strFullName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> '.$this->strFirstName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> '.$this->strLastName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> '.$this->strEmailAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$this->strUsername.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> '.$this->strPassword.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> '.$this->strChangedBy.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->intUserRole.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("FullName" => $this->strFullName));
+                $ChangedArray = array_merge($ChangedArray,array("FirstName" => $this->strFirstName));
+                $ChangedArray = array_merge($ChangedArray,array("LastName" => $this->strLastName));
+                $ChangedArray = array_merge($ChangedArray,array("EmailAddress" => $this->strEmailAddress));
+                $ChangedArray = array_merge($ChangedArray,array("Username" => $this->strUsername));
+                $ChangedArray = array_merge($ChangedArray,array("Password" => $this->strPassword));
+                $ChangedArray = array_merge($ChangedArray,array("ChangedBy" => $this->strChangedBy));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $ChangedArray = array_merge($ChangedArray,array("UserRole" => $this->intUserRole));
+                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->FullName) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> '.$ExistingObj->FullName.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->FirstName) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> '.$ExistingObj->FirstName.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->FullName)) {
+                    $ExistingValueStr = $ExistingObj->FullName;
                 }
-                if ($ExistingObj->LastName) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> '.$ExistingObj->LastName.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> NULL<br>';
+                if ($ExistingObj->FullName != $this->strFullName) {
+                    $ChangedArray = array_merge($ChangedArray,array("FullName" => array("Before" => $ExistingValueStr,"After" => $this->strFullName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("FullName" => "From: ".$ExistingValueStr." to: ".$this->strFullName));
                 }
-                if ($ExistingObj->EmailAddress) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> '.$ExistingObj->EmailAddress.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->FirstName)) {
+                    $ExistingValueStr = $ExistingObj->FirstName;
                 }
-                if ($ExistingObj->Username) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$ExistingObj->Username.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> NULL<br>';
+                if ($ExistingObj->FirstName != $this->strFirstName) {
+                    $ChangedArray = array_merge($ChangedArray,array("FirstName" => array("Before" => $ExistingValueStr,"After" => $this->strFirstName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("FirstName" => "From: ".$ExistingValueStr." to: ".$this->strFirstName));
                 }
-                if ($ExistingObj->Password) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> '.$ExistingObj->Password.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastName)) {
+                    $ExistingValueStr = $ExistingObj->LastName;
                 }
-                if ($ExistingObj->ChangedBy) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> '.$ExistingObj->ChangedBy.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> NULL<br>';
+                if ($ExistingObj->LastName != $this->strLastName) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastName" => array("Before" => $ExistingValueStr,"After" => $this->strLastName)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastName" => "From: ".$ExistingValueStr." to: ".$this->strLastName));
                 }
-                if ($ExistingObj->UserRole) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$ExistingObj->UserRole.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->EmailAddress)) {
+                    $ExistingValueStr = $ExistingObj->EmailAddress;
                 }
-                if ($ExistingObj->SearchMetaInfo) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$ExistingObj->SearchMetaInfo.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> NULL<br>';
+                if ($ExistingObj->EmailAddress != $this->strEmailAddress) {
+                    $ChangedArray = array_merge($ChangedArray,array("EmailAddress" => array("Before" => $ExistingValueStr,"After" => $this->strEmailAddress)));
+                    //$ChangedArray = array_merge($ChangedArray,array("EmailAddress" => "From: ".$ExistingValueStr." to: ".$this->strEmailAddress));
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> '.$this->strFullName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> '.$this->strFirstName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> '.$this->strLastName.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> '.$this->strEmailAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$this->strUsername.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> '.$this->strPassword.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> '.$this->strChangedBy.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->intUserRole.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Username)) {
+                    $ExistingValueStr = $ExistingObj->Username;
+                }
+                if ($ExistingObj->Username != $this->strUsername) {
+                    $ChangedArray = array_merge($ChangedArray,array("Username" => array("Before" => $ExistingValueStr,"After" => $this->strUsername)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Username" => "From: ".$ExistingValueStr." to: ".$this->strUsername));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Password)) {
+                    $ExistingValueStr = $ExistingObj->Password;
+                }
+                if ($ExistingObj->Password != $this->strPassword) {
+                    $ChangedArray = array_merge($ChangedArray,array("Password" => array("Before" => $ExistingValueStr,"After" => $this->strPassword)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Password" => "From: ".$ExistingValueStr." to: ".$this->strPassword));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->ChangedBy)) {
+                    $ExistingValueStr = $ExistingObj->ChangedBy;
+                }
+                if ($ExistingObj->ChangedBy != $this->strChangedBy) {
+                    $ChangedArray = array_merge($ChangedArray,array("ChangedBy" => array("Before" => $ExistingValueStr,"After" => $this->strChangedBy)));
+                    //$ChangedArray = array_merge($ChangedArray,array("ChangedBy" => "From: ".$ExistingValueStr." to: ".$this->strChangedBy));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->UserRole)) {
+                    $ExistingValueStr = $ExistingObj->UserRole;
+                }
+                if ($ExistingObj->UserRole != $this->intUserRole) {
+                    $ChangedArray = array_merge($ChangedArray,array("UserRole" => array("Before" => $ExistingValueStr,"After" => $this->intUserRole)));
+                    //$ChangedArray = array_merge($ChangedArray,array("UserRole" => "From: ".$ExistingValueStr." to: ".$this->intUserRole));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->SearchMetaInfo)) {
+                    $ExistingValueStr = $ExistingObj->SearchMetaInfo;
+                }
+                if ($ExistingObj->SearchMetaInfo != $this->strSearchMetaInfo) {
+                    $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
+                    //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `Account` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `Account` (
 							`FullName`,
 							`FirstName`,
 							`LastName`,
@@ -1096,20 +1231,27 @@
 							' . $objDatabase->SqlVariable($this->intUserRole) . ',
 							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('Account', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('Account', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+									
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `Account` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`Account`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('Account');
+                }
+			
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `Account` SET
 							`FullName` = ' . $objDatabase->SqlVariable($this->strFullName) . ',
 							`FirstName` = ' . $objDatabase->SqlVariable($this->strFirstName) . ',
 							`LastName` = ' . $objDatabase->SqlVariable($this->strLastName) . ',
@@ -1119,31 +1261,36 @@
 							`ChangedBy` = ' . $objDatabase->SqlVariable($this->strChangedBy) . ',
 							`UserRole` = ' . $objDatabase->SqlVariable($this->intUserRole) . ',
 							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+						            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+									            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `Account` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+			
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this Account
@@ -1156,26 +1303,28 @@
 			// Get the Database Object for this Class
 			$objDatabase = Account::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'Account';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'FullName -> '.$this->strFullName.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'FirstName -> '.$this->strFirstName.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'LastName -> '.$this->strLastName.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'EmailAddress -> '.$this->strEmailAddress.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Username -> '.$this->strUsername.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Password -> '.$this->strPassword.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'ChangedBy -> '.$this->strChangedBy.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'UserRole -> '.$this->intUserRole.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("FullName" => $this->strFullName));
+            $ChangedArray = array_merge($ChangedArray,array("FirstName" => $this->strFirstName));
+            $ChangedArray = array_merge($ChangedArray,array("LastName" => $this->strLastName));
+            $ChangedArray = array_merge($ChangedArray,array("EmailAddress" => $this->strEmailAddress));
+            $ChangedArray = array_merge($ChangedArray,array("Username" => $this->strUsername));
+            $ChangedArray = array_merge($ChangedArray,array("Password" => $this->strPassword));
+            $ChangedArray = array_merge($ChangedArray,array("ChangedBy" => $this->strChangedBy));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $ChangedArray = array_merge($ChangedArray,array("UserRole" => $this->intUserRole));
+            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting Account. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -1256,6 +1405,7 @@
 			$this->strUsername = $objReloaded->strUsername;
 			$this->strPassword = $objReloaded->strPassword;
 			$this->strChangedBy = $objReloaded->strChangedBy;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 			$this->UserRole = $objReloaded->UserRole;
 			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 		}
@@ -1334,6 +1484,13 @@
 					 */
 					return $this->strChangedBy;
 
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
+
 				case 'UserRole':
 					/**
 					 * Gets the value for intUserRole 
@@ -1404,21 +1561,69 @@
 					 */
 					return $this->_objPasswordResetArray;
 
-				case '_PlaceHolder':
+				case '_Post':
 					/**
-					 * Gets the value for the private _objPlaceHolder (Read-Only)
-					 * if set due to an expansion on the PlaceHolder.Account reverse relationship
-					 * @return PlaceHolder
+					 * Gets the value for the private _objPost (Read-Only)
+					 * if set due to an expansion on the Post.Account reverse relationship
+					 * @return Post
 					 */
-					return $this->_objPlaceHolder;
+					return $this->_objPost;
 
-				case '_PlaceHolderArray':
+				case '_PostArray':
 					/**
-					 * Gets the value for the private _objPlaceHolderArray (Read-Only)
-					 * if set due to an ExpandAsArray on the PlaceHolder.Account reverse relationship
-					 * @return PlaceHolder[]
+					 * Gets the value for the private _objPostArray (Read-Only)
+					 * if set due to an ExpandAsArray on the Post.Account reverse relationship
+					 * @return Post[]
 					 */
-					return $this->_objPlaceHolderArray;
+					return $this->_objPostArray;
+
+				case '_PostComment':
+					/**
+					 * Gets the value for the private _objPostComment (Read-Only)
+					 * if set due to an expansion on the PostComment.Account reverse relationship
+					 * @return PostComment
+					 */
+					return $this->_objPostComment;
+
+				case '_PostCommentArray':
+					/**
+					 * Gets the value for the private _objPostCommentArray (Read-Only)
+					 * if set due to an ExpandAsArray on the PostComment.Account reverse relationship
+					 * @return PostComment[]
+					 */
+					return $this->_objPostCommentArray;
+
+				case '_PostLike':
+					/**
+					 * Gets the value for the private _objPostLike (Read-Only)
+					 * if set due to an expansion on the PostLike.Account reverse relationship
+					 * @return PostLike
+					 */
+					return $this->_objPostLike;
+
+				case '_PostLikeArray':
+					/**
+					 * Gets the value for the private _objPostLikeArray (Read-Only)
+					 * if set due to an ExpandAsArray on the PostLike.Account reverse relationship
+					 * @return PostLike[]
+					 */
+					return $this->_objPostLikeArray;
+
+				case '_ProfilePicture':
+					/**
+					 * Gets the value for the private _objProfilePicture (Read-Only)
+					 * if set due to an expansion on the ProfilePicture.Account reverse relationship
+					 * @return ProfilePicture
+					 */
+					return $this->_objProfilePicture;
+
+				case '_ProfilePictureArray':
+					/**
+					 * Gets the value for the private _objProfilePictureArray (Read-Only)
+					 * if set due to an ExpandAsArray on the ProfilePicture.Account reverse relationship
+					 * @return ProfilePicture[]
+					 */
+					return $this->_objProfilePictureArray;
 
 
 				case '__Restored':
@@ -1928,20 +2133,20 @@
 		}
 
 
-		// Related Objects' Methods for PlaceHolder
+		// Related Objects' Methods for Post
 		//-------------------------------------------------------------------
 
 		/**
-		 * Gets all associated PlaceHolders as an array of PlaceHolder objects
+		 * Gets all associated Posts as an array of Post objects
 		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
-		 * @return PlaceHolder[]
+		 * @return Post[]
 		*/
-		public function GetPlaceHolderArray($objOptionalClauses = null) {
+		public function GetPostArray($objOptionalClauses = null) {
 			if ((is_null($this->intId)))
 				return array();
 
 			try {
-				return PlaceHolder::LoadArrayByAccount($this->intId, $objOptionalClauses);
+				return Post::LoadArrayByAccount($this->intId, $objOptionalClauses);
 			} catch (QCallerException $objExc) {
 				$objExc->IncrementOffset();
 				throw $objExc;
@@ -1949,26 +2154,26 @@
 		}
 
 		/**
-		 * Counts all associated PlaceHolders
+		 * Counts all associated Posts
 		 * @return int
 		*/
-		public function CountPlaceHolders() {
+		public function CountPosts() {
 			if ((is_null($this->intId)))
 				return 0;
 
-			return PlaceHolder::CountByAccount($this->intId);
+			return Post::CountByAccount($this->intId);
 		}
 
 		/**
-		 * Associates a PlaceHolder
-		 * @param PlaceHolder $objPlaceHolder
+		 * Associates a Post
+		 * @param Post $objPost
 		 * @return void
 		*/
-		public function AssociatePlaceHolder(PlaceHolder $objPlaceHolder) {
+		public function AssociatePost(Post $objPost) {
 			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePlaceHolder on this unsaved Account.');
-			if ((is_null($objPlaceHolder->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePlaceHolder on this Account with an unsaved PlaceHolder.');
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePost on this unsaved Account.');
+			if ((is_null($objPost->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePost on this Account with an unsaved Post.');
 
 			// Get the Database Object for this Class
 			$objDatabase = Account::GetDatabase();
@@ -1976,24 +2181,24 @@
 			// Perform the SQL Query
 			$objDatabase->NonQuery('
 				UPDATE
-					`PlaceHolder`
+					`Post`
 				SET
 					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
 				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objPlaceHolder->Id) . '
+					`Id` = ' . $objDatabase->SqlVariable($objPost->Id) . '
 			');
 		}
 
 		/**
-		 * Unassociates a PlaceHolder
-		 * @param PlaceHolder $objPlaceHolder
+		 * Unassociates a Post
+		 * @param Post $objPost
 		 * @return void
 		*/
-		public function UnassociatePlaceHolder(PlaceHolder $objPlaceHolder) {
+		public function UnassociatePost(Post $objPost) {
 			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved Account.');
-			if ((is_null($objPlaceHolder->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this Account with an unsaved PlaceHolder.');
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePost on this unsaved Account.');
+			if ((is_null($objPost->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePost on this Account with an unsaved Post.');
 
 			// Get the Database Object for this Class
 			$objDatabase = Account::GetDatabase();
@@ -2001,47 +2206,47 @@
 			// Perform the SQL Query
 			$objDatabase->NonQuery('
 				UPDATE
-					`PlaceHolder`
-				SET
-					`Account` = null
-				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objPlaceHolder->Id) . ' AND
-					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
-			');
-		}
-
-		/**
-		 * Unassociates all PlaceHolders
-		 * @return void
-		*/
-		public function UnassociateAllPlaceHolders() {
-			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved Account.');
-
-			// Get the Database Object for this Class
-			$objDatabase = Account::GetDatabase();
-
-			// Perform the SQL Query
-			$objDatabase->NonQuery('
-				UPDATE
-					`PlaceHolder`
+					`Post`
 				SET
 					`Account` = null
 				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPost->Id) . ' AND
 					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
 			');
 		}
 
 		/**
-		 * Deletes an associated PlaceHolder
-		 * @param PlaceHolder $objPlaceHolder
+		 * Unassociates all Posts
 		 * @return void
 		*/
-		public function DeleteAssociatedPlaceHolder(PlaceHolder $objPlaceHolder) {
+		public function UnassociateAllPosts() {
 			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved Account.');
-			if ((is_null($objPlaceHolder->Id)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this Account with an unsaved PlaceHolder.');
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePost on this unsaved Account.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`Post`
+				SET
+					`Account` = null
+				WHERE
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated Post
+		 * @param Post $objPost
+		 * @return void
+		*/
+		public function DeleteAssociatedPost(Post $objPost) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePost on this unsaved Account.');
+			if ((is_null($objPost->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePost on this Account with an unsaved Post.');
 
 			// Get the Database Object for this Class
 			$objDatabase = Account::GetDatabase();
@@ -2049,20 +2254,20 @@
 			// Perform the SQL Query
 			$objDatabase->NonQuery('
 				DELETE FROM
-					`PlaceHolder`
+					`Post`
 				WHERE
-					`Id` = ' . $objDatabase->SqlVariable($objPlaceHolder->Id) . ' AND
+					`Id` = ' . $objDatabase->SqlVariable($objPost->Id) . ' AND
 					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
 			');
 		}
 
 		/**
-		 * Deletes all associated PlaceHolders
+		 * Deletes all associated Posts
 		 * @return void
 		*/
-		public function DeleteAllPlaceHolders() {
+		public function DeleteAllPosts() {
 			if ((is_null($this->intId)))
-				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePlaceHolder on this unsaved Account.');
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePost on this unsaved Account.');
 
 			// Get the Database Object for this Class
 			$objDatabase = Account::GetDatabase();
@@ -2070,7 +2275,454 @@
 			// Perform the SQL Query
 			$objDatabase->NonQuery('
 				DELETE FROM
-					`PlaceHolder`
+					`Post`
+				WHERE
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+
+		// Related Objects' Methods for PostComment
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated PostComments as an array of PostComment objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return PostComment[]
+		*/
+		public function GetPostCommentArray($objOptionalClauses = null) {
+			if ((is_null($this->intId)))
+				return array();
+
+			try {
+				return PostComment::LoadArrayByAccount($this->intId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated PostComments
+		 * @return int
+		*/
+		public function CountPostComments() {
+			if ((is_null($this->intId)))
+				return 0;
+
+			return PostComment::CountByAccount($this->intId);
+		}
+
+		/**
+		 * Associates a PostComment
+		 * @param PostComment $objPostComment
+		 * @return void
+		*/
+		public function AssociatePostComment(PostComment $objPostComment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePostComment on this unsaved Account.');
+			if ((is_null($objPostComment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePostComment on this Account with an unsaved PostComment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PostComment`
+				SET
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPostComment->Id) . '
+			');
+		}
+
+		/**
+		 * Unassociates a PostComment
+		 * @param PostComment $objPostComment
+		 * @return void
+		*/
+		public function UnassociatePostComment(PostComment $objPostComment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostComment on this unsaved Account.');
+			if ((is_null($objPostComment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostComment on this Account with an unsaved PostComment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PostComment`
+				SET
+					`Account` = null
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPostComment->Id) . ' AND
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Unassociates all PostComments
+		 * @return void
+		*/
+		public function UnassociateAllPostComments() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostComment on this unsaved Account.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PostComment`
+				SET
+					`Account` = null
+				WHERE
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated PostComment
+		 * @param PostComment $objPostComment
+		 * @return void
+		*/
+		public function DeleteAssociatedPostComment(PostComment $objPostComment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostComment on this unsaved Account.');
+			if ((is_null($objPostComment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostComment on this Account with an unsaved PostComment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PostComment`
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPostComment->Id) . ' AND
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes all associated PostComments
+		 * @return void
+		*/
+		public function DeleteAllPostComments() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostComment on this unsaved Account.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PostComment`
+				WHERE
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+
+		// Related Objects' Methods for PostLike
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated PostLikes as an array of PostLike objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return PostLike[]
+		*/
+		public function GetPostLikeArray($objOptionalClauses = null) {
+			if ((is_null($this->intId)))
+				return array();
+
+			try {
+				return PostLike::LoadArrayByAccount($this->intId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated PostLikes
+		 * @return int
+		*/
+		public function CountPostLikes() {
+			if ((is_null($this->intId)))
+				return 0;
+
+			return PostLike::CountByAccount($this->intId);
+		}
+
+		/**
+		 * Associates a PostLike
+		 * @param PostLike $objPostLike
+		 * @return void
+		*/
+		public function AssociatePostLike(PostLike $objPostLike) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePostLike on this unsaved Account.');
+			if ((is_null($objPostLike->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePostLike on this Account with an unsaved PostLike.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PostLike`
+				SET
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPostLike->Id) . '
+			');
+		}
+
+		/**
+		 * Unassociates a PostLike
+		 * @param PostLike $objPostLike
+		 * @return void
+		*/
+		public function UnassociatePostLike(PostLike $objPostLike) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostLike on this unsaved Account.');
+			if ((is_null($objPostLike->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostLike on this Account with an unsaved PostLike.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PostLike`
+				SET
+					`Account` = null
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPostLike->Id) . ' AND
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Unassociates all PostLikes
+		 * @return void
+		*/
+		public function UnassociateAllPostLikes() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostLike on this unsaved Account.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PostLike`
+				SET
+					`Account` = null
+				WHERE
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated PostLike
+		 * @param PostLike $objPostLike
+		 * @return void
+		*/
+		public function DeleteAssociatedPostLike(PostLike $objPostLike) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostLike on this unsaved Account.');
+			if ((is_null($objPostLike->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostLike on this Account with an unsaved PostLike.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PostLike`
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPostLike->Id) . ' AND
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes all associated PostLikes
+		 * @return void
+		*/
+		public function DeleteAllPostLikes() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePostLike on this unsaved Account.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PostLike`
+				WHERE
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+
+		// Related Objects' Methods for ProfilePicture
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated ProfilePictures as an array of ProfilePicture objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return ProfilePicture[]
+		*/
+		public function GetProfilePictureArray($objOptionalClauses = null) {
+			if ((is_null($this->intId)))
+				return array();
+
+			try {
+				return ProfilePicture::LoadArrayByAccount($this->intId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated ProfilePictures
+		 * @return int
+		*/
+		public function CountProfilePictures() {
+			if ((is_null($this->intId)))
+				return 0;
+
+			return ProfilePicture::CountByAccount($this->intId);
+		}
+
+		/**
+		 * Associates a ProfilePicture
+		 * @param ProfilePicture $objProfilePicture
+		 * @return void
+		*/
+		public function AssociateProfilePicture(ProfilePicture $objProfilePicture) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateProfilePicture on this unsaved Account.');
+			if ((is_null($objProfilePicture->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateProfilePicture on this Account with an unsaved ProfilePicture.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`ProfilePicture`
+				SET
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objProfilePicture->Id) . '
+			');
+		}
+
+		/**
+		 * Unassociates a ProfilePicture
+		 * @param ProfilePicture $objProfilePicture
+		 * @return void
+		*/
+		public function UnassociateProfilePicture(ProfilePicture $objProfilePicture) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this unsaved Account.');
+			if ((is_null($objProfilePicture->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this Account with an unsaved ProfilePicture.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`ProfilePicture`
+				SET
+					`Account` = null
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objProfilePicture->Id) . ' AND
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Unassociates all ProfilePictures
+		 * @return void
+		*/
+		public function UnassociateAllProfilePictures() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this unsaved Account.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`ProfilePicture`
+				SET
+					`Account` = null
+				WHERE
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated ProfilePicture
+		 * @param ProfilePicture $objProfilePicture
+		 * @return void
+		*/
+		public function DeleteAssociatedProfilePicture(ProfilePicture $objProfilePicture) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this unsaved Account.');
+			if ((is_null($objProfilePicture->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this Account with an unsaved ProfilePicture.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`ProfilePicture`
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objProfilePicture->Id) . ' AND
+					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes all associated ProfilePictures
+		 * @return void
+		*/
+		public function DeleteAllProfilePictures() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateProfilePicture on this unsaved Account.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Account::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`ProfilePicture`
 				WHERE
 					`Account` = ' . $objDatabase->SqlVariable($this->intId) . '
 			');
@@ -2123,6 +2775,7 @@
 			$strToReturn .= '<element name="Username" type="xsd:string"/>';
 			$strToReturn .= '<element name="Password" type="xsd:string"/>';
 			$strToReturn .= '<element name="ChangedBy" type="xsd:string"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="UserRoleObject" type="xsd1:UserRole"/>';
 			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
@@ -2164,6 +2817,8 @@
 				$objToReturn->strPassword = $objSoapObject->Password;
 			if (property_exists($objSoapObject, 'ChangedBy'))
 				$objToReturn->strChangedBy = $objSoapObject->ChangedBy;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if ((property_exists($objSoapObject, 'UserRoleObject')) &&
 				($objSoapObject->UserRoleObject))
 				$objToReturn->UserRoleObject = UserRole::GetObjectFromSoapObject($objSoapObject->UserRoleObject);
@@ -2213,6 +2868,7 @@
 			$iArray['Username'] = $this->strUsername;
 			$iArray['Password'] = $this->strPassword;
 			$iArray['ChangedBy'] = $this->strChangedBy;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			$iArray['UserRole'] = $this->intUserRole;
 			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			return new ArrayIterator($iArray);
@@ -2260,6 +2916,7 @@
      * @property-read QQNode $Username
      * @property-read QQNode $Password
      * @property-read QQNode $ChangedBy
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $UserRole
      * @property-read QQNodeUserRole $UserRoleObject
      * @property-read QQNode $SearchMetaInfo
@@ -2267,7 +2924,10 @@
      *
      * @property-read QQReverseReferenceNodeLoginToken $LoginToken
      * @property-read QQReverseReferenceNodePasswordReset $PasswordReset
-     * @property-read QQReverseReferenceNodePlaceHolder $PlaceHolder
+     * @property-read QQReverseReferenceNodePost $Post
+     * @property-read QQReverseReferenceNodePostComment $PostComment
+     * @property-read QQReverseReferenceNodePostLike $PostLike
+     * @property-read QQReverseReferenceNodeProfilePicture $ProfilePicture
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -2293,6 +2953,8 @@
 					return new QQNode('Password', 'Password', 'VarChar', $this);
 				case 'ChangedBy':
 					return new QQNode('ChangedBy', 'ChangedBy', 'VarChar', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'UserRole':
 					return new QQNode('UserRole', 'UserRole', 'Integer', $this);
 				case 'UserRoleObject':
@@ -2303,8 +2965,14 @@
 					return new QQReverseReferenceNodeLoginToken($this, 'logintoken', 'reverse_reference', 'Account', 'LoginToken');
 				case 'PasswordReset':
 					return new QQReverseReferenceNodePasswordReset($this, 'passwordreset', 'reverse_reference', 'Account', 'PasswordReset');
-				case 'PlaceHolder':
-					return new QQReverseReferenceNodePlaceHolder($this, 'placeholder', 'reverse_reference', 'Account', 'PlaceHolder');
+				case 'Post':
+					return new QQReverseReferenceNodePost($this, 'post', 'reverse_reference', 'Account', 'Post');
+				case 'PostComment':
+					return new QQReverseReferenceNodePostComment($this, 'postcomment', 'reverse_reference', 'Account', 'PostComment');
+				case 'PostLike':
+					return new QQReverseReferenceNodePostLike($this, 'postlike', 'reverse_reference', 'Account', 'PostLike');
+				case 'ProfilePicture':
+					return new QQReverseReferenceNodeProfilePicture($this, 'profilepicture', 'reverse_reference', 'Account', 'ProfilePicture');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -2328,6 +2996,7 @@
      * @property-read QQNode $Username
      * @property-read QQNode $Password
      * @property-read QQNode $ChangedBy
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $UserRole
      * @property-read QQNodeUserRole $UserRoleObject
      * @property-read QQNode $SearchMetaInfo
@@ -2335,7 +3004,10 @@
      *
      * @property-read QQReverseReferenceNodeLoginToken $LoginToken
      * @property-read QQReverseReferenceNodePasswordReset $PasswordReset
-     * @property-read QQReverseReferenceNodePlaceHolder $PlaceHolder
+     * @property-read QQReverseReferenceNodePost $Post
+     * @property-read QQReverseReferenceNodePostComment $PostComment
+     * @property-read QQReverseReferenceNodePostLike $PostLike
+     * @property-read QQReverseReferenceNodeProfilePicture $ProfilePicture
 
      * @property-read QQNode $_PrimaryKeyNode
      **/
@@ -2361,6 +3033,8 @@
 					return new QQNode('Password', 'Password', 'string', $this);
 				case 'ChangedBy':
 					return new QQNode('ChangedBy', 'ChangedBy', 'string', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'UserRole':
 					return new QQNode('UserRole', 'UserRole', 'integer', $this);
 				case 'UserRoleObject':
@@ -2371,8 +3045,14 @@
 					return new QQReverseReferenceNodeLoginToken($this, 'logintoken', 'reverse_reference', 'Account', 'LoginToken');
 				case 'PasswordReset':
 					return new QQReverseReferenceNodePasswordReset($this, 'passwordreset', 'reverse_reference', 'Account', 'PasswordReset');
-				case 'PlaceHolder':
-					return new QQReverseReferenceNodePlaceHolder($this, 'placeholder', 'reverse_reference', 'Account', 'PlaceHolder');
+				case 'Post':
+					return new QQReverseReferenceNodePost($this, 'post', 'reverse_reference', 'Account', 'Post');
+				case 'PostComment':
+					return new QQReverseReferenceNodePostComment($this, 'postcomment', 'reverse_reference', 'Account', 'PostComment');
+				case 'PostLike':
+					return new QQReverseReferenceNodePostLike($this, 'postlike', 'reverse_reference', 'Account', 'PostLike');
+				case 'ProfilePicture':
+					return new QQReverseReferenceNodeProfilePicture($this, 'profilepicture', 'reverse_reference', 'Account', 'ProfilePicture');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

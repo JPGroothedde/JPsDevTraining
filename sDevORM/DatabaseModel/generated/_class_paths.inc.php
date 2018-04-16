@@ -69,10 +69,25 @@
 		QApplicationBase::$ClassFile['qqnodepasswordreset'] = __MODEL__ . '/PasswordReset.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodepasswordreset'] = __MODEL__ . '/PasswordReset.class.php';
 
-	// ClassPaths for the PlaceHolder class
-		QApplicationBase::$ClassFile['placeholder'] = __MODEL__ . '/PlaceHolder.class.php';
-		QApplicationBase::$ClassFile['qqnodeplaceholder'] = __MODEL__ . '/PlaceHolder.class.php';
-		QApplicationBase::$ClassFile['qqreversereferencenodeplaceholder'] = __MODEL__ . '/PlaceHolder.class.php';
+	// ClassPaths for the Post class
+		QApplicationBase::$ClassFile['post'] = __MODEL__ . '/Post.class.php';
+		QApplicationBase::$ClassFile['qqnodepost'] = __MODEL__ . '/Post.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodepost'] = __MODEL__ . '/Post.class.php';
+
+	// ClassPaths for the PostComment class
+		QApplicationBase::$ClassFile['postcomment'] = __MODEL__ . '/PostComment.class.php';
+		QApplicationBase::$ClassFile['qqnodepostcomment'] = __MODEL__ . '/PostComment.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodepostcomment'] = __MODEL__ . '/PostComment.class.php';
+
+	// ClassPaths for the PostLike class
+		QApplicationBase::$ClassFile['postlike'] = __MODEL__ . '/PostLike.class.php';
+		QApplicationBase::$ClassFile['qqnodepostlike'] = __MODEL__ . '/PostLike.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodepostlike'] = __MODEL__ . '/PostLike.class.php';
+
+	// ClassPaths for the ProfilePicture class
+		QApplicationBase::$ClassFile['profilepicture'] = __MODEL__ . '/ProfilePicture.class.php';
+		QApplicationBase::$ClassFile['qqnodeprofilepicture'] = __MODEL__ . '/ProfilePicture.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodeprofilepicture'] = __MODEL__ . '/ProfilePicture.class.php';
 
 	// ClassPaths for the RemoteAccess class
 		QApplicationBase::$ClassFile['remoteaccess'] = __MODEL__ . '/RemoteAccess.class.php';

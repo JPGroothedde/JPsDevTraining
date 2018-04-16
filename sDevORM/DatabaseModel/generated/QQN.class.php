@@ -85,10 +85,28 @@
 			return new QQNodePasswordReset('PasswordReset', null, null);
 		}
 		/**
-		 * @return QQNodePlaceHolder
+		 * @return QQNodePost
 		 */
-		static public function PlaceHolder() {
-			return new QQNodePlaceHolder('PlaceHolder', null, null);
+		static public function Post() {
+			return new QQNodePost('Post', null, null);
+		}
+		/**
+		 * @return QQNodePostComment
+		 */
+		static public function PostComment() {
+			return new QQNodePostComment('PostComment', null, null);
+		}
+		/**
+		 * @return QQNodePostLike
+		 */
+		static public function PostLike() {
+			return new QQNodePostLike('PostLike', null, null);
+		}
+		/**
+		 * @return QQNodeProfilePicture
+		 */
+		static public function ProfilePicture() {
+			return new QQNodeProfilePicture('ProfilePicture', null, null);
 		}
 		/**
 		 * @return QQNodeRemoteAccess

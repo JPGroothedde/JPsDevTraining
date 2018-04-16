@@ -26,6 +26,7 @@
 	 * @property string $EmailMessage the value for strEmailMessage 
 	 * @property string $Attachments the value for strAttachments 
 	 * @property string $ErrorInfo the value for strErrorInfo 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class EmailMessageGen extends QBaseClass implements IteratorAggregate {
@@ -125,6 +126,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column EmailMessage.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
+
+
+		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
 		 * columns from the run-time database query result for this object).  Used by InstantiateDbRow and
 		 * GetVirtualAttribute.
@@ -164,6 +173,7 @@
 			$this->strEmailMessage = EmailMessage::EmailMessageDefault;
 			$this->strAttachments = EmailMessage::AttachmentsDefault;
 			$this->strErrorInfo = EmailMessage::ErrorInfoDefault;
+			$this->strLastUpdated = EmailMessage::LastUpdatedDefault;
 		}
 
 
@@ -516,6 +526,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'EmailMessage', $strAliasPrefix . 'EmailMessage');
 			    $objBuilder->AddSelectItem($strTableName, 'Attachments', $strAliasPrefix . 'Attachments');
 			    $objBuilder->AddSelectItem($strTableName, 'ErrorInfo', $strAliasPrefix . 'ErrorInfo');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
             }
 		}
 
@@ -665,6 +676,9 @@
 			$strAlias = $strAliasPrefix . 'ErrorInfo';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strErrorInfo = $objDbRow->GetColumn($strAliasName, 'Blob');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -806,118 +820,142 @@
 		//////////////////////////
 
 		/**
-		 * Save this EmailMessage
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this EmailMessage
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = EmailMessage::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = EmailMessage::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = EmailMessage::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'EmailMessage';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SentDate -> '.$this->dttSentDate.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FromAddress -> '.$this->strFromAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ReplyEmail -> '.$this->strReplyEmail.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Recipients -> '.$this->strRecipients.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Cc -> '.$this->strCc.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Bcc -> '.$this->strBcc.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Subject -> '.$this->strSubject.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EmailMessage -> '.$this->strEmailMessage.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Attachments -> '.$this->strAttachments.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ErrorInfo -> '.$this->strErrorInfo.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("SentDate" => $this->dttSentDate));
+                $ChangedArray = array_merge($ChangedArray,array("FromAddress" => $this->strFromAddress));
+                $ChangedArray = array_merge($ChangedArray,array("ReplyEmail" => $this->strReplyEmail));
+                $ChangedArray = array_merge($ChangedArray,array("Recipients" => $this->strRecipients));
+                $ChangedArray = array_merge($ChangedArray,array("Cc" => $this->strCc));
+                $ChangedArray = array_merge($ChangedArray,array("Bcc" => $this->strBcc));
+                $ChangedArray = array_merge($ChangedArray,array("Subject" => $this->strSubject));
+                $ChangedArray = array_merge($ChangedArray,array("EmailMessage" => $this->strEmailMessage));
+                $ChangedArray = array_merge($ChangedArray,array("Attachments" => $this->strAttachments));
+                $ChangedArray = array_merge($ChangedArray,array("ErrorInfo" => $this->strErrorInfo));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->SentDate) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SentDate -> '.$ExistingObj->SentDate.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SentDate -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->FromAddress) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FromAddress -> '.$ExistingObj->FromAddress.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'FromAddress -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->SentDate)) {
+                    $ExistingValueStr = $ExistingObj->SentDate;
                 }
-                if ($ExistingObj->ReplyEmail) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ReplyEmail -> '.$ExistingObj->ReplyEmail.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ReplyEmail -> NULL<br>';
+                if ($ExistingObj->SentDate != $this->dttSentDate) {
+                    $ChangedArray = array_merge($ChangedArray,array("SentDate" => array("Before" => $ExistingValueStr,"After" => $this->dttSentDate)));
+                    //$ChangedArray = array_merge($ChangedArray,array("SentDate" => "From: ".$ExistingValueStr." to: ".$this->dttSentDate));
                 }
-                if ($ExistingObj->Recipients) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Recipients -> '.$ExistingObj->Recipients.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Recipients -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->FromAddress)) {
+                    $ExistingValueStr = $ExistingObj->FromAddress;
                 }
-                if ($ExistingObj->Cc) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Cc -> '.$ExistingObj->Cc.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Cc -> NULL<br>';
+                if ($ExistingObj->FromAddress != $this->strFromAddress) {
+                    $ChangedArray = array_merge($ChangedArray,array("FromAddress" => array("Before" => $ExistingValueStr,"After" => $this->strFromAddress)));
+                    //$ChangedArray = array_merge($ChangedArray,array("FromAddress" => "From: ".$ExistingValueStr." to: ".$this->strFromAddress));
                 }
-                if ($ExistingObj->Bcc) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Bcc -> '.$ExistingObj->Bcc.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Bcc -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->ReplyEmail)) {
+                    $ExistingValueStr = $ExistingObj->ReplyEmail;
                 }
-                if ($ExistingObj->Subject) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Subject -> '.$ExistingObj->Subject.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Subject -> NULL<br>';
+                if ($ExistingObj->ReplyEmail != $this->strReplyEmail) {
+                    $ChangedArray = array_merge($ChangedArray,array("ReplyEmail" => array("Before" => $ExistingValueStr,"After" => $this->strReplyEmail)));
+                    //$ChangedArray = array_merge($ChangedArray,array("ReplyEmail" => "From: ".$ExistingValueStr." to: ".$this->strReplyEmail));
                 }
-                if ($ExistingObj->EmailMessage) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EmailMessage -> '.$ExistingObj->EmailMessage.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EmailMessage -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Recipients)) {
+                    $ExistingValueStr = $ExistingObj->Recipients;
                 }
-                if ($ExistingObj->Attachments) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Attachments -> '.$ExistingObj->Attachments.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Attachments -> NULL<br>';
+                if ($ExistingObj->Recipients != $this->strRecipients) {
+                    $ChangedArray = array_merge($ChangedArray,array("Recipients" => array("Before" => $ExistingValueStr,"After" => $this->strRecipients)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Recipients" => "From: ".$ExistingValueStr." to: ".$this->strRecipients));
                 }
-                if ($ExistingObj->ErrorInfo) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ErrorInfo -> '.$ExistingObj->ErrorInfo.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'ErrorInfo -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Cc)) {
+                    $ExistingValueStr = $ExistingObj->Cc;
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SentDate -> '.$this->dttSentDate.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'FromAddress -> '.$this->strFromAddress.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ReplyEmail -> '.$this->strReplyEmail.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Recipients -> '.$this->strRecipients.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Cc -> '.$this->strCc.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Bcc -> '.$this->strBcc.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Subject -> '.$this->strSubject.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EmailMessage -> '.$this->strEmailMessage.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Attachments -> '.$this->strAttachments.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'ErrorInfo -> '.$this->strErrorInfo.'<br>';
+                if ($ExistingObj->Cc != $this->strCc) {
+                    $ChangedArray = array_merge($ChangedArray,array("Cc" => array("Before" => $ExistingValueStr,"After" => $this->strCc)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Cc" => "From: ".$ExistingValueStr." to: ".$this->strCc));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Bcc)) {
+                    $ExistingValueStr = $ExistingObj->Bcc;
+                }
+                if ($ExistingObj->Bcc != $this->strBcc) {
+                    $ChangedArray = array_merge($ChangedArray,array("Bcc" => array("Before" => $ExistingValueStr,"After" => $this->strBcc)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Bcc" => "From: ".$ExistingValueStr." to: ".$this->strBcc));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Subject)) {
+                    $ExistingValueStr = $ExistingObj->Subject;
+                }
+                if ($ExistingObj->Subject != $this->strSubject) {
+                    $ChangedArray = array_merge($ChangedArray,array("Subject" => array("Before" => $ExistingValueStr,"After" => $this->strSubject)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Subject" => "From: ".$ExistingValueStr." to: ".$this->strSubject));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->EmailMessage)) {
+                    $ExistingValueStr = $ExistingObj->EmailMessage;
+                }
+                if ($ExistingObj->EmailMessage != $this->strEmailMessage) {
+                    $ChangedArray = array_merge($ChangedArray,array("EmailMessage" => array("Before" => $ExistingValueStr,"After" => $this->strEmailMessage)));
+                    //$ChangedArray = array_merge($ChangedArray,array("EmailMessage" => "From: ".$ExistingValueStr." to: ".$this->strEmailMessage));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Attachments)) {
+                    $ExistingValueStr = $ExistingObj->Attachments;
+                }
+                if ($ExistingObj->Attachments != $this->strAttachments) {
+                    $ChangedArray = array_merge($ChangedArray,array("Attachments" => array("Before" => $ExistingValueStr,"After" => $this->strAttachments)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Attachments" => "From: ".$ExistingValueStr." to: ".$this->strAttachments));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->ErrorInfo)) {
+                    $ExistingValueStr = $ExistingObj->ErrorInfo;
+                }
+                if ($ExistingObj->ErrorInfo != $this->strErrorInfo) {
+                    $ChangedArray = array_merge($ChangedArray,array("ErrorInfo" => array("Before" => $ExistingValueStr,"After" => $this->strErrorInfo)));
+                    //$ChangedArray = array_merge($ChangedArray,array("ErrorInfo" => "From: ".$ExistingValueStr." to: ".$this->strErrorInfo));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving EmailMessage. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `EmailMessage` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `EmailMessage` (
 							`SentDate`,
 							`FromAddress`,
 							`ReplyEmail`,
@@ -940,20 +978,27 @@
 							' . $objDatabase->SqlVariable($this->strAttachments) . ',
 							' . $objDatabase->SqlVariable($this->strErrorInfo) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('EmailMessage', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('EmailMessage', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+												
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `EmailMessage` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`EmailMessage`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('EmailMessage');
+                }
+	
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `EmailMessage` SET
 							`SentDate` = ' . $objDatabase->SqlVariable($this->dttSentDate) . ',
 							`FromAddress` = ' . $objDatabase->SqlVariable($this->strFromAddress) . ',
 							`ReplyEmail` = ' . $objDatabase->SqlVariable($this->strReplyEmail) . ',
@@ -964,31 +1009,36 @@
 							`EmailMessage` = ' . $objDatabase->SqlVariable($this->strEmailMessage) . ',
 							`Attachments` = ' . $objDatabase->SqlVariable($this->strAttachments) . ',
 							`ErrorInfo` = ' . $objDatabase->SqlVariable($this->strErrorInfo) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving EmailMessage. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving EmailMessage. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+												            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `EmailMessage` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+	
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this EmailMessage
@@ -1001,27 +1051,29 @@
 			// Get the Database Object for this Class
 			$objDatabase = EmailMessage::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'EmailMessage';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'SentDate -> '.$this->dttSentDate.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'FromAddress -> '.$this->strFromAddress.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'ReplyEmail -> '.$this->strReplyEmail.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Recipients -> '.$this->strRecipients.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Cc -> '.$this->strCc.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Bcc -> '.$this->strBcc.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Subject -> '.$this->strSubject.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'EmailMessage -> '.$this->strEmailMessage.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Attachments -> '.$this->strAttachments.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'ErrorInfo -> '.$this->strErrorInfo.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("SentDate" => $this->dttSentDate));
+            $ChangedArray = array_merge($ChangedArray,array("FromAddress" => $this->strFromAddress));
+            $ChangedArray = array_merge($ChangedArray,array("ReplyEmail" => $this->strReplyEmail));
+            $ChangedArray = array_merge($ChangedArray,array("Recipients" => $this->strRecipients));
+            $ChangedArray = array_merge($ChangedArray,array("Cc" => $this->strCc));
+            $ChangedArray = array_merge($ChangedArray,array("Bcc" => $this->strBcc));
+            $ChangedArray = array_merge($ChangedArray,array("Subject" => $this->strSubject));
+            $ChangedArray = array_merge($ChangedArray,array("EmailMessage" => $this->strEmailMessage));
+            $ChangedArray = array_merge($ChangedArray,array("Attachments" => $this->strAttachments));
+            $ChangedArray = array_merge($ChangedArray,array("ErrorInfo" => $this->strErrorInfo));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting EmailMessage. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting EmailMessage. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -1105,6 +1157,7 @@
 			$this->strEmailMessage = $objReloaded->strEmailMessage;
 			$this->strAttachments = $objReloaded->strAttachments;
 			$this->strErrorInfo = $objReloaded->strErrorInfo;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 		}
 
 
@@ -1201,6 +1254,13 @@
 					 * @return string
 					 */
 					return $this->strErrorInfo;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 
 				///////////////////
@@ -1451,6 +1511,7 @@
 			$strToReturn .= '<element name="EmailMessage" type="xsd:string"/>';
 			$strToReturn .= '<element name="Attachments" type="xsd:string"/>';
 			$strToReturn .= '<element name="ErrorInfo" type="xsd:string"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1495,6 +1556,8 @@
 				$objToReturn->strAttachments = $objSoapObject->Attachments;
 			if (property_exists($objSoapObject, 'ErrorInfo'))
 				$objToReturn->strErrorInfo = $objSoapObject->ErrorInfo;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1540,6 +1603,7 @@
 			$iArray['EmailMessage'] = $this->strEmailMessage;
 			$iArray['Attachments'] = $this->strAttachments;
 			$iArray['ErrorInfo'] = $this->strErrorInfo;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1588,6 +1652,7 @@
      * @property-read QQNode $EmailMessage
      * @property-read QQNode $Attachments
      * @property-read QQNode $ErrorInfo
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1621,6 +1686,8 @@
 					return new QQNode('Attachments', 'Attachments', 'Blob', $this);
 				case 'ErrorInfo':
 					return new QQNode('ErrorInfo', 'ErrorInfo', 'Blob', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1647,6 +1714,7 @@
      * @property-read QQNode $EmailMessage
      * @property-read QQNode $Attachments
      * @property-read QQNode $ErrorInfo
+     * @property-read QQNode $LastUpdated
      *
      *
 
@@ -1680,6 +1748,8 @@
 					return new QQNode('Attachments', 'Attachments', 'string', $this);
 				case 'ErrorInfo':
 					return new QQNode('ErrorInfo', 'ErrorInfo', 'string', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

@@ -18,6 +18,7 @@
 	 * @property-read integer $Id the value for intId (Read-Only PK)
 	 * @property integer $Columns the value for intColumns 
 	 * @property integer $RowOrder the value for intRowOrder 
+	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property integer $EmailTemplate the value for intEmailTemplate 
 	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
 	 * @property EmailTemplate $EmailTemplateObject the value for the EmailTemplate object referenced by intEmailTemplate 
@@ -53,6 +54,14 @@
 		 */
 		protected $intRowOrder;
 		const RowOrderDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column EmailTemplateContentRow.LastUpdated
+		 * @var string strLastUpdated
+		 */
+		protected $strLastUpdated;
+		const LastUpdatedDefault = null;
 
 
 		/**
@@ -129,6 +138,7 @@
 			$this->intId = EmailTemplateContentRow::IdDefault;
 			$this->intColumns = EmailTemplateContentRow::ColumnsDefault;
 			$this->intRowOrder = EmailTemplateContentRow::RowOrderDefault;
+			$this->strLastUpdated = EmailTemplateContentRow::LastUpdatedDefault;
 			$this->intEmailTemplate = EmailTemplateContentRow::EmailTemplateDefault;
 			$this->strSearchMetaInfo = EmailTemplateContentRow::SearchMetaInfoDefault;
 		}
@@ -475,6 +485,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'Id', $strAliasPrefix . 'Id');
 			    $objBuilder->AddSelectItem($strTableName, 'Columns', $strAliasPrefix . 'Columns');
 			    $objBuilder->AddSelectItem($strTableName, 'RowOrder', $strAliasPrefix . 'RowOrder');
+			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
 			    $objBuilder->AddSelectItem($strTableName, 'EmailTemplate', $strAliasPrefix . 'EmailTemplate');
 			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
             }
@@ -611,6 +622,9 @@
 			$strAlias = $strAliasPrefix . 'RowOrder';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intRowOrder = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$strAlias = $strAliasPrefix . 'LastUpdated';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->strLastUpdated = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAlias = $strAliasPrefix . 'EmailTemplate';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intEmailTemplate = $objDbRow->GetColumn($strAliasName, 'Integer');
@@ -812,76 +826,88 @@
 		//////////////////////////
 
 		/**
-		 * Save this EmailTemplateContentRow
-		 * @param bool $blnForceInsert
-		 * @param bool $blnForceUpdate
+* Save this EmailTemplateContentRow
+* @param bool $blnForceInsert
+* @param bool $blnForceUpdate
 		 * @return int
-		 */
-		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
-			// Get the Database Object for this Class
-			$objDatabase = EmailTemplateContentRow::GetDatabase();
-
-			$mixToReturn = null;
+*/
+        public function Save($blnForceInsert = false, $blnForceUpdate = false) {
+            // Get the Database Object for this Class
+            $objDatabase = EmailTemplateContentRow::GetDatabase();
+            $mixToReturn = null;
             $ExistingObj = EmailTemplateContentRow::Load($this->intId);
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'EmailTemplateContentRow';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             if (!$ExistingObj) {
                 $newAuditLogEntry->ModificationType = 'Create';
-    $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values after create:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Columns -> '.$this->intColumns.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'RowOrder -> '.$this->intRowOrder.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EmailTemplate -> '.$this->intEmailTemplate.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+                $ChangedArray = array_merge($ChangedArray,array("Columns" => $this->intColumns));
+                $ChangedArray = array_merge($ChangedArray,array("RowOrder" => $this->intRowOrder));
+                $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+                $ChangedArray = array_merge($ChangedArray,array("EmailTemplate" => $this->intEmailTemplate));
+                $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
-                $newAuditLogEntry->AuditLogEntryDetail = '<strong>Values before update:</strong> <br>';
-                if ($ExistingObj->Id) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$ExistingObj->Id.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Id)) {
+                    $ExistingValueStr = $ExistingObj->Id;
                 }
-                if ($ExistingObj->Columns) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Columns -> '.$ExistingObj->Columns.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'Columns -> NULL<br>';
+                if ($ExistingObj->Id != $this->intId) {
+                    $ChangedArray = array_merge($ChangedArray,array("Id" => array("Before" => $ExistingValueStr,"After" => $this->intId)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Id" => "From: ".$ExistingValueStr." to: ".$this->intId));
                 }
-                if ($ExistingObj->RowOrder) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'RowOrder -> '.$ExistingObj->RowOrder.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'RowOrder -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->Columns)) {
+                    $ExistingValueStr = $ExistingObj->Columns;
                 }
-                if ($ExistingObj->EmailTemplate) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EmailTemplate -> '.$ExistingObj->EmailTemplate.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'EmailTemplate -> NULL<br>';
+                if ($ExistingObj->Columns != $this->intColumns) {
+                    $ChangedArray = array_merge($ChangedArray,array("Columns" => array("Before" => $ExistingValueStr,"After" => $this->intColumns)));
+                    //$ChangedArray = array_merge($ChangedArray,array("Columns" => "From: ".$ExistingValueStr." to: ".$this->intColumns));
                 }
-                if ($ExistingObj->SearchMetaInfo) {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$ExistingObj->SearchMetaInfo.'<br>';
-                } else {
-                    $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> NULL<br>';
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->RowOrder)) {
+                    $ExistingValueStr = $ExistingObj->RowOrder;
                 }
-                $newAuditLogEntry->AuditLogEntryDetail .= '<strong>Values after update:</strong> <br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'Columns -> '.$this->intColumns.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'RowOrder -> '.$this->intRowOrder.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'EmailTemplate -> '.$this->intEmailTemplate.'<br>';
-                $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+                if ($ExistingObj->RowOrder != $this->intRowOrder) {
+                    $ChangedArray = array_merge($ChangedArray,array("RowOrder" => array("Before" => $ExistingValueStr,"After" => $this->intRowOrder)));
+                    //$ChangedArray = array_merge($ChangedArray,array("RowOrder" => "From: ".$ExistingValueStr." to: ".$this->intRowOrder));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->LastUpdated)) {
+                    $ExistingValueStr = $ExistingObj->LastUpdated;
+                }
+                if ($ExistingObj->LastUpdated != $this->strLastUpdated) {
+                    $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => array("Before" => $ExistingValueStr,"After" => $this->strLastUpdated)));
+                    //$ChangedArray = array_merge($ChangedArray,array("LastUpdated" => "From: ".$ExistingValueStr." to: ".$this->strLastUpdated));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->EmailTemplate)) {
+                    $ExistingValueStr = $ExistingObj->EmailTemplate;
+                }
+                if ($ExistingObj->EmailTemplate != $this->intEmailTemplate) {
+                    $ChangedArray = array_merge($ChangedArray,array("EmailTemplate" => array("Before" => $ExistingValueStr,"After" => $this->intEmailTemplate)));
+                    //$ChangedArray = array_merge($ChangedArray,array("EmailTemplate" => "From: ".$ExistingValueStr." to: ".$this->intEmailTemplate));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->SearchMetaInfo)) {
+                    $ExistingValueStr = $ExistingObj->SearchMetaInfo;
+                }
+                if ($ExistingObj->SearchMetaInfo != $this->strSearchMetaInfo) {
+                    $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
+                    //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
+                }
+                $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
-
             try {
-                $newAuditLogEntry->Save();
-            } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving EmailTemplateContentRow. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }
-			try {
-				if ((!$this->__blnRestored) || ($blnForceInsert)) {
-					// Perform an INSERT query
-					$objDatabase->NonQuery('
-						INSERT INTO `EmailTemplateContentRow` (
+                if ((!$this->__blnRestored) || ($blnForceInsert)) {
+                    // Perform an INSERT query
+                    $objDatabase->NonQuery('
+                    INSERT INTO `EmailTemplateContentRow` (
 							`Columns`,
 							`RowOrder`,
 							`EmailTemplate`,
@@ -892,49 +918,61 @@
 							' . $objDatabase->SqlVariable($this->intEmailTemplate) . ',
 							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
 						)
-					');
-
+                    ');
 					// Update Identity column and return its value
-					$mixToReturn = $this->intId = $objDatabase->InsertId('EmailTemplateContentRow', 'Id');
-				} else {
-					// Perform an UPDATE query
+					$mixToReturn = $this->intId = $objDatabase->InsertId('EmailTemplateContentRow', 'Id');                
+                } else {
+                    // Perform an UPDATE query
+                    // First checking for Optimistic Locking constraints (if applicable)
+				
+                    if (!$blnForceUpdate) {
+                        // Perform the Optimistic Locking check
+                        $objResult = $objDatabase->Query('
+                        SELECT `LastUpdated` FROM `EmailTemplateContentRow` WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-					// First checking for Optimistic Locking constraints (if applicable)
-
-					// Perform the UPDATE query
-					$objDatabase->NonQuery('
-						UPDATE
-							`EmailTemplateContentRow`
-						SET
+                    $objRow = $objResult->FetchArray();
+                    if ($objRow[0] != $this->strLastUpdated)
+                        throw new QOptimisticLockingException('EmailTemplateContentRow');
+                }
+			
+                // Perform the UPDATE query
+                $objDatabase->NonQuery('
+                UPDATE `EmailTemplateContentRow` SET
 							`Columns` = ' . $objDatabase->SqlVariable($this->intColumns) . ',
 							`RowOrder` = ' . $objDatabase->SqlVariable($this->intRowOrder) . ',
 							`EmailTemplate` = ' . $objDatabase->SqlVariable($this->intEmailTemplate) . ',
 							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
-						WHERE
-							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '
-					');
-				}
+                WHERE
+							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
+                }
 
-			} catch (QCallerException $objExc) {
-				$objExc->IncrementOffset();
-				throw $objExc;
-			}
-
-			// Update __blnRestored and any Non-Identity PK Columns (if applicable)
-			$this->__blnRestored = true;
-
-            /*Work in progress
-            $newAuditLogEntry->ObjectId = $this->intId;
+	            } catch (QCallerException $objExc) {
+                $objExc->IncrementOffset();
+                throw $objExc;
+            }
             try {
+                $newAuditLogEntry->ObjectId = $this->intId;
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while saving EmailTemplateContentRow. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
-            }*/
-			$this->DeleteCache();
+                error_log('Could not save audit log while saving EmailTemplateContentRow. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+            }
+            // Update __blnRestored and any Non-Identity PK Columns (if applicable)
+            $this->__blnRestored = true;
+	
+				            // Update Local Timestamp
+            $objResult = $objDatabase->Query('SELECT `LastUpdated` FROM
+                                                `EmailTemplateContentRow` WHERE
+                    							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
 
-			// Return
-			return $mixToReturn;
-		}
+            $objRow = $objResult->FetchArray();
+            $this->strLastUpdated = $objRow[0];
+			
+            $this->DeleteCache();
+            
+            // Return
+            return $mixToReturn;
+        }
 
 		/**
 		 * Delete this EmailTemplateContentRow
@@ -947,21 +985,23 @@
 			// Get the Database Object for this Class
 			$objDatabase = EmailTemplateContentRow::GetDatabase();
             $newAuditLogEntry = new AuditLogEntry();
+            $ChangedArray = array();
             $newAuditLogEntry->EntryTimeStamp = QDateTime::Now();
             $newAuditLogEntry->ObjectId = $this->intId;
             $newAuditLogEntry->ObjectName = 'EmailTemplateContentRow';
             $newAuditLogEntry->UserEmail = AppSpecificFunctions::getCurrentUserEmailForAudit();
             $newAuditLogEntry->ModificationType = 'Delete';
-            $newAuditLogEntry->AuditLogEntryDetail = 'Values before delete:<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Id -> '.$this->intId.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'Columns -> '.$this->intColumns.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'RowOrder -> '.$this->intRowOrder.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'EmailTemplate -> '.$this->intEmailTemplate.'<br>';
-	        $newAuditLogEntry->AuditLogEntryDetail .= 'SearchMetaInfo -> '.$this->strSearchMetaInfo.'<br>';
+            $ChangedArray = array_merge($ChangedArray,array("Id" => $this->intId));
+            $ChangedArray = array_merge($ChangedArray,array("Columns" => $this->intColumns));
+            $ChangedArray = array_merge($ChangedArray,array("RowOrder" => $this->intRowOrder));
+            $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
+            $ChangedArray = array_merge($ChangedArray,array("EmailTemplate" => $this->intEmailTemplate));
+            $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+            $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
             } catch(QCallerException $e) {
-                AppSpecificFunctions::AddCustomLog('Could not save audit log while deleting EmailTemplateContentRow. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
+                error_log('Could not save audit log while deleting EmailTemplateContentRow. Details: '.$newAuditLogEntry->getJson().'<br>Error details: '.$e->getMessage());
             }
 
 			// Perform the SQL Query
@@ -1037,6 +1077,7 @@
 			// Update $this's local variables to match
 			$this->intColumns = $objReloaded->intColumns;
 			$this->intRowOrder = $objReloaded->intRowOrder;
+			$this->strLastUpdated = $objReloaded->strLastUpdated;
 			$this->EmailTemplate = $objReloaded->EmailTemplate;
 			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 		}
@@ -1079,6 +1120,13 @@
 					 * @return integer
 					 */
 					return $this->intRowOrder;
+
+				case 'LastUpdated':
+					/**
+					 * Gets the value for strLastUpdated (Read-Only Timestamp)
+					 * @return string
+					 */
+					return $this->strLastUpdated;
 
 				case 'EmailTemplate':
 					/**
@@ -1469,6 +1517,7 @@
 			$strToReturn .= '<element name="Id" type="xsd:int"/>';
 			$strToReturn .= '<element name="Columns" type="xsd:int"/>';
 			$strToReturn .= '<element name="RowOrder" type="xsd:int"/>';
+			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="EmailTemplateObject" type="xsd1:EmailTemplate"/>';
 			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
@@ -1500,6 +1549,8 @@
 				$objToReturn->intColumns = $objSoapObject->Columns;
 			if (property_exists($objSoapObject, 'RowOrder'))
 				$objToReturn->intRowOrder = $objSoapObject->RowOrder;
+			if (property_exists($objSoapObject, 'LastUpdated'))
+				$objToReturn->strLastUpdated = $objSoapObject->LastUpdated;
 			if ((property_exists($objSoapObject, 'EmailTemplateObject')) &&
 				($objSoapObject->EmailTemplateObject))
 				$objToReturn->EmailTemplateObject = EmailTemplate::GetObjectFromSoapObject($objSoapObject->EmailTemplateObject);
@@ -1544,6 +1595,7 @@
 			$iArray['Id'] = $this->intId;
 			$iArray['Columns'] = $this->intColumns;
 			$iArray['RowOrder'] = $this->intRowOrder;
+			$iArray['LastUpdated'] = $this->strLastUpdated;
 			$iArray['EmailTemplate'] = $this->intEmailTemplate;
 			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			return new ArrayIterator($iArray);
@@ -1586,6 +1638,7 @@
      * @property-read QQNode $Id
      * @property-read QQNode $Columns
      * @property-read QQNode $RowOrder
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $EmailTemplate
      * @property-read QQNodeEmailTemplate $EmailTemplateObject
      * @property-read QQNode $SearchMetaInfo
@@ -1607,6 +1660,8 @@
 					return new QQNode('Columns', 'Columns', 'Integer', $this);
 				case 'RowOrder':
 					return new QQNode('RowOrder', 'RowOrder', 'Integer', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'VarChar', $this);
 				case 'EmailTemplate':
 					return new QQNode('EmailTemplate', 'EmailTemplate', 'Integer', $this);
 				case 'EmailTemplateObject':
@@ -1633,6 +1688,7 @@
      * @property-read QQNode $Id
      * @property-read QQNode $Columns
      * @property-read QQNode $RowOrder
+     * @property-read QQNode $LastUpdated
      * @property-read QQNode $EmailTemplate
      * @property-read QQNodeEmailTemplate $EmailTemplateObject
      * @property-read QQNode $SearchMetaInfo
@@ -1654,6 +1710,8 @@
 					return new QQNode('Columns', 'Columns', 'integer', $this);
 				case 'RowOrder':
 					return new QQNode('RowOrder', 'RowOrder', 'integer', $this);
+				case 'LastUpdated':
+					return new QQNode('LastUpdated', 'LastUpdated', 'string', $this);
 				case 'EmailTemplate':
 					return new QQNode('EmailTemplate', 'EmailTemplate', 'integer', $this);
 				case 'EmailTemplateObject':

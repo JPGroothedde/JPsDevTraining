@@ -1,20 +1,29 @@
 <?php
 require('DataModel_Base.class.php');
 class DataModel extends DataModel_Base {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // define all the objects for your app here
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    var $ProjectObjects                = array("PlaceHolder");
+    var $ProjectObjects                = array("Post","PostComment","PostLike","ProfilePicture");
     var $ProjectObjectAttributes = array (																										// The attributes for each of the defined objects
-        "PlaceHolder"                   => array("DummyOne","DummyTwo","DummyThree","DummyFour","DummyFive","DummySix"),
+        "Post"                   => array("PostText","PostTimeStamp"),
+        "PostComment"            => array("PostCommentText"),
+        "PostLike"               => array("AdditionalSearchInfo"),
+        "ProfilePicture"         => array("ProfilePicturePath"),
     );
 
     var $ProjectObjectAttributeTypes = array (																									// The attribute type for each of the defined object attributes (Defines how it is stored in the db)
-        "PlaceHolder"                   => array("DATE","VARCHAR(20)","INT","INT","DATETIME","DOUBLE"),
+        "Post"                   => array("VARCHAR(255)","DATETIME"),
+        "PostComment"            => array("VARCHAR(255)"),
+        "PostLike"               => array("VARCHAR(255)"),
+        "ProfilePicture"         => array("VARCHAR(100)"),
     );
 
     var $ProjectObjectSingleRelations = array (																									 // The list of objects that each object is related to once
-        "PlaceHolder"                   => array("Account","UserRole"),
+        "Post"                  => array("Account"),
+        "PostComment"           => array("Account","Post"),
+        "PostLike"              => array("Account","Post"),
+        "ProfilePicture"        => array("Account","FileDocument"),
     );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Special Renders
