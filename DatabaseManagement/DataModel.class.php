@@ -7,14 +7,14 @@ class DataModel extends DataModel_Base {
     var $ProjectObjects                = array("Post","PostComment","PostLike","ProfilePicture");
     var $ProjectObjectAttributes = array (																										// The attributes for each of the defined objects
         "Post"                   => array("PostText","PostTimeStamp"),
-        "PostComment"            => array("PostCommentText"),
+        "PostComment"            => array("PostCommentText","PostTimeStamp"),
         "PostLike"               => array("AdditionalSearchInfo"),
         "ProfilePicture"         => array("ProfilePicturePath"),
     );
 
     var $ProjectObjectAttributeTypes = array (																									// The attribute type for each of the defined object attributes (Defines how it is stored in the db)
         "Post"                   => array("VARCHAR(255)","DATETIME"),
-        "PostComment"            => array("VARCHAR(255)"),
+        "PostComment"            => array("VARCHAR(255)","DATETIME"),
         "PostLike"               => array("VARCHAR(255)"),
         "ProfilePicture"         => array("VARCHAR(100)"),
     );

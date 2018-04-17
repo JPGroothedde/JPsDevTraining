@@ -21,6 +21,7 @@
 	 * @property integer $Account the value for intAccount 
 	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
 	 * @property integer $Post the value for intPost 
+	 * @property QDateTime $PostTimeStamp the value for dttPostTimeStamp 
 	 * @property Account $AccountObject the value for the Account object referenced by intAccount 
 	 * @property Post $PostObject the value for the Post object referenced by intPost 
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
@@ -81,6 +82,14 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column PostComment.PostTimeStamp
+		 * @var QDateTime dttPostTimeStamp
+		 */
+		protected $dttPostTimeStamp;
+		const PostTimeStampDefault = null;
+
+
+		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
 		 * columns from the run-time database query result for this object).  Used by InstantiateDbRow and
 		 * GetVirtualAttribute.
@@ -135,6 +144,7 @@
 			$this->intAccount = PostComment::AccountDefault;
 			$this->strSearchMetaInfo = PostComment::SearchMetaInfoDefault;
 			$this->intPost = PostComment::PostDefault;
+			$this->dttPostTimeStamp = (PostComment::PostTimeStampDefault === null)?null:new QDateTime(PostComment::PostTimeStampDefault);
 		}
 
 
@@ -482,6 +492,7 @@
 			    $objBuilder->AddSelectItem($strTableName, 'Account', $strAliasPrefix . 'Account');
 			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
 			    $objBuilder->AddSelectItem($strTableName, 'Post', $strAliasPrefix . 'Post');
+			    $objBuilder->AddSelectItem($strTableName, 'PostTimeStamp', $strAliasPrefix . 'PostTimeStamp');
             }
 		}
 
@@ -625,6 +636,9 @@
 			$strAlias = $strAliasPrefix . 'Post';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->intPost = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$strAlias = $strAliasPrefix . 'PostTimeStamp';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->dttPostTimeStamp = $objDbRow->GetColumn($strAliasName, 'DateTime');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -868,6 +882,7 @@
                 $ChangedArray = array_merge($ChangedArray,array("Account" => $this->intAccount));
                 $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
                 $ChangedArray = array_merge($ChangedArray,array("Post" => $this->intPost));
+                $ChangedArray = array_merge($ChangedArray,array("PostTimeStamp" => $this->dttPostTimeStamp));
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
@@ -919,6 +934,14 @@
                     $ChangedArray = array_merge($ChangedArray,array("Post" => array("Before" => $ExistingValueStr,"After" => $this->intPost)));
                     //$ChangedArray = array_merge($ChangedArray,array("Post" => "From: ".$ExistingValueStr." to: ".$this->intPost));
                 }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->PostTimeStamp)) {
+                    $ExistingValueStr = $ExistingObj->PostTimeStamp;
+                }
+                if ($ExistingObj->PostTimeStamp != $this->dttPostTimeStamp) {
+                    $ChangedArray = array_merge($ChangedArray,array("PostTimeStamp" => array("Before" => $ExistingValueStr,"After" => $this->dttPostTimeStamp)));
+                    //$ChangedArray = array_merge($ChangedArray,array("PostTimeStamp" => "From: ".$ExistingValueStr." to: ".$this->dttPostTimeStamp));
+                }
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
             try {
@@ -929,12 +952,14 @@
 							`PostCommentText`,
 							`Account`,
 							`SearchMetaInfo`,
-							`Post`
+							`Post`,
+							`PostTimeStamp`
 						) VALUES (
 							' . $objDatabase->SqlVariable($this->strPostCommentText) . ',
 							' . $objDatabase->SqlVariable($this->intAccount) . ',
 							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
-							' . $objDatabase->SqlVariable($this->intPost) . '
+							' . $objDatabase->SqlVariable($this->intPost) . ',
+							' . $objDatabase->SqlVariable($this->dttPostTimeStamp) . '
 						)
                     ');
 					// Update Identity column and return its value
@@ -953,14 +978,15 @@
                     if ($objRow[0] != $this->strLastUpdated)
                         throw new QOptimisticLockingException('PostComment');
                 }
-				
+					
                 // Perform the UPDATE query
                 $objDatabase->NonQuery('
                 UPDATE `PostComment` SET
 							`PostCommentText` = ' . $objDatabase->SqlVariable($this->strPostCommentText) . ',
 							`Account` = ' . $objDatabase->SqlVariable($this->intAccount) . ',
 							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
-							`Post` = ' . $objDatabase->SqlVariable($this->intPost) . '
+							`Post` = ' . $objDatabase->SqlVariable($this->intPost) . ',
+							`PostTimeStamp` = ' . $objDatabase->SqlVariable($this->dttPostTimeStamp) . '
                 WHERE
 							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
                 }
@@ -985,7 +1011,7 @@
 
             $objRow = $objResult->FetchArray();
             $this->strLastUpdated = $objRow[0];
-				
+					
             $this->DeleteCache();
             
             // Return
@@ -1015,6 +1041,7 @@
             $ChangedArray = array_merge($ChangedArray,array("Account" => $this->intAccount));
             $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
             $ChangedArray = array_merge($ChangedArray,array("Post" => $this->intPost));
+            $ChangedArray = array_merge($ChangedArray,array("PostTimeStamp" => $this->dttPostTimeStamp));
             $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
@@ -1098,6 +1125,7 @@
 			$this->Account = $objReloaded->Account;
 			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
 			$this->Post = $objReloaded->Post;
+			$this->dttPostTimeStamp = $objReloaded->dttPostTimeStamp;
 		}
 
 
@@ -1159,6 +1187,13 @@
 					 * @return integer
 					 */
 					return $this->intPost;
+
+				case 'PostTimeStamp':
+					/**
+					 * Gets the value for dttPostTimeStamp 
+					 * @return QDateTime
+					 */
+					return $this->dttPostTimeStamp;
 
 
 				///////////////////
@@ -1274,6 +1309,19 @@
 					try {
 						$this->objPostObject = null;
 						return ($this->intPost = QType::Cast($mixValue, QType::Integer));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
+				case 'PostTimeStamp':
+					/**
+					 * Sets the value for dttPostTimeStamp 
+					 * @param QDateTime $mixValue
+					 * @return QDateTime
+					 */
+					try {
+						return ($this->dttPostTimeStamp = QType::Cast($mixValue, QType::DateTime));
 					} catch (QCallerException $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
@@ -1420,6 +1468,7 @@
 			$strToReturn .= '<element name="AccountObject" type="xsd1:Account"/>';
 			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
 			$strToReturn .= '<element name="PostObject" type="xsd1:Post"/>';
+			$strToReturn .= '<element name="PostTimeStamp" type="xsd:dateTime"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -1458,6 +1507,8 @@
 			if ((property_exists($objSoapObject, 'PostObject')) &&
 				($objSoapObject->PostObject))
 				$objToReturn->PostObject = Post::GetObjectFromSoapObject($objSoapObject->PostObject);
+			if (property_exists($objSoapObject, 'PostTimeStamp'))
+				$objToReturn->dttPostTimeStamp = new QDateTime($objSoapObject->PostTimeStamp);
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -1484,6 +1535,8 @@
 				$objObject->objPostObject = Post::GetSoapObjectFromObject($objObject->objPostObject, false);
 			else if (!$blnBindRelatedObjects)
 				$objObject->intPost = null;
+			if ($objObject->dttPostTimeStamp)
+				$objObject->dttPostTimeStamp = $objObject->dttPostTimeStamp->qFormat(QDateTime::FormatSoap);
 			return $objObject;
 		}
 
@@ -1504,6 +1557,7 @@
 			$iArray['Account'] = $this->intAccount;
 			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
 			$iArray['Post'] = $this->intPost;
+			$iArray['PostTimeStamp'] = $this->dttPostTimeStamp;
 			return new ArrayIterator($iArray);
 		}
 
@@ -1549,6 +1603,7 @@
      * @property-read QQNode $SearchMetaInfo
      * @property-read QQNode $Post
      * @property-read QQNodePost $PostObject
+     * @property-read QQNode $PostTimeStamp
      *
      *
 
@@ -1576,6 +1631,8 @@
 					return new QQNode('Post', 'Post', 'Integer', $this);
 				case 'PostObject':
 					return new QQNodePost('Post', 'PostObject', 'Integer', $this);
+				case 'PostTimeStamp':
+					return new QQNode('PostTimeStamp', 'PostTimeStamp', 'DateTime', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'Integer', $this);
@@ -1599,6 +1656,7 @@
      * @property-read QQNode $SearchMetaInfo
      * @property-read QQNode $Post
      * @property-read QQNodePost $PostObject
+     * @property-read QQNode $PostTimeStamp
      *
      *
 
@@ -1626,6 +1684,8 @@
 					return new QQNode('Post', 'Post', 'integer', $this);
 				case 'PostObject':
 					return new QQNodePost('Post', 'PostObject', 'integer', $this);
+				case 'PostTimeStamp':
+					return new QQNode('PostTimeStamp', 'PostTimeStamp', 'QDateTime', $this);
 
 				case '_PrimaryKeyNode':
 					return new QQNode('Id', 'Id', 'integer', $this);

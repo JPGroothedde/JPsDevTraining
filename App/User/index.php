@@ -18,6 +18,7 @@ class PostListForm extends QForm {
 	protected $TotalPostArray = array();
 	protected $action_HandlePageRequest;
 	protected $LastLoadCheckTime = null;
+	protected $PostCommentInput;
 
     public function Form_Create() {
         parent::Form_Create();
@@ -34,8 +35,8 @@ class PostListForm extends QForm {
         $this->NewPostInputBox->Placeholder = "What's on your mind?";
 
         $this->btnProcessNewPost = new QButton($this);
-        $this->btnProcessNewPost->Text = "New Post";
-        $this->btnProcessNewPost->CssClass = 'btn btn-primary rippleclick pull-right fullWidth mrg-bottom5';
+        $this->btnProcessNewPost->Text = "Post";
+        $this->btnProcessNewPost->CssClass = 'btn btn-primary rippleclick pull-right mrg-bottom5';
         $this->btnProcessNewPost->AddAction(new QClickEvent(), new QAjaxAction("createNewPost"));
 
         $this->HtmlResults = new sUIElementsBase($this);
@@ -104,43 +105,71 @@ class PostListForm extends QForm {
 					$ProfilePictureSrc = '../'.$ProfilePictureSrcExplode[3].'/'.$ProfilePictureSrcExplode[4];
                 }
                 $html.= '<div class="PostId panel panel-primary" id="Post_'.$Post->Id.'">';
-                $html.= '<div class="panel-heading"><img style="width:50px;" src="'.$ProfilePictureSrc.'">'.$PostAccountFirstName. ' '.$PostAccountLastName;
-                $html.= '<div class="row"><div class="col-md-12"><div class="small">'.$PostTimeStamp.'</div></div></div>';
+                $html.= '<div class="panel-heading"><img class="img-circle" style="width:30px; height: 30px;" src="'.$ProfilePictureSrc.'"> '.$PostAccountFirstName. ' '.$PostAccountLastName.' <span class="JpSeTimestamp">'.$PostTimeStamp.'</span>';
                 $html.= '</div>';
-                $html.= '<div class="panel-body">';
-                $html.= '<div class="row"><div class="col-md-12"><pre><p>'.$Post->PostText.'</p></pre></div></div>';
+                $html.= '<div class="panel-body" style="padding: 0 15px;">';
+                $html.= '<div class="row"><div class="col-md-12"><p>'.$Post->PostText.'</p></div></div>';
+	            $html.= '<div class="row">';
+	            $LikeCount = PostLike::QueryCount(QQ::Equal(QQN::PostLike()->PostObject->Id,$Post->Id));
+	            if ($LikeCount) {
+		            $LikeCountBadge = '<span class="badge">'.$LikeCount.'</span>';
+	            } else {
+		            $LikeCountBadge = '';
+	            }
+	            $html.= '<div class="col-md-11"></div>';
+	            $html.= '<div class="col-md-1"><button type="button" id="PostLike_'.$Post->Id.'" role="button" class="LikePost btn btn-primary rippleclick pull-right "><span class="glyphicon glyphicon-thumbs-up"></span> '.$LikeCountBadge.'</button></div>';
+	            $html.= '</div>';
+	            $html.= '<div style="padding-top: 10px;">';
+	            $html.= '<div class="input-group">';
+	            $html.= '<input type="text" id="PostCommentInputBox_'.$Post->Id.'" name="PostCommentInputBox" class="form-control" style="padding:10px;" placeholder="Write a comment.... "/>';
+	            $html.= '<span class="input-group-btn">';
+	            $html.= '<button type="button" id="PostComment_'.$Post->Id.'" role="button" class="PostCommentBtn btn btn-default rippleclick pull-right "><span class="glyphicon glyphicon-send"></span></button>';
+	            $html.= '</span>';
+	            
+	            $html.= '</div>';
+	            $html.= '</div>';
                 $PostCommentArray = PostComment::QueryArray(QQ::Equal(QQN::PostComment()->PostObject->Id,$Post->Id));
+                
                 if ($PostCommentArray) {
-                    $html.= '<div class="panel-group">';
-                    $html.= '<div class="panel panel-default">';
                     $html.= '<div class="panel-heading">';
-                    $html.= '<h4 class="panel-title">';
-                    $html.= '<a data-toggle="collapse" href="#collapse'.$Post->Id.'">Comments</a>';
-                    $html.= '</h4>';
+                    $html.= '<a class="pull-right" style="text-decoration:none; color:#949494;" data-toggle="collapse" href="#collapse'.$Post->Id.'">Comments <span class="glyphicon glyphicon-arrow-down"></span> </a>';
                     $html.= '</div>';
                     $html.= '<div id="collapse'.$Post->Id.'" class="panel-collapse collapse">';
                     $html.= '<ul class="list-group">';
                     foreach ($PostCommentArray as $PostComment) {
-                        $html .= '<li class="list-group-item"><div class="row"><div class="col-md-12"><pre><p>' . $PostComment->PostCommentText . '</p></pre></div></div></li>';
+	                    if ($PostComment->AccountObject) {
+		                    $PostCommentAccountId = $PostComment->AccountObject->Id;
+		                    $PostCommentAccountFirstName = $PostComment->AccountObject->FirstName;
+		                    $PostCommentAccountLastName = $PostComment->AccountObject->LastName;
+	                    }
+	                    if ($PostComment->PostTimeStamp)
+		                    $PostCommentTimeStamp = $PostComment->PostTimeStamp->format(DATE_TIME_FORMAT_HTML.' H:i:s');
+	                    else
+	                    	$PostCommentTimeStamp = 'Sometime in the past...';
+                    	$PostCommentProfilePictureObj = ProfilePicture::QuerySingle(QQ::Equal(
+                    		QQN::ProfilePicture()->AccountObject->Id,$PostComment->AccountObject->Id),
+	                        QQ::Clause(
+	                        	QQ::OrderBy(QQN::ProfilePicture()->Id,false)
+	                        )
+	                    );
+                    	$PostCommentProfilePictureSrc = __APP_IMAGE_ASSETS__.'/image_not_available.jpg';
+                    	if ($PostCommentProfilePictureObj) {
+                    		$PostCommentProfilePictureSrc = $PostCommentProfilePictureObj->ProfilePicturePath;
+                    		$PostCommentProfilePictureSrcExplode = explode('/', $PostCommentProfilePictureSrc);
+                    		$PostCommentProfilePictureSrc = '../'.$PostCommentProfilePictureSrcExplode[3].'/'.$PostCommentProfilePictureSrcExplode[4];
+	                    }
+                        $html.= '<li class="list-group-item">';
+                    	$html.= '<img class="img-circle" style="width:30px; height: 30px;" src="'.$PostCommentProfilePictureSrc.'"> '.$PostCommentAccountFirstName. ' '.$PostCommentAccountLastName.' <span class="JpSeTimestamp">'.$PostCommentTimeStamp.'</span>';
+                    	$html.= '<div class="row"><div class="col-md-12"><p>' . $PostComment->PostCommentText . '</p></div></div>';
+                    	$html.= '</li>';
                     }
                     $html.= '</ul>';
                     $html.= '</div>';
-                    $html.= '</div>';
-                    $html.= '</div>';
                 }
-                $html.= '</div>';
-                $html.= '<div class="panel-footer">';
-                $html.= '<div class="row">';
-                $LikeCount = PostLike::QueryCount(QQ::Equal(QQN::PostLike()->PostObject->Id,$Post->Id));
-                if ($LikeCount) {
-                    $LikeCountBadge = '<span class="badge">'.$LikeCount.'</span>';
-                }else{
-                    $LikeCountBadge = '';
-                }
-                $html.= '<div class="col-md-8"></div>';
-                $html.= '<div class="col-md-2"><a href="#" id="PostLike_'.$Post->Id.'" role="button" class="LikePost btn btn-primary rippleclick pull-right fullWidth "><span class="glyphicon glyphicon-thumbs-up"></span> Like '.$LikeCountBadge.'</a></div>';
-                $html.= '<div class="col-md-2"><a href="#" id="PostComment_'.$Post->Id.'" role="button" class="PostCommentBtn btn btn-default rippleclick pull-right fullWidth "><span class="glyphicon glyphicon-pencil"></span> Comment</a></div>';
-                $html.= '</div>';
+                
+                
+                
+                $html.= '<div class="panel-footer"></div>';
                 $html.= '</div>';
                 $html.= '</div>';
             }
@@ -190,15 +219,30 @@ class PostListForm extends QForm {
             AppSpecificFunctions::ShowNotedFeedback("Something weird happened here... Oops",false);
             return;
         }
-        $PostLikeObj = new PostLike();
-        $PostLikeObj->PostObject = $PostObj;
-        $PostLikeObj->AccountObject = Account::Load(AppSpecificFunctions::getCurrentAccountAttribute());
-        try {
-            $PostLikeObj->Save();
-        } catch(QCallerException $e) {
-
+        $checkIfPostIsLiked = PostLike::QuerySingle(
+        	                    QQ::AndCondition(
+						            QQ::Equal(QQN::PostLike()->AccountObject->Id,AppSpecificFunctions::getCurrentAccountAttribute()),
+							        QQ::Equal(QQN::PostLike()->PostObject->Id,$ParameterArray[1]))
+                                );
+        if ($checkIfPostIsLiked) {
+	        try {
+		        $checkIfPostIsLiked->Delete();
+	        } catch(QUndefinedPrimaryKeyException $e) {
+	        
+	        }
+	        //$js = '$("#'.$strParameter.'").reload();';
+	        //AppSpecificFunctions::ExecuteJavaScript($js);
+        } else {
+	        $PostLikeObj = new PostLike();
+	        $PostLikeObj->PostObject = $PostObj;
+	        $PostLikeObj->AccountObject = Account::Load(AppSpecificFunctions::getCurrentAccountAttribute());
+	        try {
+		        $PostLikeObj->Save();
+	        } catch(QCallerException $e) {
+		
+	        }
         }
-        $this->loadPosts();
+	    $this->loadPosts();
     }
 
 	protected function initPostComments() {
@@ -208,15 +252,17 @@ class PostListForm extends QForm {
         $this->PostCommentInputBox->Placeholder = "What's on your mind?";
 
         $this->btnPostNewComment = new QButton($this);
-        $this->btnPostNewComment->Text = "Post Comment";
-        $this->btnPostNewComment->CssClass = 'btn btn-success rippleclick mrg-top10 fullWidth';
+        $this->btnPostNewComment->Text = "Post";
+        $this->btnPostNewComment->CssClass = 'btn btn-primary rippleclick mrg-top10 fullWidth';
         $this->btnPostNewComment->AddAction(new QClickEvent(), new QAjaxAction("createNewPostComment"));
 
         $this->action_PostComment = new sUIElementsBase($this);
         $this->action_PostComment->AddAction(new QClickEvent(), new QAjaxAction('handleAction_PostComment'));
 
         $js_Action_PostComment = '$(document).on("click",".PostCommentBtn", function() {
-            qc.pA(\''.$this->FormId.'\',\''.$this->action_PostComment->getControlId().'\', \'QClickEvent\', $(this).attr("id"));
+            var BtnId = $(this).attr("Id").split("_");
+            var InputText = BtnId[1]+"_"+$("#PostCommentInputBox_"+BtnId[1]).val();
+            qc.pA(\''.$this->FormId.'\',\''.$this->action_PostComment->getControlId().'\', \'QClickEvent\', InputText);
         });
         var style = document.createElement(\'style\');
         style.type = \'text/css\';
@@ -244,6 +290,34 @@ class PostListForm extends QForm {
 		$this->loadPosts();
 	}
 	protected function handleAction_PostComment($strFormId, $strControlId, $strParameter) {
+    	$CommentInput = explode('_', $strParameter);
+    	if (sizeof($CommentInput) != 2) {
+		    AppSpecificFunctions::ShowNotedFeedback('Something weird happened ... Oops',false);
+		    return;
+	    }
+    	if (!$this->doManualCrossSiteScriptPrevention($CommentInput[1])) {
+    		AppSpecificFunctions::ShowNotedFeedback("That comment was not valid you poepol",false);
+    		return;
+	    }
+    	
+	    $PostObj = Post::Load($CommentInput[0]);
+		if (is_null($PostObj)) {
+			AppSpecificFunctions::ShowNotedFeedback("Something weird happened here... Oops",false);
+			return;
+		}
+		$PostCommentObj = new PostComment();
+		$PostCommentObj->PostCommentText = $CommentInput[1];
+		$PostCommentObj->AccountObject = Account::Load(AppSpecificFunctions::getCurrentAccountAttribute());
+		$PostCommentObj->PostTimeStamp = QDateTime::Now(true);
+		$PostCommentObj->PostObject = $PostObj;
+		try {
+			$PostCommentObj->Save();
+			AppSpecificFunctions::ShowNotedFeedback('New comment created.');
+		} catch(QCallerException $e) {
+		
+		}
+		$this->loadPosts();
+    	/*
         $ParameterArray = explode('_',$strParameter);
         if (sizeof($ParameterArray) < 2) {
             AppSpecificFunctions::ShowNotedFeedback("Something weird happened here... Oops",false);
@@ -255,7 +329,34 @@ class PostListForm extends QForm {
             return;
         }
         $this->PostId = $PostObj->Id;
-		AppSpecificFunctions::ToggleModal('PostCommentModal');
+		AppSpecificFunctions::ToggleModal('PostCommentModal');*/
+	}
+	
+	protected function doManualCrossSiteScriptPrevention($strText) {
+		$strText = mb_strtolower($strText, QApplication::$EncodingType);
+		if ((mb_strpos($strText, '<script', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, '<applet', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, '<embed', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, '<style', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, '<link', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, '<body', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, '<iframe', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, 'javascript:', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onfocus=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onblur=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onkeydown=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onkeyup=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onkeypress=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onmousedown=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onmouseup=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onmouseover=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onmouseout=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onmousemove=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, ' onclick=', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, '<object', 0, QApplication::$EncodingType) !== false) ||
+			(mb_strpos($strText, 'background:url', 0, QApplication::$EncodingType) !== false))
+			return false;
+		return true;
 	}
 }
 PostListForm::Run('PostListForm');

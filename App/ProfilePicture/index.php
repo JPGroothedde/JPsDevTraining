@@ -1,6 +1,6 @@
 <?php
 // Load the sDev Development Framework
-require('../../../sdev.inc.php');
+require('../../sdev.inc.php');
 require('ProfilePictureUploader.php');
 AppSpecificFunctions::CheckRemoteAdmin();
 
@@ -17,6 +17,7 @@ class FileUploadForm extends QForm {
         $this->sh_Feedback = new sUIElementsBase($this);
         $this->btnInvokeFileUpload = AppSpecificFunctions::getNewActionButton($this,'Force Upload','btn btn-default','InvokeFileUpload_Action');
         $this->btnSendToRemoteServer = AppSpecificFunctions::getNewActionButton($this,'Send File To Remote Server','btn btn-warning','btnSendToRemoteServer_Clicked');
+        
         $this->btnCancel = new QButton($this);
         $this->btnCancel->Text = 'Cancel';
         $this->btnCancel->CssClass = 'btn btn-primary rippleclick fullWidth';

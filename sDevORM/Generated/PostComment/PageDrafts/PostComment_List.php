@@ -58,10 +58,10 @@ class PostComment_ListForm extends QForm {
         }
     }
     protected function InitPostCommentDataList() {
-        $searchableAttributes = array(QQN::PostComment()->PostCommentText,QQN::PostComment()->AccountObject->Id,QQN::PostComment()->PostObject->Id);
-        $SortAttributesShown = array('Post Comment Text','Account Object','Post Object');
-        $SortAttributes = array(QQN::PostComment()->PostCommentText,QQN::PostComment()->AccountObject->Id,QQN::PostComment()->PostObject->Id);
-        $columnItems = array('PostCommentText','Account','Post');
+        $searchableAttributes = array(QQN::PostComment()->PostCommentText,QQN::PostComment()->PostTimeStamp,QQN::PostComment()->AccountObject->Id,QQN::PostComment()->PostObject->Id);
+        $SortAttributesShown = array('Post Comment Text','Post Time Stamp','Account Object','Post Object');
+        $SortAttributes = array(QQN::PostComment()->PostCommentText,QQN::PostComment()->PostTimeStamp,QQN::PostComment()->AccountObject->Id,QQN::PostComment()->PostObject->Id);
+        $columnItems = array('PostCommentText','PostTimeStamp','Account','Post');
         $this->btnNewPostComment = AppSpecificFunctions::getNewActionButton($this,'Add PostComment','btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss,'btnNewPostComment_Clicked');
         $this->PostCommentList = new PostCommentDataList($this, QQN::PostComment(),$searchableAttributes, null, $columnItems, $SortAttributes,$SortAttributesShown);
     }

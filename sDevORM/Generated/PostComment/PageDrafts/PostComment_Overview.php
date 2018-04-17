@@ -60,10 +60,10 @@ class PostComment_OverviewForm extends QForm {
         }
     }
     protected function InitPostCommentDataGrid() {
-        $searchableAttributes = array(QQN::PostComment()->PostCommentText,QQN::PostComment()->AccountObject->Id,QQN::PostComment()->PostObject->Id);
-        $headerItems = array('Post Comment Text','Account Object','Post Object');
-        $headerSortNodes = array(QQN::PostComment()->PostCommentText,QQN::PostComment()->AccountObject->Id,QQN::PostComment()->PostObject->Id);
-        $columnItems = array('PostCommentText','Account','Post');
+        $searchableAttributes = array(QQN::PostComment()->PostCommentText,QQN::PostComment()->PostTimeStamp,QQN::PostComment()->AccountObject->Id,QQN::PostComment()->PostObject->Id);
+        $headerItems = array('Post Comment Text','Post Time Stamp','Account Object','Post Object');
+        $headerSortNodes = array(QQN::PostComment()->PostCommentText,QQN::PostComment()->PostTimeStamp,QQN::PostComment()->AccountObject->Id,QQN::PostComment()->PostObject->Id);
+        $columnItems = array('PostCommentText','PostTimeStamp','Account','Post');
         $this->PostCommentWaitControlIcon = new QWaitIcon($this);
         $this->btnNewPostComment = new QButton($this);
         $this->btnNewPostComment->Text = 'Add PostComment';

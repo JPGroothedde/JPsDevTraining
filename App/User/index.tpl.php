@@ -1,36 +1,37 @@
 <?php $strPageTitle = 'User Home';?>
 <?php require(__CONFIGURATION__ . '/header_with_nav.inc.php');?>
+<style>
+    .JpSeTimestamp {
+        font-size: 10px;
+        color: #949494;
+    }
+</style>
 <?php
 if (!checkRole(array('User')))
 	AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 ?>
-
 <?php $this->RenderBegin();?>
+
+<div class="container">
 <div class="row">
-    <div class="col-md-12">
-        <h2 class="page-header">My Feed</h2>
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="background-color: #FFFFFF; padding: 15px; padding-bottom: 40px; margin-bottom: 10px; margin-top: 15px; border-radius: 10px;">
+        <?php $this->NewPostInputBox->Render();?><?php $this->btnProcessNewPost->Render(); ?>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <?php $this->NewPostInputBox->Render();?>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-3"></div>
-    <div class="col-md-3"></div>
-    <div class="col-md-3">
-        <?php $this->btnProcessNewPost->Render(); ?>
-    </div>
+    <div class="col-md-2"></div>
 </div>
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4"><a id="ReloadLink" style="display:none;" href="javascript:location.reload();">There are new posts available...</a></div>
     <div class="col-md-4"></div>
-    <div class="col-md-12" id="PostData">
+</div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" id="PostData">
         <?php $this->HtmlResults->Render(); ?>
     </div>
+    <div class="col-md-2"></div>
+</div>
 </div>
 <!-- Modal -->
     <div class="modal fade" id="PostCommentModal" tabindex="-1" role="dialog" aria-labelledby="PostCommentModalLabel" data-backdrop="static" data-keyboard="false">

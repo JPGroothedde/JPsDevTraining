@@ -147,7 +147,9 @@ abstract class AppMenus {
             $UserNameToDisplay = $currentUser->FirstName;
         }
 
-        $items = array(new MenuItem(array('User','Administrator'),$UserNameToDisplay,'#','Right','','','User Home',false,
+        $items = array(
+	        new MenuItem(array('User','Administrator'),'Profile Picture',__SUBDIRECTORY__.'/App/ProfilePicture/','Right','','','Profile Picture'),
+        	new MenuItem(array('User','Administrator'),$UserNameToDisplay,'#','Right','','','User Home',false,
                         array(new MenuItem(array('User','Administrator'),'My Account',__USRMNG__.'/account_edit/','','','My Account'),
                             new MenuItem(array('User','Administrator'),'Logout',__USRMNG__.'/logout/','','','','',true))),
             new MenuItem(array('Administrator'),'Accounts',__SUBDIRECTORY__.'/App/Administrator/Account_Overview/','Left','','','Account Overview'),
@@ -157,7 +159,7 @@ abstract class AppMenus {
             new MenuItem(array('Administrator'),'Page Views',__SUBDIRECTORY__.'/App/Administrator/PageView_Overview/','Left','','','PageView Overview'),
             new MenuItem(array('Administrator'),'Email History',__SUBDIRECTORY__.'/App/Administrator/EmailMessage_Overview/','Left','','','Email History'),
             new MenuItem(array('Administrator'),'Email Templates',__SUBDIRECTORY__.'/App/Administrator/EmailTemplate_Overview/','Left','','','Email Template Overview'),
-            new MenuItem(array('User','Administrator'),'Profile Picture',__SUBDIRECTORY__.'/sDevORM/Implementations/ProfilePicture/index.php','Right','','','Profile Picture'),);
+            );
         return $items;
     }
 

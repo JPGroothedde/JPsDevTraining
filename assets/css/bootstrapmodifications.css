@@ -1,2 +1,167 @@
 @import url("sDevBaseModifications/basemodifications.css");
 /* Custom modifications can follow below */
+body {
+    background: #e6ecf0;
+}
+pre {
+    background-color: transparent;
+    border: none;
+}
+#PostData {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+}
+/*----------------------- Nav Bar ----------------*/
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: transparent;
+}
+.container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+.navbar-inverse {
+    background-color: #FFFFFF;
+    border-color: transparent;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    color: #000000;
+    background-color: transparent;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #000000;
+}
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: transparent;
+    color: #000000;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+    color: #000000;
+}
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: transparent;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu .divider {
+    background-color: #e5e5e5;
+}
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: #000000;
+    background-color: transparent;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #000;
+}
+/*------------------- Panel -----------------*/
+.panel {
+    border-radius: 10px;
+}
+.panel-heading {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-bottom: 15px;
+}
+.panel-primary > .panel-heading {
+    color: #000000;
+    background-color: transparent;
+    border-color: transparent;
+}
+.panel-primary {
+    border-color: #a9a9a9;
+}
+.panel-group .panel {
+    margin-bottom: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.panel-footer {
+    padding: 10px 15px;
+    background-color: transparent;
+    border-top: transparent;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+/*------------------FORM CONTROLS----------------*/
+.form-control {
+    border-radius: 10px;
+}
+
+/*---------------- Modal -----------------*/
+.modal-content {
+    border-radius: 10px;
+}
+.modal-header {
+    padding: 10px;
+    border-bottom: none;
+}
+.modal-footer {
+    padding: 10px;
+    text-align: right;
+    border-top: none;
+}
+/*------------------BUTTONS----------------*/
+.btn {
+    border-radius: 30px;
+    border: none;
+    outline: transparent;
+}
+.btn:hover {
+    box-shadow: 0px 12px 18px -6px rgba(165, 165, 165, 0.4);
+}
+.btn-default {
+    border: 1px solid;
+}
+.btn-primary,.btn-success {
+    color: #000000;
+    background-color: #a9a9a9;
+    border-color: #a9a9a9;
+}
+.btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
+    color: #fff;
+    background-color: #a9a9a9;
+    border-color: #a9a9a9;
+}
+.btn-success:focus, .btn-success.focus {
+    color: #fff;
+    background-color: #a9a9a9;
+    border-color: #a9a9a9;
+}
+.btn-primary,.btn-success:hover {
+    color: #333333 !important;
+    background-color: #e6e6e6 !important;
+    border-color: #adadad !important;
+}
+.btn-primary .badge {
+    color: #000000;
+    background-color: #FFFFFF;
+}
+.btn-info {
+    color: #000000;
+    background-color: #a9a9a9;
+    border-color: #a9a9a9;
+}
+.btn-info:hover {
+    color: #333333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
+    color: #fff;
+    background-color: #a9a9a9;
+    border-color: #a9a9a9;
+}
+.btn-info:focus, .btn-info.focus {
+    color: #fff;
+    background-color: #a9a9a9;
+    border-color: #a9a9a9;
+}
+.btn-info:active:hover, .btn-info.active:hover, .open > .btn-info.dropdown-toggle:hover, .btn-info:active:focus, .btn-info.active:focus, .open > .btn-info.dropdown-toggle:focus, .btn-info:active.focus, .btn-info.active.focus, .open > .btn-info.dropdown-toggle.focus {
+    color: #fff;
+    background-color: #a9a9a9;
+    border-color: #a9a9a9;
+}

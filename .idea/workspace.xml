@@ -2,134 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de105970-ee06-4441-a939-70ec740783fe" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/App/Administrator/Post_Overview.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/App/Administrator/Post_Overview.tpl.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/App/User/EmailExample.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.tpl.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/ProfilePicture/FormTemplates/ProfilePicture_Template.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/ProfilePicture/FormTemplates/ProfilePicture_Template.tpl.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/ProfilePicture/ProfilePictureController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/ProfilePicture/ProfilePictureFrontEnd.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/ProfilePicture/ProfilePictureModal.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/ProfilePicture/ProfilePictureUploader.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/ProfilePicture/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/ProfilePicture/index.tpl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Generated/Account_API_Base.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/Account_API_Base.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Generated/Documentation/PlaceHolder_API_Documentation_Base.html" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/Documentation/PlaceHolder_API_Documentation_Base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Generated/Operations/PlaceHolder_API_Operations.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/Operations/PlaceHolder_API_Operations.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Generated/PlaceHolder_API_Base.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/PlaceHolder_API_Base.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Generated/UserRole_API_Base.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/Generated/UserRole_API_Base.class.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App/User/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/User/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App/User/index.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/User/index.tpl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/uploaded/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/App/uploaded/.htaccess" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/uploaded/12-04-2018_14-40-59_20180313_084708.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/App/uploaded/12-04-2018_14-40-59_20180313_084708.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Coordinates.json" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Coordinates.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Delta.json" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseManagement/DataModeller/DataModel_Delta.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/_core/js/qc_sdev_wrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/_core/js/qc_sdev_wrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/_core/php/DeveloperMode/CustomLog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/_core/php/DeveloperMode/CustomLog.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/configuration/header_with_nav.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/configuration/header_with_nav.inc.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevExamples/FileUploads/ProfilePictureUploader.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/bootstrapmodifications.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/bootstrapmodifications.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sDevFunctions/AppMenus.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevFunctions/AppMenus.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AccountGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AccountGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/ApiEntityGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/ApiEntityGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/ApiKeyGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/ApiKeyGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AuditLogEntryGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/AuditLogEntryGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/BackgroundProcessGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/BackgroundProcessGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/BackgroundProcessUpdateGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/BackgroundProcessUpdateGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailMessageGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailMessageGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateContentBlockGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateContentBlockGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateContentRowGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateContentRowGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/EmailTemplateGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/FileDocumentGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/FileDocumentGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/LoginTokenGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/LoginTokenGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PageViewGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PageViewGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PasswordResetGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PasswordResetGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/QQN.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/QQN.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/RemoteAccessGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/RemoteAccessGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/SummernoteEntryGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/SummernoteEntryGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/UserRoleGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/UserRoleGen.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/_class_paths.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/_class_paths.inc.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/AccountController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/AccountController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/FormTemplates/Account_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/FormTemplates/Account_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/Account/PageDrafts/Account_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/ApiEntityController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/ApiEntityController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/FormTemplates/ApiEntity_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/FormTemplates/ApiEntity_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiEntity/PageDrafts/ApiEntity_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/ApiKeyController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/ApiKeyController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/FormTemplates/ApiKey_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/FormTemplates/ApiKey_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/ApiKey/PageDrafts/ApiKey_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/AuditLogEntryController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/AuditLogEntryController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/FormTemplates/AuditLogEntry_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/FormTemplates/AuditLogEntry_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/AuditLogEntry/PageDrafts/AuditLogEntry_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/BackgroundProcessController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/BackgroundProcessController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/FormTemplates/BackgroundProcess_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/FormTemplates/BackgroundProcess_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcess/PageDrafts/BackgroundProcess_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/BackgroundProcessUpdateController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/BackgroundProcessUpdateController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/FormTemplates/BackgroundProcessUpdate_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/FormTemplates/BackgroundProcessUpdate_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/BackgroundProcessUpdate/PageDrafts/BackgroundProcessUpdate_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/EmailMessageController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/EmailMessageController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/FormTemplates/EmailMessage_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/FormTemplates/EmailMessage_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailMessage/PageDrafts/EmailMessage_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/EmailTemplateController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/EmailTemplateController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/FormTemplates/EmailTemplate_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/FormTemplates/EmailTemplate_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplate/PageDrafts/EmailTemplate_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/EmailTemplateContentBlockController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/EmailTemplateContentBlockController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/FormTemplates/EmailTemplateContentBlock_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/FormTemplates/EmailTemplateContentBlock_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentBlock/PageDrafts/EmailTemplateContentBlock_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/EmailTemplateContentRowController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/EmailTemplateContentRowController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/FormTemplates/EmailTemplateContentRow_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/FormTemplates/EmailTemplateContentRow_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/EmailTemplateContentRow/PageDrafts/EmailTemplateContentRow_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FileDocumentController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FileDocumentController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FormTemplates/FileDocument_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/FormTemplates/FileDocument_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/FileDocument/PageDrafts/FileDocument_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/FormTemplates/LoginToken_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/FormTemplates/LoginToken_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/LoginTokenController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/LoginTokenController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/LoginToken/PageDrafts/LoginToken_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/FormTemplates/PageView_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/FormTemplates/PageView_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageDrafts/PageView_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageViewController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PageView/PageViewController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/FormTemplates/PasswordReset_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/FormTemplates/PasswordReset_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PageDrafts/PasswordReset_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PasswordResetController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PasswordReset/PasswordResetController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/FormTemplates/RemoteAccess_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/FormTemplates/RemoteAccess_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/PageDrafts/RemoteAccess_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/RemoteAccessController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/RemoteAccess/RemoteAccessController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/FormTemplates/SummernoteEntry_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/FormTemplates/SummernoteEntry_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/PageDrafts/SummernoteEntry_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/SummernoteEntryController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/SummernoteEntry/SummernoteEntryController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/FormTemplates/UserRole_Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/FormTemplates/UserRole_Template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_List.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/PageDrafts/UserRole_Overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/UserRole/UserRoleController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/UserRole/UserRoleController_Base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountFrontEnd_Self.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountFrontEnd_Self.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PostCommentGen.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PostCommentGen.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PostComment/PageDrafts/PostComment_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PostComment/PageDrafts/PostComment_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PostComment/PageDrafts/PostComment_Overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PostComment/PageDrafts/PostComment_Overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PostComment/PostCommentController_Base.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PostComment/PostCommentController_Base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Generated/PostComment/PostCommentFrontEnd.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Generated/PostComment/PostCommentFrontEnd.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.tpl.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -160,353 +56,141 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.tpl.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.tpl.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/User/index.tpl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1155">
-              <caret line="77" column="9" lean-forward="true" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
+            <state relative-caret-position="5">
+              <caret line="44" column="59" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="59" />
               <folding>
                 <element signature="e#0#5#0#PHP" expanded="true" />
                 <element signature="e#37#42#0#PHP" expanded="true" />
+                <element signature="n#style#0;n#!!top" expanded="true" />
                 <element signature="e#102#107#0#PHP" expanded="true" />
-                <element signature="e#198#203#0#PHP" expanded="true" />
+                <element signature="e#197#202#0#PHP" expanded="true" />
                 <element signature="n#div#0;n#!!top" expanded="true" />
                 <element signature="n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#1;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#div#1;n#!!top" expanded="true" />
-                <element signature="e#391#396#0#PHP" expanded="true" />
-                <element signature="n#div#2;n#!!top" expanded="true" />
-                <element signature="n#div#3;n#div#2;n#!!top" expanded="true" />
-                <element signature="e#603#608#0#PHP" expanded="true" />
-                <element signature="n#div#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#3;n#!!top" expanded="true" />
-                <element signature="n#div#3;n#div#3;n#!!top" expanded="true" />
-                <element signature="e#947#952#0#PHP" expanded="true" />
-                <element signature="n#div#4;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="e#1464#1471#1#HTML" expanded="true" />
-                <element signature="n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="e#1631#1636#0#PHP" expanded="true" />
-                <element signature="n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="e#1936#1941#0#PHP" expanded="true" />
-                <element signature="n#div#2;n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="e#2345#2350#0#PHP" expanded="true" />
-                <element signature="e#2374#2379#0#PHP" expanded="true" />
-                <element signature="n#script#0;n#!!top" expanded="true" />
-                <element signature="e#2522#2789#0#HTML" expanded="true" />
-                <element signature="e#2625#2630#0#PHP" expanded="true" />
-                <element signature="e#2655#2660#0#PHP" expanded="true" />
-                <element signature="e#2819#3031#0#HTML" expanded="true" />
-                <element signature="e#2862#2867#0#PHP" expanded="true" />
-                <element signature="e#2892#2897#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header_with_nav.inc.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/configuration/header_with_nav.inc.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="44" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="44" />
-              <folding>
-                <element signature="n#div#0;n#!!top" expanded="true" />
-                <element signature="e#91#96#0#PHP" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#448#453#0#PHP" expanded="true" />
+                <element signature="e#498#503#0#PHP" expanded="true" />
                 <element signature="n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#script#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#165#172#1" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#div#2;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#div#1;n#div#2;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#932#937#0#PHP" expanded="true" />
+                <element signature="n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#1463#1470#1#HTML" expanded="true" />
+                <element signature="n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#1961#1966#0#PHP" expanded="true" />
+                <element signature="n#div#2;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#2370#2375#0#PHP" expanded="true" />
+                <element signature="e#2399#2404#0#PHP" expanded="true" />
+                <element signature="n#script#0;n#!!top" expanded="true" />
+                <element signature="e#2521#2788#0#HTML" expanded="true" />
+                <element signature="e#2650#2655#0#PHP" expanded="true" />
+                <element signature="e#2680#2685#0#PHP" expanded="true" />
+                <element signature="e#2818#3030#0#HTML" expanded="true" />
+                <element signature="e#2887#2892#0#PHP" expanded="true" />
+                <element signature="e#2917#2922#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="standard_header_init.inc.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/configuration/HeaderComponents/standard_header_init.inc.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2395">
-              <folding>
-                <element signature="e#0#5#0#PHP" expanded="true" />
-                <element signature="e#25#9890#0#HTML" expanded="true" />
-                <element signature="e#32#9022#0#HTML" expanded="true" />
-                <element signature="e#58#63#0#PHP" expanded="true" />
-                <element signature="e#120#125#0#PHP" expanded="true" />
-                <element signature="e#561#566#0#PHP" expanded="true" />
-                <element signature="e#591#1702#0#HTML" expanded="true" />
-                <element signature="e#672#1646#0#HTML" expanded="true" />
-                <element signature="e#1025#1614#0#HTML" expanded="true" />
-                <element signature="e#1795#1800#0#PHP" expanded="true" />
-                <element signature="e#1891#1896#0#PHP" expanded="true" />
-                <element signature="e#1981#2030#0#HTML" expanded="true" />
-                <element signature="e#2050#2055#0#PHP" expanded="true" />
-                <element signature="e#2183#2188#0#PHP" expanded="true" />
-                <element signature="e#2271#2276#0#PHP" expanded="true" />
-                <element signature="e#2319#2324#0#PHP" expanded="true" />
-                <element signature="e#2369#2374#0#PHP" expanded="true" />
-                <element signature="e#2446#2451#0#PHP" expanded="true" />
-                <element signature="e#2575#2580#0#PHP" expanded="true" />
-                <element signature="e#2661#2666#0#PHP" expanded="true" />
-                <element signature="e#2799#2804#0#PHP" expanded="true" />
-                <element signature="e#2879#2884#0#PHP" expanded="true" />
-                <element signature="e#3011#3016#0#PHP" expanded="true" />
-                <element signature="e#3093#3098#0#PHP" expanded="true" />
-                <element signature="e#3227#3232#0#PHP" expanded="true" />
-                <element signature="e#3321#3326#0#PHP" expanded="true" />
-                <element signature="e#3467#3472#0#PHP" expanded="true" />
-                <element signature="e#3546#3551#0#PHP" expanded="true" />
-                <element signature="e#3677#3682#0#PHP" expanded="true" />
-                <element signature="e#3767#3772#0#PHP" expanded="true" />
-                <element signature="e#3943#3948#0#PHP" expanded="true" />
-                <element signature="e#4013#4018#0#PHP" expanded="true" />
-                <element signature="e#4101#4106#0#PHP" expanded="true" />
-                <element signature="e#4203#4208#0#PHP" expanded="true" />
-                <element signature="e#4191#4348#0#HTML" expanded="true" />
-                <element signature="e#4399#4404#0#PHP" expanded="true" />
-                <element signature="e#4387#4544#0#HTML" expanded="true" />
-                <element signature="e#4597#4602#0#PHP" expanded="true" />
-                <element signature="e#4585#4742#0#HTML" expanded="true" />
-                <element signature="e#4795#4800#0#PHP" expanded="true" />
-                <element signature="e#4783#4940#0#HTML" expanded="true" />
-                <element signature="e#4982#4987#0#PHP" expanded="true" />
-                <element signature="e#4970#5123#0#HTML" expanded="true" />
-                <element signature="e#5165#5170#0#PHP" expanded="true" />
-                <element signature="e#5153#5306#0#HTML" expanded="true" />
-                <element signature="e#5350#5355#0#PHP" expanded="true" />
-                <element signature="e#5338#5491#0#HTML" expanded="true" />
-                <element signature="e#5585#5590#0#PHP" expanded="true" />
-                <element signature="e#5573#5907#0#HTML" expanded="true" />
-                <element signature="e#5973#5978#0#PHP" expanded="true" />
-                <element signature="e#5961#6297#0#HTML" expanded="true" />
-                <element signature="e#6350#6355#0#PHP" expanded="true" />
-                <element signature="e#6338#6671#0#HTML" expanded="true" />
-                <element signature="e#6725#6730#0#PHP" expanded="true" />
-                <element signature="e#6713#7048#0#HTML" expanded="true" />
-                <element signature="e#7098#7103#0#PHP" expanded="true" />
-                <element signature="e#7086#7360#0#HTML" expanded="true" />
-                <element signature="e#7417#7422#0#PHP" expanded="true" />
-                <element signature="e#7405#7678#0#HTML" expanded="true" />
-                <element signature="e#7722#7727#0#PHP" expanded="true" />
-                <element signature="e#7710#7983#0#HTML" expanded="true" />
-                <element signature="e#8023#8028#0#PHP" expanded="true" />
-                <element signature="e#8011#8312#0#HTML" expanded="true" />
-                <element signature="e#8362#8367#0#PHP" expanded="true" />
-                <element signature="e#8350#8661#0#HTML" expanded="true" />
-                <element signature="e#8712#8717#0#PHP" expanded="true" />
-                <element signature="e#8700#9013#0#HTML" expanded="true" />
-                <element signature="e#9023#9890#0#HTML" expanded="true" />
-                <element signature="e#9055#9101#0#HTML" expanded="true" />
-                <element signature="e#9152#9331#0#HTML" expanded="true" />
-                <element signature="e#9109#9339#0#HTML" expanded="true" />
-                <element signature="e#9369#9451#0#HTML" expanded="true" />
-                <element signature="e#9340#9459#0#HTML" expanded="true" />
-                <element signature="e#9460#9889#0#HTML" expanded="true" />
-                <element signature="e#9890#9895#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AppMenus.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sDevFunctions/AppMenus.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2020">
-              <caret line="39" column="49" lean-forward="true" selection-start-line="39" selection-start-column="36" selection-end-line="39" selection-end-column="49" />
-              <folding>
-                <element signature="e#7#196#0#PHP" expanded="true" />
-                <element signature="e#227#299#0#PHP" expanded="true" />
-                <element signature="n#__construct#0;n#AppMenus#0;n#!!top" expanded="true" />
-                <element signature="e#429#645#0#PHP" expanded="true" />
-                <element signature="e#3817#3952#0#PHP" expanded="true" />
-                <element signature="n#renderMenuItems#0;n#AppMenus#0;n#!!top" expanded="true" />
-                <element signature="n#DefaultMenu#0;n#AppMenus#0;n#!!top" expanded="true" />
-                <element signature="e#8063#8124#0#PHP" expanded="true" />
-                <element signature="n#ExampleMenu#0;n#AppMenus#0;n#!!top" expanded="true" />
-                <element signature="e#8753#8778#0#PHP" expanded="true" />
-                <element signature="n#MenuType#0;n#!!top" expanded="true" />
-                <element signature="e#9020#9045#0#PHP" expanded="true" />
-                <element signature="n#MenuItem#0;n#!!top" expanded="true" />
-                <element signature="e#9224#10189#0#PHP" expanded="true" />
-                <element signature="n#__construct#0;n#MenuItem#0;n#!!top" expanded="true" />
-                <element signature="e#10841#10906#0#PHP" expanded="true" />
-                <element signature="n#CheckMenuItemUserRole#0;n#MenuItem#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App/User/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="825">
+              <caret line="301" column="8" lean-forward="true" selection-start-line="301" selection-start-column="8" selection-end-line="301" selection-end-column="8" />
               <folding>
-                <element signature="e#0#5#0#PHP" expanded="true" />
-                <element signature="n#PostListForm#0;n#!!top" expanded="true" />
-                <element signature="n#Form_Create#0;n#PostListForm#0;n#!!top" expanded="true" />
-                <element signature="n#initPostList#0;n#PostListForm#0;n#!!top" expanded="true" />
-                <element signature="n#handleCustomPageRequest#0;n#PostListForm#0;n#!!top" expanded="true" />
-                <element signature="n#loadPosts#0;n#PostListForm#0;n#!!top" expanded="true" />
+                <element signature="e#1773#2194#0#PHP" />
+                <element signature="e#1829#2184#0#PHP" />
+                <element signature="e#2007#2170#0#PHP" />
                 <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#createNewPost#0;n#PostListForm#0;n#!!top" expanded="true" />
-                <element signature="n#initPostLikes#0;n#PostListForm#0;n#!!top" expanded="true" />
-                <element signature="n#handleAction_LikePost#0;n#PostListForm#0;n#!!top" expanded="true" />
-                <element signature="n#initPostComments#0;n#PostListForm#0;n#!!top" expanded="true" />
-                <element signature="n#createNewPostComment#0;n#PostListForm#0;n#!!top" expanded="true" />
-                <element signature="n#handleAction_PostComment#0;n#PostListForm#0;n#!!top" expanded="true" />
+                <element signature="e#9064#9161#0#PHP" />
+                <element signature="e#9118#9161#0#PHP" />
+                <element signature="e#9894#10058#0#PHP" />
+                <element signature="e#10118#10272#0#PHP" />
+                <element signature="e#10303#10600#0#PHP" />
+                <element signature="e#10355#10566#1#PHP" />
+                <element signature="e#10610#11197#0#PHP" />
+                <element signature="e#10646#10766#0#PHP" />
+                <element signature="e#10704#10766#0#PHP" />
+                <element signature="e#10888#11197#0#PHP" />
+                <element signature="e#11029#11120#0#PHP" />
+                <element signature="e#11078#11120#0#PHP" />
+                <element signature="e#12591#12690#0#PHP" />
+                <element signature="e#12970#13111#0#PHP" />
+                <element signature="e#13076#13111#0#PHP" />
+                <element signature="e#13545#14085#0#PHP" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Post_Overview.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/Administrator/Post_Overview.php">
+      <file leaf-file-name="QApplicationBase.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/framework/QApplicationBase.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="266">
+              <caret line="1507" column="5" lean-forward="true" selection-start-line="1498" selection-start-column="4" selection-end-line="1507" selection-end-column="5" />
               <folding>
-                <element signature="e#0#5#0#PHP" expanded="true" />
-                <element signature="n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#Form_Create#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#InitPostModal#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#btnSavePost_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#btnDeletePost_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#InitPostDataGrid#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#PostGrid_ItemsPerPageClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#PostGrid_NavButtonsClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#PostGrid_DataGridHeaderClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#PostGrid_ResetSearchClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#PostGrid_ApplySearchClickChangeAction_Triggered#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#PostGrid_DataGridRowClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-                <element signature="n#btnNewPost_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
+                <element signature="e#54488#54902#0#PHP" expanded="true" />
+                <element signature="n#style#0;n#li#1;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PostDataGrid.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sDevControls/Implementations/Post/PostDataGrid.php">
+      <file leaf-file-name="DataModel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DatabaseManagement/DataModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="330">
+              <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
               <folding>
-                <element signature="e#0#5#0#PHP" expanded="true" />
-                <element signature="n#PostDataGrid#0;n#!!top" expanded="true" />
-                <element signature="n#__construct#0;n#PostDataGrid#0;n#!!top" expanded="true" />
-                <element signature="n#getSortNode#0;n#PostDataGrid#0;n#!!top" expanded="true" />
-                <element signature="n#getColumnItemText#0;n#PostDataGrid#0;n#!!top" expanded="true" />
+                <element signature="n#__construct#0;n#DataModel#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sDataGrid.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sDevControls/BaseControls/sDataGrid.php">
+      <file leaf-file-name="QTextBox.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/qcubed/controls/QTextBox.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-90">
+            <state relative-caret-position="60">
+              <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
               <folding>
-                <element signature="e#0#5#0#PHP" expanded="true" />
-                <element signature="e#6#670#0#PHP" expanded="true" />
-                <element signature="n#sDataGrid#0;n#!!top" expanded="true" />
-                <element signature="e#694#728#0#PHP" expanded="true" />
-                <element signature="e#757#784#0#PHP" expanded="true" />
-                <element signature="e#789#816#0#PHP" expanded="true" />
-                <element signature="e#821#848#0#PHP" expanded="true" />
-                <element signature="e#853#880#0#PHP" expanded="true" />
-                <element signature="e#885#912#0#PHP" expanded="true" />
-                <element signature="e#917#944#0#PHP" expanded="true" />
-                <element signature="e#1065#1088#0#PHP" expanded="true" />
-                <element signature="e#1093#1116#0#PHP" expanded="true" />
-                <element signature="e#1178#1207#0#PHP" expanded="true" />
-                <element signature="e#1212#1241#0#PHP" expanded="true" />
-                <element signature="e#1320#1343#0#PHP" expanded="true" />
-                <element signature="e#1348#1376#0#PHP" expanded="true" />
-                <element signature="e#1451#1474#0#PHP" expanded="true" />
-                <element signature="e#1479#1502#0#PHP" expanded="true" />
-                <element signature="e#1507#1535#0#PHP" expanded="true" />
-                <element signature="e#1605#1634#0#PHP" expanded="true" />
-                <element signature="e#1639#1668#0#PHP" expanded="true" />
-                <element signature="e#1673#1702#0#PHP" expanded="true" />
-                <element signature="e#1826#1864#0#PHP" expanded="true" />
-                <element signature="e#1869#1907#0#PHP" expanded="true" />
-                <element signature="e#1968#2002#0#PHP" expanded="true" />
-                <element signature="e#2007#2041#0#PHP" expanded="true" />
-                <element signature="e#2046#2080#0#PHP" expanded="true" />
-                <element signature="e#2085#2119#0#PHP" expanded="true" />
-                <element signature="e#2253#2287#0#PHP" expanded="true" />
-                <element signature="e#2292#2326#0#PHP" expanded="true" />
-                <element signature="e#2403#2426#0#PHP" expanded="true" />
-                <element signature="e#2460#2488#0#PHP" expanded="true" />
-                <element signature="e#2528#2565#0#PHP" expanded="true" />
-                <element signature="e#2570#2614#0#PHP" expanded="true" />
-                <element signature="e#2654#2682#0#PHP" expanded="true" />
-                <element signature="e#2719#2749#0#PHP" expanded="true" />
-                <element signature="e#2873#4003#0#PHP" expanded="true" />
-                <element signature="e#4008#7660#0#PHP" expanded="true" />
-                <element signature="e#7665#7865#0#PHP" expanded="true" />
-                <element signature="e#7871#7889#0#PHP" expanded="true" />
-                <element signature="e#7894#9160#0#PHP" expanded="true" />
-                <element signature="e#9166#9198#0#PHP" expanded="true" />
-                <element signature="e#9203#9307#0#PHP" expanded="true" />
-                <element signature="e#9313#9346#0#PHP" expanded="true" />
-                <element signature="e#9351#11757#0#PHP" expanded="true" />
-                <element signature="e#11763#11796#0#PHP" expanded="true" />
-                <element signature="e#11801#12722#0#PHP" expanded="true" />
-                <element signature="n#style#0;n#ul#0;n#!!top" expanded="true" />
-                <element signature="n#ul#0;n#!!top" expanded="true" />
-                <element signature="e#12728#12761#0#PHP" expanded="true" />
-                <element signature="e#12766#12991#0#PHP" expanded="true" />
-                <element signature="e#12997#13030#0#PHP" expanded="true" />
-                <element signature="e#13035#13530#0#PHP" expanded="true" />
-                <element signature="e#13536#13569#0#PHP" expanded="true" />
-                <element signature="e#13574#13891#0#PHP" expanded="true" />
-                <element signature="e#13897#13930#0#PHP" expanded="true" />
-                <element signature="e#13935#14064#0#PHP" expanded="true" />
-                <element signature="e#14070#14135#0#PHP" expanded="true" />
-                <element signature="e#14140#16251#0#PHP" expanded="true" />
-                <element signature="n#table#0;n#!!top" expanded="true" />
-                <element signature="e#16257#16348#0#PHP" expanded="true" />
-                <element signature="e#16353#16800#0#PHP" expanded="true" />
-                <element signature="e#16806#17704#0#PHP" expanded="true" />
-                <element signature="e#17709#17774#0#PHP" expanded="true" />
-                <element signature="e#17779#18601#0#PHP" expanded="true" />
-                <element signature="n#table#0;n#!!top" expanded="true" />
-                <element signature="e#18607#18625#0#PHP" expanded="true" />
-                <element signature="e#18630#21286#0#PHP" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#21292#21328#0#PHP" expanded="true" />
-                <element signature="e#21333#21478#0#PHP" expanded="true" />
-                <element signature="e#21484#21531#0#PHP" expanded="true" />
-                <element signature="e#21536#21928#0#PHP" expanded="true" />
-                <element signature="e#21934#22026#0#PHP" expanded="true" />
-                <element signature="e#22031#22247#0#PHP" expanded="true" />
-                <element signature="e#22253#22345#0#PHP" expanded="true" />
-                <element signature="e#22350#23061#0#PHP" expanded="true" />
-                <element signature="e#23067#23159#0#PHP" expanded="true" />
-                <element signature="e#23164#23598#0#PHP" expanded="true" />
-                <element signature="e#23604#23696#0#PHP" expanded="true" />
-                <element signature="e#23701#23874#0#PHP" expanded="true" />
-                <element signature="e#23880#23972#0#PHP" expanded="true" />
-                <element signature="e#23977#26707#0#PHP" expanded="true" />
-                <element signature="e#26713#26805#0#PHP" expanded="true" />
-                <element signature="e#26810#27047#0#PHP" expanded="true" />
-                <element signature="e#27053#27121#0#PHP" expanded="true" />
-                <element signature="e#27126#27263#0#PHP" expanded="true" />
-                <element signature="e#27269#27408#0#PHP" expanded="true" />
-                <element signature="e#27413#27520#0#PHP" expanded="true" />
-                <element signature="e#27526#27557#0#PHP" expanded="true" />
-                <element signature="e#27562#27631#0#PHP" expanded="true" />
-                <element signature="e#27637#27670#0#PHP" expanded="true" />
-                <element signature="e#27675#27766#0#PHP" expanded="true" />
-                <element signature="e#27772#27790#0#PHP" expanded="true" />
-                <element signature="e#27795#28309#0#PHP" expanded="true" />
-                <element signature="e#28315#28333#0#PHP" expanded="true" />
-                <element signature="e#28338#29728#0#PHP" expanded="true" />
-                <element signature="e#29734#29752#0#PHP" expanded="true" />
-                <element signature="e#29757#30391#0#PHP" expanded="true" />
-                <element signature="e#30397#30908#0#PHP" expanded="true" />
+                <element signature="e#7#39#0#PHP" expanded="true" />
+                <element signature="n#QTextBox#0;n#!!top" expanded="true" />
+                <element signature="n#RenderAsInputGroup#0;n#QTextBox#0;n#!!top" expanded="true" />
+                <element signature="n#GetControlHtml#0;n#QTextBox#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QTextBoxBase.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/base_controls/QTextBoxBase.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1680">
+              <caret line="180" column="84" selection-start-line="158" selection-start-column="24" selection-end-line="180" selection-end-column="84" />
+              <folding>
+                <element signature="n#Validate#0;n#QTextBoxBase#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bootstrapmodifications.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/css/bootstrapmodifications.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-355">
+              <caret line="66" column="24" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -523,17 +207,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>validate</find>
-      <find>mu</find>
-      <find>PostComment</find>
-      <find>action_PostComment</find>
-      <find>$btnPostNewComment</find>
-      <find>btnPostNewComment</find>
-      <find>Dis</find>
-      <find>AccountInstance</find>
-      <find>sFileUploaderExample</find>
-      <find>My Acc</find>
-      <find>My Account</find>
       <find>last</find>
       <find>handleAction_LikePost</find>
       <find>handleAction_PostComment</find>
@@ -544,10 +217,26 @@
       <find>order</find>
       <find>sort</find>
       <find>PostT</find>
-      <find>Time C</find>
+      <find />
       <find>getCol</find>
       <find>PostTimeStamp</find>
       <find>forma</find>
+      <find>.navbar-inverse</find>
+      <find>dropdown-</find>
+      <find>ripple</find>
+      <find>rippleclick</find>
+      <find>form-con</find>
+      <find />
+      <find>PostInstance</find>
+      <find />
+      <find>handleCustomPageRequest</find>
+      <find>PostLike_</find>
+      <find>PostCommentBtn</find>
+      <find>LikePost</find>
+      <find>$action_PostComment</find>
+      <find>action_PostComment</find>
+      <find>PostCommentInput</find>
+      <find>QCrossScriptingException</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -569,12 +258,10 @@
         <option value="$PROJECT_DIR$/includes/configuration/ConfigurationComponents/app_config.inc.php" />
         <option value="$PROJECT_DIR$/sDevORM/Implementations/PostComment/PostCommentModal.php" />
         <option value="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountFrontEnd.php" />
-        <option value="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" />
         <option value="$PROJECT_DIR$/sDevORM/Implementations/Account/index.php" />
         <option value="$PROJECT_DIR$/sDevORM/Implementations/Account/index.tpl.php" />
         <option value="$PROJECT_DIR$/sDevORM/Implementations/Account/ProfilePictureUploader.php" />
         <option value="$PROJECT_DIR$/sDevORM/Implementations/Account/AccountFrontEnd_Self.php" />
-        <option value="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.tpl.php" />
         <option value="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/ProfilePictureUploader.php" />
         <option value="$PROJECT_DIR$/App/uploaded/.htaccess" />
         <option value="$PROJECT_DIR$/App/User/EmailExample.php" />
@@ -582,12 +269,18 @@
         <option value="$PROJECT_DIR$/assets/_core/js/qc_sdev_wrapper.js" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.txt" />
         <option value="$PROJECT_DIR$/sDevControls/BaseControls/sDataGrid.php" />
-        <option value="$PROJECT_DIR$/sDevFunctions/AppMenus.class.php" />
         <option value="$PROJECT_DIR$/sDevControls/Implementations/Post/PostDataGrid.php" />
-        <option value="$PROJECT_DIR$/App/User/index.php" />
         <option value="$PROJECT_DIR$/App/Administrator/Post_Overview.php" />
         <option value="$PROJECT_DIR$/includes/configuration/header_with_nav.inc.php" />
+        <option value="$PROJECT_DIR$/assets/css/bootstrap.min.css" />
+        <option value="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.tpl.php" />
+        <option value="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.php" />
+        <option value="$PROJECT_DIR$/sDevFunctions/AppMenus.class.php" />
+        <option value="$PROJECT_DIR$/App/ProfilePicture/index.php" />
         <option value="$PROJECT_DIR$/App/User/index.tpl.php" />
+        <option value="$PROJECT_DIR$/assets/css/bootstrapmodifications.css" />
+        <option value="$PROJECT_DIR$/DatabaseManagement/DataModel.class.php" />
+        <option value="$PROJECT_DIR$/App/User/index.php" />
       </list>
     </option>
   </component>
@@ -610,6 +303,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -617,11 +311,53 @@
               <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
               <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Administrator" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="User" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="DatabaseManagement" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevFunctions" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sDevORM" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Implementations" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="JPsDevTraining" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JPsDevTraining" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="UserManagement" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -632,14 +368,15 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/App" />
       <recent name="$PROJECT_DIR$/App/Administrator" />
       <recent name="$PROJECT_DIR$/sDevORM/Implementations/Account" />
       <recent name="$PROJECT_DIR$/sDevExamples/FileUploads" />
       <recent name="$PROJECT_DIR$/App/User" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -674,23 +411,34 @@
       <workItem from="1523597029085" duration="17000" />
       <workItem from="1523597096043" duration="27348000" />
       <workItem from="1523856397955" duration="78000" />
-      <workItem from="1523856499017" duration="2104000" />
+      <workItem from="1523856499017" duration="27315000" />
+      <workItem from="1523942506642" duration="25779000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99898000" />
+    <option name="totallyTimeSpent" value="150888000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="732" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4992272" visible="true" weight="0.15936556" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4992272" visible="true" weight="0.16163142" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3298791" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32744783" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32642487" />
       <window_info anchor="right" id="Database" order="3" weight="0.32930514" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.3298791" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3298791" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" sideWeight="0.501845" side_tool="true" weight="0.20468278" />
       <window_info anchor="bottom" id="Terminal" order="7" />
@@ -711,277 +459,12 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/App/User/index.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="70" column="9" selection-start-line="70" selection-start-column="9" selection-end-line="70" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="e#37#42#0#PHP" expanded="true" />
-            <element signature="e#102#107#0#PHP" expanded="true" />
-            <element signature="e#198#203#0#PHP" expanded="true" />
-            <element signature="n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="e#391#396#0#PHP" expanded="true" />
-            <element signature="n#div#2;n#!!top" expanded="true" />
-            <element signature="n#div#3;n#div#2;n#!!top" expanded="true" />
-            <element signature="e#603#608#0#PHP" expanded="true" />
-            <element signature="n#div#3;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#3;n#!!top" expanded="true" />
-            <element signature="n#div#3;n#div#3;n#!!top" expanded="true" />
-            <element signature="e#947#952#0#PHP" expanded="true" />
-            <element signature="n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="e#1464#1471#1#HTML" expanded="true" />
-            <element signature="n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="e#1631#1636#0#PHP" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="e#1936#1941#0#PHP" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="e#2345#2350#0#PHP" expanded="true" />
-            <element signature="e#2374#2379#0#PHP" expanded="true" />
-            <element signature="n#script#0;n#!!top" expanded="true" />
-            <element signature="e#2522#2789#0#HTML" expanded="true" />
-            <element signature="e#2625#2630#0#PHP" expanded="true" />
-            <element signature="e#2655#2660#0#PHP" expanded="true" />
-            <element signature="e#2819#3031#0#HTML" expanded="true" />
-            <element signature="e#2862#2867#0#PHP" expanded="true" />
-            <element signature="e#2892#2897#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevFunctions/AppMenus.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2280">
-          <caret line="152" selection-start-line="152" selection-end-line="152" />
-          <folding>
-            <element signature="e#7#196#0#PHP" expanded="true" />
-            <element signature="e#227#299#0#PHP" expanded="true" />
-            <element signature="n#__construct#0;n#AppMenus#0;n#!!top" expanded="true" />
-            <element signature="e#429#645#0#PHP" expanded="true" />
-            <element signature="e#3817#3952#0#PHP" expanded="true" />
-            <element signature="n#renderMenuItems#0;n#AppMenus#0;n#!!top" expanded="true" />
-            <element signature="n#DefaultMenu#0;n#AppMenus#0;n#!!top" expanded="true" />
-            <element signature="e#8063#8124#0#PHP" expanded="true" />
-            <element signature="n#ExampleMenu#0;n#AppMenus#0;n#!!top" expanded="true" />
-            <element signature="e#8753#8778#0#PHP" expanded="true" />
-            <element signature="n#MenuType#0;n#!!top" expanded="true" />
-            <element signature="e#9020#9045#0#PHP" expanded="true" />
-            <element signature="n#MenuItem#0;n#!!top" expanded="true" />
-            <element signature="e#9224#10189#0#PHP" expanded="true" />
-            <element signature="n#__construct#0;n#MenuItem#0;n#!!top" expanded="true" />
-            <element signature="e#10841#10906#0#PHP" expanded="true" />
-            <element signature="n#CheckMenuItemUserRole#0;n#MenuItem#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/User/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1800">
-          <caret line="120" column="46" selection-start-line="120" selection-start-column="46" selection-end-line="120" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#Form_Create#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#initPostList#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#handleCustomPageRequest#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#loadPosts#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#createNewPost#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#initPostLikes#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#handleAction_LikePost#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#initPostComments#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#createNewPostComment#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#handleAction_PostComment#0;n#PostListForm#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevControls/Implementations/Post/PostDataGrid.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="n#PostDataGrid#0;n#!!top" expanded="true" />
-            <element signature="n#__construct#0;n#PostDataGrid#0;n#!!top" expanded="true" />
-            <element signature="n#getSortNode#0;n#PostDataGrid#0;n#!!top" expanded="true" />
-            <element signature="n#getColumnItemText#0;n#PostDataGrid#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevControls/BaseControls/sDataGrid.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1365">
-          <caret line="376" column="23" selection-start-line="376" selection-start-column="23" selection-end-line="376" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="e#6#670#0#PHP" expanded="true" />
-            <element signature="n#sDataGrid#0;n#!!top" expanded="true" />
-            <element signature="e#694#728#0#PHP" expanded="true" />
-            <element signature="e#757#784#0#PHP" expanded="true" />
-            <element signature="e#789#816#0#PHP" expanded="true" />
-            <element signature="e#821#848#0#PHP" expanded="true" />
-            <element signature="e#853#880#0#PHP" expanded="true" />
-            <element signature="e#885#912#0#PHP" expanded="true" />
-            <element signature="e#917#944#0#PHP" expanded="true" />
-            <element signature="e#1065#1088#0#PHP" expanded="true" />
-            <element signature="e#1093#1116#0#PHP" expanded="true" />
-            <element signature="e#1178#1207#0#PHP" expanded="true" />
-            <element signature="e#1212#1241#0#PHP" expanded="true" />
-            <element signature="e#1320#1343#0#PHP" expanded="true" />
-            <element signature="e#1348#1376#0#PHP" expanded="true" />
-            <element signature="e#1451#1474#0#PHP" expanded="true" />
-            <element signature="e#1479#1502#0#PHP" expanded="true" />
-            <element signature="e#1507#1535#0#PHP" expanded="true" />
-            <element signature="e#1605#1634#0#PHP" expanded="true" />
-            <element signature="e#1639#1668#0#PHP" expanded="true" />
-            <element signature="e#1673#1702#0#PHP" expanded="true" />
-            <element signature="e#1826#1864#0#PHP" expanded="true" />
-            <element signature="e#1869#1907#0#PHP" expanded="true" />
-            <element signature="e#1968#2002#0#PHP" expanded="true" />
-            <element signature="e#2007#2041#0#PHP" expanded="true" />
-            <element signature="e#2046#2080#0#PHP" expanded="true" />
-            <element signature="e#2085#2119#0#PHP" expanded="true" />
-            <element signature="e#2253#2287#0#PHP" expanded="true" />
-            <element signature="e#2292#2326#0#PHP" expanded="true" />
-            <element signature="e#2403#2426#0#PHP" expanded="true" />
-            <element signature="e#2460#2488#0#PHP" expanded="true" />
-            <element signature="e#2528#2565#0#PHP" expanded="true" />
-            <element signature="e#2570#2614#0#PHP" expanded="true" />
-            <element signature="e#2654#2682#0#PHP" expanded="true" />
-            <element signature="e#2719#2749#0#PHP" expanded="true" />
-            <element signature="e#2873#4003#0#PHP" expanded="true" />
-            <element signature="e#4008#7660#0#PHP" expanded="true" />
-            <element signature="e#7665#7865#0#PHP" expanded="true" />
-            <element signature="e#7871#7889#0#PHP" expanded="true" />
-            <element signature="e#7894#9160#0#PHP" expanded="true" />
-            <element signature="e#9166#9198#0#PHP" expanded="true" />
-            <element signature="e#9203#9307#0#PHP" expanded="true" />
-            <element signature="e#9313#9346#0#PHP" expanded="true" />
-            <element signature="e#9351#11757#0#PHP" expanded="true" />
-            <element signature="e#11763#11796#0#PHP" expanded="true" />
-            <element signature="e#11801#12722#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#!!top" expanded="true" />
-            <element signature="n#ul#0;n#!!top" expanded="true" />
-            <element signature="e#12728#12761#0#PHP" expanded="true" />
-            <element signature="e#12766#12991#0#PHP" expanded="true" />
-            <element signature="e#12997#13030#0#PHP" expanded="true" />
-            <element signature="e#13035#13530#0#PHP" expanded="true" />
-            <element signature="e#13536#13569#0#PHP" expanded="true" />
-            <element signature="e#13574#13891#0#PHP" expanded="true" />
-            <element signature="e#13897#13930#0#PHP" expanded="true" />
-            <element signature="e#13935#14064#0#PHP" expanded="true" />
-            <element signature="e#14070#14135#0#PHP" expanded="true" />
-            <element signature="e#14140#16251#0#PHP" expanded="true" />
-            <element signature="n#table#0;n#!!top" expanded="true" />
-            <element signature="e#16257#16348#0#PHP" expanded="true" />
-            <element signature="e#16353#16800#0#PHP" expanded="true" />
-            <element signature="e#16806#17704#0#PHP" expanded="true" />
-            <element signature="e#17709#17774#0#PHP" expanded="true" />
-            <element signature="e#17779#18601#0#PHP" expanded="true" />
-            <element signature="n#table#0;n#!!top" expanded="true" />
-            <element signature="e#18607#18625#0#PHP" expanded="true" />
-            <element signature="e#18630#21286#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#21292#21328#0#PHP" expanded="true" />
-            <element signature="e#21333#21478#0#PHP" expanded="true" />
-            <element signature="e#21484#21531#0#PHP" expanded="true" />
-            <element signature="e#21536#21928#0#PHP" expanded="true" />
-            <element signature="e#21934#22026#0#PHP" expanded="true" />
-            <element signature="e#22031#22247#0#PHP" expanded="true" />
-            <element signature="e#22253#22345#0#PHP" expanded="true" />
-            <element signature="e#22350#23061#0#PHP" expanded="true" />
-            <element signature="e#23067#23159#0#PHP" expanded="true" />
-            <element signature="e#23164#23598#0#PHP" expanded="true" />
-            <element signature="e#23604#23696#0#PHP" expanded="true" />
-            <element signature="e#23701#23874#0#PHP" expanded="true" />
-            <element signature="e#23880#23972#0#PHP" expanded="true" />
-            <element signature="e#23977#26707#0#PHP" expanded="true" />
-            <element signature="e#26713#26805#0#PHP" expanded="true" />
-            <element signature="e#26810#27047#0#PHP" expanded="true" />
-            <element signature="e#27053#27121#0#PHP" expanded="true" />
-            <element signature="e#27126#27263#0#PHP" expanded="true" />
-            <element signature="e#27269#27408#0#PHP" expanded="true" />
-            <element signature="e#27413#27520#0#PHP" expanded="true" />
-            <element signature="e#27526#27557#0#PHP" expanded="true" />
-            <element signature="e#27562#27631#0#PHP" expanded="true" />
-            <element signature="e#27637#27670#0#PHP" expanded="true" />
-            <element signature="e#27675#27766#0#PHP" expanded="true" />
-            <element signature="e#27772#27790#0#PHP" expanded="true" />
-            <element signature="e#27795#28309#0#PHP" expanded="true" />
-            <element signature="e#28315#28333#0#PHP" expanded="true" />
-            <element signature="e#28338#29728#0#PHP" expanded="true" />
-            <element signature="e#29734#29752#0#PHP" expanded="true" />
-            <element signature="e#29757#30391#0#PHP" expanded="true" />
-            <element signature="e#30397#30908#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Administrator/Post_Overview.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="84" column="50" selection-start-line="84" selection-start-column="50" selection-end-line="84" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#Form_Create#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#InitPostModal#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#btnSavePost_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#btnDeletePost_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#InitPostDataGrid#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#PostGrid_ItemsPerPageClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#PostGrid_NavButtonsClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#PostGrid_DataGridHeaderClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#PostGrid_ResetSearchClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#PostGrid_ApplySearchClickChangeAction_Triggered#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#PostGrid_DataGridRowClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#btnNewPost_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/User/index.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="70" column="9" selection-start-line="70" selection-start-column="9" selection-end-line="70" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevFunctions/AppMenus.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2584">
-          <caret line="152" selection-start-line="152" selection-end-line="152" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/User/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2040">
-          <caret line="120" column="46" lean-forward="true" selection-start-line="120" selection-start-column="46" selection-end-line="120" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevControls/Implementations/Post/PostDataGrid.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sDevControls/BaseControls/sDataGrid.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6154">
@@ -1106,13 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UserManagement/account_edit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="104" selection-start-line="14" selection-start-column="104" selection-end-line="14" selection-end-column="104" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/UserManagement/account_edit.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1143,20 +619,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="38" selection-start-column="38" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="14" column="57" selection-start-line="14" selection-start-column="57" selection-end-line="14" selection-end-column="57" />
         </state>
       </provider>
     </entry>
@@ -1232,16 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/framework/QApplicationBase.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="1497" column="7" selection-start-line="1496" selection-start-column="12" selection-end-line="1497" selection-end-column="7" />
-          <folding>
-            <element signature="n#style#0;n#li#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_8.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="429">
@@ -1267,13 +719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="46" selection-start-line="3" selection-start-column="46" selection-end-line="3" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Account/AccountController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="141" column="2" lean-forward="true" selection-start-line="141" selection-start-column="2" selection-end-line="141" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -1306,17 +751,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sDevControls/Implementations/Post/PostDataGrid.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="n#PostDataGrid#0;n#!!top" expanded="true" />
-            <element signature="n#__construct#0;n#PostDataGrid#0;n#!!top" expanded="true" />
-            <element signature="n#getSortNode#0;n#PostDataGrid#0;n#!!top" expanded="true" />
-            <element signature="n#getColumnItemText#0;n#PostDataGrid#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/sDevControls/BaseControls/sDataGrid.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -1427,33 +862,102 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/User/index.php">
+    <entry file="file://$PROJECT_DIR$/includes/configuration/header_with_nav.inc.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="15">
+          <caret line="1" column="44" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/configuration/HeaderComponents/standard_header_init.inc.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2395" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/bootstrap.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3135">
+          <caret line="209" column="43" selection-start-line="209" selection-start-column="43" selection-end-line="209" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UserManagement/account_edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="51" column="5" lean-forward="true" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageControl/pageManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/ProfilePicture/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="67" column="59" selection-start-line="67" selection-start-column="59" selection-end-line="67" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/API/Object/Account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="48" column="2" lean-forward="true" selection-start-line="48" selection-start-column="2" selection-end-line="48" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/ProfilePicture/index.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sDevORM/Implementations/Account/AccountController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
           <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#Form_Create#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#initPostList#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#handleCustomPageRequest#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#loadPosts#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#createNewPost#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#initPostLikes#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#handleAction_LikePost#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#initPostComments#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#createNewPostComment#0;n#PostListForm#0;n#!!top" expanded="true" />
-            <element signature="n#handleAction_PostComment#0;n#PostListForm#0;n#!!top" expanded="true" />
+            <element signature="n#__construct#0;n#AccountController#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/Administrator/Account_Overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="29" column="46" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
+          <folding>
+            <element signature="n#Form_Create#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#btnSaveAccount_Clicked#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#btnDeleteAccount_Clicked#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#InitAccountDataGrid#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#AccountGrid_ItemsPerPageClickAction_Clicked#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#AccountGrid_NavButtonsClickAction_Clicked#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#AccountGrid_DataGridHeaderClickAction_Clicked#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#AccountGrid_ResetSearchClickAction_Clicked#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#AccountGrid_ApplySearchClickChangeAction_Triggered#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#AccountGrid_DataGridRowClickAction_Clicked#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
+            <element signature="n#btnNewAccount_Clicked#0;n#Account_OverviewForm#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Administrator/Post_Overview.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="827">
+          <caret line="107" column="46" selection-start-line="107" selection-start-column="46" selection-end-line="107" selection-end-column="46" />
           <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="n#Post_OverviewForm#0;n#!!top" expanded="true" />
             <element signature="n#Form_Create#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
             <element signature="n#InitPostModal#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
             <element signature="n#btnSavePost_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
@@ -1464,178 +968,165 @@
             <element signature="n#PostGrid_DataGridHeaderClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
             <element signature="n#PostGrid_ResetSearchClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
             <element signature="n#PostGrid_ApplySearchClickChangeAction_Triggered#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
-            <element signature="n#PostGrid_DataGridRowClickAction_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
             <element signature="n#btnNewPost_Clicked#0;n#Post_OverviewForm#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configuration/header_with_nav.inc.php">
+    <entry file="file://$PROJECT_DIR$/sDevORM/DatabaseModel/generated/PostLikeGen.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="44" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="44" />
+        <state relative-caret-position="49">
+          <caret line="998" column="24" selection-start-line="998" selection-start-column="24" selection-end-line="998" selection-end-column="24" />
           <folding>
-            <element signature="n#div#0;n#!!top" expanded="true" />
-            <element signature="e#91#96#0#PHP" expanded="true" />
-            <element signature="n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#script#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#165#172#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configuration/HeaderComponents/standard_header_init.inc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2395">
-          <folding>
-            <element signature="e#0#5#0#PHP" expanded="true" />
-            <element signature="e#25#9890#0#HTML" expanded="true" />
-            <element signature="e#32#9022#0#HTML" expanded="true" />
-            <element signature="e#58#63#0#PHP" expanded="true" />
-            <element signature="e#120#125#0#PHP" expanded="true" />
-            <element signature="e#561#566#0#PHP" expanded="true" />
-            <element signature="e#591#1702#0#HTML" expanded="true" />
-            <element signature="e#672#1646#0#HTML" expanded="true" />
-            <element signature="e#1025#1614#0#HTML" expanded="true" />
-            <element signature="e#1795#1800#0#PHP" expanded="true" />
-            <element signature="e#1891#1896#0#PHP" expanded="true" />
-            <element signature="e#1981#2030#0#HTML" expanded="true" />
-            <element signature="e#2050#2055#0#PHP" expanded="true" />
-            <element signature="e#2183#2188#0#PHP" expanded="true" />
-            <element signature="e#2271#2276#0#PHP" expanded="true" />
-            <element signature="e#2319#2324#0#PHP" expanded="true" />
-            <element signature="e#2369#2374#0#PHP" expanded="true" />
-            <element signature="e#2446#2451#0#PHP" expanded="true" />
-            <element signature="e#2575#2580#0#PHP" expanded="true" />
-            <element signature="e#2661#2666#0#PHP" expanded="true" />
-            <element signature="e#2799#2804#0#PHP" expanded="true" />
-            <element signature="e#2879#2884#0#PHP" expanded="true" />
-            <element signature="e#3011#3016#0#PHP" expanded="true" />
-            <element signature="e#3093#3098#0#PHP" expanded="true" />
-            <element signature="e#3227#3232#0#PHP" expanded="true" />
-            <element signature="e#3321#3326#0#PHP" expanded="true" />
-            <element signature="e#3467#3472#0#PHP" expanded="true" />
-            <element signature="e#3546#3551#0#PHP" expanded="true" />
-            <element signature="e#3677#3682#0#PHP" expanded="true" />
-            <element signature="e#3767#3772#0#PHP" expanded="true" />
-            <element signature="e#3943#3948#0#PHP" expanded="true" />
-            <element signature="e#4013#4018#0#PHP" expanded="true" />
-            <element signature="e#4101#4106#0#PHP" expanded="true" />
-            <element signature="e#4203#4208#0#PHP" expanded="true" />
-            <element signature="e#4191#4348#0#HTML" expanded="true" />
-            <element signature="e#4399#4404#0#PHP" expanded="true" />
-            <element signature="e#4387#4544#0#HTML" expanded="true" />
-            <element signature="e#4597#4602#0#PHP" expanded="true" />
-            <element signature="e#4585#4742#0#HTML" expanded="true" />
-            <element signature="e#4795#4800#0#PHP" expanded="true" />
-            <element signature="e#4783#4940#0#HTML" expanded="true" />
-            <element signature="e#4982#4987#0#PHP" expanded="true" />
-            <element signature="e#4970#5123#0#HTML" expanded="true" />
-            <element signature="e#5165#5170#0#PHP" expanded="true" />
-            <element signature="e#5153#5306#0#HTML" expanded="true" />
-            <element signature="e#5350#5355#0#PHP" expanded="true" />
-            <element signature="e#5338#5491#0#HTML" expanded="true" />
-            <element signature="e#5585#5590#0#PHP" expanded="true" />
-            <element signature="e#5573#5907#0#HTML" expanded="true" />
-            <element signature="e#5973#5978#0#PHP" expanded="true" />
-            <element signature="e#5961#6297#0#HTML" expanded="true" />
-            <element signature="e#6350#6355#0#PHP" expanded="true" />
-            <element signature="e#6338#6671#0#HTML" expanded="true" />
-            <element signature="e#6725#6730#0#PHP" expanded="true" />
-            <element signature="e#6713#7048#0#HTML" expanded="true" />
-            <element signature="e#7098#7103#0#PHP" expanded="true" />
-            <element signature="e#7086#7360#0#HTML" expanded="true" />
-            <element signature="e#7417#7422#0#PHP" expanded="true" />
-            <element signature="e#7405#7678#0#HTML" expanded="true" />
-            <element signature="e#7722#7727#0#PHP" expanded="true" />
-            <element signature="e#7710#7983#0#HTML" expanded="true" />
-            <element signature="e#8023#8028#0#PHP" expanded="true" />
-            <element signature="e#8011#8312#0#HTML" expanded="true" />
-            <element signature="e#8362#8367#0#PHP" expanded="true" />
-            <element signature="e#8350#8661#0#HTML" expanded="true" />
-            <element signature="e#8712#8717#0#PHP" expanded="true" />
-            <element signature="e#8700#9013#0#HTML" expanded="true" />
-            <element signature="e#9023#9890#0#HTML" expanded="true" />
-            <element signature="e#9055#9101#0#HTML" expanded="true" />
-            <element signature="e#9152#9331#0#HTML" expanded="true" />
-            <element signature="e#9109#9339#0#HTML" expanded="true" />
-            <element signature="e#9369#9451#0#HTML" expanded="true" />
-            <element signature="e#9340#9459#0#HTML" expanded="true" />
-            <element signature="e#9460#9889#0#HTML" expanded="true" />
-            <element signature="e#9890#9895#0#PHP" expanded="true" />
+            <element signature="e#40288#42107#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sDevFunctions/AppMenus.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2020">
-          <caret line="39" column="49" lean-forward="true" selection-start-line="39" selection-start-column="36" selection-end-line="39" selection-end-column="49" />
+        <state relative-caret-position="15">
+          <caret line="150" column="146" selection-start-line="150" selection-start-column="146" selection-end-line="150" selection-end-column="146" />
           <folding>
             <element signature="e#7#196#0#PHP" expanded="true" />
             <element signature="e#227#299#0#PHP" expanded="true" />
             <element signature="n#__construct#0;n#AppMenus#0;n#!!top" expanded="true" />
             <element signature="e#429#645#0#PHP" expanded="true" />
+            <element signature="n#getMenu#0;n#AppMenus#0;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#!!top" expanded="true" />
             <element signature="e#3817#3952#0#PHP" expanded="true" />
             <element signature="n#renderMenuItems#0;n#AppMenus#0;n#!!top" expanded="true" />
-            <element signature="n#DefaultMenu#0;n#AppMenus#0;n#!!top" expanded="true" />
-            <element signature="e#8063#8124#0#PHP" expanded="true" />
             <element signature="n#ExampleMenu#0;n#AppMenus#0;n#!!top" expanded="true" />
-            <element signature="e#8753#8778#0#PHP" expanded="true" />
             <element signature="n#MenuType#0;n#!!top" expanded="true" />
-            <element signature="e#9020#9045#0#PHP" expanded="true" />
             <element signature="n#MenuItem#0;n#!!top" expanded="true" />
-            <element signature="e#9224#10189#0#PHP" expanded="true" />
             <element signature="n#__construct#0;n#MenuItem#0;n#!!top" expanded="true" />
-            <element signature="e#10841#10906#0#PHP" expanded="true" />
             <element signature="n#CheckMenuItemUserRole#0;n#MenuItem#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/bootstrapmodifications.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-355">
+          <caret line="66" column="24" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/qcubed/controls/QTextBox.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+          <folding>
+            <element signature="e#7#39#0#PHP" expanded="true" />
+            <element signature="n#QTextBox#0;n#!!top" expanded="true" />
+            <element signature="n#RenderAsInputGroup#0;n#QTextBox#0;n#!!top" expanded="true" />
+            <element signature="n#GetControlHtml#0;n#QTextBox#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseManagement/DataModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+          <folding>
+            <element signature="n#__construct#0;n#DataModel#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/base_controls/QTextBoxBase.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1680">
+          <caret line="180" column="84" selection-start-line="158" selection-start-column="24" selection-end-line="180" selection-end-column="84" />
+          <folding>
+            <element signature="n#Validate#0;n#QTextBoxBase#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/qcubed/_core/framework/QApplicationBase.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="1507" column="5" lean-forward="true" selection-start-line="1498" selection-start-column="4" selection-end-line="1507" selection-end-column="5" />
+          <folding>
+            <element signature="e#54488#54902#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#li#1;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/User/index.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1155">
-          <caret line="77" column="9" lean-forward="true" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
+        <state relative-caret-position="5">
+          <caret line="44" column="59" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="59" />
           <folding>
             <element signature="e#0#5#0#PHP" expanded="true" />
             <element signature="e#37#42#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#!!top" expanded="true" />
             <element signature="e#102#107#0#PHP" expanded="true" />
-            <element signature="e#198#203#0#PHP" expanded="true" />
+            <element signature="e#197#202#0#PHP" expanded="true" />
             <element signature="n#div#0;n#!!top" expanded="true" />
             <element signature="n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="e#391#396#0#PHP" expanded="true" />
-            <element signature="n#div#2;n#!!top" expanded="true" />
-            <element signature="n#div#3;n#div#2;n#!!top" expanded="true" />
-            <element signature="e#603#608#0#PHP" expanded="true" />
-            <element signature="n#div#3;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#3;n#!!top" expanded="true" />
-            <element signature="n#div#3;n#div#3;n#!!top" expanded="true" />
-            <element signature="e#947#952#0#PHP" expanded="true" />
-            <element signature="n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="e#1464#1471#1#HTML" expanded="true" />
-            <element signature="n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="e#1631#1636#0#PHP" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="e#1936#1941#0#PHP" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#div#2;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="e#2345#2350#0#PHP" expanded="true" />
-            <element signature="e#2374#2379#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#448#453#0#PHP" expanded="true" />
+            <element signature="e#498#503#0#PHP" expanded="true" />
+            <element signature="n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#div#2;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#div#2;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#932#937#0#PHP" expanded="true" />
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#1463#1470#1#HTML" expanded="true" />
+            <element signature="n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#1961#1966#0#PHP" expanded="true" />
+            <element signature="n#div#2;n#div#0;n#div#2;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#2370#2375#0#PHP" expanded="true" />
+            <element signature="e#2399#2404#0#PHP" expanded="true" />
             <element signature="n#script#0;n#!!top" expanded="true" />
-            <element signature="e#2522#2789#0#HTML" expanded="true" />
-            <element signature="e#2625#2630#0#PHP" expanded="true" />
-            <element signature="e#2655#2660#0#PHP" expanded="true" />
-            <element signature="e#2819#3031#0#HTML" expanded="true" />
-            <element signature="e#2862#2867#0#PHP" expanded="true" />
-            <element signature="e#2892#2897#0#PHP" expanded="true" />
+            <element signature="e#2521#2788#0#HTML" expanded="true" />
+            <element signature="e#2650#2655#0#PHP" expanded="true" />
+            <element signature="e#2680#2685#0#PHP" expanded="true" />
+            <element signature="e#2818#3030#0#HTML" expanded="true" />
+            <element signature="e#2887#2892#0#PHP" expanded="true" />
+            <element signature="e#2917#2922#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/User/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="301" column="8" lean-forward="true" selection-start-line="301" selection-start-column="8" selection-end-line="301" selection-end-column="8" />
+          <folding>
+            <element signature="e#1773#2194#0#PHP" />
+            <element signature="e#1829#2184#0#PHP" />
+            <element signature="e#2007#2170#0#PHP" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#createNewPost#0;n#PostListForm#0;n#!!top" expanded="true" />
+            <element signature="e#9064#9161#0#PHP" />
+            <element signature="e#9118#9161#0#PHP" />
+            <element signature="e#9894#10058#0#PHP" />
+            <element signature="e#10118#10272#0#PHP" />
+            <element signature="e#10303#10600#0#PHP" />
+            <element signature="e#10355#10566#1#PHP" />
+            <element signature="e#10610#11197#0#PHP" />
+            <element signature="e#10646#10766#0#PHP" />
+            <element signature="e#10704#10766#0#PHP" />
+            <element signature="e#10888#11197#0#PHP" />
+            <element signature="e#11029#11120#0#PHP" />
+            <element signature="e#11078#11120#0#PHP" />
+            <element signature="e#12591#12690#0#PHP" />
+            <element signature="e#12970#13111#0#PHP" />
+            <element signature="e#13076#13111#0#PHP" />
+            <element signature="e#13545#14085#0#PHP" />
           </folding>
         </state>
       </provider>
