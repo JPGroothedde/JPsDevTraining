@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UserRole API Documentation</title>
+</head>
+<body>
+<h2>Introduction</h2>
+<p>This API allows for interaction with the UserRole object contained in the application ORM. To call this API, the calling application needs to POST the
+following minimum parameters:</p >
+<ul >
+    <li >
+        APIKEY -> The API key that allows for access to this API
+    </li >
+    <li >
+        OPERATION -> The operation that is to be performed
+    </li >
+</ul> 
+<hr>
+<h2>Implementation</h2>
+<h3>Object Definition (UserRole)</h3>
+<h5>Object Attributes</h5>
+["Role"]
+<h5>Object Relationships (Id for each associated object)</h5>
+[]  
+<hr>
+<h2>Available Operations (CRUD)</h2>
+<p>The following base operations are available: (Additional Operations are defined at the bottom of this page)</p>
+<ul>
+    <li>
+        READ
+    </li>
+    <li>
+        UPDATE
+    </li>
+    <li>
+        CREATE
+    </li>
+    <li>
+        DELETE
+    </li>
+    <li>
+        LIST
+    </li>
+</ul>
+<hr>
+<h4>READ</h4>
+<h5>Input Data (POST FIELDS):</h5>
+{"APIKEY":"The Provided Api Key","OPERATION":"READ","UserRoleId":"[The Id To Retrieve]"}
+<h5>Expected Result:</h5>
+{"Result":"Success","Obj":"[json encoded UserRole Object]"}
+<hr>
+<h4>UPDATE</h4>
+<h5>Input Data (POST FIELDS):</h5>
+{"APIKEY":"The Provided Api Key","OPERATION":"UPDATE","UserRoleId":"[The Id To Update]","Role":"[new value]",}
+<h5>Expected Result:</h5>
+{"Result":"Success","Message":"Object Modified"}
+<hr>
+<h4>CREATE</h4>
+<h5>Input Data (POST FIELDS):</h5>
+{"APIKEY":"The Provided Api Key","OPERATION":"CREATE","Role":"[new value]",}
+<h5 > Expected Result:</h5>
+{"Result":"Success","ObjId":"[Id of newly created object]"}
+<hr>
+<h4>DELETE</h4>
+<h5>Input Data (POST FIELDS):</h5>
+{"APIKEY":"The Provided Api Key","OPERATION":"DELETE","UserRoleId":"[The Id To Delete]"}
+<h5>Expected Result:</h5>
+{"Result":"Success"}
+<hr>
+<h4>LIST</h4>
+<h5>Input Data (POST FIELDS):</h5>
+{"APIKEY":"The Provided Api Key","OPERATION":"LIST","QueryConditions":"[The Query Conditions]"}
+<h5>Expected Result:</h5>
+{"Result":"Success","ObjArray":"[Array Of JSON Encoded Objects]"}
+<h4>Example Query Conditions</h4>
+<p>array("AND" => ["ObjectAttribute","<",[Value]],"AND" => ["ObjectAttribute","is not null"],"OR" => ["ObjectAttribute","=",[Value]],"AND" => ["ObjectAttribute","is null"])<br>
+<h5>All available compare symbols</h5>
+"=","!=",">","<",">=","<=","in","not in","like","not like","is null","is not null","between","not between"</p><hr>
+<h2>Additional Operations</h2>
+None
+</body>
+</html>

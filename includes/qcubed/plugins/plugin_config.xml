@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<plugins>
+	
+
+<plugin>
+	<name><![CDATA[QEmailTextBox]]></name>
+	<description><![CDATA[A sublcass of QTextBox, this control validates valid emails.]]></description>
+	<version>0.2</version>
+	<platform_version>1.1</platform_version>
+	<author name="Eduardo Garcia, a.k.a. enzo" email="enzo [at] anexusit [dot] com"/>
+	<files>
+		<file type="control" filename="includes/QEmailTextBox.class.php" />
+		<file type="example" filename="example/emailtextbox.php" />
+		<file type="example" filename="example/emailtextbox.tpl.php" />
+	</files>
+	<includes>
+		<include_files classname="QEmailTextBox" filename="includes/QEmailTextBox.class.php" />
+	</includes>
+	<examples>
+		<example filename="example/emailtextbox.php" description="QEmailTextBox: Validate Email Addresses" />
+	</examples>
+</plugin>
+
+</plugins>

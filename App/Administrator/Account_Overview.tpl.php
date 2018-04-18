@@ -1,0 +1,15 @@
+<?php $strPageTitle = 'Account Overview';?>
+<?php require(__CONFIGURATION__ . '/header_with_nav.inc.php');	?>
+
+<?php $this->RenderBegin() ?>
+<?php require(__SDEV_ORM__.'/Implementations/Account/AccountModal.php');?>
+<div class="row">
+    <div class="col-md-12">
+            <h3 class="page-header">Account Overview</h3>
+        <?php $this->btnNewAccount->Render();?>
+        <?php $this->AccountGrid->RenderGrid();?>
+    </div>
+</div>
+
+<?php $this->RenderEnd() ?>
+<?php require(__CONFIGURATION__ . '/footer.inc.php');	?>
