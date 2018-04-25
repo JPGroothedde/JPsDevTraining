@@ -1,3 +1,4 @@
-Order deny,allow
-Allow from 127.           # localhost
-Deny from all
+#Order deny,allow
+#Allow from 127.           # localhost
+#Deny from all*/
+allow from all

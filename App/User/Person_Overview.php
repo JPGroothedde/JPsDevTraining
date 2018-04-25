@@ -16,6 +16,7 @@ class Person_OverviewForm extends QForm {
     protected $PersonWaitControlIcon;
     protected $btnNewPerson;
     protected $selectedPersonId = -1;
+    protected $PersonId;
 
     // Person Object variables
     protected $PersonInstance;
@@ -48,10 +49,20 @@ class Person_OverviewForm extends QForm {
         $this->btnDeletePerson->AddAction(new QClickEvent(), new QAjaxAction('btnDeletePerson_Clicked'));
     }
     protected function btnSavePerson_Clicked($strFormId, $strControlId, $strParameter) {
-        if ($this->PersonInstance->saveObject()) {
-            $this->PersonGrid->UpdateGrid();
-            AppSpecificFunctions::ToggleModal('PersonModal');
-        }
+    	$ValidateFirstName = AppSpecificFunctions::validateFieldAsRequired($this->PersonInstance->txtFirstName);
+    	$ValidateSurname    = AppSpecificFunctions::validateFieldAsRequired($this->PersonInstance->txtSurname);
+    	if($ValidateFirstName != '' && $ValidateSurname != '') {
+		    if ($this->PersonInstance->saveObject()) {
+			    $this->PersonGrid->UpdateGrid();
+			    AppSpecificFunctions::ToggleModal('PersonModal');
+				//AppSpecificFunctions::PathInfo($this->PersonInstance->getObjectId());
+			    $PersonId = $this->PersonInstance->getObjectId();
+			    AppSpecificFunctions::Redirect('/VIPSYS/App/User/Person_Detail/'.$PersonId);
+			    
+		    }
+	    } else {
+    		AppSpecificFunctions::ShowNotedFeedback('First name and surname is required.',false);
+	    }
     }
     protected function btnDeletePerson_Clicked($strFormId, $strControlId, $strParameter) {
         if ($this->PersonInstance->deleteObject()) {
@@ -60,14 +71,14 @@ class Person_OverviewForm extends QForm {
         }
     }
     protected function InitPersonDataGrid() {
-        $searchableAttributes = array(QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->FileDocumentObject->Id);
-        $headerItems = array('First Name','Surname','ID Passport Number','Date Of Birth','Telephone Number','Alternative Telephone Number','Nationality','Ethnic Group','Drivers License','Current Address','File Document Object');
-        $headerSortNodes = array(QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->FileDocumentObject->Id);
-        $columnItems = array('FirstName','Surname','IDPassportNumber','DateOfBirth','TelephoneNumber','AlternativeTelephoneNumber','Nationality','EthnicGroup','DriversLicense','CurrentAddress','FileDocument');
+        $searchableAttributes = array(QQN::Person()->Id,QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->FileDocumentObject->Id);
+        $headerItems = array('#','First Name','Surname','ID Passport Number','Date Of Birth');//,'Telephone Number','Alternative Telephone Number','Nationality','Ethnic Group','Drivers License','Current Address','File Document Object');
+        $headerSortNodes = array(QQN::Person()->Id,QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->FileDocumentObject->Id);
+        $columnItems = array('Id','FirstName','Surname','IDPassportNumber','DateOfBirth');//,'TelephoneNumber','AlternativeTelephoneNumber','Nationality','EthnicGroup','DriversLicense','CurrentAddress','FileDocument');
         $this->PersonWaitControlIcon = new QWaitIcon($this);
         $this->btnNewPerson = new QButton($this);
-        $this->btnNewPerson->Text = 'Add Person';
-        $this->btnNewPerson->CssClass = 'btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss;
+        $this->btnNewPerson->Text = '';
+        $this->btnNewPerson->CssClass = 'btn btn-primary rippleclick mrg-top10 fa fa-plus'.$this->buttonFullWidthCss;
         $this->btnNewPerson->AddAction(new QClickEvent(), new QAjaxAction('btnNewPerson_Clicked'));
         $this->PersonGrid = new PersonDataGrid($this, QQN::Person(),$searchableAttributes, 'Search...', $headerItems, $headerSortNodes, $columnItems, null, 10, $this->PersonWaitControlIcon, 'PersonGrid');
     }
@@ -89,12 +100,15 @@ class Person_OverviewForm extends QForm {
     protected function PersonGrid_DataGridRowClickAction_Clicked($strFormId, $strControlId, $strParameter) {
         $this->selectedPersonId = $strParameter;
         $theObject = Person::Load($this->selectedPersonId);
+        
         if ($theObject) {
             $this->PersonInstance->setObject($theObject);
             $this->PersonInstance->setValues($theObject);
             $this->PersonInstance->refreshAll();
             $this->btnDeletePerson->Visible = true;
-            AppSpecificFunctions::ToggleModal('PersonModal');
+	        $PersonId = $this->PersonInstance->getObjectId();
+	        AppSpecificFunctions::Redirect('/VIPSYS/App/User/Person_Detail/'.$PersonId);
+            //AppSpecificFunctions::ToggleModal('PersonModal');
         }
     }
     protected function btnNewPerson_Clicked($strFormId, $strControlId, $strParameter) {
@@ -102,7 +116,7 @@ class Person_OverviewForm extends QForm {
         $this->PersonInstance->setObject(null);
         $this->PersonInstance->setValues(null);
         $this->btnDeletePerson->Visible = false;
-        AppSpecificFunctions::ToggleModal('PersonModal');
+	    AppSpecificFunctions::ToggleModal('PersonModal');
     }
 }
 Person_OverviewForm::Run('Person_OverviewForm');

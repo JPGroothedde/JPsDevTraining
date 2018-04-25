@@ -78,6 +78,21 @@ class Person_DetailForm extends QForm {
         $js = 'window.parent.window.executeFormAction(\''.$parentFormId.'\',\''.$strControlId.'\',\''.$strParameter.'\');';
         AppSpecificFunctions::ExecuteJavaScript($js);
     }
+    protected function btnPhoneVerified_Clicked($strFormId, $strControlId, $strParameter) {
+        $this->GetControl($this->PersonInstance->getControlId('PhoneVerified'))->Toggle(!$this->GetControl($this->PersonInstance->getControlId('PhoneVerified'))->IsToggled);
+    }
+
+    
+    protected function btnIdentityVerified_Clicked($strFormId, $strControlId, $strParameter) {
+        $this->GetControl($this->PersonInstance->getControlId('IdentityVerified'))->Toggle(!$this->GetControl($this->PersonInstance->getControlId('IdentityVerified'))->IsToggled);
+    }
+
+    
+    protected function btnDriversLicenseVerified_Clicked($strFormId, $strControlId, $strParameter) {
+        $this->GetControl($this->PersonInstance->getControlId('DriversLicenseVerified'))->Toggle(!$this->GetControl($this->PersonInstance->getControlId('DriversLicenseVerified'))->IsToggled);
+    }
+
+    
 }
 Person_DetailForm::Run('Person_DetailForm');
 ?>

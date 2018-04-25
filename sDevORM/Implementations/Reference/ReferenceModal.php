@@ -16,7 +16,7 @@
                         <?php $this->btnSaveReference->Render();?>
                     </div>
                     <div class="col-md-4">
-                        <?php $this->btnDeleteReference->Render();?>
+                        <?php //$this->btnDeleteReference->Render();?>
                     </div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-default rippleclick mrg-top10 fullWidth" data-dismiss="modal">Cancel</button>

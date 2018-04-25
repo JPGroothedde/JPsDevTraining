@@ -26,6 +26,8 @@
 	 * @property-read EmploymentHistory[] $_EmploymentHistoryArray the value for the private _objEmploymentHistoryArray (Read-Only) if set due to an ExpandAsArray on the EmploymentHistory.FileDocument reverse relationship
 	 * @property-read Person $_Person the value for the private _objPerson (Read-Only) if set due to an expansion on the Person.FileDocument reverse relationship
 	 * @property-read Person[] $_PersonArray the value for the private _objPersonArray (Read-Only) if set due to an ExpandAsArray on the Person.FileDocument reverse relationship
+	 * @property-read PersonAttachment $_PersonAttachment the value for the private _objPersonAttachment (Read-Only) if set due to an expansion on the PersonAttachment.FileDocument reverse relationship
+	 * @property-read PersonAttachment[] $_PersonAttachmentArray the value for the private _objPersonAttachmentArray (Read-Only) if set due to an ExpandAsArray on the PersonAttachment.FileDocument reverse relationship
 	 * @property-read Reference $_Reference the value for the private _objReference (Read-Only) if set due to an expansion on the Reference.FileDocument reverse relationship
 	 * @property-read Reference[] $_ReferenceArray the value for the private _objReferenceArray (Read-Only) if set due to an ExpandAsArray on the Reference.FileDocument reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
@@ -125,6 +127,22 @@
 		 * @var Person[] _objPersonArray;
 		 */
 		private $_objPersonArray = null;
+
+		/**
+		 * Private member variable that stores a reference to a single PersonAttachment object
+		 * (of type PersonAttachment), if this FileDocument object was restored with
+		 * an expansion on the PersonAttachment association table.
+		 * @var PersonAttachment _objPersonAttachment;
+		 */
+		private $_objPersonAttachment;
+
+		/**
+		 * Private member variable that stores a reference to an array of PersonAttachment objects
+		 * (of type PersonAttachment[]), if this FileDocument object was restored with
+		 * an ExpandAsArray on the PersonAttachment association table.
+		 * @var PersonAttachment[] _objPersonAttachmentArray;
+		 */
+		private $_objPersonAttachmentArray = null;
 
 		/**
 		 * Private member variable that stores a reference to a single Reference object
@@ -740,6 +758,21 @@
 				}
 			}
 
+			// Check for PersonAttachment Virtual Binding
+			$strAlias = $strAliasPrefix . 'personattachment__Id';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objExpansionNode = (empty($objExpansionAliasArray['personattachment']) ? null : $objExpansionAliasArray['personattachment']);
+			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
+			if ($blnExpanded && null === $objToReturn->_objPersonAttachmentArray)
+				$objToReturn->_objPersonAttachmentArray = array();
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if ($blnExpanded) {
+					$objToReturn->_objPersonAttachmentArray[] = PersonAttachment::InstantiateDbRow($objDbRow, $strAliasPrefix . 'personattachment__', $objExpansionNode, null, $strColumnAliasArray);
+				} elseif (is_null($objToReturn->_objPersonAttachment)) {
+					$objToReturn->_objPersonAttachment = PersonAttachment::InstantiateDbRow($objDbRow, $strAliasPrefix . 'personattachment__', $objExpansionNode, null, $strColumnAliasArray);
+				}
+			}
+
 			// Check for Reference Virtual Binding
 			$strAlias = $strAliasPrefix . 'reference__Id';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
@@ -972,7 +1005,7 @@
 							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
                 }
 
-				            } catch (QCallerException $objExc) {
+					            } catch (QCallerException $objExc) {
                 $objExc->IncrementOffset();
                 throw $objExc;
             }
@@ -1215,6 +1248,22 @@
 					 * @return Person[]
 					 */
 					return $this->_objPersonArray;
+
+				case '_PersonAttachment':
+					/**
+					 * Gets the value for the private _objPersonAttachment (Read-Only)
+					 * if set due to an expansion on the PersonAttachment.FileDocument reverse relationship
+					 * @return PersonAttachment
+					 */
+					return $this->_objPersonAttachment;
+
+				case '_PersonAttachmentArray':
+					/**
+					 * Gets the value for the private _objPersonAttachmentArray (Read-Only)
+					 * if set due to an ExpandAsArray on the PersonAttachment.FileDocument reverse relationship
+					 * @return PersonAttachment[]
+					 */
+					return $this->_objPersonAttachmentArray;
 
 				case '_Reference':
 					/**
@@ -1778,6 +1827,155 @@
 		}
 
 
+		// Related Objects' Methods for PersonAttachment
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated PersonAttachments as an array of PersonAttachment objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return PersonAttachment[]
+		*/
+		public function GetPersonAttachmentArray($objOptionalClauses = null) {
+			if ((is_null($this->intId)))
+				return array();
+
+			try {
+				return PersonAttachment::LoadArrayByFileDocument($this->intId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated PersonAttachments
+		 * @return int
+		*/
+		public function CountPersonAttachments() {
+			if ((is_null($this->intId)))
+				return 0;
+
+			return PersonAttachment::CountByFileDocument($this->intId);
+		}
+
+		/**
+		 * Associates a PersonAttachment
+		 * @param PersonAttachment $objPersonAttachment
+		 * @return void
+		*/
+		public function AssociatePersonAttachment(PersonAttachment $objPersonAttachment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePersonAttachment on this unsaved FileDocument.');
+			if ((is_null($objPersonAttachment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePersonAttachment on this FileDocument with an unsaved PersonAttachment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PersonAttachment`
+				SET
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPersonAttachment->Id) . '
+			');
+		}
+
+		/**
+		 * Unassociates a PersonAttachment
+		 * @param PersonAttachment $objPersonAttachment
+		 * @return void
+		*/
+		public function UnassociatePersonAttachment(PersonAttachment $objPersonAttachment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this unsaved FileDocument.');
+			if ((is_null($objPersonAttachment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this FileDocument with an unsaved PersonAttachment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PersonAttachment`
+				SET
+					`FileDocument` = null
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPersonAttachment->Id) . ' AND
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Unassociates all PersonAttachments
+		 * @return void
+		*/
+		public function UnassociateAllPersonAttachments() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this unsaved FileDocument.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PersonAttachment`
+				SET
+					`FileDocument` = null
+				WHERE
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated PersonAttachment
+		 * @param PersonAttachment $objPersonAttachment
+		 * @return void
+		*/
+		public function DeleteAssociatedPersonAttachment(PersonAttachment $objPersonAttachment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this unsaved FileDocument.');
+			if ((is_null($objPersonAttachment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this FileDocument with an unsaved PersonAttachment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PersonAttachment`
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPersonAttachment->Id) . ' AND
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes all associated PersonAttachments
+		 * @return void
+		*/
+		public function DeleteAllPersonAttachments() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this unsaved FileDocument.');
+
+			// Get the Database Object for this Class
+			$objDatabase = FileDocument::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PersonAttachment`
+				WHERE
+					`FileDocument` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+
 		// Related Objects' Methods for Reference
 		//-------------------------------------------------------------------
 
@@ -2088,6 +2286,7 @@
      * @property-read QQReverseReferenceNodeEducation $Education
      * @property-read QQReverseReferenceNodeEmploymentHistory $EmploymentHistory
      * @property-read QQReverseReferenceNodePerson $Person
+     * @property-read QQReverseReferenceNodePersonAttachment $PersonAttachment
      * @property-read QQReverseReferenceNodeReference $Reference
 
      * @property-read QQNode $_PrimaryKeyNode
@@ -2114,6 +2313,8 @@
 					return new QQReverseReferenceNodeEmploymentHistory($this, 'employmenthistory', 'reverse_reference', 'FileDocument', 'EmploymentHistory');
 				case 'Person':
 					return new QQReverseReferenceNodePerson($this, 'person', 'reverse_reference', 'FileDocument', 'Person');
+				case 'PersonAttachment':
+					return new QQReverseReferenceNodePersonAttachment($this, 'personattachment', 'reverse_reference', 'FileDocument', 'PersonAttachment');
 				case 'Reference':
 					return new QQReverseReferenceNodeReference($this, 'reference', 'reverse_reference', 'FileDocument', 'Reference');
 
@@ -2141,6 +2342,7 @@
      * @property-read QQReverseReferenceNodeEducation $Education
      * @property-read QQReverseReferenceNodeEmploymentHistory $EmploymentHistory
      * @property-read QQReverseReferenceNodePerson $Person
+     * @property-read QQReverseReferenceNodePersonAttachment $PersonAttachment
      * @property-read QQReverseReferenceNodeReference $Reference
 
      * @property-read QQNode $_PrimaryKeyNode
@@ -2167,6 +2369,8 @@
 					return new QQReverseReferenceNodeEmploymentHistory($this, 'employmenthistory', 'reverse_reference', 'FileDocument', 'EmploymentHistory');
 				case 'Person':
 					return new QQReverseReferenceNodePerson($this, 'person', 'reverse_reference', 'FileDocument', 'Person');
+				case 'PersonAttachment':
+					return new QQReverseReferenceNodePersonAttachment($this, 'personattachment', 'reverse_reference', 'FileDocument', 'PersonAttachment');
 				case 'Reference':
 					return new QQReverseReferenceNodeReference($this, 'reference', 'reverse_reference', 'FileDocument', 'Reference');
 

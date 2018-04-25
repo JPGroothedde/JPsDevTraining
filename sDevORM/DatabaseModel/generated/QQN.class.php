@@ -109,10 +109,22 @@
 			return new QQNodePerson('Person', null, null);
 		}
 		/**
+		 * @return QQNodePersonAttachment
+		 */
+		static public function PersonAttachment() {
+			return new QQNodePersonAttachment('PersonAttachment', null, null);
+		}
+		/**
 		 * @return QQNodePersonLanguage
 		 */
 		static public function PersonLanguage() {
 			return new QQNodePersonLanguage('PersonLanguage', null, null);
+		}
+		/**
+		 * @return QQNodePersonSkillsTag
+		 */
+		static public function PersonSkillsTag() {
+			return new QQNodePersonSkillsTag('PersonSkillsTag', null, null);
 		}
 		/**
 		 * @return QQNodeReference

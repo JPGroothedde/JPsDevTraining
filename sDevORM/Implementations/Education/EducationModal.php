@@ -16,7 +16,7 @@
                         <?php $this->btnSaveEducation->Render();?>
                     </div>
                     <div class="col-md-4">
-                        <?php $this->btnDeleteEducation->Render();?>
+                        <?php //$this->btnDeleteEducation->Render();?>
                     </div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-default rippleclick mrg-top10 fullWidth" data-dismiss="modal">Cancel</button>

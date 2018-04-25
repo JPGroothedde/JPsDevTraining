@@ -32,7 +32,7 @@ ob_start();
         <table class="page_header">
             <tr>
                 <td style="width: 100%; text-align: left">
-                    Exemple d'utilisation des bookmarks
+                
                 </td>
             </tr>
         </table>

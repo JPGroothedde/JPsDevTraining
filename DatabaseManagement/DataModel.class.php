@@ -4,23 +4,27 @@ class DataModel extends DataModel_Base {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // define all the objects for your app here
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	var $ProjectObjects                = array("Person","EmploymentHistory","Reference","Education","MasterLanguage","PersonLanguage");
+	var $ProjectObjects                = array("Person","EmploymentHistory","Reference","Education","MasterLanguage","PersonLanguage","PersonAttachment","PersonSkillsTag");
 	var $ProjectObjectAttributes = array (																										// The attributes for each of the defined objects
-		"Person"                    => array("FirstName","Surname","IDPassportNumber","DateOfBirth","TelephoneNumber","AlternativeTelephoneNumber","Nationality","EthnicGroup","DriversLicense","CurrentAddress"),
+		"Person"                    => array("FirstName","Surname","IDPassportNumber","DateOfBirth","TelephoneNumber","AlternativeTelephoneNumber","Nationality","EthnicGroup","DriversLicense","CurrentAddress","PhoneVerified","IdentityVerified","DriversLicenseVerified"),
 		"EmploymentHistory"         => array("PeriodStartDate","PeriodEndDate","EmployerName","Title","Duties"),
 		"Reference"                 => array("FirstName","Surname","Relationship","TelephoneNumber"),
 		"Education"                 => array("Institution","StartDate","EndDate","Qualification"),
 		"MasterLanguage"            => array("Language"),
 		"PersonLanguage"            => array("Language"),
+		"PersonAttachment"          => array("Name"),
+		"PersonSkillsTag"           => array("SkillTag"),
 	);
 	
 	var $ProjectObjectAttributeTypes = array (																									// The attribute type for each of the defined object attributes (Defines how it is stored in the db)
-		"Person"                    => array("VARCHAR(50)","VARCHAR(50)","VARCHAR(20)","DATE","INT(11)","INT(11)","VARCHAR(20)","VARCHAR(20)","VARCHAR(5)","VARCHAR(50)"),
+		"Person"                    => array("VARCHAR(50)","VARCHAR(50)","VARCHAR(20)","DATE","VARCHAR(20)","VARCHAR(20)","VARCHAR(20)","VARCHAR(20)","VARCHAR(5)","VARCHAR(50)","INT","INT","INT"),
 		"EmploymentHistory"         => array("DATE","DATE","VARCHAR(50)","VARCHAR(10)","VARCHAR(20)"),
 		"Reference"                 => array("VARCHAR(50)","VARCHAR(50)","VARCHAR(50)","INT(11)"),
 		"Education"                 => array("VARCHAR(50)","DATE","DATE","VARCHAR(50)"),
 		"MasterLanguage"            => array("VARCHAR(20)"),
 		"PersonLanguage"            => array("VARCHAR(20)"),
+		"PersonAttachment"          => array("VARCHAR(50)"),
+		"PersonSkillsTag"           => array("VARCHAR(50)"),
 	);
 	
 	var $ProjectObjectSingleRelations = array (																									 // The list of objects that each object is related to once
@@ -29,18 +33,20 @@ class DataModel extends DataModel_Base {
 		"Reference"                 => array("Person","FileDocument"),
 		"Education"                 => array("Person","FileDocument"),
 		"PersonLanguage"            => array("Person","MasterLanguage"),
+		"PersonAttachment"          => array("Person","FileDocument"),
+		"PersonSkillsTag"           => array("Person")
 	);
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Special Renders
     //TODO: Support more renders here... REMEMBER: When adding new render types here, they must be implemented in sDevORM/index.php
     var $ProjectObjectSpecialRenders    = array(
-        "PlaceHolder"                   => array(
-            "DummyTwo"
-                =>array("LIST","Test,Result","Result,Test","One more item"),
-            "DummyThree"
-                =>array("INPUT_GROUP","R",null),
-            "DummyFour"
-                =>array("BUTTON_TOGGLE","Checked","Unchecked"),
+        "Person"                   => array(
+        	"IdentityVerified"
+	            =>array("BUTTON_TOGGLE","Identity Verified","Identity Verified"),
+            "PhoneVerified"
+                =>array("BUTTON_TOGGLE","Phone # Verified","Phone # Verified"),
+	        "DriversLicenseVerified"
+	            =>array("BUTTON_TOGGLE","Driver\'s License","Driver\'s License"),
             ),
     );
     /*

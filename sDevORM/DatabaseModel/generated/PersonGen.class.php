@@ -20,8 +20,8 @@
 	 * @property string $Surname the value for strSurname 
 	 * @property string $IDPassportNumber the value for strIDPassportNumber 
 	 * @property QDateTime $DateOfBirth the value for dttDateOfBirth 
-	 * @property integer $TelephoneNumber the value for intTelephoneNumber 
-	 * @property integer $AlternativeTelephoneNumber the value for intAlternativeTelephoneNumber 
+	 * @property string $TelephoneNumber the value for strTelephoneNumber 
+	 * @property string $AlternativeTelephoneNumber the value for strAlternativeTelephoneNumber 
 	 * @property string $Nationality the value for strNationality 
 	 * @property string $EthnicGroup the value for strEthnicGroup 
 	 * @property string $DriversLicense the value for strDriversLicense 
@@ -29,13 +29,20 @@
 	 * @property-read string $LastUpdated the value for strLastUpdated (Read-Only Timestamp)
 	 * @property integer $FileDocument the value for intFileDocument 
 	 * @property string $SearchMetaInfo the value for strSearchMetaInfo 
+	 * @property integer $PhoneVerified the value for intPhoneVerified 
+	 * @property integer $IdentityVerified the value for intIdentityVerified 
+	 * @property integer $DriversLicenseVerified the value for intDriversLicenseVerified 
 	 * @property FileDocument $FileDocumentObject the value for the FileDocument object referenced by intFileDocument 
 	 * @property-read Education $_Education the value for the private _objEducation (Read-Only) if set due to an expansion on the Education.Person reverse relationship
 	 * @property-read Education[] $_EducationArray the value for the private _objEducationArray (Read-Only) if set due to an ExpandAsArray on the Education.Person reverse relationship
 	 * @property-read EmploymentHistory $_EmploymentHistory the value for the private _objEmploymentHistory (Read-Only) if set due to an expansion on the EmploymentHistory.Person reverse relationship
 	 * @property-read EmploymentHistory[] $_EmploymentHistoryArray the value for the private _objEmploymentHistoryArray (Read-Only) if set due to an ExpandAsArray on the EmploymentHistory.Person reverse relationship
+	 * @property-read PersonAttachment $_PersonAttachment the value for the private _objPersonAttachment (Read-Only) if set due to an expansion on the PersonAttachment.Person reverse relationship
+	 * @property-read PersonAttachment[] $_PersonAttachmentArray the value for the private _objPersonAttachmentArray (Read-Only) if set due to an ExpandAsArray on the PersonAttachment.Person reverse relationship
 	 * @property-read PersonLanguage $_PersonLanguage the value for the private _objPersonLanguage (Read-Only) if set due to an expansion on the PersonLanguage.Person reverse relationship
 	 * @property-read PersonLanguage[] $_PersonLanguageArray the value for the private _objPersonLanguageArray (Read-Only) if set due to an ExpandAsArray on the PersonLanguage.Person reverse relationship
+	 * @property-read PersonSkillsTag $_PersonSkillsTag the value for the private _objPersonSkillsTag (Read-Only) if set due to an expansion on the PersonSkillsTag.Person reverse relationship
+	 * @property-read PersonSkillsTag[] $_PersonSkillsTagArray the value for the private _objPersonSkillsTagArray (Read-Only) if set due to an ExpandAsArray on the PersonSkillsTag.Person reverse relationship
 	 * @property-read Reference $_Reference the value for the private _objReference (Read-Only) if set due to an expansion on the Reference.Person reverse relationship
 	 * @property-read Reference[] $_ReferenceArray the value for the private _objReferenceArray (Read-Only) if set due to an ExpandAsArray on the Reference.Person reverse relationship
 	 * @property-read boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
@@ -91,17 +98,19 @@
 
 		/**
 		 * Protected member variable that maps to the database column Person.TelephoneNumber
-		 * @var integer intTelephoneNumber
+		 * @var string strTelephoneNumber
 		 */
-		protected $intTelephoneNumber;
+		protected $strTelephoneNumber;
+		const TelephoneNumberMaxLength = 20;
 		const TelephoneNumberDefault = null;
 
 
 		/**
 		 * Protected member variable that maps to the database column Person.AlternativeTelephoneNumber
-		 * @var integer intAlternativeTelephoneNumber
+		 * @var string strAlternativeTelephoneNumber
 		 */
-		protected $intAlternativeTelephoneNumber;
+		protected $strAlternativeTelephoneNumber;
+		const AlternativeTelephoneNumberMaxLength = 20;
 		const AlternativeTelephoneNumberDefault = null;
 
 
@@ -166,6 +175,30 @@
 
 
 		/**
+		 * Protected member variable that maps to the database column Person.PhoneVerified
+		 * @var integer intPhoneVerified
+		 */
+		protected $intPhoneVerified;
+		const PhoneVerifiedDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column Person.IdentityVerified
+		 * @var integer intIdentityVerified
+		 */
+		protected $intIdentityVerified;
+		const IdentityVerifiedDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column Person.DriversLicenseVerified
+		 * @var integer intDriversLicenseVerified
+		 */
+		protected $intDriversLicenseVerified;
+		const DriversLicenseVerifiedDefault = null;
+
+
+		/**
 		 * Private member variable that stores a reference to a single Education object
 		 * (of type Education), if this Person object was restored with
 		 * an expansion on the Education association table.
@@ -198,6 +231,22 @@
 		private $_objEmploymentHistoryArray = null;
 
 		/**
+		 * Private member variable that stores a reference to a single PersonAttachment object
+		 * (of type PersonAttachment), if this Person object was restored with
+		 * an expansion on the PersonAttachment association table.
+		 * @var PersonAttachment _objPersonAttachment;
+		 */
+		private $_objPersonAttachment;
+
+		/**
+		 * Private member variable that stores a reference to an array of PersonAttachment objects
+		 * (of type PersonAttachment[]), if this Person object was restored with
+		 * an ExpandAsArray on the PersonAttachment association table.
+		 * @var PersonAttachment[] _objPersonAttachmentArray;
+		 */
+		private $_objPersonAttachmentArray = null;
+
+		/**
 		 * Private member variable that stores a reference to a single PersonLanguage object
 		 * (of type PersonLanguage), if this Person object was restored with
 		 * an expansion on the PersonLanguage association table.
@@ -212,6 +261,22 @@
 		 * @var PersonLanguage[] _objPersonLanguageArray;
 		 */
 		private $_objPersonLanguageArray = null;
+
+		/**
+		 * Private member variable that stores a reference to a single PersonSkillsTag object
+		 * (of type PersonSkillsTag), if this Person object was restored with
+		 * an expansion on the PersonSkillsTag association table.
+		 * @var PersonSkillsTag _objPersonSkillsTag;
+		 */
+		private $_objPersonSkillsTag;
+
+		/**
+		 * Private member variable that stores a reference to an array of PersonSkillsTag objects
+		 * (of type PersonSkillsTag[]), if this Person object was restored with
+		 * an ExpandAsArray on the PersonSkillsTag association table.
+		 * @var PersonSkillsTag[] _objPersonSkillsTagArray;
+		 */
+		private $_objPersonSkillsTagArray = null;
 
 		/**
 		 * Private member variable that stores a reference to a single Reference object
@@ -273,8 +338,8 @@
 			$this->strSurname = Person::SurnameDefault;
 			$this->strIDPassportNumber = Person::IDPassportNumberDefault;
 			$this->dttDateOfBirth = (Person::DateOfBirthDefault === null)?null:new QDateTime(Person::DateOfBirthDefault);
-			$this->intTelephoneNumber = Person::TelephoneNumberDefault;
-			$this->intAlternativeTelephoneNumber = Person::AlternativeTelephoneNumberDefault;
+			$this->strTelephoneNumber = Person::TelephoneNumberDefault;
+			$this->strAlternativeTelephoneNumber = Person::AlternativeTelephoneNumberDefault;
 			$this->strNationality = Person::NationalityDefault;
 			$this->strEthnicGroup = Person::EthnicGroupDefault;
 			$this->strDriversLicense = Person::DriversLicenseDefault;
@@ -282,6 +347,9 @@
 			$this->strLastUpdated = Person::LastUpdatedDefault;
 			$this->intFileDocument = Person::FileDocumentDefault;
 			$this->strSearchMetaInfo = Person::SearchMetaInfoDefault;
+			$this->intPhoneVerified = Person::PhoneVerifiedDefault;
+			$this->intIdentityVerified = Person::IdentityVerifiedDefault;
+			$this->intDriversLicenseVerified = Person::DriversLicenseVerifiedDefault;
 		}
 
 
@@ -637,6 +705,9 @@
 			    $objBuilder->AddSelectItem($strTableName, 'LastUpdated', $strAliasPrefix . 'LastUpdated');
 			    $objBuilder->AddSelectItem($strTableName, 'FileDocument', $strAliasPrefix . 'FileDocument');
 			    $objBuilder->AddSelectItem($strTableName, 'SearchMetaInfo', $strAliasPrefix . 'SearchMetaInfo');
+			    $objBuilder->AddSelectItem($strTableName, 'PhoneVerified', $strAliasPrefix . 'PhoneVerified');
+			    $objBuilder->AddSelectItem($strTableName, 'IdentityVerified', $strAliasPrefix . 'IdentityVerified');
+			    $objBuilder->AddSelectItem($strTableName, 'DriversLicenseVerified', $strAliasPrefix . 'DriversLicenseVerified');
             }
 		}
 
@@ -779,10 +850,10 @@
 			$objToReturn->dttDateOfBirth = $objDbRow->GetColumn($strAliasName, 'Date');
 			$strAlias = $strAliasPrefix . 'TelephoneNumber';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objToReturn->intTelephoneNumber = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$objToReturn->strTelephoneNumber = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAlias = $strAliasPrefix . 'AlternativeTelephoneNumber';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
-			$objToReturn->intAlternativeTelephoneNumber = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$objToReturn->strAlternativeTelephoneNumber = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAlias = $strAliasPrefix . 'Nationality';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strNationality = $objDbRow->GetColumn($strAliasName, 'VarChar');
@@ -804,6 +875,15 @@
 			$strAlias = $strAliasPrefix . 'SearchMetaInfo';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
 			$objToReturn->strSearchMetaInfo = $objDbRow->GetColumn($strAliasName, 'Blob');
+			$strAlias = $strAliasPrefix . 'PhoneVerified';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->intPhoneVerified = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$strAlias = $strAliasPrefix . 'IdentityVerified';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->intIdentityVerified = $objDbRow->GetColumn($strAliasName, 'Integer');
+			$strAlias = $strAliasPrefix . 'DriversLicenseVerified';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objToReturn->intDriversLicenseVerified = $objDbRow->GetColumn($strAliasName, 'Integer');
 
 			if (isset($objPreviousItemArray) && is_array($objPreviousItemArray)) {
 				foreach ($objPreviousItemArray as $objPreviousItem) {
@@ -874,6 +954,21 @@
 				}
 			}
 
+			// Check for PersonAttachment Virtual Binding
+			$strAlias = $strAliasPrefix . 'personattachment__Id';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objExpansionNode = (empty($objExpansionAliasArray['personattachment']) ? null : $objExpansionAliasArray['personattachment']);
+			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
+			if ($blnExpanded && null === $objToReturn->_objPersonAttachmentArray)
+				$objToReturn->_objPersonAttachmentArray = array();
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if ($blnExpanded) {
+					$objToReturn->_objPersonAttachmentArray[] = PersonAttachment::InstantiateDbRow($objDbRow, $strAliasPrefix . 'personattachment__', $objExpansionNode, null, $strColumnAliasArray);
+				} elseif (is_null($objToReturn->_objPersonAttachment)) {
+					$objToReturn->_objPersonAttachment = PersonAttachment::InstantiateDbRow($objDbRow, $strAliasPrefix . 'personattachment__', $objExpansionNode, null, $strColumnAliasArray);
+				}
+			}
+
 			// Check for PersonLanguage Virtual Binding
 			$strAlias = $strAliasPrefix . 'personlanguage__Id';
 			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
@@ -886,6 +981,21 @@
 					$objToReturn->_objPersonLanguageArray[] = PersonLanguage::InstantiateDbRow($objDbRow, $strAliasPrefix . 'personlanguage__', $objExpansionNode, null, $strColumnAliasArray);
 				} elseif (is_null($objToReturn->_objPersonLanguage)) {
 					$objToReturn->_objPersonLanguage = PersonLanguage::InstantiateDbRow($objDbRow, $strAliasPrefix . 'personlanguage__', $objExpansionNode, null, $strColumnAliasArray);
+				}
+			}
+
+			// Check for PersonSkillsTag Virtual Binding
+			$strAlias = $strAliasPrefix . 'personskillstag__Id';
+			$strAliasName = !empty($strColumnAliasArray[$strAlias]) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			$objExpansionNode = (empty($objExpansionAliasArray['personskillstag']) ? null : $objExpansionAliasArray['personskillstag']);
+			$blnExpanded = ($objExpansionNode && $objExpansionNode->ExpandAsArray);
+			if ($blnExpanded && null === $objToReturn->_objPersonSkillsTagArray)
+				$objToReturn->_objPersonSkillsTagArray = array();
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if ($blnExpanded) {
+					$objToReturn->_objPersonSkillsTagArray[] = PersonSkillsTag::InstantiateDbRow($objDbRow, $strAliasPrefix . 'personskillstag__', $objExpansionNode, null, $strColumnAliasArray);
+				} elseif (is_null($objToReturn->_objPersonSkillsTag)) {
+					$objToReturn->_objPersonSkillsTag = PersonSkillsTag::InstantiateDbRow($objDbRow, $strAliasPrefix . 'personskillstag__', $objExpansionNode, null, $strColumnAliasArray);
 				}
 			}
 
@@ -1067,8 +1177,8 @@
                 $ChangedArray = array_merge($ChangedArray,array("Surname" => $this->strSurname));
                 $ChangedArray = array_merge($ChangedArray,array("IDPassportNumber" => $this->strIDPassportNumber));
                 $ChangedArray = array_merge($ChangedArray,array("DateOfBirth" => $this->dttDateOfBirth));
-                $ChangedArray = array_merge($ChangedArray,array("TelephoneNumber" => $this->intTelephoneNumber));
-                $ChangedArray = array_merge($ChangedArray,array("AlternativeTelephoneNumber" => $this->intAlternativeTelephoneNumber));
+                $ChangedArray = array_merge($ChangedArray,array("TelephoneNumber" => $this->strTelephoneNumber));
+                $ChangedArray = array_merge($ChangedArray,array("AlternativeTelephoneNumber" => $this->strAlternativeTelephoneNumber));
                 $ChangedArray = array_merge($ChangedArray,array("Nationality" => $this->strNationality));
                 $ChangedArray = array_merge($ChangedArray,array("EthnicGroup" => $this->strEthnicGroup));
                 $ChangedArray = array_merge($ChangedArray,array("DriversLicense" => $this->strDriversLicense));
@@ -1076,6 +1186,9 @@
                 $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
                 $ChangedArray = array_merge($ChangedArray,array("FileDocument" => $this->intFileDocument));
                 $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+                $ChangedArray = array_merge($ChangedArray,array("PhoneVerified" => $this->intPhoneVerified));
+                $ChangedArray = array_merge($ChangedArray,array("IdentityVerified" => $this->intIdentityVerified));
+                $ChangedArray = array_merge($ChangedArray,array("DriversLicenseVerified" => $this->intDriversLicenseVerified));
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             } else {
                 $newAuditLogEntry->ModificationType = 'Update';
@@ -1123,17 +1236,17 @@
                 if (!is_null($ExistingObj->TelephoneNumber)) {
                     $ExistingValueStr = $ExistingObj->TelephoneNumber;
                 }
-                if ($ExistingObj->TelephoneNumber != $this->intTelephoneNumber) {
-                    $ChangedArray = array_merge($ChangedArray,array("TelephoneNumber" => array("Before" => $ExistingValueStr,"After" => $this->intTelephoneNumber)));
-                    //$ChangedArray = array_merge($ChangedArray,array("TelephoneNumber" => "From: ".$ExistingValueStr." to: ".$this->intTelephoneNumber));
+                if ($ExistingObj->TelephoneNumber != $this->strTelephoneNumber) {
+                    $ChangedArray = array_merge($ChangedArray,array("TelephoneNumber" => array("Before" => $ExistingValueStr,"After" => $this->strTelephoneNumber)));
+                    //$ChangedArray = array_merge($ChangedArray,array("TelephoneNumber" => "From: ".$ExistingValueStr." to: ".$this->strTelephoneNumber));
                 }
                 $ExistingValueStr = "NULL";
                 if (!is_null($ExistingObj->AlternativeTelephoneNumber)) {
                     $ExistingValueStr = $ExistingObj->AlternativeTelephoneNumber;
                 }
-                if ($ExistingObj->AlternativeTelephoneNumber != $this->intAlternativeTelephoneNumber) {
-                    $ChangedArray = array_merge($ChangedArray,array("AlternativeTelephoneNumber" => array("Before" => $ExistingValueStr,"After" => $this->intAlternativeTelephoneNumber)));
-                    //$ChangedArray = array_merge($ChangedArray,array("AlternativeTelephoneNumber" => "From: ".$ExistingValueStr." to: ".$this->intAlternativeTelephoneNumber));
+                if ($ExistingObj->AlternativeTelephoneNumber != $this->strAlternativeTelephoneNumber) {
+                    $ChangedArray = array_merge($ChangedArray,array("AlternativeTelephoneNumber" => array("Before" => $ExistingValueStr,"After" => $this->strAlternativeTelephoneNumber)));
+                    //$ChangedArray = array_merge($ChangedArray,array("AlternativeTelephoneNumber" => "From: ".$ExistingValueStr." to: ".$this->strAlternativeTelephoneNumber));
                 }
                 $ExistingValueStr = "NULL";
                 if (!is_null($ExistingObj->Nationality)) {
@@ -1191,6 +1304,30 @@
                     $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => array("Before" => $ExistingValueStr,"After" => $this->strSearchMetaInfo)));
                     //$ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => "From: ".$ExistingValueStr." to: ".$this->strSearchMetaInfo));
                 }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->PhoneVerified)) {
+                    $ExistingValueStr = $ExistingObj->PhoneVerified;
+                }
+                if ($ExistingObj->PhoneVerified != $this->intPhoneVerified) {
+                    $ChangedArray = array_merge($ChangedArray,array("PhoneVerified" => array("Before" => $ExistingValueStr,"After" => $this->intPhoneVerified)));
+                    //$ChangedArray = array_merge($ChangedArray,array("PhoneVerified" => "From: ".$ExistingValueStr." to: ".$this->intPhoneVerified));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->IdentityVerified)) {
+                    $ExistingValueStr = $ExistingObj->IdentityVerified;
+                }
+                if ($ExistingObj->IdentityVerified != $this->intIdentityVerified) {
+                    $ChangedArray = array_merge($ChangedArray,array("IdentityVerified" => array("Before" => $ExistingValueStr,"After" => $this->intIdentityVerified)));
+                    //$ChangedArray = array_merge($ChangedArray,array("IdentityVerified" => "From: ".$ExistingValueStr." to: ".$this->intIdentityVerified));
+                }
+                $ExistingValueStr = "NULL";
+                if (!is_null($ExistingObj->DriversLicenseVerified)) {
+                    $ExistingValueStr = $ExistingObj->DriversLicenseVerified;
+                }
+                if ($ExistingObj->DriversLicenseVerified != $this->intDriversLicenseVerified) {
+                    $ChangedArray = array_merge($ChangedArray,array("DriversLicenseVerified" => array("Before" => $ExistingValueStr,"After" => $this->intDriversLicenseVerified)));
+                    //$ChangedArray = array_merge($ChangedArray,array("DriversLicenseVerified" => "From: ".$ExistingValueStr." to: ".$this->intDriversLicenseVerified));
+                }
                 $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             }
             try {
@@ -1209,20 +1346,26 @@
 							`DriversLicense`,
 							`CurrentAddress`,
 							`FileDocument`,
-							`SearchMetaInfo`
+							`SearchMetaInfo`,
+							`PhoneVerified`,
+							`IdentityVerified`,
+							`DriversLicenseVerified`
 						) VALUES (
 							' . $objDatabase->SqlVariable($this->strFirstName) . ',
 							' . $objDatabase->SqlVariable($this->strSurname) . ',
 							' . $objDatabase->SqlVariable($this->strIDPassportNumber) . ',
 							' . $objDatabase->SqlVariable($this->dttDateOfBirth) . ',
-							' . $objDatabase->SqlVariable($this->intTelephoneNumber) . ',
-							' . $objDatabase->SqlVariable($this->intAlternativeTelephoneNumber) . ',
+							' . $objDatabase->SqlVariable($this->strTelephoneNumber) . ',
+							' . $objDatabase->SqlVariable($this->strAlternativeTelephoneNumber) . ',
 							' . $objDatabase->SqlVariable($this->strNationality) . ',
 							' . $objDatabase->SqlVariable($this->strEthnicGroup) . ',
 							' . $objDatabase->SqlVariable($this->strDriversLicense) . ',
 							' . $objDatabase->SqlVariable($this->strCurrentAddress) . ',
 							' . $objDatabase->SqlVariable($this->intFileDocument) . ',
-							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
+							' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
+							' . $objDatabase->SqlVariable($this->intPhoneVerified) . ',
+							' . $objDatabase->SqlVariable($this->intIdentityVerified) . ',
+							' . $objDatabase->SqlVariable($this->intDriversLicenseVerified) . '
 						)
                     ');
 					// Update Identity column and return its value
@@ -1241,7 +1384,7 @@
                     if ($objRow[0] != $this->strLastUpdated)
                         throw new QOptimisticLockingException('Person');
                 }
-			
+						
                 // Perform the UPDATE query
                 $objDatabase->NonQuery('
                 UPDATE `Person` SET
@@ -1249,19 +1392,22 @@
 							`Surname` = ' . $objDatabase->SqlVariable($this->strSurname) . ',
 							`IDPassportNumber` = ' . $objDatabase->SqlVariable($this->strIDPassportNumber) . ',
 							`DateOfBirth` = ' . $objDatabase->SqlVariable($this->dttDateOfBirth) . ',
-							`TelephoneNumber` = ' . $objDatabase->SqlVariable($this->intTelephoneNumber) . ',
-							`AlternativeTelephoneNumber` = ' . $objDatabase->SqlVariable($this->intAlternativeTelephoneNumber) . ',
+							`TelephoneNumber` = ' . $objDatabase->SqlVariable($this->strTelephoneNumber) . ',
+							`AlternativeTelephoneNumber` = ' . $objDatabase->SqlVariable($this->strAlternativeTelephoneNumber) . ',
 							`Nationality` = ' . $objDatabase->SqlVariable($this->strNationality) . ',
 							`EthnicGroup` = ' . $objDatabase->SqlVariable($this->strEthnicGroup) . ',
 							`DriversLicense` = ' . $objDatabase->SqlVariable($this->strDriversLicense) . ',
 							`CurrentAddress` = ' . $objDatabase->SqlVariable($this->strCurrentAddress) . ',
 							`FileDocument` = ' . $objDatabase->SqlVariable($this->intFileDocument) . ',
-							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . '
+							`SearchMetaInfo` = ' . $objDatabase->SqlVariable($this->strSearchMetaInfo) . ',
+							`PhoneVerified` = ' . $objDatabase->SqlVariable($this->intPhoneVerified) . ',
+							`IdentityVerified` = ' . $objDatabase->SqlVariable($this->intIdentityVerified) . ',
+							`DriversLicenseVerified` = ' . $objDatabase->SqlVariable($this->intDriversLicenseVerified) . '
                 WHERE
 							`Id` = ' . $objDatabase->SqlVariable($this->intId) . '');
                 }
 
-				            } catch (QCallerException $objExc) {
+						            } catch (QCallerException $objExc) {
                 $objExc->IncrementOffset();
                 throw $objExc;
             }
@@ -1281,7 +1427,7 @@
 
             $objRow = $objResult->FetchArray();
             $this->strLastUpdated = $objRow[0];
-			
+						
             $this->DeleteCache();
             
             // Return
@@ -1310,8 +1456,8 @@
             $ChangedArray = array_merge($ChangedArray,array("Surname" => $this->strSurname));
             $ChangedArray = array_merge($ChangedArray,array("IDPassportNumber" => $this->strIDPassportNumber));
             $ChangedArray = array_merge($ChangedArray,array("DateOfBirth" => $this->dttDateOfBirth));
-            $ChangedArray = array_merge($ChangedArray,array("TelephoneNumber" => $this->intTelephoneNumber));
-            $ChangedArray = array_merge($ChangedArray,array("AlternativeTelephoneNumber" => $this->intAlternativeTelephoneNumber));
+            $ChangedArray = array_merge($ChangedArray,array("TelephoneNumber" => $this->strTelephoneNumber));
+            $ChangedArray = array_merge($ChangedArray,array("AlternativeTelephoneNumber" => $this->strAlternativeTelephoneNumber));
             $ChangedArray = array_merge($ChangedArray,array("Nationality" => $this->strNationality));
             $ChangedArray = array_merge($ChangedArray,array("EthnicGroup" => $this->strEthnicGroup));
             $ChangedArray = array_merge($ChangedArray,array("DriversLicense" => $this->strDriversLicense));
@@ -1319,6 +1465,9 @@
             $ChangedArray = array_merge($ChangedArray,array("LastUpdated" => $this->strLastUpdated));
             $ChangedArray = array_merge($ChangedArray,array("FileDocument" => $this->intFileDocument));
             $ChangedArray = array_merge($ChangedArray,array("SearchMetaInfo" => $this->strSearchMetaInfo));
+            $ChangedArray = array_merge($ChangedArray,array("PhoneVerified" => $this->intPhoneVerified));
+            $ChangedArray = array_merge($ChangedArray,array("IdentityVerified" => $this->intIdentityVerified));
+            $ChangedArray = array_merge($ChangedArray,array("DriversLicenseVerified" => $this->intDriversLicenseVerified));
             $newAuditLogEntry->AuditLogEntryDetail = json_encode($ChangedArray);
             try {
                 $newAuditLogEntry->Save();
@@ -1401,8 +1550,8 @@
 			$this->strSurname = $objReloaded->strSurname;
 			$this->strIDPassportNumber = $objReloaded->strIDPassportNumber;
 			$this->dttDateOfBirth = $objReloaded->dttDateOfBirth;
-			$this->intTelephoneNumber = $objReloaded->intTelephoneNumber;
-			$this->intAlternativeTelephoneNumber = $objReloaded->intAlternativeTelephoneNumber;
+			$this->strTelephoneNumber = $objReloaded->strTelephoneNumber;
+			$this->strAlternativeTelephoneNumber = $objReloaded->strAlternativeTelephoneNumber;
 			$this->strNationality = $objReloaded->strNationality;
 			$this->strEthnicGroup = $objReloaded->strEthnicGroup;
 			$this->strDriversLicense = $objReloaded->strDriversLicense;
@@ -1410,6 +1559,9 @@
 			$this->strLastUpdated = $objReloaded->strLastUpdated;
 			$this->FileDocument = $objReloaded->FileDocument;
 			$this->strSearchMetaInfo = $objReloaded->strSearchMetaInfo;
+			$this->intPhoneVerified = $objReloaded->intPhoneVerified;
+			$this->intIdentityVerified = $objReloaded->intIdentityVerified;
+			$this->intDriversLicenseVerified = $objReloaded->intDriversLicenseVerified;
 		}
 
 
@@ -1467,17 +1619,17 @@
 
 				case 'TelephoneNumber':
 					/**
-					 * Gets the value for intTelephoneNumber 
-					 * @return integer
+					 * Gets the value for strTelephoneNumber 
+					 * @return string
 					 */
-					return $this->intTelephoneNumber;
+					return $this->strTelephoneNumber;
 
 				case 'AlternativeTelephoneNumber':
 					/**
-					 * Gets the value for intAlternativeTelephoneNumber 
-					 * @return integer
+					 * Gets the value for strAlternativeTelephoneNumber 
+					 * @return string
 					 */
-					return $this->intAlternativeTelephoneNumber;
+					return $this->strAlternativeTelephoneNumber;
 
 				case 'Nationality':
 					/**
@@ -1527,6 +1679,27 @@
 					 * @return string
 					 */
 					return $this->strSearchMetaInfo;
+
+				case 'PhoneVerified':
+					/**
+					 * Gets the value for intPhoneVerified 
+					 * @return integer
+					 */
+					return $this->intPhoneVerified;
+
+				case 'IdentityVerified':
+					/**
+					 * Gets the value for intIdentityVerified 
+					 * @return integer
+					 */
+					return $this->intIdentityVerified;
+
+				case 'DriversLicenseVerified':
+					/**
+					 * Gets the value for intDriversLicenseVerified 
+					 * @return integer
+					 */
+					return $this->intDriversLicenseVerified;
 
 
 				///////////////////
@@ -1584,6 +1757,22 @@
 					 */
 					return $this->_objEmploymentHistoryArray;
 
+				case '_PersonAttachment':
+					/**
+					 * Gets the value for the private _objPersonAttachment (Read-Only)
+					 * if set due to an expansion on the PersonAttachment.Person reverse relationship
+					 * @return PersonAttachment
+					 */
+					return $this->_objPersonAttachment;
+
+				case '_PersonAttachmentArray':
+					/**
+					 * Gets the value for the private _objPersonAttachmentArray (Read-Only)
+					 * if set due to an ExpandAsArray on the PersonAttachment.Person reverse relationship
+					 * @return PersonAttachment[]
+					 */
+					return $this->_objPersonAttachmentArray;
+
 				case '_PersonLanguage':
 					/**
 					 * Gets the value for the private _objPersonLanguage (Read-Only)
@@ -1599,6 +1788,22 @@
 					 * @return PersonLanguage[]
 					 */
 					return $this->_objPersonLanguageArray;
+
+				case '_PersonSkillsTag':
+					/**
+					 * Gets the value for the private _objPersonSkillsTag (Read-Only)
+					 * if set due to an expansion on the PersonSkillsTag.Person reverse relationship
+					 * @return PersonSkillsTag
+					 */
+					return $this->_objPersonSkillsTag;
+
+				case '_PersonSkillsTagArray':
+					/**
+					 * Gets the value for the private _objPersonSkillsTagArray (Read-Only)
+					 * if set due to an ExpandAsArray on the PersonSkillsTag.Person reverse relationship
+					 * @return PersonSkillsTag[]
+					 */
+					return $this->_objPersonSkillsTagArray;
 
 				case '_Reference':
 					/**
@@ -1697,12 +1902,12 @@
 
 				case 'TelephoneNumber':
 					/**
-					 * Sets the value for intTelephoneNumber 
-					 * @param integer $mixValue
-					 * @return integer
+					 * Sets the value for strTelephoneNumber 
+					 * @param string $mixValue
+					 * @return string
 					 */
 					try {
-						return ($this->intTelephoneNumber = QType::Cast($mixValue, QType::Integer));
+						return ($this->strTelephoneNumber = QType::Cast($mixValue, QType::String));
 					} catch (QCallerException $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
@@ -1710,12 +1915,12 @@
 
 				case 'AlternativeTelephoneNumber':
 					/**
-					 * Sets the value for intAlternativeTelephoneNumber 
-					 * @param integer $mixValue
-					 * @return integer
+					 * Sets the value for strAlternativeTelephoneNumber 
+					 * @param string $mixValue
+					 * @return string
 					 */
 					try {
-						return ($this->intAlternativeTelephoneNumber = QType::Cast($mixValue, QType::Integer));
+						return ($this->strAlternativeTelephoneNumber = QType::Cast($mixValue, QType::String));
 					} catch (QCallerException $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
@@ -1795,6 +2000,45 @@
 					 */
 					try {
 						return ($this->strSearchMetaInfo = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
+				case 'PhoneVerified':
+					/**
+					 * Sets the value for intPhoneVerified 
+					 * @param integer $mixValue
+					 * @return integer
+					 */
+					try {
+						return ($this->intPhoneVerified = QType::Cast($mixValue, QType::Integer));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
+				case 'IdentityVerified':
+					/**
+					 * Sets the value for intIdentityVerified 
+					 * @param integer $mixValue
+					 * @return integer
+					 */
+					try {
+						return ($this->intIdentityVerified = QType::Cast($mixValue, QType::Integer));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
+				case 'DriversLicenseVerified':
+					/**
+					 * Sets the value for intDriversLicenseVerified 
+					 * @param integer $mixValue
+					 * @return integer
+					 */
+					try {
+						return ($this->intDriversLicenseVerified = QType::Cast($mixValue, QType::Integer));
 					} catch (QCallerException $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
@@ -2163,6 +2407,155 @@
 		}
 
 
+		// Related Objects' Methods for PersonAttachment
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated PersonAttachments as an array of PersonAttachment objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return PersonAttachment[]
+		*/
+		public function GetPersonAttachmentArray($objOptionalClauses = null) {
+			if ((is_null($this->intId)))
+				return array();
+
+			try {
+				return PersonAttachment::LoadArrayByPerson($this->intId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated PersonAttachments
+		 * @return int
+		*/
+		public function CountPersonAttachments() {
+			if ((is_null($this->intId)))
+				return 0;
+
+			return PersonAttachment::CountByPerson($this->intId);
+		}
+
+		/**
+		 * Associates a PersonAttachment
+		 * @param PersonAttachment $objPersonAttachment
+		 * @return void
+		*/
+		public function AssociatePersonAttachment(PersonAttachment $objPersonAttachment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePersonAttachment on this unsaved Person.');
+			if ((is_null($objPersonAttachment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePersonAttachment on this Person with an unsaved PersonAttachment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PersonAttachment`
+				SET
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPersonAttachment->Id) . '
+			');
+		}
+
+		/**
+		 * Unassociates a PersonAttachment
+		 * @param PersonAttachment $objPersonAttachment
+		 * @return void
+		*/
+		public function UnassociatePersonAttachment(PersonAttachment $objPersonAttachment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this unsaved Person.');
+			if ((is_null($objPersonAttachment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this Person with an unsaved PersonAttachment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PersonAttachment`
+				SET
+					`Person` = null
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPersonAttachment->Id) . ' AND
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Unassociates all PersonAttachments
+		 * @return void
+		*/
+		public function UnassociateAllPersonAttachments() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this unsaved Person.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PersonAttachment`
+				SET
+					`Person` = null
+				WHERE
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated PersonAttachment
+		 * @param PersonAttachment $objPersonAttachment
+		 * @return void
+		*/
+		public function DeleteAssociatedPersonAttachment(PersonAttachment $objPersonAttachment) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this unsaved Person.');
+			if ((is_null($objPersonAttachment->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this Person with an unsaved PersonAttachment.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PersonAttachment`
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPersonAttachment->Id) . ' AND
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes all associated PersonAttachments
+		 * @return void
+		*/
+		public function DeleteAllPersonAttachments() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonAttachment on this unsaved Person.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PersonAttachment`
+				WHERE
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+
 		// Related Objects' Methods for PersonLanguage
 		//-------------------------------------------------------------------
 
@@ -2306,6 +2699,155 @@
 			$objDatabase->NonQuery('
 				DELETE FROM
 					`PersonLanguage`
+				WHERE
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+
+		// Related Objects' Methods for PersonSkillsTag
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated PersonSkillsTags as an array of PersonSkillsTag objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return PersonSkillsTag[]
+		*/
+		public function GetPersonSkillsTagArray($objOptionalClauses = null) {
+			if ((is_null($this->intId)))
+				return array();
+
+			try {
+				return PersonSkillsTag::LoadArrayByPerson($this->intId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated PersonSkillsTags
+		 * @return int
+		*/
+		public function CountPersonSkillsTags() {
+			if ((is_null($this->intId)))
+				return 0;
+
+			return PersonSkillsTag::CountByPerson($this->intId);
+		}
+
+		/**
+		 * Associates a PersonSkillsTag
+		 * @param PersonSkillsTag $objPersonSkillsTag
+		 * @return void
+		*/
+		public function AssociatePersonSkillsTag(PersonSkillsTag $objPersonSkillsTag) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePersonSkillsTag on this unsaved Person.');
+			if ((is_null($objPersonSkillsTag->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociatePersonSkillsTag on this Person with an unsaved PersonSkillsTag.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PersonSkillsTag`
+				SET
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPersonSkillsTag->Id) . '
+			');
+		}
+
+		/**
+		 * Unassociates a PersonSkillsTag
+		 * @param PersonSkillsTag $objPersonSkillsTag
+		 * @return void
+		*/
+		public function UnassociatePersonSkillsTag(PersonSkillsTag $objPersonSkillsTag) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonSkillsTag on this unsaved Person.');
+			if ((is_null($objPersonSkillsTag->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonSkillsTag on this Person with an unsaved PersonSkillsTag.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PersonSkillsTag`
+				SET
+					`Person` = null
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPersonSkillsTag->Id) . ' AND
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Unassociates all PersonSkillsTags
+		 * @return void
+		*/
+		public function UnassociateAllPersonSkillsTags() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonSkillsTag on this unsaved Person.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`PersonSkillsTag`
+				SET
+					`Person` = null
+				WHERE
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated PersonSkillsTag
+		 * @param PersonSkillsTag $objPersonSkillsTag
+		 * @return void
+		*/
+		public function DeleteAssociatedPersonSkillsTag(PersonSkillsTag $objPersonSkillsTag) {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonSkillsTag on this unsaved Person.');
+			if ((is_null($objPersonSkillsTag->Id)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonSkillsTag on this Person with an unsaved PersonSkillsTag.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PersonSkillsTag`
+				WHERE
+					`Id` = ' . $objDatabase->SqlVariable($objPersonSkillsTag->Id) . ' AND
+					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
+			');
+		}
+
+		/**
+		 * Deletes all associated PersonSkillsTags
+		 * @return void
+		*/
+		public function DeleteAllPersonSkillsTags() {
+			if ((is_null($this->intId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociatePersonSkillsTag on this unsaved Person.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Person::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`PersonSkillsTag`
 				WHERE
 					`Person` = ' . $objDatabase->SqlVariable($this->intId) . '
 			');
@@ -2504,8 +3046,8 @@
 			$strToReturn .= '<element name="Surname" type="xsd:string"/>';
 			$strToReturn .= '<element name="IDPassportNumber" type="xsd:string"/>';
 			$strToReturn .= '<element name="DateOfBirth" type="xsd:dateTime"/>';
-			$strToReturn .= '<element name="TelephoneNumber" type="xsd:int"/>';
-			$strToReturn .= '<element name="AlternativeTelephoneNumber" type="xsd:int"/>';
+			$strToReturn .= '<element name="TelephoneNumber" type="xsd:string"/>';
+			$strToReturn .= '<element name="AlternativeTelephoneNumber" type="xsd:string"/>';
 			$strToReturn .= '<element name="Nationality" type="xsd:string"/>';
 			$strToReturn .= '<element name="EthnicGroup" type="xsd:string"/>';
 			$strToReturn .= '<element name="DriversLicense" type="xsd:string"/>';
@@ -2513,6 +3055,9 @@
 			$strToReturn .= '<element name="LastUpdated" type="xsd:string"/>';
 			$strToReturn .= '<element name="FileDocumentObject" type="xsd1:FileDocument"/>';
 			$strToReturn .= '<element name="SearchMetaInfo" type="xsd:string"/>';
+			$strToReturn .= '<element name="PhoneVerified" type="xsd:int"/>';
+			$strToReturn .= '<element name="IdentityVerified" type="xsd:int"/>';
+			$strToReturn .= '<element name="DriversLicenseVerified" type="xsd:int"/>';
 			$strToReturn .= '<element name="__blnRestored" type="xsd:boolean"/>';
 			$strToReturn .= '</sequence></complexType>';
 			return $strToReturn;
@@ -2547,9 +3092,9 @@
 			if (property_exists($objSoapObject, 'DateOfBirth'))
 				$objToReturn->dttDateOfBirth = new QDateTime($objSoapObject->DateOfBirth);
 			if (property_exists($objSoapObject, 'TelephoneNumber'))
-				$objToReturn->intTelephoneNumber = $objSoapObject->TelephoneNumber;
+				$objToReturn->strTelephoneNumber = $objSoapObject->TelephoneNumber;
 			if (property_exists($objSoapObject, 'AlternativeTelephoneNumber'))
-				$objToReturn->intAlternativeTelephoneNumber = $objSoapObject->AlternativeTelephoneNumber;
+				$objToReturn->strAlternativeTelephoneNumber = $objSoapObject->AlternativeTelephoneNumber;
 			if (property_exists($objSoapObject, 'Nationality'))
 				$objToReturn->strNationality = $objSoapObject->Nationality;
 			if (property_exists($objSoapObject, 'EthnicGroup'))
@@ -2565,6 +3110,12 @@
 				$objToReturn->FileDocumentObject = FileDocument::GetObjectFromSoapObject($objSoapObject->FileDocumentObject);
 			if (property_exists($objSoapObject, 'SearchMetaInfo'))
 				$objToReturn->strSearchMetaInfo = $objSoapObject->SearchMetaInfo;
+			if (property_exists($objSoapObject, 'PhoneVerified'))
+				$objToReturn->intPhoneVerified = $objSoapObject->PhoneVerified;
+			if (property_exists($objSoapObject, 'IdentityVerified'))
+				$objToReturn->intIdentityVerified = $objSoapObject->IdentityVerified;
+			if (property_exists($objSoapObject, 'DriversLicenseVerified'))
+				$objToReturn->intDriversLicenseVerified = $objSoapObject->DriversLicenseVerified;
 			if (property_exists($objSoapObject, '__blnRestored'))
 				$objToReturn->__blnRestored = $objSoapObject->__blnRestored;
 			return $objToReturn;
@@ -2608,8 +3159,8 @@
 			$iArray['Surname'] = $this->strSurname;
 			$iArray['IDPassportNumber'] = $this->strIDPassportNumber;
 			$iArray['DateOfBirth'] = $this->dttDateOfBirth;
-			$iArray['TelephoneNumber'] = $this->intTelephoneNumber;
-			$iArray['AlternativeTelephoneNumber'] = $this->intAlternativeTelephoneNumber;
+			$iArray['TelephoneNumber'] = $this->strTelephoneNumber;
+			$iArray['AlternativeTelephoneNumber'] = $this->strAlternativeTelephoneNumber;
 			$iArray['Nationality'] = $this->strNationality;
 			$iArray['EthnicGroup'] = $this->strEthnicGroup;
 			$iArray['DriversLicense'] = $this->strDriversLicense;
@@ -2617,6 +3168,9 @@
 			$iArray['LastUpdated'] = $this->strLastUpdated;
 			$iArray['FileDocument'] = $this->intFileDocument;
 			$iArray['SearchMetaInfo'] = $this->strSearchMetaInfo;
+			$iArray['PhoneVerified'] = $this->intPhoneVerified;
+			$iArray['IdentityVerified'] = $this->intIdentityVerified;
+			$iArray['DriversLicenseVerified'] = $this->intDriversLicenseVerified;
 			return new ArrayIterator($iArray);
 		}
 
@@ -2669,11 +3223,16 @@
      * @property-read QQNode $FileDocument
      * @property-read QQNodeFileDocument $FileDocumentObject
      * @property-read QQNode $SearchMetaInfo
+     * @property-read QQNode $PhoneVerified
+     * @property-read QQNode $IdentityVerified
+     * @property-read QQNode $DriversLicenseVerified
      *
      *
      * @property-read QQReverseReferenceNodeEducation $Education
      * @property-read QQReverseReferenceNodeEmploymentHistory $EmploymentHistory
+     * @property-read QQReverseReferenceNodePersonAttachment $PersonAttachment
      * @property-read QQReverseReferenceNodePersonLanguage $PersonLanguage
+     * @property-read QQReverseReferenceNodePersonSkillsTag $PersonSkillsTag
      * @property-read QQReverseReferenceNodeReference $Reference
 
      * @property-read QQNode $_PrimaryKeyNode
@@ -2695,9 +3254,9 @@
 				case 'DateOfBirth':
 					return new QQNode('DateOfBirth', 'DateOfBirth', 'Date', $this);
 				case 'TelephoneNumber':
-					return new QQNode('TelephoneNumber', 'TelephoneNumber', 'Integer', $this);
+					return new QQNode('TelephoneNumber', 'TelephoneNumber', 'VarChar', $this);
 				case 'AlternativeTelephoneNumber':
-					return new QQNode('AlternativeTelephoneNumber', 'AlternativeTelephoneNumber', 'Integer', $this);
+					return new QQNode('AlternativeTelephoneNumber', 'AlternativeTelephoneNumber', 'VarChar', $this);
 				case 'Nationality':
 					return new QQNode('Nationality', 'Nationality', 'VarChar', $this);
 				case 'EthnicGroup':
@@ -2714,12 +3273,22 @@
 					return new QQNodeFileDocument('FileDocument', 'FileDocumentObject', 'Integer', $this);
 				case 'SearchMetaInfo':
 					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'Blob', $this);
+				case 'PhoneVerified':
+					return new QQNode('PhoneVerified', 'PhoneVerified', 'Integer', $this);
+				case 'IdentityVerified':
+					return new QQNode('IdentityVerified', 'IdentityVerified', 'Integer', $this);
+				case 'DriversLicenseVerified':
+					return new QQNode('DriversLicenseVerified', 'DriversLicenseVerified', 'Integer', $this);
 				case 'Education':
 					return new QQReverseReferenceNodeEducation($this, 'education', 'reverse_reference', 'Person', 'Education');
 				case 'EmploymentHistory':
 					return new QQReverseReferenceNodeEmploymentHistory($this, 'employmenthistory', 'reverse_reference', 'Person', 'EmploymentHistory');
+				case 'PersonAttachment':
+					return new QQReverseReferenceNodePersonAttachment($this, 'personattachment', 'reverse_reference', 'Person', 'PersonAttachment');
 				case 'PersonLanguage':
 					return new QQReverseReferenceNodePersonLanguage($this, 'personlanguage', 'reverse_reference', 'Person', 'PersonLanguage');
+				case 'PersonSkillsTag':
+					return new QQReverseReferenceNodePersonSkillsTag($this, 'personskillstag', 'reverse_reference', 'Person', 'PersonSkillsTag');
 				case 'Reference':
 					return new QQReverseReferenceNodeReference($this, 'reference', 'reverse_reference', 'Person', 'Reference');
 
@@ -2752,11 +3321,16 @@
      * @property-read QQNode $FileDocument
      * @property-read QQNodeFileDocument $FileDocumentObject
      * @property-read QQNode $SearchMetaInfo
+     * @property-read QQNode $PhoneVerified
+     * @property-read QQNode $IdentityVerified
+     * @property-read QQNode $DriversLicenseVerified
      *
      *
      * @property-read QQReverseReferenceNodeEducation $Education
      * @property-read QQReverseReferenceNodeEmploymentHistory $EmploymentHistory
+     * @property-read QQReverseReferenceNodePersonAttachment $PersonAttachment
      * @property-read QQReverseReferenceNodePersonLanguage $PersonLanguage
+     * @property-read QQReverseReferenceNodePersonSkillsTag $PersonSkillsTag
      * @property-read QQReverseReferenceNodeReference $Reference
 
      * @property-read QQNode $_PrimaryKeyNode
@@ -2778,9 +3352,9 @@
 				case 'DateOfBirth':
 					return new QQNode('DateOfBirth', 'DateOfBirth', 'QDateTime', $this);
 				case 'TelephoneNumber':
-					return new QQNode('TelephoneNumber', 'TelephoneNumber', 'integer', $this);
+					return new QQNode('TelephoneNumber', 'TelephoneNumber', 'string', $this);
 				case 'AlternativeTelephoneNumber':
-					return new QQNode('AlternativeTelephoneNumber', 'AlternativeTelephoneNumber', 'integer', $this);
+					return new QQNode('AlternativeTelephoneNumber', 'AlternativeTelephoneNumber', 'string', $this);
 				case 'Nationality':
 					return new QQNode('Nationality', 'Nationality', 'string', $this);
 				case 'EthnicGroup':
@@ -2797,12 +3371,22 @@
 					return new QQNodeFileDocument('FileDocument', 'FileDocumentObject', 'integer', $this);
 				case 'SearchMetaInfo':
 					return new QQNode('SearchMetaInfo', 'SearchMetaInfo', 'string', $this);
+				case 'PhoneVerified':
+					return new QQNode('PhoneVerified', 'PhoneVerified', 'integer', $this);
+				case 'IdentityVerified':
+					return new QQNode('IdentityVerified', 'IdentityVerified', 'integer', $this);
+				case 'DriversLicenseVerified':
+					return new QQNode('DriversLicenseVerified', 'DriversLicenseVerified', 'integer', $this);
 				case 'Education':
 					return new QQReverseReferenceNodeEducation($this, 'education', 'reverse_reference', 'Person', 'Education');
 				case 'EmploymentHistory':
 					return new QQReverseReferenceNodeEmploymentHistory($this, 'employmenthistory', 'reverse_reference', 'Person', 'EmploymentHistory');
+				case 'PersonAttachment':
+					return new QQReverseReferenceNodePersonAttachment($this, 'personattachment', 'reverse_reference', 'Person', 'PersonAttachment');
 				case 'PersonLanguage':
 					return new QQReverseReferenceNodePersonLanguage($this, 'personlanguage', 'reverse_reference', 'Person', 'PersonLanguage');
+				case 'PersonSkillsTag':
+					return new QQReverseReferenceNodePersonSkillsTag($this, 'personskillstag', 'reverse_reference', 'Person', 'PersonSkillsTag');
 				case 'Reference':
 					return new QQReverseReferenceNodeReference($this, 'reference', 'reverse_reference', 'Person', 'Reference');
 

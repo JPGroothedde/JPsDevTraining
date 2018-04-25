@@ -41,7 +41,7 @@ class FileUploadForm extends QForm {
                         AppSpecificFunctions::ShowNotedFeedback('File could not be sent...');
                     }
                 } else {
-                    AppSpecificFunctions::ShowNotedFeedback('Could not find realpath for file to send');
+                    AppSpecificFunctions::ShowNotedFeedback('Could not find real path for file to send');
                 }
             }
         }

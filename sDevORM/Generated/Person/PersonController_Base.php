@@ -11,6 +11,9 @@ class PersonController_Base {
     public $txtEthnicGroup;
     public $txtDriversLicense;
     public $txtCurrentAddress;
+    public $btnPhoneVerified;
+    public $btnIdentityVerified;
+    public $btnDriversLicenseVerified;
     public $lstFileDocument,$saveUsingLstFileDocument = false;
     
     public function __construct($objParentObject,$InitObject = null) {
@@ -44,6 +47,45 @@ class PersonController_Base {
 
         $this->txtCurrentAddress = new QTextBox($objParentObject);
         $this->txtCurrentAddress->Name = 'Current Address';
+
+        $this->btnPhoneVerified = new QButton($objParentObject);
+        $this->btnPhoneVerified->Name = 'Phone Verified';
+        $this->btnPhoneVerified->HtmlEntities = false;
+        $trueLabel = 'Phone # Verified';
+        $falseLabel = 'Phone # Verified';
+        if (strlen($trueLabel) < 1)
+            $trueLabel = null;
+        if (strlen($falseLabel) < 1)
+            $falseLabel = null;
+        $this->btnPhoneVerified->setAsToggle(true,$trueLabel,$falseLabel);
+        $this->btnPhoneVerified->DisplayStyle = QDisplayStyle::Block;
+        $this->btnPhoneVerified->AddAction(new QClickEvent(), new QAjaxAction('btnPhoneVerified_Clicked'));//btnPhoneVerified_Clicked must be implemented in Page Controller class (QForm class)
+
+        $this->btnIdentityVerified = new QButton($objParentObject);
+        $this->btnIdentityVerified->Name = 'Identity Verified';
+        $this->btnIdentityVerified->HtmlEntities = false;
+        $trueLabel = 'Identity Verified';
+        $falseLabel = 'Identity Verified';
+        if (strlen($trueLabel) < 1)
+            $trueLabel = null;
+        if (strlen($falseLabel) < 1)
+            $falseLabel = null;
+        $this->btnIdentityVerified->setAsToggle(true,$trueLabel,$falseLabel);
+        $this->btnIdentityVerified->DisplayStyle = QDisplayStyle::Block;
+        $this->btnIdentityVerified->AddAction(new QClickEvent(), new QAjaxAction('btnIdentityVerified_Clicked'));//btnIdentityVerified_Clicked must be implemented in Page Controller class (QForm class)
+
+        $this->btnDriversLicenseVerified = new QButton($objParentObject);
+        $this->btnDriversLicenseVerified->Name = 'Drivers License Verified';
+        $this->btnDriversLicenseVerified->HtmlEntities = false;
+        $trueLabel = 'Driver\'s License';
+        $falseLabel = 'Driver\'s License';
+        if (strlen($trueLabel) < 1)
+            $trueLabel = null;
+        if (strlen($falseLabel) < 1)
+            $falseLabel = null;
+        $this->btnDriversLicenseVerified->setAsToggle(true,$trueLabel,$falseLabel);
+        $this->btnDriversLicenseVerified->DisplayStyle = QDisplayStyle::Block;
+        $this->btnDriversLicenseVerified->AddAction(new QClickEvent(), new QAjaxAction('btnDriversLicenseVerified_Clicked'));//btnDriversLicenseVerified_Clicked must be implemented in Page Controller class (QForm class)
 
         $this->lstFileDocument = new QListBox($objParentObject);
         $this->lstFileDocument->Name = 'File Document';
@@ -101,6 +143,12 @@ class PersonController_Base {
         $this->txtEthnicGroup->Text = '';
         $this->txtDriversLicense->Text = '';
         $this->txtCurrentAddress->Text = '';
+        
+        $this->btnPhoneVerified->IsToggled = false;
+        
+        $this->btnIdentityVerified->IsToggled = false;
+        
+        $this->btnDriversLicenseVerified->IsToggled = false;
 
         if (!$Object) {
             $this->refreshAll();
@@ -135,6 +183,21 @@ class PersonController_Base {
         }
         if (!is_null($Object->CurrentAddress)) {
             $this->txtCurrentAddress->Text = $Object->CurrentAddress;
+        }
+        if ($Object->PhoneVerified == 1) {
+            $this->btnPhoneVerified->Toggle();
+        } else {
+            $this->btnPhoneVerified->Toggle(false);
+        }
+        if ($Object->IdentityVerified == 1) {
+            $this->btnIdentityVerified->Toggle();
+        } else {
+            $this->btnIdentityVerified->Toggle(false);
+        }
+        if ($Object->DriversLicenseVerified == 1) {
+            $this->btnDriversLicenseVerified->Toggle();
+        } else {
+            $this->btnDriversLicenseVerified->Toggle(false);
         }
         
         if (!is_null($Object->FileDocumentObject)) {
@@ -199,6 +262,21 @@ class PersonController_Base {
                 $this->txtCurrentAddress->Name = $nameValue;
             $output = $withName ? $this->txtCurrentAddress->RenderWithName($blnPrintOutput):$this->txtCurrentAddress->Render($blnPrintOutput);
         }
+        if (strtoupper($strControl) == 'PHONEVERIFIED') {
+            if (strlen($nameValue) > 0)
+                $this->btnPhoneVerified->Name = $nameValue;
+            $output = $withName ? $this->btnPhoneVerified->RenderWithName($blnPrintOutput):$this->btnPhoneVerified->Render($blnPrintOutput);
+        }
+        if (strtoupper($strControl) == 'IDENTITYVERIFIED') {
+            if (strlen($nameValue) > 0)
+                $this->btnIdentityVerified->Name = $nameValue;
+            $output = $withName ? $this->btnIdentityVerified->RenderWithName($blnPrintOutput):$this->btnIdentityVerified->Render($blnPrintOutput);
+        }
+        if (strtoupper($strControl) == 'DRIVERSLICENSEVERIFIED') {
+            if (strlen($nameValue) > 0)
+                $this->btnDriversLicenseVerified->Name = $nameValue;
+            $output = $withName ? $this->btnDriversLicenseVerified->RenderWithName($blnPrintOutput):$this->btnDriversLicenseVerified->Render($blnPrintOutput);
+        }
         if (strtoupper($strControl) == 'FILEDOCUMENT') {
             if (strlen($nameValue) > 0)
                 $this->lstFileDocument->Name = $nameValue;
@@ -219,6 +297,9 @@ class PersonController_Base {
         $this->renderControl('ETHNICGROUP',$withName);
         $this->renderControl('DRIVERSLICENSE',$withName);
         $this->renderControl('CURRENTADDRESS',$withName);
+        $this->renderControl('PHONEVERIFIED',$withName);
+        $this->renderControl('IDENTITYVERIFIED',$withName);
+        $this->renderControl('DRIVERSLICENSEVERIFIED',$withName);
         $this->renderControl('FILEDOCUMENT',$withName);
     }
 
@@ -254,6 +335,15 @@ class PersonController_Base {
                 <div class="col-md-6">
                    '.$this->renderControl('CurrentAddress',$withName, null, false).'
                 </div>
+                <div class="col-md-6">
+                   '.$this->renderControl('PhoneVerified',$withName, null, false).'
+                </div>
+                <div class="col-md-6">
+                   '.$this->renderControl('IdentityVerified',$withName, null, false).'
+                </div>
+                <div class="col-md-6">
+                   '.$this->renderControl('DriversLicenseVerified',$withName, null, false).'
+                </div>
             </div>';
         return $html;
     }
@@ -269,6 +359,9 @@ class PersonController_Base {
         $this->txtEthnicGroup->Visible = false;
         $this->txtDriversLicense->Visible = false;
         $this->txtCurrentAddress->Visible = false;
+        $this->btnPhoneVerified->Visible = false;
+        $this->btnIdentityVerified->Visible = false;
+        $this->btnDriversLicenseVerified->Visible = false;
         $this->lstFileDocument->Visible = false;
     }
 
@@ -283,6 +376,9 @@ class PersonController_Base {
         $this->txtEthnicGroup->Visible = true;
         $this->txtDriversLicense->Visible = true;
         $this->txtCurrentAddress->Visible = true;
+        $this->btnPhoneVerified->Visible = true;
+        $this->btnIdentityVerified->Visible = true;
+        $this->btnDriversLicenseVerified->Visible = true;
         $this->lstFileDocument->Visible = true;
     }
 
@@ -297,6 +393,9 @@ class PersonController_Base {
         $this->txtEthnicGroup->Refresh();
         $this->txtDriversLicense->Refresh();
         $this->txtCurrentAddress->Refresh();
+        $this->btnPhoneVerified->Refresh();
+        $this->btnIdentityVerified->Refresh();
+        $this->btnDriversLicenseVerified->Refresh();
         $this->lstFileDocument->Refresh();
     }
 
@@ -333,6 +432,15 @@ class PersonController_Base {
                 break;
             case 'CURRENTADDRESS':
                 $this->txtCurrentAddress->Text = $value;
+                break;
+            case 'PHONEVERIFIED':
+                $this->btnPhoneVerified->IsToggled = $value;
+                break;
+            case 'IDENTITYVERIFIED':
+                $this->btnIdentityVerified->IsToggled = $value;
+                break;
+            case 'DRIVERSLICENSEVERIFIED':
+                $this->btnDriversLicenseVerified->IsToggled = $value;
                 break;
             case 'FILEDOCUMENT':
                 $this->lstFileDocument->SelectedValue = $value;
@@ -387,6 +495,18 @@ class PersonController_Base {
             case 'CURRENTADDRESS':
                 if ($this->txtCurrentAddress->Text)
                     return $this->txtCurrentAddress->Text;
+                break;
+            case 'PHONEVERIFIED':
+                if ($this->btnPhoneVerified->IsToggled)
+                    return $this->btnPhoneVerified->IsToggled;
+                break;
+            case 'IDENTITYVERIFIED':
+                if ($this->btnIdentityVerified->IsToggled)
+                    return $this->btnIdentityVerified->IsToggled;
+                break;
+            case 'DRIVERSLICENSEVERIFIED':
+                if ($this->btnDriversLicenseVerified->IsToggled)
+                    return $this->btnDriversLicenseVerified->IsToggled;
                 break;
             case 'FILEDOCUMENT':
                 if ($this->lstFileDocument->SelectedValue)
@@ -443,6 +563,18 @@ class PersonController_Base {
                 if ($this->txtCurrentAddress)
                     return $this->txtCurrentAddress->ControlId;
                 break;
+            case 'PHONEVERIFIED':
+                if ($this->btnPhoneVerified)
+                    return $this->btnPhoneVerified->ControlId;
+                break;
+            case 'IDENTITYVERIFIED':
+                if ($this->btnIdentityVerified)
+                    return $this->btnIdentityVerified->ControlId;
+                break;
+            case 'DRIVERSLICENSEVERIFIED':
+                if ($this->btnDriversLicenseVerified)
+                    return $this->btnDriversLicenseVerified->ControlId;
+                break;
             case 'FILEDOCUMENT':
                 if ($this->lstFileDocument)
                     return $this->lstFileDocument->ControlId;
@@ -497,6 +629,18 @@ class PersonController_Base {
             case 'CURRENTADDRESS':
                 $this->txtCurrentAddress->Visible = false;
                 $this->txtCurrentAddress->Refresh();
+                break;
+            case 'PHONEVERIFIED':
+                $this->btnPhoneVerified->Visible = false;
+                $this->btnPhoneVerified->Refresh();
+                break;
+            case 'IDENTITYVERIFIED':
+                $this->btnIdentityVerified->Visible = false;
+                $this->btnIdentityVerified->Refresh();
+                break;
+            case 'DRIVERSLICENSEVERIFIED':
+                $this->btnDriversLicenseVerified->Visible = false;
+                $this->btnDriversLicenseVerified->Refresh();
                 break;
             case 'FILEDOCUMENT':
                 $this->lstFileDocument->Visible = false;
@@ -553,6 +697,18 @@ class PersonController_Base {
                 $this->txtCurrentAddress->Visible = true;
                 $this->txtCurrentAddress->Refresh();
                 break;
+            case 'PHONEVERIFIED':
+                $this->btnPhoneVerified->Visible = true;
+                $this->btnPhoneVerified->Refresh();
+                break;
+            case 'IDENTITYVERIFIED':
+                $this->btnIdentityVerified->Visible = true;
+                $this->btnIdentityVerified->Refresh();
+                break;
+            case 'DRIVERSLICENSEVERIFIED':
+                $this->btnDriversLicenseVerified->Visible = true;
+                $this->btnDriversLicenseVerified->Refresh();
+                break;
             case 'FILEDOCUMENT':
                 $this->lstFileDocument->Visible = true;
                 $this->lstFileDocument->Refresh();
@@ -595,6 +751,9 @@ class PersonController_Base {
         $this->Object->EthnicGroup = $this->txtEthnicGroup->Text;
         $this->Object->DriversLicense = $this->txtDriversLicense->Text;
         $this->Object->CurrentAddress = $this->txtCurrentAddress->Text;
+        $this->Object->PhoneVerified = $this->btnPhoneVerified->IsToggled?1:0;
+        $this->Object->IdentityVerified = $this->btnIdentityVerified->IsToggled?1:0;
+        $this->Object->DriversLicenseVerified = $this->btnDriversLicenseVerified->IsToggled?1:0;
         if ($FileDocument) {
             $this->Object->FileDocumentObject = $FileDocument;
         }
@@ -700,6 +859,9 @@ class PersonController_Base {
         EthnicGroup-> Value before: '.$previousValues->EthnicGroup.', Value after: '.$this->Object->EthnicGroup.'<br>
         DriversLicense-> Value before: '.$previousValues->DriversLicense.', Value after: '.$this->Object->DriversLicense.'<br>
         CurrentAddress-> Value before: '.$previousValues->CurrentAddress.', Value after: '.$this->Object->CurrentAddress.'<br>
+        PhoneVerified-> Value before: '.$previousValues->PhoneVerified.', Value after: '.$this->Object->PhoneVerified.'<br>
+        IdentityVerified-> Value before: '.$previousValues->IdentityVerified.', Value after: '.$this->Object->IdentityVerified.'<br>
+        DriversLicenseVerified-> Value before: '.$previousValues->DriversLicenseVerified.', Value after: '.$this->Object->DriversLicenseVerified.'<br>
         ';
         } else {
         $changeText = 'FirstName-> Value: '.$this->Object->FirstName.'<br>
@@ -712,6 +874,9 @@ class PersonController_Base {
         EthnicGroup-> Value: '.$this->Object->EthnicGroup.'<br>
         DriversLicense-> Value: '.$this->Object->DriversLicense.'<br>
         CurrentAddress-> Value: '.$this->Object->CurrentAddress.'<br>
+        PhoneVerified-> Value: '.$this->Object->PhoneVerified.'<br>
+        IdentityVerified-> Value: '.$this->Object->IdentityVerified.'<br>
+        DriversLicenseVerified-> Value: '.$this->Object->DriversLicenseVerified.'<br>
         ';
         }
         try {

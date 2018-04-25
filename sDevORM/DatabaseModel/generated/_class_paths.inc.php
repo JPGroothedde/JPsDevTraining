@@ -89,10 +89,20 @@
 		QApplicationBase::$ClassFile['qqnodeperson'] = __MODEL__ . '/Person.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodeperson'] = __MODEL__ . '/Person.class.php';
 
+	// ClassPaths for the PersonAttachment class
+		QApplicationBase::$ClassFile['personattachment'] = __MODEL__ . '/PersonAttachment.class.php';
+		QApplicationBase::$ClassFile['qqnodepersonattachment'] = __MODEL__ . '/PersonAttachment.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodepersonattachment'] = __MODEL__ . '/PersonAttachment.class.php';
+
 	// ClassPaths for the PersonLanguage class
 		QApplicationBase::$ClassFile['personlanguage'] = __MODEL__ . '/PersonLanguage.class.php';
 		QApplicationBase::$ClassFile['qqnodepersonlanguage'] = __MODEL__ . '/PersonLanguage.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodepersonlanguage'] = __MODEL__ . '/PersonLanguage.class.php';
+
+	// ClassPaths for the PersonSkillsTag class
+		QApplicationBase::$ClassFile['personskillstag'] = __MODEL__ . '/PersonSkillsTag.class.php';
+		QApplicationBase::$ClassFile['qqnodepersonskillstag'] = __MODEL__ . '/PersonSkillsTag.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodepersonskillstag'] = __MODEL__ . '/PersonSkillsTag.class.php';
 
 	// ClassPaths for the Reference class
 		QApplicationBase::$ClassFile['reference'] = __MODEL__ . '/Reference.class.php';

@@ -7,7 +7,7 @@ require(__SDEV_ORM__.'/Implementations/EmploymentHistory/EmploymentHistoryContro
         AppSpecificFunctions::Redirect(__USRMNG__.'/login/');
 }*/
 // Remove this line if the file needs to be accessible remotely(production)
-AppSpecificFunctions::CheckRemoteAdmin();
+//AppSpecificFunctions::CheckRemoteAdmin();
 class EmploymentHistory_DetailForm extends QForm {
     // EmploymentHistory Object variables
     protected $EmploymentHistoryInstance;

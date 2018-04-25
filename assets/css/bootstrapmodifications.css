@@ -1,2 +1,37 @@
 @import url("sDevBaseModifications/basemodifications.css");
 /* Custom modifications can follow below */
+html {
+    font-family: Avanir;
+}
+.btn-primary {
+    color: #468DF0;
+    background-color: #FFFFFF;
+    border: 2px solid #468DF0;
+    border-radius: 15px;
+}
+.btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
+    background-color: #FFFFFF;
+}
+.btn-primary:hover {
+    color: #468DF0;
+    background-color: #FFFFFF;
+    border: 2px solid #468DF0;
+    border-radius: 15px;
+}
+.btn-default {
+    color: #58B5AB;
+    background-color: #FFFFFF;
+    border: 2px solid #58B5AB;
+    border-radius: 15px;
+}
+.form-control {
+    border-radius: 15px;
+}
+#LeftSideBar {
+    background-color: transparent;
+    background: linear-gradient(to bottom,#58B5AB,#54B4E2);
+}
+#LeftSideBar .nav > li > a {
+    color: #ffffff;
+    background-color: transparent;
+}

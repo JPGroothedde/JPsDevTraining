@@ -58,7 +58,7 @@ class sHtml2PdfInstance {
             return true;
         }
         catch(HTML2PDF_exception $e) {
-            echo $e;
+            AppSpecificFunctions::AddCustomLog("The error is ".$e);
             return false;
         }
     }

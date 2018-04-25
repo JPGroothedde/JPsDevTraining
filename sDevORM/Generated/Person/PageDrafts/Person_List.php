@@ -58,10 +58,10 @@ class Person_ListForm extends QForm {
         }
     }
     protected function InitPersonDataList() {
-        $searchableAttributes = array(QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->FileDocumentObject->Id);
-        $SortAttributesShown = array('First Name','Surname','ID Passport Number','Date Of Birth','Telephone Number','Alternative Telephone Number','Nationality','Ethnic Group','Drivers License','Current Address','File Document Object');
-        $SortAttributes = array(QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->FileDocumentObject->Id);
-        $columnItems = array('FirstName','Surname','IDPassportNumber','DateOfBirth','TelephoneNumber','AlternativeTelephoneNumber','Nationality','EthnicGroup','DriversLicense','CurrentAddress','FileDocument');
+        $searchableAttributes = array(QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->PhoneVerified,QQN::Person()->IdentityVerified,QQN::Person()->DriversLicenseVerified,QQN::Person()->FileDocumentObject->Id);
+        $SortAttributesShown = array('First Name','Surname','ID Passport Number','Date Of Birth','Telephone Number','Alternative Telephone Number','Nationality','Ethnic Group','Drivers License','Current Address','Phone Verified','Identity Verified','Drivers License Verified','File Document Object');
+        $SortAttributes = array(QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->PhoneVerified,QQN::Person()->IdentityVerified,QQN::Person()->DriversLicenseVerified,QQN::Person()->FileDocumentObject->Id);
+        $columnItems = array('FirstName','Surname','IDPassportNumber','DateOfBirth','TelephoneNumber','AlternativeTelephoneNumber','Nationality','EthnicGroup','DriversLicense','CurrentAddress','PhoneVerified','IdentityVerified','DriversLicenseVerified','FileDocument');
         $this->btnNewPerson = AppSpecificFunctions::getNewActionButton($this,'Add Person','btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss,'btnNewPerson_Clicked');
         $this->PersonList = new PersonDataList($this, QQN::Person(),$searchableAttributes, null, $columnItems, $SortAttributes,$SortAttributesShown);
     }
@@ -101,6 +101,11 @@ class Person_ListForm extends QForm {
         $this->btnDeletePerson->Visible = false;
         AppSpecificFunctions::ToggleModal('PersonModal');
     }
+    protected function btnDriversLicenseVerified_Clicked($strFormId, $strControlId, $strParameter) {
+        $this->GetControl($this->PersonInstance->getControlId('DriversLicenseVerified'))->Toggle(!$this->GetControl($this->PersonInstance->getControlId('DriversLicenseVerified'))->IsToggled);
+    }
+
+    
 }
 Person_ListForm::Run('Person_ListForm');
 ?>

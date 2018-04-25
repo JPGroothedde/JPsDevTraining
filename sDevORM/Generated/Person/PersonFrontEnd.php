@@ -32,4 +32,13 @@
     <div class="col-md-6">
         <?php $this->PersonInstance->renderControl('CurrentAddress');?>
     </div>
+    <div class="col-md-6">
+        <?php $this->PersonInstance->renderControl('PhoneVerified');?>
+    </div>
+    <div class="col-md-6">
+        <?php $this->PersonInstance->renderControl('IdentityVerified');?>
+    </div>
+    <div class="col-md-6">
+        <?php $this->PersonInstance->renderControl('DriversLicenseVerified');?>
+    </div>
 </div>

@@ -2,7 +2,7 @@
 require ('HeaderComponents/standard_header_init.inc.php');
 ?>
 <div id="wrapper">
-    <?php echo AppMenus::getMenu('Default',MenuType::navbarInverseFixedTop,$strPageTitle,true,__APPNAME__,'mainNavbar',true);?>
+    <?php echo AppMenus::getMenu('Default',MenuType::navbarInverseFixedTop,$strPageTitle,false,__APPNAME__,'mainNavbar',true);?>
 
     <div class="container-fluid" id="ieInfo"></div>
 	<div class="container">

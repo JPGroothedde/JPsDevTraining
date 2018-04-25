@@ -8,7 +8,15 @@
                 <h4 class="modal-title" id="PersonModalLabel">Person Details</h4>
             </div>
             <div class="modal-body">
-                <?php require(__SDEV_ORM__.'/Implementations/Person/PersonFrontEnd.php');?>
+                <?php //require(__SDEV_ORM__.'/Implementations/Person/PersonFrontEnd.php');?>
+                <div class="row">
+                    <div class="col-md-6">
+	                    <?php $this->PersonInstance->renderControl('FirstName');?>
+                    </div>
+                    <div class="col-md-6">
+	                    <?php $this->PersonInstance->renderControl('Surname');?>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="row">
