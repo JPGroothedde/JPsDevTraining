@@ -2,6 +2,8 @@
 require('../../sdev.inc.php');
 require(__PAGE_CONTROL__.'/pageManager.php');
 require(__SDEV_ORM__.'/Implementations/Person/PersonController.php');
+require(__SDEV_ORM__.'/Implementations/PersonAttachment/PersonAttachmentController.php');
+require(__SDEV_CONTROLS__.'/Implementations/PersonAttachment/PersonAttachmentDataList.php');
 require(__SDEV_ORM__.'/Implementations/EmploymentHistory/EmploymentHistoryController.php');
 require(__SDEV_ORM__.'/Implementations/Education/EducationController.php');
 require(__SDEV_ORM__.'/Implementations/Reference/ReferenceController.php');
@@ -21,6 +23,8 @@ class Person_DetailForm extends QForm {
     protected $btnAddAttachment,$btnAddProfilePic;
 	protected $listIdPassportDriversLicense;
 	protected $PersonId;
+	protected $PersonAttachmentList;
+	protected $btnNewPersonAttachment;
 	
 	// EmploymentHistory Object variables
 	protected $EmploymentHistoryInstance;
@@ -76,6 +80,7 @@ class Person_DetailForm extends QForm {
 	    $this->InitReferenceInstance();
 	    $this->InitProfilePictureUpload();
 	    $this->InitAttachmentUpload();
+	    $this->InitPersonAttachmentDataList();
 		
 	    
         $objId = AppSpecificFunctions::PathInfo(0);
@@ -173,7 +178,14 @@ class Person_DetailForm extends QForm {
 			AppSpecificFunctions::ToggleModal('profilePictureModal');
 	}
 	
-	
+	protected function InitPersonAttachmentDataList() {
+		$searchableAttributes = array(QQN::PersonAttachment()->Name,QQN::PersonAttachment()->PersonObject->Id,QQN::PersonAttachment()->FileDocumentObject->Id);
+		$SortAttributesShown = array('Name','Person Object','File Document Object');
+		$SortAttributes = array(QQN::PersonAttachment()->Name,QQN::PersonAttachment()->PersonObject->Id,QQN::PersonAttachment()->FileDocumentObject->Id);
+		$columnItems = array('Name','Person','FileDocument');
+		//$this->btnNewPersonAttachment = AppSpecificFunctions::getNewActionButton($this,'Add PersonAttachment','btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss,'btnNewPersonAttachment_Clicked');
+		$this->PersonAttachmentList = new PersonAttachmentDataList($this, QQN::PersonAttachment(),$searchableAttributes, null, $columnItems, $SortAttributes,$SortAttributesShown,'','','','',2,'','',false,false);
+	}
 	///////////////////////////////////////////Employment History//////////////////////////////////////
 	protected function InitEmploymentHistoryInstance() {
 		$this->EmploymentHistoryInstance = new EmploymentHistoryController($this);
@@ -426,8 +438,11 @@ class Person_DetailForm extends QForm {
     	$ProfilePictureObj = Person::QuerySingle(QQ::Equal(QQN::Person()->Id, $PersonId));
 		$ProfilePictureObj->FileDocumentObject;
 		
-	    $ProfilePicturePath = __APP_IMAGE_ASSETS__.'/image_not_available.jpg';
-	    
+		if ($ProfilePictureObj->FileDocumentObject) {
+			$ProfilePicturePath = $ProfilePictureObj->FileDocumentObject->Path;
+		} else {
+			$ProfilePicturePath = __APP_IMAGE_ASSETS__.'/image_not_available.jpg';
+		}
 		$htmlResults = '<img class="img-circle" style="width:200px; height: 200px;" src="'.$ProfilePicturePath.'">';
 		$this->ProfilePicture->updateControl($htmlResults);
     }
@@ -448,8 +463,10 @@ class Person_DetailForm extends QForm {
 		$this->attachmentUploader = new attachmentUploader($this,null,'attachmentUploaded');
 		$this->attachmentUploadFeedback = new sUIElementsBase($this);
 		
-		$this->attachmentUploadName = new QTextBox($this);
-		$this->attachmentUploadName->Placeholder = 'Please supply a name for the attachment....';
+		$this->attachmentUploadName = new QListBox($this);
+		$this->attachmentUploadName->AddItem('Please supply a name for the attachment.');
+		$this->attachmentUploadName->AddItem('ID/Passport');
+		$this->attachmentUploadName->AddItem('Drivers License');
 	}
 	protected function attachmentUploaded($strFormId, $strControlId, $strParameter) {
 		$uploadedArray = $this->attachmentUploader->HandleDocumentUpload($strFormId, $strControlId, $strParameter,$this->PersonId);
@@ -461,6 +478,8 @@ class Person_DetailForm extends QForm {
 		}
 		$html .= '</div>';
 		$this->attachmentUploadFeedback->updateControl($html);
+		AppSpecificFunctions::ToggleModal('AddIDPassportDriversLicenseModal');
+		$this->PersonAttachmentList->refreshList();
 	}
 	protected function generateCV($strFormId, $strControlId, $strParameter) {
 		$filename = date("Y-m-d_h-m-s").'.pdf';

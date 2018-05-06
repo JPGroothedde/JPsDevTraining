@@ -72,9 +72,9 @@ class Person_OverviewForm extends QForm {
     }
     protected function InitPersonDataGrid() {
         $searchableAttributes = array(QQN::Person()->Id,QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->FileDocumentObject->Id);
-        $headerItems = array('#','First Name','Surname','ID Passport Number','Date Of Birth');//,'Telephone Number','Alternative Telephone Number','Nationality','Ethnic Group','Drivers License','Current Address','File Document Object');
+        $headerItems = array('First Name','Surname','ID Passport Number','Date Of Birth');//,'Telephone Number','Alternative Telephone Number','Nationality','Ethnic Group','Drivers License','Current Address','File Document Object');
         $headerSortNodes = array(QQN::Person()->Id,QQN::Person()->FirstName,QQN::Person()->Surname,QQN::Person()->IDPassportNumber,QQN::Person()->DateOfBirth,QQN::Person()->TelephoneNumber,QQN::Person()->AlternativeTelephoneNumber,QQN::Person()->Nationality,QQN::Person()->EthnicGroup,QQN::Person()->DriversLicense,QQN::Person()->CurrentAddress,QQN::Person()->FileDocumentObject->Id);
-        $columnItems = array('Id','FirstName','Surname','IDPassportNumber','DateOfBirth');//,'TelephoneNumber','AlternativeTelephoneNumber','Nationality','EthnicGroup','DriversLicense','CurrentAddress','FileDocument');
+        $columnItems = array('FirstName','Surname','IDPassportNumber','DateOfBirth');//,'TelephoneNumber','AlternativeTelephoneNumber','Nationality','EthnicGroup','DriversLicense','CurrentAddress','FileDocument');
         $this->PersonWaitControlIcon = new QWaitIcon($this);
         $this->btnNewPerson = new QButton($this);
         $this->btnNewPerson->Text = '';

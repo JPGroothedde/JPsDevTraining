@@ -141,7 +141,7 @@ class Person_DetailForm extends QForm {
 	    $this->txtCurrentAddress = new QTextBox($this);
 	    $this->txtCurrentAddress->Name = 'Current Address';
 	    $this->txtCurrentAddress->TextMode = 'MultiLine';
-	    $this->txtCurrentAddress->Rows  = 5;
+	    $this->txtCurrentAddress->Rows = 5;
     }
     protected  function btnPersonNext_Clicked($strFormId,$strControld,$strParameter) {
 	    $FirstNameValidate      = AppSpecificFunctions::validateFieldAsRequired($this->txtFirstName);

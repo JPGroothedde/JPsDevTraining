@@ -9,29 +9,90 @@ html {
     border: 2px solid #468DF0;
     border-radius: 15px;
 }
-.btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
-    background-color: #FFFFFF;
+
+.btn:hover {
+    box-shadow: 0 18px 12px -6px rgba(0, 0, 0, .075)!important;
 }
-.btn-primary:hover {
-    color: #468DF0;
-    background-color: #FFFFFF;
-    border: 2px solid #468DF0;
-    border-radius: 15px;
-}
-.btn-default {
-    color: #58B5AB;
-    background-color: #FFFFFF;
-    border: 2px solid #58B5AB;
-    border-radius: 15px;
-}
-.form-control {
-    border-radius: 15px;
-}
+
 #LeftSideBar {
     background-color: transparent;
-    background: linear-gradient(to bottom,#58B5AB,#54B4E2);
+    background: linear-gradient(to bottom,#468DF0,#58B5AB);
 }
 #LeftSideBar .nav > li > a {
     color: #ffffff;
     background-color: transparent;
+}
+
+.btn {
+    border-radius: 30px;
+}
+
+.btn-default, .btn-default:hover {
+    color: #58B5AB;
+    background-color: #FFFFFF;
+    border: 2px solid #58B5AB;
+}
+
+
+.btn-primary, .btn-primary:hover {
+    color: #468DF0;
+    background-color: #FFFFFF;
+    border: 2px solid #468DF0;
+}
+
+
+.btn-success, .btn-success:hover {
+    color: #5ABD51;
+    background-color: #FFFFFF;
+    border: 2px solid #5ABD51;
+}
+
+.btn-info, .btn-info:hover {
+    color: #54B4E2 ;
+    background-color: #FFFFFF;
+    border: 2px solid #54B4E2 ;
+}
+
+.btn-warning, .btn-warning:hover {
+    color: #F38F31  ;
+    background-color: #FFFFFF;
+    border: 2px solid #F38F31 ;
+}
+
+.btn-danger, .btn-danger:hover {
+    color: #BE3624  ;
+    background-color: #FFFFFF;
+    border: 2px solid #BE3624 ;
+}
+
+.btn.disabled {
+    border: none;
+}
+
+.btn-link:hover {
+    box-shadow: none !important;
+}
+
+.form-control {
+    border-radius: 30px;
+}
+.form-control:focus {
+    border-color: #58B5AB;
+    outline: none;
+    -webkit-box-shadow: 0 12px 12px -6px rgba(0, 0, 0, .075);
+    box-shadow: 0 12px 12px -6px rgba(0, 0, 0, .075);
+}
+
+#btnLeftSideBarCollapse {
+    top: 0px;
+    position: fixed;
+    left: 0px;
+    width: 250px;
+    height: 50px;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-indent: 100px;
+    border: none;
+    outline: none;
 }

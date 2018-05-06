@@ -21,13 +21,13 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-4">
-                        <?php $this->btnSavePerson->Render();?>
+                        <button type="button" class="btn btn-default rippleclick mrg-top10 fullWidth" data-dismiss="modal">Cancel</button>
                     </div>
                     <div class="col-md-4">
                         <?php $this->btnDeletePerson->Render();?>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-default rippleclick mrg-top10 fullWidth" data-dismiss="modal">Cancel</button>
+		                <?php $this->btnSavePerson->Render();?>
                     </div>
                 </div>
             </div>

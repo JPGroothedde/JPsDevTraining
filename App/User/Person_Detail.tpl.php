@@ -13,18 +13,18 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-		            <?php $this->PersonInstance->renderControl('PhoneVerified');?>
+                <div class="col-md-12" style="padding: 10px;">
+		            <?php $this->PersonInstance->renderControl('PhoneVerified',false);?>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-		            <?php $this->PersonInstance->renderControl('IdentityVerified');?>
+                <div class="col-md-12" style="padding: 10px;">
+		            <?php $this->PersonInstance->renderControl('IdentityVerified',false);?>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-		            <?php $this->PersonInstance->renderControl('DriversLicenseVerified');?>
+                <div class="col-md-12" style="padding: 10px;">
+		            <?php $this->PersonInstance->renderControl('DriversLicenseVerified',false);?>
                 </div>
             </div>
         </div>
@@ -62,6 +62,9 @@
                                 </div>
                             </div>
                             <div class="row">
+	                            <?php $this->PersonAttachmentList->RenderList();?>
+                            </div>
+                            <!--div class="row">
                                 <div class="col-md-6">ID / Passport</div>
                                 <div class="col-md-2">
                                 </div>
@@ -70,7 +73,7 @@
                                 <div class="col-md-6">Drivers License</div>
                                 <div class="col-md-2">
                                 </div>
-                            </div>
+                            </div-->
                             <div class="row">
                                 <?php  $this->btnAddAttachment->Render();?>
                             </div>
@@ -158,7 +161,7 @@
                 <h4 class="modal-title" id="AddIDPassportDriversLicenseModalLabel">Add ID / Passport or Drivers License</h4>
             </div>
             <div class="modal-body">
-				<?php //$this->attachmentUploadName->Render();?>
+				<?php $this->attachmentUploadName->Render();?>
 				<?php $this->attachmentUploader->renderUploader();?>
 				<?php $this->attachmentUploadFeedback->Render();?>
             </div>
