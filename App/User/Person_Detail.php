@@ -5,8 +5,11 @@ require(__SDEV_ORM__.'/Implementations/Person/PersonController.php');
 require(__SDEV_ORM__.'/Implementations/PersonAttachment/PersonAttachmentController.php');
 require(__SDEV_CONTROLS__.'/Implementations/PersonAttachment/PersonAttachmentDataList.php');
 require(__SDEV_ORM__.'/Implementations/EmploymentHistory/EmploymentHistoryController.php');
+require(__SDEV_CONTROLS__.'/Implementations/EmploymentHistory/EmploymentHistoryDataList.php');
 require(__SDEV_ORM__.'/Implementations/Education/EducationController.php');
+require(__SDEV_CONTROLS__.'/Implementations/Education/EducationDataList.php');
 require(__SDEV_ORM__.'/Implementations/Reference/ReferenceController.php');
+require(__SDEV_CONTROLS__.'/Implementations/Reference/ReferenceDataGrid.php');
 require('profilePictureUploader.php');
 require('attachmentUploader.php');
 
@@ -35,17 +38,40 @@ class Person_DetailForm extends QForm {
 	protected $EmploymentHistorySkillsTagsInput;
 	protected $btnAddNewEmploymentHistorySkillsTag;
 	protected $EmploymentHistorySkillsTagDisplay;
+	protected $EmploymentHistoryGrid;
+	protected $EmploymentHistoryWaitControlIcon;
+	protected $btnNewEmploymentHistory;
+	protected $selectedEmploymentHistoryId = -1;
+	
+	protected $EmploymentHistoryList;
+	//protected $btnNewEmploymentHistory;
+	
+	// EmploymentHistory Object variables
+	//protected $EmploymentHistoryInstance;
+	//protected $btnSaveEmploymentHistory,$btnDeleteEmploymentHistory;
+	
+	// EmploymentHistory Object variables
+	
+	//protected $btnSaveEmploymentHistory,$btnDeleteEmploymentHistory;
 	
 	// Education Object variables
 	protected $EducationInstance;
 	protected $btnSaveEducation,$btnDeleteEducation,$btnCancelEducation;
 	protected $btnAddEducation;
 	protected $EducationDisplay;
+	protected $EducationList;
+	protected $btnNewEducation;
+	
 	
 	// Reference Object variables
 	protected $ReferenceInstance;
 	protected $btnSaveReference,$btnDeleteReference,$btnCancelReference;
 	protected $ReferenceDisplay;
+	
+	protected $ReferenceGrid;
+	protected $ReferenceWaitControlIcon;
+	protected $btnNewReference;
+	protected $selectedReferenceId = -1;
 
 	//Profile Picture
 	protected $fileUploader;
@@ -76,8 +102,12 @@ class Person_DetailForm extends QForm {
 
         $this->InitPersonInstance();
 	    $this->InitEmploymentHistoryInstance();
+	    $this->InitEmploymentHistoryDataList();
+	    $this->InitEmploymentHistoryModal();
 	    $this->InitEducationInstance();
+	    $this->InitEducationDataList();
 	    $this->InitReferenceInstance();
+	    $this->InitReferenceDataGrid();
 	    $this->InitProfilePictureUpload();
 	    $this->InitAttachmentUpload();
 	    $this->InitPersonAttachmentDataList();
@@ -118,7 +148,7 @@ class Person_DetailForm extends QForm {
 		
         $this->btnAddAttachment = new QButton($this);
         $this->btnAddAttachment->Text = 'ADD ANOTHER';
-        $this->btnAddAttachment->CssClass = 'btn-sml btn-default mrg-top10 rippleclick';
+        $this->btnAddAttachment->CssClass = 'btn btn-warning mrg-top10 rippleclick';
         $this->btnAddAttachment->AddAction(new QClickEvent(), new QAjaxAction('btnAddAttachment_Clicked'));
         
         $this->btnSavePerson = new QButton($this);
@@ -268,28 +298,66 @@ class Person_DetailForm extends QForm {
 		}
 		$this->EmploymentHistorySkillsTagDisplay->updateControl($html);
     }
-    protected function btnAddNewEmploymentHistorySkillsTag_Clicked($strFormId, $strControlId, $strParameter) {
-    	$ValidateTagsInput = $this->EmploymentHistorySkillsTagsInput->Text;
-	    $ThePerson = AppSpecificFunctions::PathInfo(0);
-    	$TagObj = new PersonSkillsTag();
-    	$TagObj->SkillTag = $ValidateTagsInput;
-    	$TagObj->Person = $ThePerson;
-    	$TagObj->Save();
-    }
-	protected function btnSaveEmploymentHistory_Clicked($strFormId, $strControlId, $strParameter) {
-    	$ThePerson = Person::Load($this->PersonId);
-		if ($this->EmploymentHistoryInstance->saveObject(true,$ThePerson)) {
-			AppSpecificFunctions::ShowNotedFeedback('Saved!');
+	protected function InitEmploymentHistoryModal() {
+		$this->EmploymentHistoryInstance = new EmploymentHistoryController($this);
+		
+		$this->btnSaveEmploymentHistory = new QButton($this);
+		$this->btnSaveEmploymentHistory->Text = 'Save';
+		$this->btnSaveEmploymentHistory->CssClass = 'btn btn-success rippleclick mrg-top10 fullWidth';
+		$this->btnSaveEmploymentHistory->AddAction(new QClickEvent(), new QAjaxAction('btnSaveEmploymentHistory_Clicked'));
+		
+		$this->btnDeleteEmploymentHistory = new QButton($this);
+		$this->btnDeleteEmploymentHistory->Text = 'Delete';
+		$this->btnDeleteEmploymentHistory->CssClass = 'btn btn-danger rippleclick mrg-top10 fullWidth';
+		$this->btnDeleteEmploymentHistory->AddAction(new QClickEvent(), new QConfirmAction('Are you sure?'));
+		$this->btnDeleteEmploymentHistory->AddAction(new QClickEvent(), new QAjaxAction('btnDeleteEmploymentHistory_Clicked'));
+	}
+	protected function InitEmploymentHistoryDataList() {
+		$searchableAttributes = array(QQN::EmploymentHistory()->PeriodStartDate,QQN::EmploymentHistory()->PeriodEndDate,QQN::EmploymentHistory()->EmployerName,QQN::EmploymentHistory()->Title,QQN::EmploymentHistory()->Duties,QQN::EmploymentHistory()->PersonObject->Id,QQN::EmploymentHistory()->FileDocumentObject->Id);
+		$SortAttributesShown = array('Period Start Date','Period End Date','Employer Name','Title','Duties','Person Object','File Document Object');
+		$SortAttributes = array(QQN::EmploymentHistory()->PeriodStartDate,QQN::EmploymentHistory()->PeriodEndDate,QQN::EmploymentHistory()->EmployerName,QQN::EmploymentHistory()->Title,QQN::EmploymentHistory()->Duties,QQN::EmploymentHistory()->PersonObject->Id,QQN::EmploymentHistory()->FileDocumentObject->Id);
+		$columnItems = array('PeriodStartDate','PeriodEndDate','EmployerName','Title','Duties','Person','FileDocument');
+		$this->btnNewEmploymentHistory = AppSpecificFunctions::getNewActionButton($this,'Add EmploymentHistory','btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss,'btnNewEmploymentHistory_Clicked');
+		$this->EmploymentHistoryList = new EmploymentHistoryDataList($this, QQN::EmploymentHistory(),$searchableAttributes, null, $columnItems, $SortAttributes,$SortAttributesShown,'','','','','','','',false,false);
+	}
+	
+	protected function EmploymentHistory_ListItemClicked($strFormId, $strControlId, $strParameter) {
+		if ($this->EmploymentHistoryList->getActiveId() != $strParameter)
+			$this->EmploymentHistoryList->setActiveId($strParameter);
+		else
+			$this->EmploymentHistoryList->setActiveId(null);
+		$theObject = EmploymentHistory::Load($strParameter);
+		if ($theObject) {
+			$this->EmploymentHistoryInstance->setObject($theObject);
+			$this->EmploymentHistoryInstance->setValues($theObject);
+			$this->EmploymentHistoryInstance->refreshAll();
+			$this->btnDeleteEmploymentHistory->Visible = true;
 			AppSpecificFunctions::ToggleModal('EmploymentHistoryModal');
-		} else
-			AppSpecificFunctions::ShowNotedFeedback('Could not save right now! Please try again.',false);
+		}
 	}
-	protected function btnDeleteEmploymentHistory_Clicked($strFormId, $strControlId, $strParameter) {
-		if ($this->EmploymentHistoryInstance->deleteObject()) {
-			AppSpecificFunctions::ShowNotedFeedback('Deleted!');
-		} else
-			AppSpecificFunctions::ShowNotedFeedback('Could not delete right now! Please try again.',false);
+	protected function EmploymentHistory_LoadMoreClicked($strFormId, $strControlId, $strParameter) {
+		$this->EmploymentHistoryList->doLoadMore($strFormId, $strControlId, $strParameter);
 	}
+	protected function EmploymentHistory_SortNodeChanged($strFormId, $strControlId, $strParameter) {
+		$this->EmploymentHistoryList->ApplySearchClickChangeAction_Triggered($strFormId, $strControlId, $strParameter);
+	}
+	protected function EmploymentHistory_SortDirectionToggled($strFormId, $strControlId, $strParameter) {
+		$this->EmploymentHistoryList->toggleSortDirection($strFormId, $strControlId, $strParameter);
+	}
+	protected function EmploymentHistory_ResetSearchClicked($strFormId, $strControlId, $strParameter) {
+		$this->EmploymentHistoryList->ResetSearchClickAction_Clicked($strFormId, $strControlId, $strParameter);
+	}
+	protected function EmploymentHistory_ApplySearchClickedOrChanged($strFormId, $strControlId, $strParameter) {
+		$this->EmploymentHistoryList->ApplySearchClickChangeAction_Triggered($strFormId, $strControlId, $strParameter);
+	}
+	protected function btnNewEmploymentHistory_Clicked($strFormId, $strControlId, $strParameter) {
+		$this->EmploymentHistoryList->setActiveId(null);
+		$this->EmploymentHistoryInstance->setObject(null);
+		$this->EmploymentHistoryInstance->setValues(null);
+		$this->btnDeleteEmploymentHistory->Visible = false;
+		AppSpecificFunctions::ToggleModal('EmploymentHistoryModal');
+	}
+	
 	protected function btnAddExperience_Clicked($strFormId,$strControlId,$strParameter) {
 			AppSpecificFunctions::ToggleModal('EmploymentHistoryModal');
 	}
@@ -347,10 +415,56 @@ class Person_DetailForm extends QForm {
 		}
 		$this->EducationDisplay->updateControl($html);
 		
+		
+		
 		$this->btnCreatePdf = new QButton($this);
 		$this->btnCreatePdf->Text = 'Create PDF';
 		$this->btnCreatePdf->CssClass = 'btn btn-default mrg-top10 rippleclick';
 		$this->btnCreatePdf->AddAction(new QClickEvent(), new QAjaxAction('generateCV'));
+	}
+	protected function InitEducationDataList() {
+		$searchableAttributes = array(QQN::Education()->Institution,QQN::Education()->StartDate,QQN::Education()->EndDate,QQN::Education()->Qualification,QQN::Education()->PersonObject->Id,QQN::Education()->FileDocumentObject->Id);
+		$SortAttributesShown = array('Institution','Start Date','End Date','Qualification','Person Object','File Document Object');
+		$SortAttributes = array(QQN::Education()->Institution,QQN::Education()->StartDate,QQN::Education()->EndDate,QQN::Education()->Qualification,QQN::Education()->PersonObject->Id,QQN::Education()->FileDocumentObject->Id);
+		$columnItems = array('Institution','StartDate','EndDate','Qualification','Person','FileDocument');
+		$this->btnNewEducation = AppSpecificFunctions::getNewActionButton($this,'Add Education','btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss,'btnNewEducation_Clicked');
+		$this->EducationList = new EducationDataList($this, QQN::Education(),$searchableAttributes, null, $columnItems, $SortAttributes,$SortAttributesShown,'','','','','','','',false,false);
+	}
+	protected function Education_ListItemClicked($strFormId, $strControlId, $strParameter) {
+		if ($this->EducationList->getActiveId() != $strParameter)
+			$this->EducationList->setActiveId($strParameter);
+		else
+			$this->EducationList->setActiveId(null);
+		$theObject = Education::Load($strParameter);
+		if ($theObject) {
+			$this->EducationInstance->setObject($theObject);
+			$this->EducationInstance->setValues($theObject);
+			$this->EducationInstance->refreshAll();
+			$this->btnDeleteEducation->Visible = true;
+			AppSpecificFunctions::ToggleModal('EducationModal');
+		}
+	}
+	protected function Education_LoadMoreClicked($strFormId, $strControlId, $strParameter) {
+		$this->EducationList->doLoadMore($strFormId, $strControlId, $strParameter);
+	}
+	protected function Education_SortNodeChanged($strFormId, $strControlId, $strParameter) {
+		$this->EducationList->ApplySearchClickChangeAction_Triggered($strFormId, $strControlId, $strParameter);
+	}
+	protected function Education_SortDirectionToggled($strFormId, $strControlId, $strParameter) {
+		$this->EducationList->toggleSortDirection($strFormId, $strControlId, $strParameter);
+	}
+	protected function Education_ResetSearchClicked($strFormId, $strControlId, $strParameter) {
+		$this->EducationList->ResetSearchClickAction_Clicked($strFormId, $strControlId, $strParameter);
+	}
+	protected function Education_ApplySearchClickedOrChanged($strFormId, $strControlId, $strParameter) {
+		$this->EducationList->ApplySearchClickChangeAction_Triggered($strFormId, $strControlId, $strParameter);
+	}
+	protected function btnNewEducation_Clicked($strFormId, $strControlId, $strParameter) {
+		$this->EducationList->setActiveId(null);
+		$this->EducationInstance->setObject(null);
+		$this->EducationInstance->setValues(null);
+		$this->btnDeleteEducation->Visible = false;
+		AppSpecificFunctions::ToggleModal('EducationModal');
 	}
 	protected function btnAddEducation_Clicked($strFormId, $strControlId, $strParameter) {
     	AppSpecificFunctions::ToggleModal('EducationModal');
@@ -411,6 +525,46 @@ class Person_DetailForm extends QForm {
 		}
 		$this->ReferenceDisplay->updateControl($ReferenceHtml);
 	}
+	
+	protected function InitReferenceDataGrid() {
+		$searchableAttributes = array(QQN::Reference()->FirstName,QQN::Reference()->Surname,QQN::Reference()->Relationship,QQN::Reference()->TelephoneNumber,QQN::Reference()->PersonObject->Id,QQN::Reference()->FileDocumentObject->Id);
+		$headerItems = array('');//'First Name','Surname','Relationship','Telephone Number','Person Object','File Document Object');
+		$headerSortNodes = array(QQN::Reference()->FirstName,QQN::Reference()->Surname,QQN::Reference()->Relationship,QQN::Reference()->TelephoneNumber,QQN::Reference()->PersonObject->Id,QQN::Reference()->FileDocumentObject->Id);
+		$columnItems = array('FirstName','Surname','Relationship','TelephoneNumber','Person','FileDocument');
+		$this->ReferenceWaitControlIcon = new QWaitIcon($this);
+		$this->btnNewReference = new QButton($this);
+		$this->btnNewReference->Text = 'Add Reference';
+		$this->btnNewReference->CssClass = 'btn btn-primary rippleclick mrg-top10 '.$this->buttonFullWidthCss;
+		$this->btnNewReference->AddAction(new QClickEvent(), new QAjaxAction('btnNewReference_Clicked'));
+		$this->ReferenceGrid = new ReferenceDataGrid($this, QQN::Reference(),$searchableAttributes, 'Search...', $headerItems, $headerSortNodes, $columnItems, null, 10, $this->ReferenceWaitControlIcon, 'ReferenceGrid');
+	}
+	protected function ReferenceGrid_ItemsPerPageClickAction_Clicked($strFormId, $strControlId, $strParameter) {
+		$this->ReferenceGrid->ItemsPerPageClickAction_Clicked($strFormId, $strControlId, $strParameter);
+	}
+	protected function ReferenceGrid_NavButtonsClickAction_Clicked($strFormId, $strControlId, $strParameter) {
+		$this->ReferenceGrid->NavButtonsClickAction_Clicked($strFormId, $strControlId, $strParameter);
+	}
+	protected function ReferenceGrid_DataGridHeaderClickAction_Clicked($strFormId, $strControlId, $strParameter) {
+		$this->ReferenceGrid->DataGridHeaderClickAction_Clicked($strFormId, $strControlId, $strParameter);
+	}
+	protected function ReferenceGrid_ResetSearchClickAction_Clicked($strFormId, $strControlId, $strParameter) {
+		$this->ReferenceGrid->ResetSearchClickAction_Clicked($strFormId, $strControlId, $strParameter);
+	}
+	protected function ReferenceGrid_ApplySearchClickChangeAction_Triggered($strFormId, $strControlId, $strParameter) {
+		$this->ReferenceGrid->ApplySearchClickChangeAction_Triggered($strFormId, $strControlId, $strParameter);
+	}
+	protected function ReferenceGrid_DataGridRowClickAction_Clicked($strFormId, $strControlId, $strParameter) {
+		$this->selectedReferenceId = $strParameter;
+		$theObject = Reference::Load($this->selectedReferenceId);
+		if ($theObject) {
+			$this->ReferenceInstance->setObject($theObject);
+			$this->ReferenceInstance->setValues($theObject);
+			$this->ReferenceInstance->refreshAll();
+			$this->btnDeleteReference->Visible = true;
+			AppSpecificFunctions::ToggleModal('ReferenceModal');
+		}
+	}
+	
 	protected function btnSaveReference_Clicked($strFormId, $strControlId, $strParameter) {
 		$ThePerson = Person::Load($this->PersonId);
 		if ($this->ReferenceInstance->saveObject(true,$ThePerson)) {

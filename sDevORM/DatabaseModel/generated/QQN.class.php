@@ -91,12 +91,6 @@
 			return new QQNodeMasterLanguage('MasterLanguage', null, null);
 		}
 		/**
-		 * @return QQNodeMasterSkillsTag
-		 */
-		static public function MasterSkillsTag() {
-			return new QQNodeMasterSkillsTag('MasterSkillsTag', null, null);
-		}
-		/**
 		 * @return QQNodePageView
 		 */
 		static public function PageView() {

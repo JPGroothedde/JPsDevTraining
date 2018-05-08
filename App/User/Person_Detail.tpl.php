@@ -92,10 +92,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <?php $this->EmploymentHistoryDisplay->Render();?>
+	                                <?php $this->EmploymentHistoryList->RenderList();?>
+                                    <?php //$this->EmploymentHistoryDisplay->Render();?>
                                 </div>
                                 <div class="col-md-6">
-		                            <?php $this->ReferenceDisplay->Render();?>
+	                                <?php $this->ReferenceGrid->RenderGrid();?>
+		                            <?php //$this->ReferenceDisplay->Render();?>
                                 </div>
                             </div>
                             <div class="row">
@@ -111,7 +113,8 @@
                         <div role="tabpanel" class="tab-pane fade" id="Person_Education">
                             <?php $this->btnAddEducation->Render();?>
                             <div class="col-md-6">
-                                <?php $this->EducationDisplay->Render()?>
+	                            <?php $this->EducationList->RenderList();?>
+                                <?php //$this->EducationDisplay->Render()?>
                             </div>
                             <?php $this->btnCreatePdf->Render();?>
                         </div>

@@ -5,14 +5,6 @@
 <h1 class="page-header"></h1>
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <div class="row">
-                <?php $this->DashBoardMenuButton->Render();?>
-            </div>
-            <div class="row">
-                <?php $this->RegisteredCVsButton->Render();?>
-            </div>
-        </div>
         <div class="col-md-8">
             <div class="row"><?php $this->SearchPersonInputBox->Render();?></div>
             <div class="row">-or-</div>

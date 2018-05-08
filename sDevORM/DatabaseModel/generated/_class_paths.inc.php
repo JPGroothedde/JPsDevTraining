@@ -74,11 +74,6 @@
 		QApplicationBase::$ClassFile['qqnodemasterlanguage'] = __MODEL__ . '/MasterLanguage.class.php';
 		QApplicationBase::$ClassFile['qqreversereferencenodemasterlanguage'] = __MODEL__ . '/MasterLanguage.class.php';
 
-	// ClassPaths for the MasterSkillsTag class
-		QApplicationBase::$ClassFile['masterskillstag'] = __MODEL__ . '/MasterSkillsTag.class.php';
-		QApplicationBase::$ClassFile['qqnodemasterskillstag'] = __MODEL__ . '/MasterSkillsTag.class.php';
-		QApplicationBase::$ClassFile['qqreversereferencenodemasterskillstag'] = __MODEL__ . '/MasterSkillsTag.class.php';
-
 	// ClassPaths for the PageView class
 		QApplicationBase::$ClassFile['pageview'] = __MODEL__ . '/PageView.class.php';
 		QApplicationBase::$ClassFile['qqnodepageview'] = __MODEL__ . '/PageView.class.php';
